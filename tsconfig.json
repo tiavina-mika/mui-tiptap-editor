@@ -22,11 +22,12 @@
     "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true,
     "jsxImportSource": "@emotion/react",
+    "typeRoots": ["./dist/index.d.ts", "node_modules/@types"],
     "paths": {
       "@/*": ["src/*"],
       "assets*": ["public/*"],
     },
   },
-  "include": ["src"],
+  "include": ["src", "./index.ts"],
   "references": [{ "path": "./tsconfig.node.json" }]
 }
