@@ -1,4 +1,4 @@
-import "./textEditorStyles.css";
+import "../index.css";
 
 import { cx } from '@emotion/css';
 import { Theme } from '@emotion/react';
