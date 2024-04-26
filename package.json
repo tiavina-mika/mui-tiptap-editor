@@ -1,5 +1,5 @@
 {
-  "name": "@tiavina-mika/mui-tiptap",
+  "name": "mui-tiptap-editor",
   "description": "Tiptap WYSIWYG rich text editor using Material UI (MUI)",
   "private": false,
   "keywords": [
@@ -14,13 +14,14 @@
     "draftjs",
     "slate"
   ],
-  "homepage": "https://github.com/tiavina-mika/mui-tiptap",
+  "homepage": "https://github.com/tiavina-mika/mui-tiptap-editor",
   "bugs": {
-    "url": "https://github.com/tiavina-mika/mui-tiptap/issues"
+    "url": "https://github.com/tiavina-mika/mui-tiptap-editor/issues"
   },
   "author": {
     "name": "Tiavina Michael Ralainirina",
-    "email": "tiavinamika@gmail.com"
+    "email": "tiavinamika@gmail.com",
+    "github": "https://github.com/tiavina-mika"
   },
   "version": "0.0.3",
   "license": "MIT",
