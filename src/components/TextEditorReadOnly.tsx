@@ -1,17 +1,16 @@
-import "./textEditorStyles.css";
+import "../index.css";
 
 import {
   EditorContent,
-  EditorOptions,
 } from '@tiptap/react';
 
 import { useTextEditor } from "@/hooks/useTextEditor";
 
-export type TextEditorProps = {
+type TextEditorProps = {
   className?: string;
   value?: string;
   tab?: 'editor' | 'preview';
-} & Partial<EditorOptions>;
+};
 
 const TextEditorReadOnly = ({
   value,
