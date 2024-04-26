@@ -10,7 +10,7 @@ import LinkDialog from "./LinkDialog";
 import HeadingMenu from "./HeadingMenu";
 import ColorPicker from "./ColorPicker";
 import YoutubeDialog from "./YoutubeDialog";
-import { IEditorToolbar } from "@/types/app.type";
+import { IEditorToolbar } from "@/index";
 import { defaultEditorToolbar, showTextEditorToolbarMenu } from "@/utils/app.utils";
 
 const classes = {
