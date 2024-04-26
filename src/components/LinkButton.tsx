@@ -1,10 +1,9 @@
-import { IconButton } from '@mui/material';
+import { IconButton, TextField } from '@mui/material';
 import { Editor } from '@tiptap/react';
 import { useState, ChangeEvent } from 'react';
 import { z } from 'zod';
 
 import Dialog from './Dialog';
-import TextFieldInput from '../TextFieldInput';
 
 const linkSchemaField = z.string().url().min(5, { message: 'Must be 10 or more characters long' });
 
@@ -68,7 +67,7 @@ const LinkButton = ({ editor, className }: Props) => {
         onPrimaryButtonAction={handleConfirm}
         fullWidth
       >
-        <TextFieldInput
+        <TextField
           placeholder="Lien"
           type="url"
           fullWidth
