@@ -49,22 +49,9 @@
     "preview": "vite preview",
     "lint": "eslint . --ext ts,tsx --fix --report-unused-disable-directives --max-warnings 0"
   },
-  "peerDependencies": {
-    "@emotion/react": "^11.11.3",
-    "@mui/material": "^5.0.1",
-    "@tiptap/core": "^2.0.0-beta.210",
-    "@tiptap/extension-heading": "^2.0.0-beta.210",
-    "@tiptap/extension-image": "^2.0.0-beta.210",
-    "@tiptap/extension-table": "^2.0.0-beta.210",
-    "@tiptap/pm": "^2.0.0-beta.210",
-    "@tiptap/react": "^2.0.0-beta.210",
-    "react": "^16.8.0 || ^17.0.2 || ^18.0.0",
-    "react-dom": "^16.8.0 || ^17.0.2 || ^18.0.0"
-  },
   "dependencies": {
     "@emotion/css": "^11.11.2",
     "@emotion/react": "^11.11.3",
-    "@emotion/styled": "^11.11.0",
     "@mui/material": "^5.15.2",
     "@tiptap/extension-code-block-lowlight": "^2.3.0",
     "@tiptap/extension-color": "^2.2.5",

@@ -105,7 +105,7 @@ const Dialog = ({
             variant="contained"
             sx={{ textTransform: 'capitalize' }}
           >
-            {primaryButtonText}
+            {primaryButtonText ?? 'Confirm'}
           </Button>
         )}
 
