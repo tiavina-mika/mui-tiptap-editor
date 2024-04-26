@@ -23,7 +23,7 @@
     "email": "tiavinamika@gmail.com",
     "github": "https://github.com/tiavina-mika"
   },
-  "version": "0.0.4",
+  "version": "0.0.5",
   "license": "MIT",
   "type": "module",
   "main": "dist/index.umd.js",
@@ -62,9 +62,9 @@
   },
   "devDependencies": {
     "@emotion/babel-plugin": "^11.11.0",
-    "@emotion/styled": "^11.11.5",
     "@emotion/css": "^11.11.2",
     "@emotion/react": "^11.11.3",
+    "@emotion/styled": "^11.11.5",
     "@ianvs/prettier-plugin-sort-imports": "^4.1.1",
     "@mui/material": "^5.15.2",
     "@tiptap/extension-code-block-lowlight": "^2.3.0",
