@@ -22,7 +22,7 @@
     "name": "Tiavina Michael Ralainirina",
     "email": "tiavinamika@gmail.com"
   },
-  "version": "0.0.2",
+  "version": "0.0.3",
   "license": "MIT",
   "type": "module",
   "main": "dist/index.umd.js",
