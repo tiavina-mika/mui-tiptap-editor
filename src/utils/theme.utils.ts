@@ -1,95 +1,9 @@
-import { BadgeProps, PaletteColorOptions, PaletteMode, PaletteOptions, Theme, createTheme } from '@mui/material';
+import { BadgeProps, PaletteMode, PaletteOptions, Theme, createTheme } from '@mui/material';
 import { grey, teal } from '@mui/material/colors';
-import { IThemeColors } from '@/types/setting.type';
-import { LAYOUT_CONTENT_PADDING, RESPONSIVE_BREAKPOINT } from './constants';
 
 export const DASHBOARD_BACKGROUND_COLOR = '#FAFBFB';
 export const DEFAULT_THEME_COLOR = 'green';
 
-export const getLinkStyles = (theme: Theme) => ({
-  fontSize: 16,
-  fontWeight: '500 !important',
-  textDecoration: 'none',
-  color: theme.palette.primary.main,
-  '&:hover': {
-    textDecoration: 'underline',
-  },
-});
-
-export const themeColorOptions: IThemeColors[] = [
-  {
-    name: DEFAULT_THEME_COLOR,
-    colors: {
-      light: teal[50],
-      main: '#03C9D7',
-      dark: teal[900],
-      contrastText: '#fff',
-    },
-  },
-  {
-    name: 'blue',
-    colors: {
-      light: '#aadbff',
-      main: '#1A9BFC',
-      dark: '#0a446d',
-      contrastText: '#fff',
-    },
-  },
-  {
-    name: 'purple',
-    colors: {
-      light: '#bcadff',
-      main: '#7352ff',
-      dark: '#342772',
-      contrastText: '#fff',
-    },
-  },
-  {
-    name: 'red',
-    colors: {
-      light: '#ffc6d7',
-      main: '#ff5c8e',
-      dark: '#72293f',
-      contrastText: '#fff',
-    },
-  },
-  {
-    name: 'indigo',
-    colors: {
-      light: '#798cb5',
-      main: '#1e4db7',
-      dark: '#0e2963',
-      contrastText: '#fff',
-    },
-  },
-  {
-    name: 'orange',
-    colors: {
-      light: '#ffdfd6',
-      main: '#fb9678',
-      dark: '#7c4c3e',
-      contrastText: '#fff',
-    },
-  },
-  {
-    name: 'yellow',
-    colors: {
-      light: '#ffff91',
-      main: '#a8aa00',
-      dark: '#565600',
-      contrastText: '#fff',
-    },
-  },
-];
-
-const getThemeColor = (color: string): PaletteColorOptions => {
-  const selectColor = themeColorOptions.find((themeColor: IThemeColors): boolean => themeColor.name === color);
-
-  if (!selectColor) {
-    return themeColorOptions[0].colors;
-  }
-  return selectColor.colors;
-};
 
 const textDarkColor = {
   color: '#fff',
@@ -227,11 +141,6 @@ const defaultTheme = {
         }),
       },
     },
-    MuiLink: {
-      styleOverrides:  {
-        root: ({ theme }: { theme: Theme }) => getLinkStyles(theme),
-      },
-    },
     MuiStack: {
       defaultProps: {
         useFlexGap: true,
@@ -250,8 +159,8 @@ const defaultTheme = {
     MuiDialog: {
       styleOverrides: {
         paper: {
-          paddingTop: LAYOUT_CONTENT_PADDING,
-          paddingBottom: LAYOUT_CONTENT_PADDING,
+          paddingTop: 4,
+          paddingBottom: 4,
         },
       },
     },
@@ -404,7 +313,7 @@ const darkTheme = {
   },
 };
 
-export const getTheme = (mode: PaletteMode = 'light', color = DEFAULT_THEME_COLOR): Theme => {
+export const getTheme = (mode: PaletteMode = 'light'): Theme => {
   const defaultTheme = mode === 'light' ? lightTheme : darkTheme;
 
   // @ts-expect-error - unknown type
@@ -412,13 +321,18 @@ export const getTheme = (mode: PaletteMode = 'light', color = DEFAULT_THEME_COLO
     ...defaultTheme,
     palette: {
       mode,
-      primary: getThemeColor(color),
+      primary: {
+        light: teal[50],
+        main: '#03C9D7',
+        dark: teal[900],
+        contrastText: '#fff',
+      },
       ...defaultTheme.palette,
     },
   });
 
   theme.typography.h6 = {
-    [theme.breakpoints.down(RESPONSIVE_BREAKPOINT)]: {
+    [theme.breakpoints.down('md')]: {
       fontSize: 14,
     },
   };

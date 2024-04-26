@@ -1,6 +1,5 @@
 import { Editor } from "@tiptap/react";
 import { Menu, MenuItem, Fade } from "@mui/material";
-import i18n from "@/config/i18n";
 
 type IOption = {
   label: string;
@@ -8,7 +7,7 @@ type IOption = {
 };
 const getTableMenus = (editor: Editor): IOption[] => [
   {
-    label: i18n.t("cms:table.insertTable"),
+    label: "Insert table",
     action: () =>
       editor
         .chain()
@@ -17,55 +16,55 @@ const getTableMenus = (editor: Editor): IOption[] => [
         .run()
   },
   {
-    label: i18n.t("cms:table.addColumnBefore"),
+    label: "Add column before",
     action: () => editor.chain().focus().addColumnBefore().run()
   },
   {
-    label: i18n.t("cms:table.addColumnAfter"),
+    label: "Add column after",
     action: () => editor.chain().focus().addColumnAfter().run()
   },
   {
-    label: i18n.t("cms:table.deleteColumn"),
+    label: "Delete Column",
     action: () => editor.chain().focus().deleteColumn().run()
   },
   {
-    label: i18n.t("cms:table.addRowBefore"),
+    label: "Add row before",
     action: () => editor.chain().focus().addRowBefore().run()
   },
   {
-    label: i18n.t("cms:table.addRowAfter"),
+    label: "Add row after",
     action: () => editor.chain().focus().addRowAfter().run()
   },
   {
-    label: i18n.t("cms:table.deleteRow"),
+    label: "Delete row",
     action: () => editor.chain().focus().deleteRow().run()
   },
   {
-    label: i18n.t("cms:table.deleteTable"),
+    label: "Delete table",
     action: () => editor.chain().focus().deleteTable().run()
   },
   {
-    label: i18n.t("cms:table.mergeCells"),
+    label: "Merge cells",
     action: () => editor.chain().focus().mergeCells().run()
   },
   {
-    label: i18n.t("cms:table.toggleHeaderColumn"),
+    label: "Toggle header column",
     action: () => editor.chain().focus().toggleHeaderColumn().run()
   },
   {
-    label: i18n.t("cms:table.toggleHeaderRow"),
+    label: "Toggle header row",
     action: () => editor.chain().focus().toggleHeaderRow().run()
   },
   {
-    label: i18n.t("cms:table.toggleHeaderCell"),
+    label: "Toggle header cell",
     action: () => editor.chain().focus().toggleHeaderCell().run()
   },
   {
-    label: i18n.t("cms:table.mergeOrSplit"),
+    label: "Merge or split",
     action: () => editor.chain().focus().mergeOrSplit().run()
   },
   {
-    label: i18n.t("cms:table.setCellAttribute"),
+    label: "Set cell attribute",
     action: () => editor.chain().focus().setCellAttribute("colspan", 2).run()
   }
 ];

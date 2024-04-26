@@ -1,21 +1,19 @@
 import { Editor } from '@tiptap/react';
 import { useState, ChangeEvent } from 'react';
 import { z } from 'zod';
-import { useTranslation } from 'react-i18next';
-import i18n from '@/config/i18n';
 
-import Dialog from '../../../Dialog';
-import TextFieldInput from '../TextFieldInput';
+import { TextField } from '@mui/material';
+import Dialog from './Dialog';
 
 const linkSchemaField = z.union([
   z
     .string()
     .url()
-    .startsWith("https://", { message: i18n.t('cms:errors.mustProvideSecureUrl') }),
+    .startsWith("https://", { message: 'Please enter a secure URL' }),
   z
     .string()
     .url()
-    .startsWith("mailto://", { message: i18n.t('cms:errors.mustProvideSecureUrl') }),
+    .startsWith("mailto://", { message: 'Please enter a secure URL' }),
   z.string().startsWith("+")
 ]);
 
@@ -27,8 +25,6 @@ type Props = {
 const LinkDialog = ({ editor, open, onClose }: Props) => {
   const [link, setLink] = useState<string>('');
   const [error, setError] = useState<string>('');
-
-  const { t } = useTranslation();
 
   if (!editor) {
     return null;
@@ -76,10 +72,9 @@ const LinkDialog = ({ editor, open, onClose }: Props) => {
       onPrimaryButtonAction={handleConfirm}
       fullWidth
     >
-      <TextFieldInput
-        label={t('cms:link')}
-        fixedLabel
-        placeholder={t('cms:enterTheLink')}
+      <TextField
+        label="Link"
+        placeholder="Entrer le lien"
         type="url"
         fullWidth
         onChange={handleChangeLink}

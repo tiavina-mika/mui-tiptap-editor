@@ -3,7 +3,7 @@ import { Editor } from '@tiptap/react';
 import { useState, ChangeEvent } from 'react';
 import { z } from 'zod';
 
-import Dialog from '../../../Dialog';
+import Dialog from './Dialog';
 import TextFieldInput from '../TextFieldInput';
 
 const linkSchemaField = z.string().url().min(5, { message: 'Must be 10 or more characters long' });

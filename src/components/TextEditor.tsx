@@ -10,8 +10,7 @@ import {
   BubbleMenu,
 } from '@tiptap/react';
 
-import { useState, SyntheticEvent } from 'react';
-import { useTranslation } from 'react-i18next';
+import { useState, SyntheticEvent, ReactNode } from 'react';
 import MenuBar from './MenuBar';
 import { IEditorToolbar } from "@/types/app.type";
 import { useTextEditor } from "@/hooks/useTextEditor";
@@ -25,20 +24,12 @@ const classes = {
   label: (theme: Theme) => ({
     pointerEvents: 'none' as const,
     color: theme.palette.grey[800],
-    // fontFamily: 'Product Sans Regular',
-    // fontSize: 10,
     fontStyle: 'normal',
     fontWeight: 400,
     lineHeight: 1,
-    // backgroundColor: '#fff',
     zIndex: 100,
     padding: '4px 3px',
     marginBottom: 6,
-  }),
-  required: (theme: Theme) => ({
-    marginRight: 6,
-    marginLeft: 6,
-    color: theme.palette.grey[500],
   }),
   tabs: {
     '& .MuiTabs-indicator': {
@@ -72,13 +63,12 @@ const classes = {
 
 export type TextEditorProps = {
   placeholder?: string;
-  label?: string;
+  label?: ReactNode;
   error?: string;
   onChange?: (value: string) => void;
   className?: string;
   value?: string;
   menuClassName?: string;
-  required?: boolean;
   withFloatingButtons?: boolean;
   toolbar?: IEditorToolbar[];
 } & Partial<EditorOptions>;
@@ -91,15 +81,12 @@ const TextEditor = ({
   className,
   value,
   menuClassName,
-  required,
   toolbar,
   editable = true,
   withFloatingButtons = false,
   ...editorOptions
 }: TextEditorProps) => {
   const [tab, setTab] = useState<'editor' | 'preview'>('editor');
-
-  const { t } = useTranslation();
 
   const handleTabChange = (_: SyntheticEvent, value: 'editor' | 'preview') => setTab(value);
 
@@ -123,7 +110,6 @@ const TextEditor = ({
       {label && (
         <Typography css={classes.label}>
           {label}
-          {required && <span css={classes.required}>({t('required')})</span>}
         </Typography>
       )}
       <Tabs
@@ -133,8 +119,8 @@ const TextEditor = ({
         TabIndicatorProps={{ children: <span className="MuiTabs-indicatorSpan" /> }}
         css={classes.tabs}
       >
-        <Tab css={classes.tab} label={t('cms:editor.tabs.editor')} value="editor" />
-        <Tab css={classes.tab} label={t('cms:editor.tabs.preview')} value="preview" />
+        <Tab css={classes.tab} label="Editor" value="editor" />
+        <Tab css={classes.tab} label="Preview" value="preview" />
       </Tabs>
       {tab === 'editor'
         ? (

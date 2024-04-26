@@ -1,51 +1,26 @@
-import { Provider } from 'react-redux';
-import { Suspense, useEffect } from 'react';
-import { PersistGate } from 'redux-persist/integration/react';
-import { HelmetProvider } from 'react-helmet-async';
-import dayjs from 'dayjs';
-import { persistor, store } from './redux/store';
-import MuiThemeProvider from './MuiThemeProvider';
-import RouterProvider from './routes/RouterProvider';
-import { getStoredLanguage } from './utils/settings.utils';
-import i18n, { getCurrentLocale } from './config/i18n';
-import { Lang } from './types/setting.type';
-import { setLang } from './redux/reducers/settings.reducer';
-import { translateDateLocale } from './utils/date.utils';
+import { ThemeProvider as EmotionThemeProvider } from '@emotion/react';
+import { ThemeProvider } from '@mui/material';
+import TextEditor from './components/TextEditor';
+
+import { getTheme } from '@/utils/theme.utils';
+import { GlobalStyles } from './GlobalStyles';
 
 const App = () => {
-    // detect browser language, then save it to persisted store (redux + local storage)
-    useEffect(() => {
-      const persistedLocale = getStoredLanguage();
-      let locale = persistedLocale;
-  
-      if (!persistedLocale) {
-        // get device lang
-        const defaultLang = getCurrentLocale();
-  
-        locale = defaultLang as Lang;
-        // change i18n lang
-        i18n.changeLanguage(defaultLang);
-        // save lang to the store
-        store.dispatch(setLang(defaultLang));
-      }
-  
-      // translate date
-      dayjs.locale(locale);
-      translateDateLocale(locale as Lang);
-    }, []);
+  const theme = getTheme();
 
   return (
-    <Suspense fallback={<span>Loading</span>}>
-      <Provider store={store}>
-        <PersistGate loading={null} persistor={persistor}>
-          <HelmetProvider>
-            <MuiThemeProvider>
-              <RouterProvider store={store} />
-            </MuiThemeProvider>
-          </HelmetProvider>
-        </PersistGate>
-      </Provider>
-    </Suspense>
+    <ThemeProvider theme={theme}>
+      <EmotionThemeProvider theme={theme}>
+        <GlobalStyles theme={theme} />
+        <TextEditor
+          className="flexColumn stretchSelf flex1"
+          label="Description"
+          placeholder="Provide as much information as possible. This field has only one limit, yours."
+          // mentions={mentions}
+          // menuClassName={classes.textEditorMenu}
+        />
+      </EmotionThemeProvider>
+    </ThemeProvider>
   )
 }
 

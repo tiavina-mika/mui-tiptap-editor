@@ -4,7 +4,7 @@ import { IconButton } from "@mui/material";
 import { Editor } from "@tiptap/react";
 import { useState, MouseEvent, useMemo, useCallback } from "react";
 
-import { useToggle } from "../../../../hooks/useToggle";
+import { useToggle } from "../hooks/useToggle";
 import TableMenuDialog from "./TableMenuDialog";
 import LinkDialog from "./LinkDialog";
 import HeadingMenu from "./HeadingMenu";

@@ -1,12 +1,11 @@
 import {
   Stack,
+  TextField,
 } from "@mui/material";
 import { Editor } from "@tiptap/react";
 import { ChangeEvent, useState } from "react";
-import { useTranslation } from "react-i18next";
 import { z } from "zod";
 import Dialog from "@/components/Dialog";
-import TextFieldInput from "../TextFieldInput";
 
 const youtubeSchema = z.object({
   url: z.string().url(),
@@ -30,8 +29,6 @@ type Props = {
 const YoutubeDialog = ({ editor, open, onClose }: Props) => {
   const [values, setValues] = useState<YoutubeInput>(initialValues);
   const [errors, setErrors] = useState<Record<string, string> | null>(null);
-
-  const { t } = useTranslation('cms');
 
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     setValues(
@@ -76,18 +73,17 @@ const YoutubeDialog = ({ editor, open, onClose }: Props) => {
 
   return (
     <Dialog
-      title={t('youtubeLink')}
+      title="Youtube link"
       open={open}
       toggle={handleClose}
       onPrimaryButtonAction={handleConfirm}
       fullWidth
     >
       <Stack spacing={3}>
-        <TextFieldInput
+        <TextField
           name="url"
-          fixedLabel
-          label={t('link')}
-          placeholder={t('enterTheLink')}
+          label="Link"
+          placeholder="Enter the link"
           variant="outlined"
           type="url"
           fullWidth
@@ -96,9 +92,9 @@ const YoutubeDialog = ({ editor, open, onClose }: Props) => {
           error={!!errors?.url}
           helperText={errors?.url}
         />
-        <TextFieldInput
+        <TextField
           name="width"
-          label={t('width')}
+          label="Width"
           variant="outlined"
           type="number"
           fullWidth
@@ -107,9 +103,9 @@ const YoutubeDialog = ({ editor, open, onClose }: Props) => {
           error={!!errors?.width}
           helperText={errors?.width}
         />
-        <TextFieldInput
+        <TextField
           name="height"
-          label={t('height')}
+          label="Height"
           variant="outlined"
           type="number"
           fullWidth
