@@ -12,7 +12,7 @@ import {
 
 import { useState, SyntheticEvent, ReactNode } from 'react';
 import MenuBar from './MenuBar';
-import { IEditorToolbar } from "@/types/app.type";
+import { IEditorToolbar } from "@/index";
 import { useTextEditor } from "@/hooks/useTextEditor";
 
 const classes = {
