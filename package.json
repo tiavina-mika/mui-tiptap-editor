@@ -1,5 +1,5 @@
 {
-  "name": "@mui/tiptap",
+  "name": "@tiavina-mika/mui-tiptap",
   "description": "Tiptap WYSIWYG rich text editor using Material UI (MUI)",
   "private": false,
   "keywords": [
@@ -22,7 +22,7 @@
     "name": "Tiavina Michael Ralainirina",
     "email": "tiavinamika@gmail.com"
   },
-  "version": "0.0.0",
+  "version": "0.0.2",
   "license": "MIT",
   "type": "module",
   "main": "dist/index.umd.js",
