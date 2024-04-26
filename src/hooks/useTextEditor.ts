@@ -132,15 +132,8 @@ export const useTextEditor = ({
   const theme = useTheme();
 
   const editor = useEditor({
-    // editable,
     content: value,
-    // editorProps: {
-    //   attributes: {
-    //     class: classes.input(theme, editable),
-    //   },
-    // },
     extensions: [
-      // StarterKit,
       Placeholder.configure({
         placeholder,
       }),

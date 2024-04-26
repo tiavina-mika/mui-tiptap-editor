@@ -218,12 +218,14 @@ const MenuBar = ({
     {
       name: "undo",
       onClick: () => editor.chain().focus().undo().run(),
-      disabled: !editor.can().undo()
+      disabled: !editor.can().undo(),
+      default: true // always display
     },
     {
       name: "redo",
       onClick: () => editor.chain().focus().redo().run(),
       disabled: !editor.can().redo(),
+      default: true, // always display
       split: true
     }
   ], [editor, toggleLinkDialog, toggleYoutubeDialog, handleOpenTableMenu, handleOpenHeadingMenu]);
