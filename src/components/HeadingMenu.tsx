@@ -1,7 +1,7 @@
 import { Editor } from "@tiptap/react";
 import { Menu, MenuItem, Fade } from "@mui/material";
 import { Level } from "@tiptap/extension-heading";
-import { ISelectOption } from "@/types/app.type";
+import { ISelectOption } from "@/index";
 
 type IOption = ISelectOption<Level>;
 
