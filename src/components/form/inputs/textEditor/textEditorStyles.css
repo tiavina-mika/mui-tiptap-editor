@@ -1,0 +1,176 @@
+/* Basic editor styles */
+.tiptap {
+  > * + * {
+    margin-top: 0.75em;
+  }
+}
+
+.tiptap blockquote {
+  border-left: 3px solid rgba(13, 13, 13, 0.1);
+  padding-left: 1rem;
+}
+.tiptap pre {
+  background: #0d0d0d;
+  color: #fff;
+  font-family: "JetBrainsMono", monospace;
+  padding: 0.75rem 1rem;
+  border-radius: 0.5rem;
+}
+/* code highlight */
+.tiptap pre code {
+  color: inherit;
+  padding: 0;
+  background: none;
+  font-size: 0.8rem;
+}
+
+.tiptap  .hljs-comment,
+.tiptap .hljs-quote {
+  color: #616161;
+}
+
+.hljs-variable,
+.hljs-template-variable,
+.hljs-attribute,
+.hljs-tag,
+.hljs-name,
+.hljs-regexp,
+.hljs-link,
+.hljs-name,
+.hljs-selector-id,
+.hljs-selector-class {
+  color: #f98181;
+}
+
+.hljs-number,
+.hljs-meta,
+.hljs-built_in,
+.hljs-builtin-name,
+.hljs-literal,
+.hljs-type,
+.hljs-params {
+  color: #fbbc88;
+}
+
+.hljs-string,
+.hljs-symbol,
+.hljs-bullet {
+  color: #b9f18d;
+}
+
+.hljs-title,
+.hljs-section {
+  color: #faf594;
+}
+
+.hljs-keyword,
+.hljs-selector-tag {
+  color: #70cff8;
+}
+
+.hljs-emphasis {
+  font-style: italic;
+}
+
+.hljs-strong {
+  font-weight: 700;
+}
+
+/* table */
+.tiptap table {
+  border-collapse: collapse;
+  margin: 0;
+  overflow: hidden;
+  table-layout: fixed;
+  width: 100%;
+}
+
+.tiptap table  td,
+.tiptap table th {
+  border: 2px solid #ced4da;
+  box-sizing: border-box;
+  min-width: 1em;
+  padding: 3px 5px;
+  position: relative;
+  vertical-align: top;
+
+  > * {
+    margin-bottom: 0;
+  }
+}
+
+.tiptap table th {
+  background-color: #f1f3f5;
+  font-weight: bold;
+  text-align: left;
+}
+
+.tiptap table .selectedCell:after {
+  background: rgba(200, 200, 255, 0.4);
+  content: "";
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  pointer-events: none;
+  position: absolute;
+  z-index: 2;
+}
+
+.tiptap table.column-resize-handle {
+  background-color: #adf;
+  bottom: -2px;
+  position: absolute;
+  right: -2px;
+  pointer-events: none;
+  top: 0;
+  width: 4px;
+}
+
+.tiptap table p {
+  margin: 0;
+}
+
+/* list */
+.tiptap ul,
+.tiptap ol {
+  padding: 0 1rem;
+}
+
+/* heading */
+.tiptap h1,
+.tiptap h2,
+.tiptap h3,
+.tiptap h4,
+.tiptap h5,
+.tiptap h6 {
+  line-height: 1.1;
+}
+.tiptap iframe {
+  border: 8px solid #000;
+  border-radius: 4px;
+  min-width: 200px;
+  min-height: 200px;
+  display: block;
+  outline: 0px solid transparent;
+}
+
+.tiptap div[data-youtube-video] {
+  cursor: move;
+  padding-right: 24px;
+}
+
+.tiptap .ProseMirror-selectednode iframe {
+  transition: outline 0.15s;
+  outline: 6px solid #ece111;
+}
+
+.tiptap .tableWrapper {
+  padding: 1rem 0;
+  overflow-x: auto;
+}
+
+.tiptap .resize-cursor {
+  cursor: ew-resize;
+  cursor: col-resize;
+}
