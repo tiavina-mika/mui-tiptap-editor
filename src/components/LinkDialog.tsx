@@ -1,21 +1,9 @@
 import { Editor } from '@tiptap/react';
 import { useState, ChangeEvent } from 'react';
-import { z } from 'zod';
 
 import { TextField } from '@mui/material';
 import Dialog from './Dialog';
-
-const linkSchemaField = z.union([
-  z
-    .string()
-    .url()
-    .startsWith("https://", { message: 'Please enter a secure URL' }),
-  z
-    .string()
-    .url()
-    .startsWith("mailto://", { message: 'Please enter a secure URL' }),
-  z.string().startsWith("+")
-]);
+import { checkIsValidUrl } from '@/utils/app.utils';
 
 type Props = {
   editor: Editor;
@@ -36,10 +24,13 @@ const LinkDialog = ({ editor, open, onClose }: Props) => {
   };
 
   const handleConfirm = () => {
-    const result = linkSchemaField.safeParse(link);
-    if (!result.success) {
-      const error = JSON.parse((result as any).error?.message);
-      setError(error[0]?.message);
+    if (!link) {
+      setError('Please enter a link');
+      return;
+    }
+    const isValidUrl = checkIsValidUrl(link);
+    if (!isValidUrl) {
+      setError('Invalid URL');
       return;
     }
 
