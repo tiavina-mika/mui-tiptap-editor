@@ -25,8 +25,7 @@ export default defineConfig({
   },
   resolve: {
     alias: {
-      "@/": path.resolve(__dirname, "src"),
-      "assets": path.resolve(__dirname, "public")
+      "@/": path.resolve(__dirname, "src")
     },
   },
   optimizeDeps: {
