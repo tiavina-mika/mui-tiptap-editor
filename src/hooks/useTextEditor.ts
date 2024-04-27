@@ -165,7 +165,7 @@ export const useTextEditor = ({
         editable: false,
         editorProps: {
           attributes: {
-            class: classes.input(theme, false),
+            class: 'mui-tiptap-input mui-tiptap-input-preview'
           },
         },
       });
@@ -177,7 +177,7 @@ export const useTextEditor = ({
       editable: tab === 'editor',
       editorProps: {
         attributes: {
-          class: classes.input(theme, tab === 'editor'),
+          class: 'mui-tiptap-input'
         },
       },
     });
