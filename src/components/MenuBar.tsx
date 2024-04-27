@@ -8,9 +8,9 @@ import TableMenuDialog from "./TableMenuDialog";
 import LinkDialog from "./LinkDialog";
 import HeadingMenu from "./HeadingMenu";
 import ColorPicker from "./ColorPicker";
-import YoutubeDialog from "./YoutubeDialog";
-import { IEditorToolbar } from "@/index";
+import { IEditorToolbar } from "@/type";
 import { defaultEditorToolbar, showTextEditorToolbarMenu } from "@/utils/app.utils";
+import YoutubeDialog from "./YoutubeDialog";
 
 const classes = {
   menu: (theme: Theme) => ({
