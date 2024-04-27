@@ -13,7 +13,7 @@ import { useState, SyntheticEvent, ReactNode } from 'react';
 import { useTextEditor } from "@/hooks/useTextEditor";
 
 import MenuBar from './MenuBar';
-import { IEditorToolbar } from "@/index";
+import { IEditorToolbar } from "@/type";
 
 const classes = {
   editorRoot: (theme: Theme) => ({
