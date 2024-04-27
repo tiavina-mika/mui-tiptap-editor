@@ -1,5 +1,3 @@
-import { css } from '@emotion/css';
-import { Theme } from '@emotion/react';
 import {  useTheme } from '@mui/material';
 import { Color } from '@tiptap/extension-color';
 import Document from '@tiptap/extension-document';
@@ -29,30 +27,6 @@ import StarterKit from '@tiptap/starter-kit';
 
 import { useEffect } from 'react';
 import Heading from '@tiptap/extension-heading';
-
-const classes = {
-  input: (theme: Theme, editable = true) =>
-    css({
-      borderRadius: 6,
-      borderTopLeftRadius: 0,
-      border: editable ? '1px solid ' + theme.palette.grey[400] : 'none',
-      paddingLeft: editable ? 16 : 0,
-      paddingRight: editable ? 16 : 0,
-      minHeight: editable ? 150 : 'initial',
-      '& p.is-editor-empty:first-child::before': {
-        content: 'attr(data-placeholder)',
-        float: 'left',
-        height: 0,
-        pointerEvents: 'none',
-        color: theme.palette.grey[300],
-        fontFamily: 'Product Sans Regular',
-        fontSize: 14,
-        fontStyle: 'normal',
-        fontWeight: 400,
-        lineHeight: '157.143%' /* 157.143% */,
-      },
-    }),
-};
 
 const extensions = [
   Color.configure({ types: [TextStyle.name, ListItem.name] }),
