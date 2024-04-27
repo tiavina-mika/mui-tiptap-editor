@@ -4,7 +4,6 @@ import { IconButton } from "@mui/material";
 import { Editor } from "@tiptap/react";
 import { useState, MouseEvent, useMemo, useCallback } from "react";
 
-import { useToggle } from "../hooks/useToggle";
 import TableMenuDialog from "./TableMenuDialog";
 import LinkDialog from "./LinkDialog";
 import HeadingMenu from "./HeadingMenu";
@@ -76,8 +75,14 @@ const MenuBar = ({
   className,
   toolbar = defaultEditorToolbar
 }: Props) => {
-  const { open: openLinkDialog, toggle: toggleLinkDialog } = useToggle();
-  const { open: openYoutubeDialog, toggle: toggleYoutubeDialog } = useToggle();
+  const [openLinkDialog, setOpen] = useState<boolean>(false);
+
+  const toggleLinkDialog = useCallback(() => setOpen(!openLinkDialog), [openLinkDialog]);
+
+  const [openYoutubeDialog, setOpenYoutubeDialog] = useState<boolean>(false);
+
+  const toggleYoutubeDialog = useCallback(() => setOpenYoutubeDialog(!openYoutubeDialog), [openYoutubeDialog]);
+
   const [tableAnchorEl, setTableAnchorEl] = useState<null | HTMLElement>(null);
   const [headingAnchorEl, setHeadingAnchorEl] = useState<null | HTMLElement>(
     null
