@@ -23,7 +23,7 @@
     "email": "tiavinamika@gmail.com",
     "github": "https://github.com/tiavina-mika"
   },
-  "version": "0.0.5",
+  "version": "0.0.6",
   "license": "MIT",
   "type": "module",
   "main": "dist/index.umd.js",
@@ -43,8 +43,9 @@
     "access": "public"
   },
   "scripts": {
+    "clean": "rimraf dist",
     "dev": "vite",
-    "build": "tsc && vite build",
+    "build": "yarn clean && tsc && vite build",
     "prepare": "npm run build",
     "preview": "vite preview",
     "lint": "eslint . --ext ts,tsx --fix --report-unused-disable-directives --max-warnings 0"
@@ -108,6 +109,7 @@
     "prettier-plugin-organize-imports": "^3.2.4",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
+    "rimraf": "^5.0.5",
     "typescript": "^5.2.2"
   }
 }
