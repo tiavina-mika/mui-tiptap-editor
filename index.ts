@@ -1,7 +1,7 @@
-import TextEditor from './src/components/TextEditor';
-import TextEditorReadOnlyComponent from './src/components/TextEditorReadOnly';
-
-export { type TextEditorProps } from './src/components/TextEditor';
-
-export const TextEditorReadOnly = TextEditorReadOnlyComponent;
-export default TextEditor;
+export {
+  default as TextEditor,
+  type TextEditorProps,
+} from './src/components/TextEditor';
+export {
+  default as TextEditorReadOnly,
+} from './src/components/TextEditorReadOnly';
