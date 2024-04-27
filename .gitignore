@@ -23,5 +23,3 @@ dist-ssr
 *.sln
 *.sw?
 
-.env.preprod
-.env.prod
