@@ -9,11 +9,11 @@ import {
   FloatingMenu,
   BubbleMenu,
 } from '@tiptap/react';
-
 import { useState, SyntheticEvent, ReactNode } from 'react';
+import { useTextEditor } from "@/hooks/useTextEditor";
+
 import MenuBar from './MenuBar';
 import { IEditorToolbar } from "@/index";
-import { useTextEditor } from "@/hooks/useTextEditor";
 
 const classes = {
   editorRoot: (theme: Theme) => ({
