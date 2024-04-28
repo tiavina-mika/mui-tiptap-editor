@@ -134,24 +134,25 @@ export const useTextEditor = ({
    */
   useEffect(() => {
     // preview tab or not editable
-    if (!editable) {
+    if (editable) {
+      const className = tab === 'editor' ? 'mui-tiptap-input' : 'mui-tiptap-input mui-tiptap-input-preview';
+      // editor tab
       editor?.setOptions({
-        editable: false,
+        editable: tab === 'editor',
         editorProps: {
           attributes: {
-            class: 'mui-tiptap-input mui-tiptap-input-preview'
+            class: className
           },
         },
       });
-      return;
+      return ;
     };
 
-    // editor tab
     editor?.setOptions({
-      editable: tab === 'editor',
+      editable: false,
       editorProps: {
         attributes: {
-          class: 'mui-tiptap-input'
+          class: 'mui-tiptap-input mui-tiptap-input-preview'
         },
       },
     });
