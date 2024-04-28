@@ -4,8 +4,8 @@ import {
 } from "@mui/material";
 import { Editor } from "@tiptap/react";
 import { ChangeEvent, useState } from "react";
-import Dialog from "@/components/Dialog";
-import { checkIsValidYoutubeUrl } from '@/utils/app.utils';
+import Dialog from "./Dialog";
+import { checkIsValidYoutubeUrl } from '../utils/app.utils';
 
 type YoutubeInput = {
   url: string;
