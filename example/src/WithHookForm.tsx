@@ -3,7 +3,7 @@ import { SubmitHandler, useForm, FormProvider, Controller } from 'react-hook-for
 
 import z from 'zod';
 import { TextEditor, TextEditorReadOnly } from 'mui-tiptap-editor';
-import { Button, Stack } from '@mui/material';
+import { Button, Stack, Typography } from '@mui/material';
 import { useState } from 'react';
 
 const schema = z.object({
@@ -12,11 +12,13 @@ const schema = z.object({
 
 type Input = z.infer<typeof schema>;
 
-const Form = () => {
+const WithHookForm = () => {
   const [value, setValue] = useState<string>('');
 
   const form = useForm<Input>({
     resolver: zodResolver(schema),
+    defaultValues: { content: '' }
+
   });
 
   const { handleSubmit, control } = form;
@@ -28,6 +30,7 @@ const Form = () => {
 
   return (
     <Stack spacing={2}>
+      {/* form */}
       <FormProvider {...form}>
         <form onSubmit={handleSubmit(handleFormSubmit)}>
           <Stack spacing={2}>
@@ -42,23 +45,30 @@ const Form = () => {
                   />
                 )}
               />
-              <div>
+              {/* buttons */}
+              <Stack direction="row" spacing={3}>
                 <Button
                   variant="contained"
                   type="submit"
                 >
                   Submit
                 </Button>
-              </div>
+            </Stack>
           </Stack>
         </form>
       </FormProvider>
 
+      {/* result */}
       {value && (
-        <TextEditorReadOnly value={value} />
+        <Stack>
+          <Typography variant="h6">
+            Result:
+          </Typography>
+          <TextEditorReadOnly value={value} />
+        </Stack>
       )}
     </Stack>
   );
 };
 
-export default Form;
+export default WithHookForm;
