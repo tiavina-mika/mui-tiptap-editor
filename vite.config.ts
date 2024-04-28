@@ -5,24 +5,24 @@ import tsconfigPaths from 'vite-tsconfig-paths'
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  build: {
-    lib: {
-      entry: path.resolve(__dirname, "index.ts"),
-      name: "mui-tiptap",
-      fileName: (format) => `index.${format}.js`,
-    },
-    rollupOptions: {
-      external: ["react", "react-dom"],
-      output: {
-        globals: {
-          react: "React",
-          "react-dom": "ReactDOM",
-        },
-      },
-    },
-    sourcemap: true,
-    emptyOutDir: true,
-  },
+  // build: {
+  //   lib: {
+  //     entry: path.resolve(__dirname, "src/index.ts"),
+  //     name: "mui-tiptap",
+  //     fileName: (format) => `index.${format}.js`,
+  //   },
+  //   rollupOptions: {
+  //     external: ["react", "react-dom"],
+  //     output: {
+  //       globals: {
+  //         react: "React",
+  //         "react-dom": "ReactDOM",
+  //       },
+  //     },
+  //   },
+  //   sourcemap: false,
+  //   emptyOutDir: true,
+  // },
   resolve: {
     alias: {
       "@/": path.resolve(__dirname, "src")
