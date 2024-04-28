@@ -3,7 +3,7 @@ import { useState, ChangeEvent } from 'react';
 
 import { TextField } from '@mui/material';
 import Dialog from './Dialog';
-import { checkIsValidUrl } from '@/utils/app.utils';
+import { checkIsValidUrl } from '../utils/app.utils';
 
 type Props = {
   editor: Editor;
