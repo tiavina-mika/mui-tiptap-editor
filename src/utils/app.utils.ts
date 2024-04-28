@@ -1,4 +1,4 @@
-import { IEditorToolbar } from "@/type";
+import { IEditorToolbar } from "../type";
 
 export const defaultEditorToolbar: IEditorToolbar[] = [
   "heading",
