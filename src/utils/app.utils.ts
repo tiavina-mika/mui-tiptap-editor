@@ -1,4 +1,4 @@
-import { IEditorToolbar } from '@/index';
+import { IEditorToolbar } from "../type";
 
 export const defaultEditorToolbar: IEditorToolbar[] = [
   "heading",
@@ -34,3 +34,29 @@ export const showTextEditorToolbarMenu = (toolbar: IEditorToolbar[], menu: any):
     return menu.group ? menu.group === t : menu.name === t;
   });
 };
+
+/**
+ * The function `checkIsValidUrl` in TypeScript checks if a given URL string starts with "http://",
+ * "https://", "mailto:", or "tel:".
+ * @param {string} url - The `checkIsValidUrl` function takes a URL string as input and checks if it
+ * starts with either "http://", "https://", "mailto:", or "tel:". If it starts with any of these
+ * prefixes, the function returns `true`, indicating that the URL is valid. Otherwise, it
+ * @returns A boolean value is being returned, indicating whether the input URL is valid based on the
+ * specified conditions.
+ */
+export const checkIsValidUrl = (url: string): boolean => {
+  return (
+    url.startsWith("http://") ||
+    url.startsWith("https://") ||
+    url.startsWith("mailto:") ||
+    url.startsWith("tel:")
+  )
+}
+
+export const checkIsValidYoutubeUrl = (url: string): boolean => {
+  return (
+    url.startsWith("https://") &&
+    url.includes("youtube")
+  );
+}
+

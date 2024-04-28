@@ -7,7 +7,6 @@ export interface ISelectOption<T = string> {
   hide?: boolean;
 }
 
-
 export enum EditorToolbarEnum {
   heading = 'heading',
   bold = 'bold',

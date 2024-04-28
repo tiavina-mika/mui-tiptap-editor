@@ -4,7 +4,7 @@ import {
   EditorContent,
 } from '@tiptap/react';
 
-import { useTextEditor } from "@/hooks/useTextEditor";
+import { useTextEditor } from "../hooks/useTextEditor";
 
 type TextEditorProps = {
   className?: string;

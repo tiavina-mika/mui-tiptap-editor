@@ -110,6 +110,34 @@ code {
   }
 }
 
+.mui-tiptap-input {
+  border-radius: 6px;
+  border-top-left-radius: 0;
+  border: 1px solid #e0e0e0;
+  padding-left: 16px;
+  padding-right: 16px;
+  min-height: 150px;
+}
+
+.mui-tiptap-input p.is-editor-empty:first-child::before {
+  content: attr(data-placeholder);
+  float: left;
+  height: 0;
+  pointer-events: none;
+  color: #bdbdbd;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 157.143%;
+}
+
+.mui-tiptap-input-preview {
+  border: none !important;
+  padding-left: 0;
+  padding-right: 0;
+  min-height: initial;
+}
+
 .tiptap blockquote {
   border-left: 3px solid rgba(13, 13, 13, 0.1);
   padding-left: 1rem;

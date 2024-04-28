@@ -1,0 +1,8 @@
+node_modules
+.eslintrc.cjs
+.prettier.js
+config.overrides.js
+types
+build
+vite.config.ts
+# .eslintrc

@@ -1,8 +1,9 @@
+import React from 'react'
 import { ThemeProvider as EmotionThemeProvider } from '@emotion/react';
 import { ThemeProvider } from '@mui/material';
-import TextEditor from './components/TextEditor';
+import TextEditor from '../components/TextEditor';
 
-import { getTheme } from '@/utils/theme.utils';
+import { getTheme } from './theme.utils';
 
 const App = () => {
   const theme = getTheme();
