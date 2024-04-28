@@ -1,12 +1,18 @@
-import MuiThemeProvider from './MuiThemeProvider';
 
+import { ThemeProvider, createTheme } from '@mui/material';
 import Form from './Form';
+
+const theme = createTheme({
+  palette: {
+    mode: 'light',
+  },
+});
 
 const App = () => {
   return (
-    <MuiThemeProvider>
+    <ThemeProvider theme={theme}>
       <Form />
-    </MuiThemeProvider>
+    </ThemeProvider>
   )
 }
 
