@@ -132,7 +132,7 @@ code {
 }
 
 .mui-tiptap-input-preview {
-  border: none;
+  border: none !important;
   padding-left: 0;
   padding-right: 0;
   min-height: initial;
