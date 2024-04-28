@@ -11,6 +11,24 @@ import ColorPicker from "./ColorPicker";
 import { IEditorToolbar } from "@/type";
 import { defaultEditorToolbar, showTextEditorToolbarMenu } from "@/utils/app.utils";
 import YoutubeDialog from "./YoutubeDialog";
+import Title from "@/icons/Title";
+import Bold from "@/icons/Bold";
+import Italic from "@/icons/Italic";
+import Strike from "@/icons/Strike";
+import Underline from "@/icons/Underline";
+import Link from "@/icons/Link";
+import BulletList from "@/icons/BulletList";
+import OrderedList from "@/icons/OrderedList";
+import AlignLeft from "@/icons/AlignLeft";
+import AlignCenter from "@/icons/AlignCenter";
+import AlignRight from "@/icons/AlignJustify";
+import AlignJustify from "@/icons/AlignRight";
+import Quote from "@/icons/Quote";
+import Code from "@/icons/Code";
+import Table from "@/icons/Table";
+import Youtube from "@/icons/Youtube";
+import Undo from "@/icons/Undo";
+import Redo from "@/icons/Redo";
 
 const classes = {
   menu: (theme: Theme) => ({
@@ -107,7 +125,7 @@ const MenuBar = ({
   const menus = useMemo(() => [
     {
       name: "heading",
-      icon: "title",
+      icon: Title,
       onClick: handleOpenHeadingMenu,
       isActive:
         editor.isActive("heading", { level: 1 }) ||
@@ -121,26 +139,31 @@ const MenuBar = ({
     },
     {
       name: "bold",
+      icon: Bold,
       onClick: () => editor.chain().focus().toggleBold().run(),
       disabled: !editor.can().chain().focus().toggleBold().run()
     },
     {
       name: "italic",
+      icon: Italic,
       onClick: () => editor.chain().focus().toggleItalic().run(),
       disabled: !editor.can().chain().focus().toggleItalic().run()
     },
     {
       name: "strike",
+      icon: Strike,
       onClick: () => editor.chain().focus().toggleStrike().run(),
       disabled: !editor.can().chain().focus().toggleStrike().run()
     },
     {
       name: "underline",
+      icon: Underline,
       onClick: () => editor.chain().focus().toggleUnderline().run(),
       disabled: !editor.can().chain().focus().toggleUnderline().run()
     },
     {
       name: "link",
+      icon: Link,
       onClick: toggleLinkDialog,
       disabled: false,
       split: true
@@ -148,13 +171,13 @@ const MenuBar = ({
     // order
     {
       name: "bulletList",
-      icon: "bullet-list",
+      icon: BulletList,
       onClick: () => editor.chain().focus().toggleBulletList().run(),
       disabled: !editor.can().chain().focus().toggleBulletList().run()
     },
     {
       name: "orderedList",
-      icon: "ordered-list",
+      icon: OrderedList,
       onClick: () => editor.chain().focus().toggleOrderedList().run(),
       disabled: !editor.can().chain().focus().toggleOrderedList().run(),
       split: true,
@@ -162,7 +185,7 @@ const MenuBar = ({
     // alignment
     {
       name: "align-left",
-      icon: "align-left",
+      icon: AlignLeft,
       onClick: () => editor.chain().focus().setTextAlign("left").run(),
       disabled: false,
       active: { textAlign: "left" },
@@ -170,7 +193,7 @@ const MenuBar = ({
     },
     {
       name: "align-center",
-      icon: "align-center",
+      icon: AlignCenter,
       onClick: () => editor.chain().focus().setTextAlign("center").run(),
       disabled: false,
       active: { textAlign: "center" },
@@ -178,7 +201,7 @@ const MenuBar = ({
     },
     {
       name: "align-right",
-      icon: "align-right",
+      icon: AlignRight,
       onClick: () => editor.chain().focus().setTextAlign("right").run(),
       disabled: false,
       active: { textAlign: "right" },
@@ -186,7 +209,7 @@ const MenuBar = ({
     },
     {
       name: "align-justify",
-      icon: "align-justify",
+      icon: AlignJustify,
       onClick: () => editor.chain().focus().setTextAlign("justify").run(),
       disabled: false,
       active: { textAlign: "justify" },
@@ -195,19 +218,20 @@ const MenuBar = ({
     },
     {
       name: "blockquote",
-      icon: "quote",
+      icon: Quote,
       onClick: () => editor.chain().focus().toggleBlockquote().run(),
       disabled: false
     },
     {
       name: "codeBlock",
-      icon: "code",
+      icon: Code,
       onClick: () => editor.chain().focus().toggleCodeBlock().run(),
       disabled: false,
       split: true
     },
     {
       name: "table",
+      icon: Table,
       onClick: (event: MouseEvent<HTMLElement>) => {
         handleOpenTableMenu(event);
       },
@@ -216,18 +240,21 @@ const MenuBar = ({
     },
     {
       name: "youtube",
+      icon: Youtube,
       onClick: toggleYoutubeDialog,
       disabled: false,
       split: true
     },
     {
       name: "undo",
+      icon: Undo,
       onClick: () => editor.chain().focus().undo().run(),
       disabled: !editor.can().undo(),
       default: true // always display
     },
     {
       name: "redo",
+      icon: Redo,
       onClick: () => editor.chain().focus().redo().run(),
       disabled: !editor.can().redo(),
       default: true, // always display
@@ -250,7 +277,8 @@ const MenuBar = ({
               !!menu.split
             )}
           >
-            <img alt={menu.name} src={`/icons/${menu.icon || menu.name}.svg`} />
+            {/* <img alt={menu.name} src={`/icons/${menu.icon || menu.name}.svg`} /> */}
+            <menu.icon />
           </IconButton>
         )
       ))}
