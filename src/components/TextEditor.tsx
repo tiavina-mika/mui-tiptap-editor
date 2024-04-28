@@ -12,8 +12,10 @@ import {
 import { useState, SyntheticEvent, ReactNode } from 'react';
 import { useTextEditor } from "../hooks/useTextEditor";
 
-import MenuBar from './MenuBar';
+import Toolbar from './Toolbar';
 import { IEditorToolbar } from "../type";
+
+const defaultMenuToolbar: IEditorToolbar[] = ['bold', 'italic', 'underline', 'link'];
 
 const classes = {
   editorRoot: (theme: Theme) => ({
@@ -68,9 +70,17 @@ export type TextEditorProps = {
   onChange?: (value: string) => void;
   className?: string;
   value?: string;
-  menuClassName?: string;
-  withFloatingButtons?: boolean;
+  toolbarClassName?: string;
+  tabsClassName?: string;
+  tabClassName?: string;
+  errorClassName?: string;
+  rootClassName?: string;
+  withFloatingMenu?: boolean;
+  withBubbleMenu?: boolean;
+  labelClassName?: string;
   toolbar?: IEditorToolbar[];
+  bubbleMenuToolbar?: IEditorToolbar[];
+  floatingMenuToolbar?: IEditorToolbar[];
 } & Partial<EditorOptions>;
 
 const TextEditor = ({
@@ -80,10 +90,18 @@ const TextEditor = ({
   onChange,
   className,
   value,
-  menuClassName,
+  toolbarClassName,
+  tabsClassName,
+  tabClassName,
+  rootClassName,
   toolbar,
+  bubbleMenuToolbar,
+  floatingMenuToolbar,
+  errorClassName,
+  labelClassName,
   editable = true,
-  withFloatingButtons = false,
+  withFloatingMenu = false,
+  withBubbleMenu = true,
   ...editorOptions
 }: TextEditorProps) => {
   const [tab, setTab] = useState<'editor' | 'preview'>('editor');
@@ -105,10 +123,10 @@ const TextEditor = ({
   }
 
   return (
-    <div>
+    <div className={rootClassName}>
       {/* ----------- tabs ----------- */}
       {label && (
-        <Typography css={classes.label}>
+        <Typography css={classes.label} className={labelClassName}>
           {label}
         </Typography>
       )}
@@ -118,40 +136,43 @@ const TextEditor = ({
         aria-label="basic tabs example"
         TabIndicatorProps={{ children: <span className="MuiTabs-indicatorSpan" /> }}
         css={classes.tabs}
+        className={tabsClassName}
       >
-        <Tab css={classes.tab} label="Editor" value="editor" />
-        <Tab css={classes.tab} label="Preview" value="preview" />
+        <Tab css={classes.tab} label="Editor" value="editor" className={tabClassName} />
+        <Tab css={classes.tab} label="Preview" value="preview" className={tabClassName} />
       </Tabs>
       {tab === 'editor'
         ? (
           <div className={cx('positionRelative flexColumn tiptap', className)} css={classes.editorRoot}>
             <div className="positionRelative stretchSelf">
-              {editor && withFloatingButtons && (
+              {editor && withFloatingMenu && (
                 <FloatingMenu editor={editor} tippyOptions={{ duration: 100 }}>
-                  <MenuBar
+                  <Toolbar
                     editor={editor}
+                    toolbar={floatingMenuToolbar || defaultMenuToolbar}
                   />
                 </FloatingMenu>
               )}
-              {editor && (
+              {editor && withBubbleMenu && (
                 <BubbleMenu editor={editor} tippyOptions={{ duration: 100 }}>
-                  <MenuBar
+                  <Toolbar
                     editor={editor}
+                    toolbar={bubbleMenuToolbar || defaultMenuToolbar}
                   />
                 </BubbleMenu>
               )}
               {/* editor */}
               <EditorContent editor={editor} />
               {error && (
-                <FormHelperText error css={{ paddingTop: 4, paddingBottom: 4 }}>
+                <FormHelperText error css={{ paddingTop: 4, paddingBottom: 4 }} className={errorClassName}>
                   {error}
                 </FormHelperText>
               )}
             </div>
             {editor && (
-              <MenuBar
+              <Toolbar
                 editor={editor}
-                className="stretchSelf"
+                className={cx('stretchSelf', toolbarClassName)}
                 toolbar={toolbar}
               />
             )}
