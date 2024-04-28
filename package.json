@@ -23,17 +23,22 @@
     "email": "tiavinamika@gmail.com",
     "github": "https://github.com/tiavina-mika"
   },
-  "version": "0.0.7",
+  "version": "0.0.8",
   "license": "MIT",
   "type": "module",
-  "main": "dist/index.umd.js",
-  "module": "dist/index.es.js",
-  "types": "dist/index.d.ts",
+  "types": "./dist/index.d.ts",
+  "main": "dist/index.js",
+  "module": "dist/esm/index.js",
   "exports": {
     ".": {
-      "import": "./dist/index.es.js",
-      "require": "./dist/index.umd.js",
-      "types": "./dist/index.d.ts"
+      "types": "./dist/index.d.ts",
+      "require": "./dist/index.js",
+      "import": "./dist/esm/index.js"
+    },
+    "./icons": {
+      "types": "./dist/icons/index.d.ts",
+      "require": "./dist/icons/index.js",
+      "import": "./dist/esm/icons/index.js"
     }
   },
   "files": [
@@ -45,10 +50,11 @@
   "scripts": {
     "clean": "rimraf dist",
     "dev": "vite",
-    "build": "yarn clean && tsc && vite build",
+    "build": "yarn clean && tsc --project tsconfig.build.json && tsc --project tsconfig.build-esm.json",
     "prepare": "npm run build",
     "preview": "vite preview",
-    "lint": "eslint . --ext ts,tsx --fix --report-unused-disable-directives --max-warnings 0"
+    "lint": "eslint . --ext ts,tsx --fix --report-unused-disable-directives --max-warnings 0",
+    "visualize": "npx vite-bundle-visualizer"
   },
   "dependencies": {
     "vite": "5.0.8",
