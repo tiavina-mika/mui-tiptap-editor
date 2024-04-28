@@ -7,7 +7,7 @@ import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
-import Close from '@/icons/Close';
+import Close from '../icons/Close';
 
 const classes = {
   dialog: (theme: Theme) => ({
