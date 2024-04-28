@@ -23,7 +23,7 @@
     "email": "tiavinamika@gmail.com",
     "github": "https://github.com/tiavina-mika"
   },
-  "version": "0.0.9",
+  "version": "0.1.1",
   "license": "MIT",
   "type": "module",
   "types": "./dist/index.d.ts",
@@ -50,13 +50,12 @@
   "scripts": {
     "clean": "rimraf dist",
     "dev": "vite",
-    "build": "yarn clean && tsc --project tsconfig.build.json && tsc --project tsconfig.build-esm.json && yarn copy-css && yarn copy-images",
+    "build": "yarn clean && tsc --project tsconfig.build.json && tsc --project tsconfig.build-esm.json && yarn copy-files",
     "prepare": "npm run build",
     "preview": "vite preview",
     "lint": "eslint . --ext ts,tsx --fix --report-unused-disable-directives --max-warnings 0",
     "visualize": "npx vite-bundle-visualizer",
-    "copy-css": "copyfiles -u 1 src/*.css dist/",
-    "copy-images": "copyfiles -u 1 public/icons/*.svg dist/icons"
+    "copy-files": "copyfiles -u 1 src/*.css dist/"
   },
   "dependencies": {
     "vite": "5.0.8",
