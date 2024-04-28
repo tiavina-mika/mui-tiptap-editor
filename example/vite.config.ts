@@ -7,27 +7,15 @@ import tsconfigPaths from 'vite-tsconfig-paths'
 export default defineConfig({
   resolve: {
     alias: {
-      parse: path.resolve(__dirname, './node_modules/parse/dist/parse.min.js'),
       "@/": path.resolve(__dirname, "src"),
       "assets": path.resolve(__dirname, "public")
     },
-  },
-  optimizeDeps: {
-    include: ['@emotion/react', '@emotion/styled'],
-  },
-  define: {
-    'process.env': {},
   },
   server: {
     open: true,
   },
   plugins: [
-    react({
-      jsxImportSource: '@emotion/react',
-      babel: {
-        plugins: ['@emotion/babel-plugin'],
-      },
-    }),
+    react(),
     tsconfigPaths(),
   ],
 })

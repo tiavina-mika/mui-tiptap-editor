@@ -2931,10 +2931,10 @@ ms@^2.1.1:
   resolved "https://registry.yarnpkg.com/ms/-/ms-2.1.3.tgz#574c8138ce1d2b5861f0b44579dbadd60c6615b2"
   integrity sha512-6FlzubTLZG3J2a/NVCAleEhjzq5oxgHyaCU9yYXvcLsvoVaHJq/s5xXI6/XXP6tz7R9xAOtHnSO/tXtF3WRTlA==
 
-mui-tiptap-editor@^0.1.1:
-  version "0.1.1"
-  resolved "https://registry.yarnpkg.com/mui-tiptap-editor/-/mui-tiptap-editor-0.1.1.tgz#9b8bab9e2eeb206eba9a7885e2edca474fe28226"
-  integrity sha512-7bwWfJtEaje1MXGPQLsliu5YWBulAJzCk7ARf7sRve81Xcl3Yk04AQmzhNQ8v2yiRvCVPNOxAhdsvfFogXKI8Q==
+mui-tiptap-editor@^0.1.31:
+  version "0.1.31"
+  resolved "https://registry.yarnpkg.com/mui-tiptap-editor/-/mui-tiptap-editor-0.1.31.tgz#a495f3e05231ee6aae869ff7e53078737c47e964"
+  integrity sha512-EW1DoQJufIIb2c9xiNOSx/IuX4BVcxgN16bb7yN5VDm50P5jwp9o4oxKX9lJMBMG4fWpkJ30sIEidsNqHDX6qw==
   dependencies:
     vite "5.0.8"
     vite-tsconfig-paths "^4.3.1"

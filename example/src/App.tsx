@@ -1,5 +1,5 @@
 
-import { ThemeProvider, createTheme } from '@mui/material';
+import { Container, CssBaseline, ThemeProvider, createTheme } from '@mui/material';
 import Form from './Form';
 
 const theme = createTheme({
@@ -11,7 +11,10 @@ const theme = createTheme({
 const App = () => {
   return (
     <ThemeProvider theme={theme}>
-      <Form />
+      <CssBaseline />
+      <Container>
+        <Form />
+      </Container>
     </ThemeProvider>
   )
 }

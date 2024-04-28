@@ -2,8 +2,9 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { SubmitHandler, useForm, FormProvider, Controller } from 'react-hook-form';
 
 import z from 'zod';
-import { TextEditor } from 'mui-tiptap-editor';
-import { Button } from '@mui/material';
+import { TextEditor, TextEditorReadOnly } from 'mui-tiptap-editor';
+import { Button, Stack } from '@mui/material';
+import { useState } from 'react';
 
 const schema = z.object({
   content: z.string(),
@@ -12,6 +13,8 @@ const schema = z.object({
 type Input = z.infer<typeof schema>;
 
 const Form = () => {
+  const [value, setValue] = useState<string>('');
+
   const form = useForm<Input>({
     resolver: zodResolver(schema),
   });
@@ -20,30 +23,41 @@ const Form = () => {
 
 
   const handleFormSubmit: SubmitHandler<Input> = async values => {
-    console.log('values: ', values);
+    setValue(values.content);
   };
 
   return (
-    <FormProvider {...form}>
-      <form onSubmit={handleSubmit(handleFormSubmit)}>
-        <Controller
-            name="content"
-            control={control}
-            defaultValue=""
-            render={({ field }) => (
-              <TextEditor
-                {...field}
-                label="content"
+    <Stack spacing={2}>
+      <FormProvider {...form}>
+        <form onSubmit={handleSubmit(handleFormSubmit)}>
+          <Stack spacing={2}>
+            <Controller
+                name="content"
+                control={control}
+                defaultValue=""
+                render={({ field }) => (
+                  <TextEditor
+                    {...field}
+                    label="Content"
+                  />
+                )}
               />
-            )}
-          />
-        <Button
-          variant="contained"
-          fullWidth
-          type="submit"
-        />
-      </form>
-    </FormProvider>
+              <div>
+                <Button
+                  variant="contained"
+                  type="submit"
+                >
+                  Submit
+                </Button>
+              </div>
+          </Stack>
+        </form>
+      </FormProvider>
+
+      {value && (
+        <TextEditorReadOnly value={value} />
+      )}
+    </Stack>
   );
 };
 
