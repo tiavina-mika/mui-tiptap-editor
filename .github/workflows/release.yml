@@ -17,7 +17,6 @@ jobs:
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
-
       # Set up .npmrc file to publish to npm. This also allows NODE_AUTH_TOKEN
       # to work below.
       - uses: actions/setup-node@v4
