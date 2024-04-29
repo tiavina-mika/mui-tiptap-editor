@@ -12,6 +12,7 @@ jobs:
       id-token: write # Needed for https://docs.npmjs.com/generating-provenance-statements
     steps:
       - uses: actions/checkout@v4
+      # need this for using yarn
       - name: Enable Corepack
         run: corepack enable
       # Setup .npmrc file to publish to npm
@@ -19,10 +20,12 @@ jobs:
         with:
           node-version: '18.x'
           registry-url: 'https://registry.npmjs.org'
+          # instead of using the local cache in .yarn folder, since it's in .gitignore
           cache: 'yarn'
       - run: yarn
       # for Yarn v1, use `yarn publish` instead
       - run: yarn npm publish
         env:
+          # this will be used in .yarnrc.yml
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
         
