@@ -1,31 +1,25 @@
 name: Publish Package to npmjs
+run-name: ${{ github.actor }} publish to npm 🚀
+
 on:
-  push:
-    tags:
-      - "v*.*.*"
-jobs:
-  # Then release to npm
   release:
+    types: [published]
+jobs:
+  build:
     runs-on: ubuntu-latest
     permissions:
       contents: read
       id-token: write # Needed for https://docs.npmjs.com/generating-provenance-statements
-    strategy:
-      matrix:
-        node-version: [18]
-
     steps:
-      - name: Checkout repo
-        uses: actions/checkout@v4
-      # Set up .npmrc file to publish to npm. This also allows NODE_AUTH_TOKEN
-      # to work below.
+      - uses: actions/checkout@v4
+      # Setup .npmrc file to publish to npm
       - uses: actions/setup-node@v4
         with:
-          node-version: "18.x"
-          registry-url: "https://registry.npmjs.org"
-
+          node-version: '18.x'
+          registry-url: 'https://registry.npmjs.org'
       - run: yarn
       # for Yarn v1, use `yarn publish` instead
       - run: yarn npm publish
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+        
