@@ -1,7 +1,6 @@
 {
   "name": "mui-tiptap-editor",
   "description": "Tiptap WYSIWYG rich text editor using Material UI (MUI)",
-  "private": false,
   "keywords": [
     "mui",
     "tiptap",
@@ -119,5 +118,6 @@
     "react-dom": "^18.2.0",
     "rimraf": "^5.0.5",
     "typescript": "^5.2.2"
-  }
+  },
+  "packageManager": "yarn@3.6.4"
 }
