@@ -1,0 +1,19 @@
+.root {
+  background-color: #fff;
+}
+
+.root .MuiTab-root.Mui-selected {
+  background-color: yellow !important;
+}
+
+.my-tab.MuiTab-root.Mui-selected {
+  background-color: pink !important;
+}
+
+.my-label {
+  color: blue !important;
+}
+
+.my-input {
+  border: 1px solid green;
+}
