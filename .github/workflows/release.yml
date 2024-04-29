@@ -19,6 +19,7 @@ jobs:
         with:
           node-version: '18.x'
           registry-url: 'https://registry.npmjs.org'
+          cache: 'yarn'
       - run: yarn
       # for Yarn v1, use `yarn publish` instead
       - run: yarn npm publish
