@@ -1,12 +1,11 @@
-name: Publish Package to npmjs registry
+name: Publish Package to npmjs
 run-name: ${{ github.actor }} publish to npm 🚀
 
 on:
-  push:
-    tags:
-      - "v*.*.*"
-jobs:
   release:
+    types: [published]
+jobs:
+  build:
     runs-on: ubuntu-latest
     permissions:
       contents: read
@@ -18,8 +17,6 @@ jobs:
         with:
           node-version: '18.x'
           registry-url: 'https://registry.npmjs.org'
-          # Defaults to the user or organization that owns the workflow file
-          scope: '@octocat'
       - run: yarn
       # for Yarn v1, use `yarn publish` instead
       - run: yarn npm publish
