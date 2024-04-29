@@ -12,6 +12,8 @@ jobs:
       id-token: write # Needed for https://docs.npmjs.com/generating-provenance-statements
     steps:
       - uses: actions/checkout@v4
+      - name: Enable Corepack
+        run: corepack enable
       # Setup .npmrc file to publish to npm
       - uses: actions/setup-node@v4
         with:
