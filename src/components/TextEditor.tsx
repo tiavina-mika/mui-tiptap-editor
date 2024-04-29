@@ -68,7 +68,7 @@ export type TextEditorProps = {
   label?: ReactNode;
   error?: string;
   onChange?: (value: string) => void;
-  className?: string;
+  inputClassName?: string;
   value?: string;
   toolbarClassName?: string;
   tabsClassName?: string;
@@ -88,7 +88,7 @@ const TextEditor = ({
   label,
   error,
   onChange,
-  className,
+  inputClassName,
   value,
   toolbarClassName,
   tabsClassName,
@@ -119,7 +119,7 @@ const TextEditor = ({
 
   // preview
   if (!editable) {
-    return <EditorContent editor={editor} className={className} />;
+    return <EditorContent editor={editor} className={inputClassName} />;
   }
 
   return (
@@ -143,7 +143,7 @@ const TextEditor = ({
       </Tabs>
       {tab === 'editor'
         ? (
-          <div className={cx('positionRelative flexColumn tiptap', className)} css={classes.editorRoot}>
+          <div className={cx('positionRelative flexColumn tiptap', inputClassName)} css={classes.editorRoot}>
             <div className="positionRelative stretchSelf">
               {editor && withFloatingMenu && (
                 <FloatingMenu editor={editor} tippyOptions={{ duration: 100 }}>
@@ -178,7 +178,7 @@ const TextEditor = ({
             )}
           </div>
         ) : (
-          <EditorContent editor={editor} className={className} />
+          <EditorContent editor={editor} className={inputClassName} />
         )
       }
     </div>
