@@ -4,16 +4,38 @@ import {
 } from "@mui/material";
 import { Editor } from "@tiptap/react";
 import { ChangeEvent, useState } from "react";
-import { z } from "zod";
-import Dialog from "@/components/Dialog";
+import Dialog from "./Dialog";
+import { checkIsValidYoutubeUrl } from '../utils/app.utils';
 
-const youtubeSchema = z.object({
-  url: z.string().url(),
-  width: z.number(),
-  height: z.number()
-});
+type YoutubeInput = {
+  url: string;
+  width: number;
+  height: number;
+};
 
-type YoutubeInput = z.infer<typeof youtubeSchema>;
+type YoutubeValidation = {
+  [x in keyof YoutubeInput]: {
+    validation: boolean;
+    error: string;
+  };
+};
+
+const validateForm = (values: YoutubeInput): YoutubeValidation => {
+  return {
+    url: {
+      validation: checkIsValidYoutubeUrl(values.url),
+      error: 'Invalid youtube URL'
+    },
+    width: {
+      validation: typeof values.width === 'number' && values.width > 0,
+      error: 'Width must be greater than 0'
+    },
+    height: {
+      validation: typeof values.height === 'number' && values.height > 0,
+      error: 'Height must be greater than 0'
+    },
+  }
+}
 
 const initialValues = {
   url: "",
@@ -50,17 +72,19 @@ const YoutubeDialog = ({ editor, open, onClose }: Props) => {
   }
 
   const handleConfirm = () => {
-    const result = youtubeSchema.safeParse(values);
-    if (!result.success) {
-      const errorsResult = JSON.parse((result as any).error?.message);
-      errorsResult.forEach((error: Record<string, any>) => {
+    const result: YoutubeValidation = validateForm(values);
+    let hasError = false;
+    Object.keys(result).forEach((key) => {
+      if (!result[key as keyof YoutubeValidation].validation) {
         setErrors((prev) => ({
           ...prev,
-          [error.validation]: error.message
+          [key]: result[key as keyof YoutubeValidation].error
         }));
-      });
-      return;
-    }
+        hasError = true;
+      }
+    });
+
+    if (hasError) return;
 
     if (!values.url) return;
     editor.commands.setYoutubeVideo({

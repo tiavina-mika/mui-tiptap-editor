@@ -1,9 +1,9 @@
+import React from 'react'
 import { ThemeProvider as EmotionThemeProvider } from '@emotion/react';
 import { ThemeProvider } from '@mui/material';
-import TextEditor from './components/TextEditor';
+import TextEditor from '../components/TextEditor';
 
-import { getTheme } from '@/utils/theme.utils';
-import { GlobalStyles } from './GlobalStyles';
+import { getTheme } from './theme.utils';
 
 const App = () => {
   const theme = getTheme();
@@ -11,7 +11,6 @@ const App = () => {
   return (
     <ThemeProvider theme={theme}>
       <EmotionThemeProvider theme={theme}>
-        <GlobalStyles theme={theme} />
         <TextEditor
           className="flexColumn stretchSelf flex1"
           label="Description"

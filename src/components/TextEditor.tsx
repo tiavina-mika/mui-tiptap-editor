@@ -1,4 +1,4 @@
-import "./textEditorStyles.css";
+import "../index.css";
 
 import { cx } from '@emotion/css';
 import { Theme } from '@emotion/react';
@@ -9,11 +9,13 @@ import {
   FloatingMenu,
   BubbleMenu,
 } from '@tiptap/react';
-
 import { useState, SyntheticEvent, ReactNode } from 'react';
-import MenuBar from './MenuBar';
-import { IEditorToolbar } from "@/types/app.type";
-import { useTextEditor } from "@/hooks/useTextEditor";
+import { useTextEditor } from "../hooks/useTextEditor";
+
+import Toolbar from './Toolbar';
+import { IEditorToolbar } from "../type";
+
+const defaultMenuToolbar: IEditorToolbar[] = ['bold', 'italic', 'underline', 'link'];
 
 const classes = {
   editorRoot: (theme: Theme) => ({
@@ -66,11 +68,19 @@ export type TextEditorProps = {
   label?: ReactNode;
   error?: string;
   onChange?: (value: string) => void;
-  className?: string;
+  inputClassName?: string;
   value?: string;
-  menuClassName?: string;
-  withFloatingButtons?: boolean;
+  toolbarClassName?: string;
+  tabsClassName?: string;
+  tabClassName?: string;
+  errorClassName?: string;
+  rootClassName?: string;
+  withFloatingMenu?: boolean;
+  withBubbleMenu?: boolean;
+  labelClassName?: string;
   toolbar?: IEditorToolbar[];
+  bubbleMenuToolbar?: IEditorToolbar[];
+  floatingMenuToolbar?: IEditorToolbar[];
 } & Partial<EditorOptions>;
 
 const TextEditor = ({
@@ -78,12 +88,20 @@ const TextEditor = ({
   label,
   error,
   onChange,
-  className,
+  inputClassName,
   value,
-  menuClassName,
+  toolbarClassName,
+  tabsClassName,
+  tabClassName,
+  rootClassName,
   toolbar,
+  bubbleMenuToolbar,
+  floatingMenuToolbar,
+  errorClassName,
+  labelClassName,
   editable = true,
-  withFloatingButtons = false,
+  withFloatingMenu = false,
+  withBubbleMenu = true,
   ...editorOptions
 }: TextEditorProps) => {
   const [tab, setTab] = useState<'editor' | 'preview'>('editor');
@@ -101,14 +119,14 @@ const TextEditor = ({
 
   // preview
   if (!editable) {
-    return <EditorContent editor={editor} className={className} />;
+    return <EditorContent editor={editor} className={inputClassName} />;
   }
 
   return (
-    <div>
+    <div className={rootClassName}>
       {/* ----------- tabs ----------- */}
       {label && (
-        <Typography css={classes.label}>
+        <Typography css={classes.label} className={labelClassName}>
           {label}
         </Typography>
       )}
@@ -118,46 +136,49 @@ const TextEditor = ({
         aria-label="basic tabs example"
         TabIndicatorProps={{ children: <span className="MuiTabs-indicatorSpan" /> }}
         css={classes.tabs}
+        className={tabsClassName}
       >
-        <Tab css={classes.tab} label="Editor" value="editor" />
-        <Tab css={classes.tab} label="Preview" value="preview" />
+        <Tab css={classes.tab} label="Editor" value="editor" className={tabClassName} />
+        <Tab css={classes.tab} label="Preview" value="preview" className={tabClassName} />
       </Tabs>
       {tab === 'editor'
         ? (
-          <div className={cx('positionRelative flexColumn tiptap', className)} css={classes.editorRoot}>
+          <div className={cx('positionRelative flexColumn tiptap', inputClassName)} css={classes.editorRoot}>
             <div className="positionRelative stretchSelf">
-              {editor && withFloatingButtons && (
+              {editor && withFloatingMenu && (
                 <FloatingMenu editor={editor} tippyOptions={{ duration: 100 }}>
-                  <MenuBar
+                  <Toolbar
                     editor={editor}
+                    toolbar={floatingMenuToolbar || defaultMenuToolbar}
                   />
                 </FloatingMenu>
               )}
-              {editor && (
+              {editor && withBubbleMenu && (
                 <BubbleMenu editor={editor} tippyOptions={{ duration: 100 }}>
-                  <MenuBar
+                  <Toolbar
                     editor={editor}
+                    toolbar={bubbleMenuToolbar || defaultMenuToolbar}
                   />
                 </BubbleMenu>
               )}
               {/* editor */}
               <EditorContent editor={editor} />
               {error && (
-                <FormHelperText error css={{ paddingTop: 4, paddingBottom: 4 }}>
+                <FormHelperText error css={{ paddingTop: 4, paddingBottom: 4 }} className={errorClassName}>
                   {error}
                 </FormHelperText>
               )}
             </div>
             {editor && (
-              <MenuBar
+              <Toolbar
                 editor={editor}
-                className="stretchSelf"
+                className={cx('stretchSelf', toolbarClassName)}
                 toolbar={toolbar}
               />
             )}
           </div>
         ) : (
-          <EditorContent editor={editor} className={className} />
+          <EditorContent editor={editor} className={inputClassName} />
         )
       }
     </div>

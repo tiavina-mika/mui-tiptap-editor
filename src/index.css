@@ -1,8 +1,141 @@
+/* ---------------------------------- */
+/* ------------ basic css ----------- */
+/* ---------------------------------- */
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans',
+    'Droid Sans', 'Helvetica Neue', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
+}
+
+.flexRow {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  flex-wrap: wrap;
+}
+
+.flexColumn {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  flex-wrap: nowrap;
+}
+
+.flexCenter {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  align-items: center;
+  justify-content: center;
+}
+
+.flexStretch {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+}
+
+.stretch {
+  align-items: stretch;
+}
+
+.center {
+  align-items: center;
+}
+
+.flexStart {
+  align-items: flex-start;
+}
+
+.flexEnd {
+  align-items: flex-end;
+}
+
+.flexBaseline {
+  align-items: baseline;
+}
+
+.spaceBetween {
+  justify-content: space-between;
+}
+
+.spaceAround {
+  justify-content: space-around;
+}
+
+.justifyStart {
+  justify-content: flex-start;
+}
+
+.justifyEnd {
+  justify-content: flex-end;
+}
+
+.justifyCenter {
+  justify-content: center;
+}
+
+.stretchSelf {
+  align-self: stretch;
+}
+
+.justifySelf {
+  justify-self: stretch;
+}
+
+.centerSelf {
+  align-self: center;
+}
+.endSelf {
+  align-self: flex-end;
+}
+
+.flex1 {
+  flex: 1;
+}
+
+/* ---------------------------------- */
+/* ----------- text editor ---------- */
+/* ---------------------------------- */
 /* Basic editor styles */
 .tiptap {
   > * + * {
     margin-top: 0.75em;
   }
+}
+
+.mui-tiptap-input {
+  border-radius: 6px;
+  border-top-left-radius: 0;
+  border: 1px solid #e0e0e0;
+  padding-left: 16px;
+  padding-right: 16px;
+  min-height: 150px;
+}
+
+.mui-tiptap-input p.is-editor-empty:first-child::before {
+  content: attr(data-placeholder);
+  float: left;
+  height: 0;
+  pointer-events: none;
+  color: #bdbdbd;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 157.143%;
+}
+
+.mui-tiptap-input-preview {
+  border: none !important;
+  padding-left: 0;
+  padding-right: 0;
+  min-height: initial;
 }
 
 .tiptap blockquote {

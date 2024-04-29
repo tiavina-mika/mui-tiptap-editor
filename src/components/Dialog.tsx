@@ -1,26 +1,28 @@
 import { MouseEventHandler, ReactNode } from 'react';
 
-import { IconButton, styled, Typography } from '@mui/material';
+import { IconButton, Theme, Typography } from '@mui/material';
 import Button from '@mui/material/Button';
 import MUIDialog, { DialogProps } from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
-import { FiX } from 'react-icons/fi';
+import Close from '../icons/Close';
 
-const StyledDialog = styled(MUIDialog)(({ theme }) => ({
-  '& .MuiDialog-root': {
-    padding: theme.spacing(1.5),
-  },
-  '& .MuiPaper-root': {
-    paddingBottom: 0,
-    paddingTop: 0,
-  },
-  '& .MuiDialogActions-root': {
-    padding: theme.spacing(1),
-  },
-}));
+const classes = {
+  dialog: (theme: Theme) => ({
+    '& .MuiDialog-root': {
+      padding: theme.spacing(1.5),
+    },
+    '& .MuiPaper-root': {
+      paddingBottom: 0,
+      paddingTop: 0,
+    },
+    '& .MuiDialogActions-root': {
+      padding: theme.spacing(1),
+    },
+  })
+}
 
 type Props = {
   title: string;
@@ -64,19 +66,22 @@ const Dialog = ({
       color="inherit"
       onClick={toggle}
       aria-label="close"
-      sx={{ position: "absolute", right: 0, top: 0 }}>
-      <FiX />
+      sx={{ position: "absolute", right: 0, top: 0 }}
+    >
+      {/* <img alt="close" src="/icons/close.svg" /> */}
+      <Close />
     </IconButton>
   );
 
   return (
-    <StyledDialog
+    <MUIDialog
       {...dialogProps}
       open={!!open}
       onClose={toggle}
       aria-labelledby="alert-dialog-title"
       aria-describedby="alert-dialog-description"
       maxWidth={maxWidth}
+      css={classes.dialog}
       onClick={onClick}>
       <DialogTitle id="alert-dialog-title">
         <div className="flexRow spaceBetween center">
@@ -102,12 +107,12 @@ const Dialog = ({
             variant="contained"
             sx={{ textTransform: 'capitalize' }}
           >
-            {primaryButtonText}
+            {primaryButtonText ?? 'Confirm'}
           </Button>
         )}
 
       </DialogActions>
-    </StyledDialog>
+    </MUIDialog>
   );
 };
 
