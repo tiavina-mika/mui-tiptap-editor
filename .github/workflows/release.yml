@@ -29,14 +29,14 @@ jobs:
         with:
           cache: "yarn" # uses the system node, which was updated prior.
 
-      - name: Install dependencies
-        run: yarn
+      # - name: Install dependencies
+        - run: yarn
 
-      - name: Lint and clean code
-        run: yarn lint
+      # - name: Lint and clean code
+        - run: yarn lint
 
-      - name: Build
-        run: yarn build
+      # - name: Build
+        - run: yarn build
 
   # Then release to npm
   release:
