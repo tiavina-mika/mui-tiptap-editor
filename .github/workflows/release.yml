@@ -2,10 +2,11 @@ name: Publish Package to npmjs
 run-name: ${{ github.actor }} publish to npm 🚀
 
 on:
-  release:
-    types: [published]
+  push:
+    tags:
+      - "v*.*.*"
 jobs:
-  build:
+  release:
     runs-on: ubuntu-latest
     permissions:
       contents: read
