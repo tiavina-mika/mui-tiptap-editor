@@ -1,4 +1,4 @@
-# Welcome to StackEdit!
+# mui-tiptap-editor!
 
 <p  align="center">
 
@@ -177,7 +177,7 @@ function App () {
 
 ## Props
 
-|Name |Type                          | Default value                         | Description |
+|props |type                          | Default value                         | Description |
 |----------------|-------------------------------|-----------------------------|-----------------------------|
 |toolbar|`string[]`| heading, bold, italic, strike, link, underline, image, code, orderedList, bulletList, align, codeBlock, blockquote, table, history, youtube, color, mention, ai| The list of the menu buttons to be displayed|
 |placeholder|`string`|empty|input placeholder
@@ -197,16 +197,3 @@ function App () {
 |value|`string`|empty| Value of the input
 |onChange|`(value: string) => void`|empty| Function to call when the input change
 |...all tiptap features|[EditorOptions](https://github.com/ueberdosis/tiptap/blob/e73073c02069393d858ca7d8c44b56a651417080/packages/core/src/types.ts#L52)|empty| Can access to all tiptap `useEditor` props
-
-
-## Component
-
-|Components | Description |
-|----------------|-------------------------------|
-|`TextEditor`|The main component to render a MUI-based tiptap rich text editor field
-|`TextEditorReadOnly`|It only renders content. There is no editor mode, no toolbar, no input, no floating menus, ...
-|`Toolbar`|Menu that can be used with an existing editor (just pass the props `editor`)
-
-
-
-
