@@ -10,8 +10,9 @@ on:
     branches:
       # Change this if your primary branch is not main
       - main
-      - develop
-
+  pull_request:
+    branches:
+      - main
 permissions:
   contents: read # for checkout
 

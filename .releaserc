@@ -1,7 +1,6 @@
 {
     "branches": [
-        "master",
-        "develop"
+        "master"
     ],
     "plugins": [
       "@semantic-release/commit-analyzer",
@@ -9,16 +8,26 @@
       [
           "@semantic-release/changelog",
           {
-              "changelogFile": "docs/CHANGELOG.md"
+              "changelogFile": "CHANGELOG.md"
           }
       ],
       [
           "@semantic-release/git",
           {
-              "assets": ["docs/CHANGELOG.md"]
+              "assets": ["CHANGELOG.md"]
           }
       ],
-      "@semantic-release/github"
+      [
+        "@semantic-release/github",
+        {
+            "assets": [
+              {
+                "path": "release/**"
+              }
+            ]
+          }
+    ]
+      
       
   ] 
 }
