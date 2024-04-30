@@ -6,10 +6,6 @@ run-name: ${{ github.actor }} publish to npm 🚀
 #   release:
 #     types: [published]
 on:
-  push:
-    branches:
-      # Change this if your primary branch is not main
-      - main
   pull_request:
     branches:
       - main
