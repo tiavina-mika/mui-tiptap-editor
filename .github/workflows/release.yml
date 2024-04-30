@@ -32,14 +32,6 @@ jobs:
         with:
           persist-credentials: false
 
-          
-      # Use this GitHub Action
-      - name: Check package version
-        uses: technote-space/package-version-check-action@v1
-        with:
-          COMMIT_DISABLED: 
-          BRANCH_PREFIX: release/
-
       # need this for using yarn
       - name: Enable Corepack
         run: corepack enable
@@ -50,6 +42,15 @@ jobs:
           registry-url: 'https://registry.npmjs.org'
           # instead of using the local cache in .yarn folder, since it's in .gitignore
           cache: 'yarn'
+
+      # Use this GitHub Action
+      - name: Check package version
+        uses: technote-space/package-version-check-action@v1
+        with:
+          COMMIT_DISABLED: 
+          BRANCH_PREFIX: release/
+
+
       - run: yarn
       # for Yarn v1, use `yarn publish` instead
       # - run: yarn npm publish // if using yarn
