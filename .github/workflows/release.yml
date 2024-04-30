@@ -1,24 +1,62 @@
+# doc: https://docs.github.com/en/actions/publishing-packages/publishing-nodejs-packages
 name: Publish Package to npmjs
 run-name: ${{ github.actor }} publish to npm 🚀
 
+# on:
+#   release:
+#     types: [published]
 on:
-  release:
-    types: [published]
+  push:
+    branches:
+      # Change this if your primary branch is not main
+      - main
+  pull_request:
+    branches:
+      - main
+permissions:
+  contents: read # for checkout
+
 jobs:
   build:
     runs-on: ubuntu-latest
+    environment:
+      name: Grim #your environment name
+    permissions:
+      contents: write # to be able to publish a GitHub release
+      issues: write # to be able to comment on released issues
+      pull-requests: write # to be able to comment on released pull requests
+      id-token: write # to enable use of OIDC for npm provenance
     steps:
-      - uses: actions/checkout@v4
-      # Setup .npmrc file to publish to npm
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+
+          
+      # Use this GitHub Action
+      - name: Check package version
+        uses: technote-space/package-version-check-action@v1
+        with:
+          COMMIT_DISABLED: 
+          BRANCH_PREFIX: release/
+
+      # need this for using yarn
+      - name: Enable Corepack
+        run: corepack enable
+
       - uses: actions/setup-node@v4
         with:
-          node-version: '18.x'
+          node-version: '20.x'
           registry-url: 'https://registry.npmjs.org'
-          # Defaults to the user or organization that owns the workflow file
-          scope: '@octocat'
+          # instead of using the local cache in .yarn folder, since it's in .gitignore
+          cache: 'yarn'
       - run: yarn
       # for Yarn v1, use `yarn publish` instead
-      - run: yarn npm publish
+      # - run: yarn npm publish // if using yarn
+      - name: Release
         env:
+          # this will be used in .yarnrc.yml
+          GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
-        
+        run: npx semantic-release
+
