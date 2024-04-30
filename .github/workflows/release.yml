@@ -2,15 +2,29 @@
 name: Publish Package to npmjs
 run-name: ${{ github.actor }} publish to npm 🚀
 
+# on:
+#   release:
+#     types: [published]
 on:
-  release:
-    types: [published]
+  push:
+    branches:
+      # Change this if your primary branch is not main
+      - master
+      - develop
+
+permissions:
+  contents: read # for checkout
+
 jobs:
   build:
     runs-on: ubuntu-latest
+    environment:
+      name: Grim #your environment name
     permissions:
-      contents: read
-      id-token: write # Needed for https://docs.npmjs.com/generating-provenance-statements
+      contents: write # to be able to publish a GitHub release
+      issues: write # to be able to comment on released issues
+      pull-requests: write # to be able to comment on released pull requests
+      id-token: write # to enable use of OIDC for npm provenance
     steps:
       - uses: actions/checkout@v4
       # need this for using yarn
@@ -25,8 +39,10 @@ jobs:
           cache: 'yarn'
       - run: yarn
       # for Yarn v1, use `yarn publish` instead
-      - run: yarn npm publish
+      # - run: yarn npm publish
+      - run: npx semantic-release
         env:
           # this will be used in .yarnrc.yml
+          GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
         
