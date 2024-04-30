@@ -40,12 +40,12 @@ jobs:
       - run: yarn
       # for Yarn v1, use `yarn publish` instead
       # - run: yarn npm publish // if using yarn
-      - name: Install semantic-release
-        run: yarn add -g semantic-release @semantic-release/gitlab @semantic-release/changelog @semantic-release/git @semantic-release/npm @semantic-release/commit-analyzer conventional-changelog-conventionalcommits
-      
-      - run: npx semantic-release
+      # - name: Install semantic-release
+        # run: yarn add -g semantic-release @semantic-release/gitlab @semantic-release/changelog @semantic-release/git @semantic-release/npm @semantic-release/commit-analyzer conventional-changelog-conventionalcommits
+      - name: Release
         env:
           # this will be used in .yarnrc.yml
           GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+        run: npx semantic-release
         
