@@ -9,7 +9,7 @@ on:
   push:
     branches:
       # Change this if your primary branch is not main
-      - master
+      - main
       - develop
 
 permissions:
