@@ -39,7 +39,7 @@ jobs:
           cache: 'yarn'
       - run: yarn
       # for Yarn v1, use `yarn publish` instead
-      # - run: yarn npm publish
+      # - run: yarn npm publish // if using yarn
       - run: npx semantic-release
         env:
           # this will be used in .yarnrc.yml
