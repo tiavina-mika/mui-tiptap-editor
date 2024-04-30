@@ -1,3 +1,10 @@
+# [0.7.0](https://github.com/tiavina-mika/mui-tiptap-editor/compare/v0.6.0...v0.7.0) (2024-04-30)
+
+
+### Features
+
+* update release ([fa96963](https://github.com/tiavina-mika/mui-tiptap-editor/commit/fa969632e048f8a54f4d8482613c9bf4c6b524f8))
+
 # [0.6.0](https://github.com/tiavina-mika/mui-tiptap-editor/compare/v0.5.0...v0.6.0) (2024-04-30)
 
 
