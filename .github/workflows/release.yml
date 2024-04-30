@@ -6,7 +6,7 @@ run-name: ${{ github.actor }} publish to npm 🚀
 #   release:
 #     types: [published]
 on:
-  pull_request:
+  push:
     branches:
       - main
 permissions:
