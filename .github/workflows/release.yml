@@ -39,6 +39,9 @@ jobs:
           # instead of using the local cache in .yarn folder, since it's in .gitignore
           cache: 'yarn'
 
+      - name: Replace branch name in branches array
+        run: sed -i 's|'current-branch'|'${{ github.ref_name }}'|' .releaserc.yaml
+
       # Use this GitHub Action
       - name: Check package version
         uses: technote-space/package-version-check-action@v1

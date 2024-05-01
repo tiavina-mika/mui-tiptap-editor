@@ -1,9 +1,28 @@
 {
     "branches": [
-        "master"
+        "master",
+        "current-branch"
     ],
     "plugins": [
-      "@semantic-release/commit-analyzer",
+        [
+            "@semantic-release/commit-analyzer",
+            {
+              "releaseRules": [
+                { "type": "docs", "scope": "README", "release": "patch" },
+                { "type": "refactor", "release": "patch" },
+                { "type": "style", "release": "patch" },
+                { "type": "ci", "release": "patch" },
+                { "type": "test", "release": "patch" },
+                { "type": "chore", "release": "patch" },
+                { "type": "perf", "release": "patch" },
+                { "type": "build", "release": "patch" },
+                { "type": "revert", "release": "patch" },
+                { "type": "fix", "release": "patch" },
+                { "type": "feat", "release": "minor" },
+                { "type": "BREAKING CHANGE", "release": "major" }
+              ]
+            }
+        ],
       "@semantic-release/release-notes-generator",
       [
           "@semantic-release/changelog",
