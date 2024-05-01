@@ -2,9 +2,6 @@
 name: Publish Package to npmjs
 run-name: ${{ github.actor }} publish to npm 🚀
 
-# on:
-#   release:
-#     types: [published]
 on:
   push:
     branches:
@@ -39,18 +36,6 @@ jobs:
 
       - name: Replace branch name in branches array
         run: sed -i 's|'current-branch'|'${{ github.ref_name }}'|' .releaserc
-
-      # Use this GitHub Action
-      # - name: Check package version
-      #   uses: technote-space/package-version-check-action@v1
-      #   with:
-      #     COMMIT_DISABLED: 
-
-      # - name: Setup .yarnrc.yml
-      #   run: |
-      #     yarn config set nodeLinker node-modules
-      #     yarn config set npmAlwaysAuth true
-      #     yarn config set npmAuthToken ${{secrets.NPM_TOKEN}}
 
       - run: yarn
       # for Yarn v1, use `yarn publish` instead
