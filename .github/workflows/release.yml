@@ -40,7 +40,7 @@ jobs:
           cache: 'yarn'
 
       - name: Replace branch name in branches array
-        run: sed -i 's|'current-branch'|'${{ github.ref_name }}'|' .releaserc.yaml
+        run: sed -i 's|'current-branch'|'${{ github.ref_name }}'|' .releaserc
 
       # Use this GitHub Action
       - name: Check package version
