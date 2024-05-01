@@ -50,6 +50,12 @@ jobs:
         with:
           COMMIT_DISABLED: 
 
+      - name: Create NPMRC
+        run: |
+            echo "//npm.pkg.github.com/:_authToken=${{ secrets.NPM_TOKEN }}" >> ~/.npmrc
+            # echo "@tiavina-mika:registry=https://npm.pkg.github.com" >> ~/.npmrc
+            echo 'npmAuthToken:${{secrets.NPM_TOKEN}}' >> ~/.yarnrc
+
       - run: yarn
       # for Yarn v1, use `yarn publish` instead
       # - run: yarn npm publish // if using yarn
