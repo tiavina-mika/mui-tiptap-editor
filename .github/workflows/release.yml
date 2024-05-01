@@ -52,8 +52,6 @@ jobs:
 
       - name: Create NPMRC
         run: |
-            echo "//npm.pkg.github.com/:_authToken=${{ secrets.NPM_TOKEN }}" >> ~/.npmrc
-            # echo "@tiavina-mika:registry=https://npm.pkg.github.com" >> ~/.npmrc
             echo 'npmAuthToken:${{secrets.NPM_TOKEN}}' >> ~/.yarnrc
 
       - run: yarn
