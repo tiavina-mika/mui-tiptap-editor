@@ -7,8 +7,8 @@ run-name: ${{ github.actor }} publish to npm 🚀
 #     types: [published]
 on:
   push:
-    # branches:
-    #   - main
+    branches:
+      - main
     tags:        
       - v*
 permissions:
