@@ -1,3 +1,10 @@
+## [1.1.7](https://github.com/tiavina-mika/mui-tiptap-editor/compare/v1.1.6...v1.1.7) (2024-05-01)
+
+
+### Bug Fixes
+
+* yarn ([12ff610](https://github.com/tiavina-mika/mui-tiptap-editor/commit/12ff610fd9d043522cadff549548b9556232bc20))
+
 ## [1.1.6](https://github.com/tiavina-mika/mui-tiptap-editor/compare/v1.1.5...v1.1.6) (2024-05-01)
 
 
