@@ -53,6 +53,7 @@ jobs:
       #     yarn config set npmAuthToken ${{secrets.NPM_TOKEN}}
 
       - run: yarn
+      - run: yarn build
       # for Yarn v1, use `yarn publish` instead
       # - run: yarn npm publish // if using yarn
       - name: Release
