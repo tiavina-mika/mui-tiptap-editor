@@ -46,10 +46,11 @@ jobs:
       #   with:
       #     COMMIT_DISABLED: 
 
-      # - name: Setup .yarnrc.yml
-      #   run: |
-      #     yarn config set npmAlwaysAuth true
-      #     yarn config set npmAuthToken ${{secrets.NPM_TOKEN}}
+      - name: Setup .yarnrc.yml
+        run: |
+          yarn config set nodeLinker node-modules
+          yarn config set npmAlwaysAuth true
+          yarn config set npmAuthToken ${{secrets.NPM_TOKEN}}
 
       - run: yarn
       # for Yarn v1, use `yarn publish` instead
