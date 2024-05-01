@@ -50,9 +50,10 @@ jobs:
         with:
           COMMIT_DISABLED: 
 
-      - name: Create NPMRC
+      - name: Setup .yarnrc.yml
         run: |
-            echo 'npmAuthToken:${{secrets.NPM_TOKEN}}' >> ~/.yarnrc
+          yarn config set npmAlwaysAuth true
+          yarn config set npmAuthToken ${{secrets.NPM_TOKEN}}
 
       - run: yarn
       # for Yarn v1, use `yarn publish` instead
