@@ -1,4 +1,4 @@
-# mui-tiptap-editor!
+# mui-tiptap-editor
 
 <p  align="center">
 
@@ -6,10 +6,6 @@
 
 </p>
 
-
-# Files
-
-StackEdit stores your files in your browser, which means all your files are automatically saved locally and are accessible **offline!**
 
 ## Table of Contents
 
@@ -120,6 +116,7 @@ See [`example/App.tsx`](..example/App.tsx) for a more thorough example of using 
 
 ```tsx
 import './index.css';
+import { TextEditor } from 'mui-tiptap-editor';
 
 function App () {
   return (
@@ -145,6 +142,7 @@ function App () {
 
 ```tsx
 import './index.css';
+import { TextEditor } from 'mui-tiptap-editor';
 
 function App () {
   return (

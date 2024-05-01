@@ -1,5 +1,3 @@
-import "./index.css";
-
 export {
   default as TextEditor,
   type TextEditorProps,
@@ -7,3 +5,7 @@ export {
 export {
   default as TextEditorReadOnly,
 } from './components/TextEditorReadOnly';
+export {
+  default as Toolbar,
+  type ToolbarProps,
+} from './components/Toolbar';
