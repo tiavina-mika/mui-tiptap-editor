@@ -45,10 +45,10 @@ jobs:
         run: sed -i 's|'current-branch'|'${{ github.ref_name }}'|' .releaserc
 
       # Use this GitHub Action
-      - name: Check package version
-        uses: technote-space/package-version-check-action@v1
-        with:
-          COMMIT_DISABLED: 
+      # - name: Check package version
+      #   uses: technote-space/package-version-check-action@v1
+      #   with:
+      #     COMMIT_DISABLED: 
 
       - name: Setup .yarnrc.yml
         run: |
@@ -65,4 +65,3 @@ jobs:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
         run: npx semantic-release
 
-        
