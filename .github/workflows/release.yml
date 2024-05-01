@@ -47,8 +47,6 @@ jobs:
         uses: technote-space/package-version-check-action@v1
         with:
           COMMIT_DISABLED: 
-          BRANCH_PREFIX: release/
-
 
       - run: yarn
       # for Yarn v1, use `yarn publish` instead

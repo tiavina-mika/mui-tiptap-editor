@@ -55,7 +55,7 @@ const classes = {
   },
 };
 
-type Props = {
+export type ToolbarProps = {
   editor: Editor;
   className?: string;
   toolbar?: IEditorToolbar[];
@@ -65,7 +65,7 @@ const Toolbar = ({
   editor,
   className,
   toolbar = defaultEditorToolbar
-}: Props) => {
+}: ToolbarProps) => {
   const [openLinkDialog, setOpen] = useState<boolean>(false);
 
   const toggleLinkDialog = useCallback(() => setOpen(!openLinkDialog), [openLinkDialog]);
