@@ -19,8 +19,11 @@
                 { "type": "revert", "release": "patch" },
                 { "type": "fix", "release": "patch" },
                 { "type": "feat", "release": "minor" },
-                { "type": "BREAKING CHANGE", "release": "major" }
-              ]
+                { "breaking": true, "release": "major" }
+              ],
+              "parserOpts": {
+                "noteKeywords": ["BREAKING CHANGE", "BREAKING CHANGES", "BREAKING"]
+              }
             }
         ],
       "@semantic-release/release-notes-generator",
