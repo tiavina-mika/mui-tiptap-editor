@@ -7,6 +7,11 @@ export interface ISelectOption<T = string> {
   hide?: boolean;
 }
 
+export interface ITextEditorCollaborationUser {
+  name: string;
+  color: string;
+}
+
 export enum EditorToolbarEnum {
   heading = 'heading',
   bold = 'bold',
