@@ -22,7 +22,7 @@
     "email": "tiavinamika@gmail.com",
     "github": "https://github.com/tiavina-mika"
   },
-  "version": "0.1.53",
+  "version": "0.1.6",
   "license": "MIT",
   "type": "module",
   "types": "./dist/index.d.ts",
