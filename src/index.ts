@@ -9,3 +9,6 @@ export {
   default as Toolbar,
   type ToolbarProps,
 } from './components/Toolbar';
+export {
+  type ITextEditorOption
+} from './type';
