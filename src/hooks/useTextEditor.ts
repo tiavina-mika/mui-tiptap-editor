@@ -34,7 +34,7 @@ import StarterKit from '@tiptap/starter-kit';
 
 import { useEffect } from 'react';
 import Heading from '@tiptap/extension-heading';
-import { ISelectOption, ITextEditorCollaborationUser } from 'src/type';
+import { ITextEditorOption, ITextEditorCollaborationUser } from 'src/type';
 import getSuggestion from 'src/components/mention/suggestions';
 
 const extensions = [
@@ -163,8 +163,8 @@ export type TextEditorProps = {
   onChange?: (value: string) => void;
   value?: string;
   tab: 'editor' | 'preview';
-  user?: ISelectOption;
-  mentions?: ISelectOption[];
+  user?: ITextEditorOption;
+  mentions?: ITextEditorOption[];
 } & Partial<EditorOptions>;
 
 export const useTextEditor = ({
