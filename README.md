@@ -11,51 +11,15 @@
 
 <details>
 
-- [Demo](#demo)
 
 - [Installation](#installation)
 
 - [Get started](#get-started)
 
-- [Use the all-in-one component](#use-the-all-in-one-component)
+- [Customization](#customization)
 
-- [Create and provide the `editor` yourself](#create-and-provide-the-editor-yourself)
-
-- [Render read-only rich text content](#render-read-only-rich-text-content)
-
-- [mui-tiptap extensions and components](#mui-tiptap-extensions-and-components)
-
-- [Tiptap extensions](#tiptap-extensions)
-
-- [`HeadingWithAnchor`](#headingwithanchor)
-
-- [`FontSize`](#fontsize)
-
-- [`LinkBubbleMenuHandler`](#linkbubblemenuhandler)
-
-- [`ResizableImage`](#resizableimage)
-
-- [`TableImproved`](#tableimproved)
-
-- [Components](#components)
-
-- [Controls components](#controls-components)
-
-- [Localization](#localization)
-
-- [Tips and suggestions](#tips-and-suggestions)
-
-- [Choosing your editor `extensions`](#choosing-your-editor-extensions)
-
-- [Extension precedence and ordering](#extension-precedence-and-ordering)
-
-- [Other extension tips](#other-extension-tips)
-
-- [Drag-and-drop and paste for images](#drag-and-drop-and-paste-for-images)
-
-- [Re-rendering `RichTextEditor` when `content` changes](#re-rendering-richtexteditor-when-content-changes)
-
-- [Contributing](#contributing)
+- [Props](#props)
+- 
 </details>
 
 ## Installation
@@ -94,7 +58,28 @@ function App() {
 }
 ```
 
+#### Using mentions
+
+```tsx
+import { TextEditor, ITextEditorOption } from 'mui-tiptap-editor';
+
+const mentions: ITextEditorOption[] = [
+  { label: "Lea Thompson", value: "id1" },
+  { label: "Cyndi Lauper", value: "id2" },
+  { label: "Tom Cruise", value: "id13" },
+];
+
+const currentUser: ITextEditorOption = mentions[0];
+
+function App() {
+  return (
+    <TextEditor mentions={mentions} user={currentUser} />
+  );
+}
+```
+
 See [`example/App.tsx`](..example/App.tsx) for a more thorough example of using `TextEditor`.
+
 
 ## Customization
 
@@ -192,6 +177,8 @@ function App () {
 |labelClassName|`string`|empty| Override the label styles
 |bubbleMenuToolbar|`string[]`|`['bold', 'italic', 'underline', 'link']`| Similar to `toolbar` props
 |floatingMenuToolbar|`string[]`|`['bold', 'italic', 'underline', 'link']`| Similar to `toolbar` props
+|mentions|`ITextEditorOption[]`|undefined| List of users to be mentionned when entering or selecting `@`
+|user|`ITextEditorOption`|undefined| Current user
 |value|`string`|empty| Value of the input
-|onChange|`(value: string) => void`|empty| Function to call when the input change
+|onChange|`(value: string) => void`|-| Function to call when the input change
 |...all tiptap features|[EditorOptions](https://github.com/ueberdosis/tiptap/blob/e73073c02069393d858ca7d8c44b56a651417080/packages/core/src/types.ts#L52)|empty| Can access to all tiptap `useEditor` props

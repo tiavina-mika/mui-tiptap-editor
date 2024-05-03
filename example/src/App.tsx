@@ -10,8 +10,39 @@ const tabs = [
   'Read only',
   'Custom global styles',
   'Each element styles',
+  'Mentions',
   'With React Hook Form'
 ];
+
+const mentions = [
+  { label: "Lea Thompson", value: "xxxx1" },
+  { label: "Cyndi Lauper", value: "xxxx2" },
+  { label: "Tom Cruise", value: "xxxx3" },
+  { label: "Madonna", value: "xxxx4" },
+  { label: "Jerry Hall", value: "xxxx5" },
+  { label: "Joan Collins", value: "xxxx6" },
+  { label: "Winona Ryder", value: "xxxx7" },
+  { label: "Christina Applegate", value: "xxxx8" },
+  { label: "Alyssa Milano", value: "xxxx9" },
+  { label: "Molly Ringwald", value: "xxxx10" },
+  { label: "Ally Sheedy", value: "xxxx11" },
+  { label: "Debbie Harry", value: "xxxx12" },
+  { label: "Olivia Newton-John", value: "xxxx13" },
+  { label: "Elton John", value: "xxxx14" },
+  { label: "Michael J. Fox", value: "xxxx15" },
+  { label: "Axl Rose", value: "xxxx16" },
+  { label: "Emilio Estevez", value: "xxxx17" },
+  { label: "Ralph Macchio", value: "xxxx18" },
+  { label: "Rob Lowe", value: "xxxx19" },
+  { label: "Jennifer Grey", value: "xxxx20" },
+  { label: "Mickey Rourke", value: "xxxx21" },
+  { label: "John Cusack", value: "xxxx22" },
+  { label: "Matthew Broderick", value: "xxxx23" },
+  { label: "Justine Bateman", value: "xxxx24" },
+  { label: "Lisa Bonet", value: "xxxx25" }
+];
+
+const currentUser = mentions[0];
 
 const theme = createTheme({
   palette: {
@@ -69,7 +100,14 @@ const App = () => {
             inputClassName="my-input"
           />
         )}
-        {tab === 5 && <WithHookForm />}
+        {tab === 5 && (
+          <TextEditor
+            label="Content"
+            mentions={mentions}
+            user={currentUser}
+          />
+        )}
+        {tab === 6 && <WithHookForm />}
       </Container>
     </ThemeProvider>
   )
