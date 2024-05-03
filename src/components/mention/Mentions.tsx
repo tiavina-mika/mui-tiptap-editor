@@ -2,7 +2,7 @@ import { Theme } from '@emotion/react';
 import { List, ListItem, ListItemButton, ListItemText } from '@mui/material';
 import { SuggestionProps } from '@tiptap/suggestion';
 import { forwardRef, useEffect, useImperativeHandle, useState } from 'react';
-import { ISelectOption } from 'src/type';
+import { ITextEditorOption } from 'src/type';
 
 const classes = {
   list: (theme: Theme) => ({
@@ -21,8 +21,8 @@ const classes = {
   }),
 };
 type Props = {
-  command: (value: { id: ISelectOption }) => void;
-} & SuggestionProps<ISelectOption>; // items should be an select option
+  command: (value: { id: ITextEditorOption }) => void;
+} & SuggestionProps<ITextEditorOption>; // items should be an select option
 const Mentions = forwardRef<any, Props>(({ items, command }, ref) => {
   const [selectedIndex, setSelectedIndex] = useState(0);
 
@@ -73,7 +73,7 @@ const Mentions = forwardRef<any, Props>(({ items, command }, ref) => {
   return (
     <List css={classes.list}>
       {items.length ? (
-        items.map((item: ISelectOption, index: number) => (
+        items.map((item: ITextEditorOption, index: number) => (
           <ListItem disablePadding key={index}>
             <ListItemButton
               onClick={() => selectItem(index)}
