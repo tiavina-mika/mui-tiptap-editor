@@ -29,6 +29,7 @@ import Table from "../icons/Table";
 import Youtube from "../icons/Youtube";
 import Undo from "../icons/Undo";
 import Redo from "../icons/Redo";
+import Mention from "src/icons/Mention";
 
 const classes = {
   menu: (theme: Theme) => ({
@@ -255,6 +256,17 @@ const Toolbar = ({
           </IconButton>
         )
       ))}
+
+        {/* mention */}
+        {showTextEditorToolbarMenu(toolbar, "mention") && (
+          <IconButton
+            onClick={() => {
+              editor.chain().focus().insertContent("@").run();
+            }}
+          >
+            <Mention />
+          </IconButton>
+        )}
 
       {/* youtube dialog */}
       {showTextEditorToolbarMenu(toolbar, "link") && (
