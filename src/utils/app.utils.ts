@@ -19,7 +19,7 @@ export const defaultEditorToolbar: IEditorToolbar[] = [
   "youtube",
   "color",
   "mention",
-  "ai"
+  // "ai"
 ];
 
 
