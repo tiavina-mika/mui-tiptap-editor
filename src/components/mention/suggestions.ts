@@ -3,12 +3,12 @@ import tippy from "tippy.js";
 
 import Mentions from "./Mentions";
 import { MentionOptions } from "@tiptap/extension-mention";
-import { ISelectOption } from "src/type";
+import { ITextEditorOption } from "src/type";
 
-const getSuggestion = (options: ISelectOption[] = []): MentionOptions['suggestion'] => ({
+const getSuggestion = (options: ITextEditorOption[] = []): MentionOptions['suggestion'] => ({
   items: ({ query }: { query: string }) => {
     return options
-      .filter((option: ISelectOption) => (option.label as string).toLowerCase().startsWith(query.toLowerCase()))
+      .filter((option: ITextEditorOption) => (option.label as string).toLowerCase().startsWith(query.toLowerCase()))
       .slice(0, 5);
   },
 
