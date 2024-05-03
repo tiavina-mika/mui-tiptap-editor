@@ -6450,6 +6450,7 @@ __metadata:
     typescript: "npm:^5.2.2"
     vite: "npm:5.0.8"
     vite-tsconfig-paths: "npm:^4.3.1"
+    y-prosemirror: "npm:^1.2.3"
     y-webrtc: "npm:^10.3.0"
     yjs: "npm:^13.6.15"
   peerDependencies:
@@ -9446,6 +9447,21 @@ __metadata:
   version: 4.0.2
   resolution: "xtend@npm:4.0.2"
   checksum: 10c0/366ae4783eec6100f8a02dff02ac907bf29f9a00b82ac0264b4d8b832ead18306797e283cf19de776538babfdcb2101375ec5646b59f08c52128ac4ab812ed0e
+  languageName: node
+  linkType: hard
+
+"y-prosemirror@npm:^1.2.3":
+  version: 1.2.3
+  resolution: "y-prosemirror@npm:1.2.3"
+  dependencies:
+    lib0: "npm:^0.2.42"
+  peerDependencies:
+    prosemirror-model: ^1.7.1
+    prosemirror-state: ^1.2.3
+    prosemirror-view: ^1.9.10
+    y-protocols: ^1.0.1
+    yjs: ^13.5.38
+  checksum: 10c0/1cd934280ce39b5cd2ba7e67e3494a0f6e6fd08db5be9ef0faaa6cc0b474b78659659815962f853d10c83679d77c7d80dc789eaf99a368555bb65c9793d31465
   languageName: node
   linkType: hard
 
