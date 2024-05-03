@@ -13,7 +13,7 @@ import { useState, SyntheticEvent, ReactNode } from 'react';
 import { useTextEditor } from "../hooks/useTextEditor";
 
 import Toolbar from './Toolbar';
-import { IEditorToolbar } from "../type";
+import { IEditorToolbar, ISelectOption } from "../type";
 
 const defaultMenuToolbar: IEditorToolbar[] = ['bold', 'italic', 'underline', 'link'];
 
@@ -81,6 +81,8 @@ export type TextEditorProps = {
   toolbar?: IEditorToolbar[];
   bubbleMenuToolbar?: IEditorToolbar[];
   floatingMenuToolbar?: IEditorToolbar[];
+  user?: ISelectOption;
+  mentions?: ISelectOption[];
 } & Partial<EditorOptions>;
 
 const TextEditor = ({
@@ -99,6 +101,8 @@ const TextEditor = ({
   floatingMenuToolbar,
   errorClassName,
   labelClassName,
+  user,
+  mentions,
   editable = true,
   withFloatingMenu = false,
   withBubbleMenu = true,
@@ -114,6 +118,8 @@ const TextEditor = ({
     value,
     tab,
     editable,
+    user,
+    mentions,
     ...editorOptions
   })
 
