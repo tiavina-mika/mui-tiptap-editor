@@ -1,9 +1,9 @@
 import { Editor } from "@tiptap/react";
 import { Menu, MenuItem, Fade } from "@mui/material";
 import { Level } from "@tiptap/extension-heading";
-import { ISelectOption } from "../type";
+import { ITextEditorOption } from "../type";
 
-type IOption = ISelectOption<Level>;
+type IOption = ITextEditorOption<Level>;
 
 const options: IOption[] = [
   {
