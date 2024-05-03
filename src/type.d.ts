@@ -1,6 +1,6 @@
 import { ReactNode } from "react";
 
-export interface ISelectOption<T = string> {
+export interface ITextEditorOption<T = string> {
   label: string;
   value: T,
   icon?: string | ReactNode;
