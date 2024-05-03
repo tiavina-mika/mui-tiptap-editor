@@ -129,6 +129,7 @@
     "rimraf": "^5.0.5",
     "semantic-release": "^23.0.8",
     "typescript": "^5.2.2",
+    "y-prosemirror": "^1.2.3",
     "y-webrtc": "^10.3.0",
     "yjs": "^13.6.15"
   }
