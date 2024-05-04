@@ -1144,18 +1144,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@tiptap/extension-bubble-menu@npm:^2.2.5":
-  version: 2.2.5
-  resolution: "@tiptap/extension-bubble-menu@npm:2.2.5"
-  dependencies:
-    tippy.js: "npm:^6.3.7"
-  peerDependencies:
-    "@tiptap/core": ^2.0.0
-    "@tiptap/pm": ^2.0.0
-  checksum: 10c0/ed7be9f9f4e94daf28eb4cc6e2b74a08aed568953f7fca333ffff948e6ad0e7a3dadf2cc7e98e22a426acc4d696711fe01aa721eb5782c99efc48482602d13c1
-  languageName: node
-  linkType: hard
-
 "@tiptap/extension-bubble-menu@npm:^2.3.1":
   version: 2.3.1
   resolution: "@tiptap/extension-bubble-menu@npm:2.3.1"
@@ -1254,18 +1242,6 @@ __metadata:
     "@tiptap/core": ^2.0.0
     "@tiptap/pm": ^2.0.0
   checksum: 10c0/71ac2ee3dfce1c5816b4179dd89fccab7aa1cda05bc5712b7973fa93e0f3d31d4b1dd8940dd0a734c432101f0303b1bf32aab5cf52e640bea8b9d06af6aa17d6
-  languageName: node
-  linkType: hard
-
-"@tiptap/extension-floating-menu@npm:^2.2.5":
-  version: 2.2.5
-  resolution: "@tiptap/extension-floating-menu@npm:2.2.5"
-  dependencies:
-    tippy.js: "npm:^6.3.7"
-  peerDependencies:
-    "@tiptap/core": ^2.0.0
-    "@tiptap/pm": ^2.0.0
-  checksum: 10c0/f4eb5fec7b0fca47d9c4cf599e94626b4a48dc107a7173bde82e3d3e22e26b8a5b773ea57ed7e71d9110323c41aa61084a78889237a7ea555595004c33519252
   languageName: node
   linkType: hard
 
@@ -1498,32 +1474,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@tiptap/pm@npm:^2.2.5":
-  version: 2.2.5
-  resolution: "@tiptap/pm@npm:2.2.5"
-  dependencies:
-    prosemirror-changeset: "npm:^2.2.1"
-    prosemirror-collab: "npm:^1.3.1"
-    prosemirror-commands: "npm:^1.5.2"
-    prosemirror-dropcursor: "npm:^1.8.1"
-    prosemirror-gapcursor: "npm:^1.3.2"
-    prosemirror-history: "npm:^1.3.2"
-    prosemirror-inputrules: "npm:^1.3.0"
-    prosemirror-keymap: "npm:^1.2.2"
-    prosemirror-markdown: "npm:^1.12.0"
-    prosemirror-menu: "npm:^1.2.4"
-    prosemirror-model: "npm:^1.19.4"
-    prosemirror-schema-basic: "npm:^1.2.2"
-    prosemirror-schema-list: "npm:^1.3.0"
-    prosemirror-state: "npm:^1.4.3"
-    prosemirror-tables: "npm:^1.3.5"
-    prosemirror-trailing-node: "npm:^2.0.7"
-    prosemirror-transform: "npm:^1.8.0"
-    prosemirror-view: "npm:^1.32.7"
-  checksum: 10c0/b76163c50cab0eb0760b1f898e996bb66c08b2105d8ff42b35a65369b2779d90af024b9ee998ad502cfece39cadd6036e382503cb2107bf8a69946844c3b3a7d
-  languageName: node
-  linkType: hard
-
 "@tiptap/pm@npm:^2.3.1":
   version: 2.3.1
   resolution: "@tiptap/pm@npm:2.3.1"
@@ -1547,21 +1497,6 @@ __metadata:
     prosemirror-transform: "npm:^1.8.0"
     prosemirror-view: "npm:^1.32.7"
   checksum: 10c0/3ad5cf6842ee8b070475ac18b3c704c7a57ed9b4cd3493e85a3e95aba15ac546804fb360a6d1360419b0bcf8a2ae455280abd0e02aa9db8b2a106cf9c99cdb1f
-  languageName: node
-  linkType: hard
-
-"@tiptap/react@npm:^2.2.5":
-  version: 2.2.5
-  resolution: "@tiptap/react@npm:2.2.5"
-  dependencies:
-    "@tiptap/extension-bubble-menu": "npm:^2.2.5"
-    "@tiptap/extension-floating-menu": "npm:^2.2.5"
-  peerDependencies:
-    "@tiptap/core": ^2.0.0
-    "@tiptap/pm": ^2.0.0
-    react: ^17.0.0 || ^18.0.0
-    react-dom: ^17.0.0 || ^18.0.0
-  checksum: 10c0/6d9304381f91a9107d748bfb2365ded36f24edb71ca2e9188e6a23009bd372a9ac036098112827c326f90ea803d8c24f34871edb163613219e38d7385db0d684
   languageName: node
   linkType: hard
 
@@ -2045,8 +1980,6 @@ __metadata:
     "@emotion/styled": "npm:^11.11.0"
     "@hookform/resolvers": "npm:^3.3.4"
     "@mui/material": "npm:^5.15.2"
-    "@tiptap/pm": "npm:^2.2.5"
-    "@tiptap/react": "npm:^2.2.5"
     "@types/react": "npm:^18.2.43"
     "@types/react-dom": "npm:^18.2.17"
     "@typescript-eslint/eslint-plugin": "npm:^6.14.0"
@@ -2064,7 +1997,7 @@ __metadata:
     eslint-plugin-prettier: "npm:^5.1.3"
     eslint-plugin-react-hooks: "npm:^4.6.0"
     eslint-plugin-react-refresh: "npm:^0.4.5"
-    mui-tiptap-editor: "npm:^0.1.73"
+    mui-tiptap-editor: "npm:^0.1.76"
     prettier: "npm:^3.2.2"
     react: "npm:^18.2.0"
     react-dom: "npm:^18.2.0"
@@ -4606,9 +4539,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"mui-tiptap-editor@npm:^0.1.73":
-  version: 0.1.73
-  resolution: "mui-tiptap-editor@npm:0.1.73"
+"mui-tiptap-editor@npm:^0.1.76":
+  version: 0.1.76
+  resolution: "mui-tiptap-editor@npm:0.1.76"
   dependencies:
     "@tiptap/extension-bubble-menu": "npm:^2.3.1"
     "@tiptap/extension-code-block-lowlight": "npm:^2.3.1"
@@ -4643,11 +4576,9 @@ __metadata:
   peerDependencies:
     "@emotion/react": ^11.11.3
     "@mui/material": ^5.15.2
-    "@tiptap/pm": ^2.3.1
-    "@tiptap/react": ^2.3.1
     react: ^16.8.0 || ^17.0.2 || ^18.2.0
     react-dom: ^16.8.0 || ^17.0.2 || ^18.2.0
-  checksum: 10c0/a78b2bdb606dbda6b6344d2962fd39ebc6444c50f6661223ebc4697707e21b83ca648bd22fce9ff6fd2f611f126114dcd92ae0ad889ffab253b09762541f3e0b
+  checksum: 10c0/adc6e14e142d4eaede1fa25032b497cd1dd37aca3463daa74763b316c89abcb738f8a25bef831d79d18b6af2b70d773db91e76e726a5c97239b85ac9783106d3
   languageName: node
   linkType: hard
 
