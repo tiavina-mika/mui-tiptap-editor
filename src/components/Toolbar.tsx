@@ -30,6 +30,7 @@ import Youtube from "../icons/Youtube";
 import Undo from "../icons/Undo";
 import Redo from "../icons/Redo";
 import Mention from "src/icons/Mention";
+import Icon from "src/icons/Icon";
 
 const classes = {
   menu: (theme: Theme) => ({
@@ -76,9 +77,6 @@ const Toolbar = ({
   const toggleYoutubeDialog = useCallback(() => setOpenYoutubeDialog(!openYoutubeDialog), [openYoutubeDialog]);
 
   const [tableAnchorEl, setTableAnchorEl] = useState<null | HTMLElement>(null);
-  const [headingAnchorEl, setHeadingAnchorEl] = useState<null | HTMLElement>(
-    null
-  );
 
   const handleOpenTableMenu = useCallback((event: MouseEvent<HTMLElement>) => {
     setTableAnchorEl(event.currentTarget);
@@ -88,49 +86,31 @@ const Toolbar = ({
     setTableAnchorEl(null);
   };
 
-  const handleOpenHeadingMenu = useCallback((event: MouseEvent<HTMLElement>) => {
-    setHeadingAnchorEl(event.currentTarget);
-  }, []);
-  
-  const handleCloseHeadingMenu = () => {
-    setHeadingAnchorEl(null);
-  };
-
   const menus = useMemo(() => [
-    {
-      name: "heading",
-      icon: Title,
-      onClick: handleOpenHeadingMenu,
-      isActive:
-        editor.isActive("heading", { level: 1 }) ||
-        editor.isActive("heading", { level: 2 }) ||
-        editor.isActive("heading", { level: 3 }) ||
-        editor.isActive("heading", { level: 4 }) ||
-        editor.isActive("heading", { level: 5 }) ||
-        editor.isActive("heading", { level: 6 }),
-      disabled: false,
-      split: true
-    },
     {
       name: "bold",
       icon: Bold,
+      iconSize: 13,
       onClick: () => editor.chain().focus().toggleBold().run(),
       disabled: !editor.can().chain().focus().toggleBold().run()
     },
     {
       name: "italic",
       icon: Italic,
+      iconSize: 13,
       onClick: () => editor.chain().focus().toggleItalic().run(),
       disabled: !editor.can().chain().focus().toggleItalic().run()
     },
     {
       name: "strike",
       icon: Strike,
+      iconSize: 14,
       onClick: () => editor.chain().focus().toggleStrike().run(),
       disabled: !editor.can().chain().focus().toggleStrike().run()
     },
     {
       name: "underline",
+      iconSize: 14,
       icon: Underline,
       onClick: () => editor.chain().focus().toggleUnderline().run(),
       disabled: !editor.can().chain().focus().toggleUnderline().run()
@@ -234,10 +214,13 @@ const Toolbar = ({
       default: true, // always display
       split: true
     }
-  ], [editor, toggleLinkDialog, toggleYoutubeDialog, handleOpenTableMenu, handleOpenHeadingMenu]);
+  ], [editor, toggleLinkDialog, toggleYoutubeDialog, handleOpenTableMenu]);
 
   return (
-    <div className={cx(className, 'flexRow')} css={classes.menu}>
+    <div className={cx(className, 'flexRow center')} css={classes.menu}>
+      {/* heading */}
+      {showTextEditorToolbarMenu(toolbar, "heading") && <HeadingMenu editor={editor} />}
+
       {/* other options */}
       {menus.map((menu, index) => (
         showTextEditorToolbarMenu(toolbar, menu) && (
@@ -247,26 +230,29 @@ const Toolbar = ({
             disabled={menu.disabled}
             css={classes.button(
               // the order is important
-              editor.isActive(menu.isActive || menu.active || menu.name),
+              editor.isActive(menu.active || menu.name),
               !!menu.split
             )}
           >
-            {/* <img alt={menu.name} src={`/icons/${menu.icon || menu.name}.svg`} /> */}
-            <menu.icon />
+            <Icon size={menu.iconSize}>
+              <menu.icon />
+            </Icon>
           </IconButton>
         )
       ))}
 
-        {/* mention */}
-        {showTextEditorToolbarMenu(toolbar, "mention") && (
-          <IconButton
-            onClick={() => {
-              editor.chain().focus().insertContent("@").run();
-            }}
-          >
-            <Mention />
-          </IconButton>
-        )}
+      {/* mention */}
+      {showTextEditorToolbarMenu(toolbar, "mention") && (
+        <IconButton
+          onClick={() => {
+            editor.chain().focus().insertContent("@").run();
+          }}
+        >
+            <Icon>
+              <Mention />
+            </Icon>
+        </IconButton>
+      )}
 
       {/* youtube dialog */}
       {showTextEditorToolbarMenu(toolbar, "link") && (
@@ -299,16 +285,7 @@ const Toolbar = ({
           onClose={handleCloseTableMenu}
         />
       )}
-
-      {/* table menu to be opened */}
-      {showTextEditorToolbarMenu(toolbar, "heading") && (
-        <HeadingMenu
-          editor={editor}
-          anchorEl={headingAnchorEl}
-          onClose={handleCloseHeadingMenu}
-        />
-      )}
-      </div>
+    </div>
   );
 };
 
