@@ -168,7 +168,7 @@ function App () {
 
 |props |type                          | Default value                         | Description |
 |----------------|-------------------------------|-----------------------------|-----------------------------|
-|toolbar|`string[]`| heading, bold, italic, strike, link, underline, image, code, orderedList, bulletList, align, codeBlock, blockquote, table, history, youtube, color, mention, ai| The list of the menu buttons to be displayed|
+|toolbar|`string[]`| heading, bold, italic, strike, link, underline, image, code, orderedList, bulletList, align, codeBlock, blockquote, table, history, youtube, color, mention| The list of the menu buttons to be displayed|
 |placeholder|`string`|empty|input placeholder
 |label|`string`|empty|input label
 |error|`string`|empty| Error message to display 
