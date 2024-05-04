@@ -62,35 +62,32 @@ const App = () => {
       <CssBaseline />
       <Container>
         {/* tabs */}
-        <Tabs value={setTab} onChange={handleChange} aria-label="tabs">
+        <Tabs value={tab} onChange={handleChange} aria-label="tabs"sx={{ mb: 2 }}>
           {tabs.map((label, index) => (
             <Tab key={index} label={label} value={index} />
           ))}
         </Tabs>
+        {/* ------ tabs panel ------ */}
+        {/* Simple input */}
+        {tab === 0 && <TextEditor placeholder='Type something here...' />}
 
-        {tab === 0 && (
-          <TextEditor
-            placeholder='Type something here...'
-            toolbar={['bold', 'italic', 'underline']}
-          />
-        )}
+        {/* Select toolbar */}
         {tab === 1 && (
           <TextEditor
             placeholder='Type something here...'
             toolbar={['bold', 'italic', 'underline']}
           />
         )}
-        {tab === 2 && (
-          <TextEditorReadOnly
-            value="<p>Hello word!</p>"
-          />
-        )}
+        {/* Read only */}
+        {tab === 2 && <TextEditorReadOnly value="<p>Hello word!</p>" />}
+        {/* Custom global styles */}
         {tab === 3 && (
           <TextEditor
             value="<p>Hello word!</p>"
             rootClassName="root"
           />
         )}
+        {/* Each element styles */}
         {tab === 4 && (
           <TextEditor
             value="<p>Hello word!</p>"
@@ -100,6 +97,8 @@ const App = () => {
             inputClassName="my-input"
           />
         )}
+
+        {/* mentions */}
         {tab === 5 && (
           <TextEditor
             label="Content"
@@ -107,6 +106,7 @@ const App = () => {
             user={currentUser}
           />
         )}
+        {/* With React Hook Form */}
         {tab === 6 && <WithHookForm />}
       </Container>
     </ThemeProvider>
