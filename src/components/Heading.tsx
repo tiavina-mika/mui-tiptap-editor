@@ -49,14 +49,17 @@ const options: IOption[] = [
 const classes = {
   button: (isActive: boolean) => (theme: Theme) => ({
     backgroundColor: "transparent",
-    fontWeight: 700,
+    fontWeight: 500,
+    paddingLeft: 8,
+    paddingRight: 8,
     textTransform: 'capitalize' as const,
     // TODO: may be changed later
     border: isActive ? "0px solid gray !important" : "none !important",
     borderRight: `1px solid ${theme.palette.grey[300]}`,
+    fontSize: 14,
     cursor: 'pointer',
-    '& .MuiTypography-root': {
-      marginRight: 12
+    '& span': {
+      marginRight: 10
     },
     '&:hover': {
       backgroundColor: 'transparent !important'
@@ -107,9 +110,9 @@ const Heading = ({ editor }: Props) => {
         variant="text"
         color="inherit"
       >
-        <Typography>
+        <span>
           {options.find(option => option.value === selected)?.label || "Normal text"}
-        </Typography>
+        </span>
         {/* chevron icon */}
         <Icon>
           <ChevronDown />

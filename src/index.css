@@ -105,9 +105,12 @@ code {
 /* ---------------------------------- */
 /* Basic editor styles */
 .tiptap {
-  > * + * {
-    margin-top: 0.75em;
-  }
+  border: none;
+}
+
+.tiptap:focus-visible {
+  outline: none;
+
 }
 
 .mui-tiptap-input {

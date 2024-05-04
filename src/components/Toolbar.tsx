@@ -92,7 +92,7 @@ const Toolbar = ({
     {
       name: "bold",
       icon: Bold,
-      iconSize: 13,
+      iconSize: 12,
       onClick: () => editor.chain().focus().toggleBold().run(),
       disabled: !editor.can().chain().focus().toggleBold().run(),
       tooltip: 'Bold'
@@ -100,7 +100,7 @@ const Toolbar = ({
     {
       name: "italic",
       icon: Italic,
-      iconSize: 13,
+      iconSize: 12,
       onClick: () => editor.chain().focus().toggleItalic().run(),
       disabled: !editor.can().chain().focus().toggleItalic().run(),
       tooltip: 'Italic'
