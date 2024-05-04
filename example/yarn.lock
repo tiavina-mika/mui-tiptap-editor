@@ -1997,7 +1997,7 @@ __metadata:
     eslint-plugin-prettier: "npm:^5.1.3"
     eslint-plugin-react-hooks: "npm:^4.6.0"
     eslint-plugin-react-refresh: "npm:^0.4.5"
-    mui-tiptap-editor: "npm:^0.1.76"
+    mui-tiptap-editor: "npm:^0.1.78"
     prettier: "npm:^3.2.2"
     react: "npm:^18.2.0"
     react-dom: "npm:^18.2.0"
@@ -4539,9 +4539,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"mui-tiptap-editor@npm:^0.1.76":
-  version: 0.1.76
-  resolution: "mui-tiptap-editor@npm:0.1.76"
+"mui-tiptap-editor@npm:^0.1.78":
+  version: 0.1.78
+  resolution: "mui-tiptap-editor@npm:0.1.78"
   dependencies:
     "@tiptap/extension-bubble-menu": "npm:^2.3.1"
     "@tiptap/extension-code-block-lowlight": "npm:^2.3.1"
@@ -4578,7 +4578,7 @@ __metadata:
     "@mui/material": ^5.15.2
     react: ^16.8.0 || ^17.0.2 || ^18.2.0
     react-dom: ^16.8.0 || ^17.0.2 || ^18.2.0
-  checksum: 10c0/adc6e14e142d4eaede1fa25032b497cd1dd37aca3463daa74763b316c89abcb738f8a25bef831d79d18b6af2b70d773db91e76e726a5c97239b85ac9783106d3
+  checksum: 10c0/23496b3bdc72bd5b45f40aaeb8f68c4f9372ee09f9bf16aaeaac32cc2db50fbde11a1e04ad06d17f25ed447c9a4631261115e2736ebd3b3d9cdd0ac0dab7f0e8
   languageName: node
   linkType: hard
 

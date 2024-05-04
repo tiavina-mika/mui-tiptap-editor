@@ -2,8 +2,8 @@ import { IconButton, Tooltip } from "@mui/material";
 import { Editor } from "@tiptap/react";
 
 import { ChangeEvent, useEffect, useState } from "react";
-import Icon from "src/icons/Icon";
-import TextColor from "src/icons/TextColor";
+import Icon from "@/icons/Icon";
+import TextColor from "@/icons/TextColor";
 
 const classes = {
   color: {
