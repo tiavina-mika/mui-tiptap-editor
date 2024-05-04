@@ -28,8 +28,8 @@ import Table from "../icons/Table";
 import Youtube from "../icons/Youtube";
 import Undo from "../icons/Undo";
 import Redo from "../icons/Redo";
-import Mention from "@/icons/Mention";
-import Icon from "@/icons/Icon";
+import Mention from "../icons/Mention";
+import Icon from "../icons/Icon";
 
 const classes = {
   toolbar: (theme: Theme) => ({

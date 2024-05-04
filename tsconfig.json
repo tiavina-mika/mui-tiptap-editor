@@ -1,6 +1,5 @@
 {
   "compilerOptions": {
-    "baseUrl": ".",
     "target": "ES2015",
     "lib": ["ES2015", "DOM", "DOM.Iterable"],
     "module": "CommonJS",
@@ -21,10 +20,7 @@
     "declaration": true,
     "allowJs": false,
     "jsxImportSource": "@emotion/react",
-    "noFallthroughCasesInSwitch": true,
-    "paths": {
-      "@/*": ["./src/*"]
-    },
+    "noFallthroughCasesInSwitch": true
   },
   "include": ["./src", "vite.config.ts"]
 }

@@ -36,9 +36,9 @@ import StarterKit from '@tiptap/starter-kit';
 
 import { useEffect } from 'react';
 import Heading from '@tiptap/extension-heading';
-import { ITextEditorOption, ITextEditorCollaborationUser } from '@/type';
+import { ITextEditorOption, ITextEditorCollaborationUser } from '../type';
 import { Node } from '@tiptap/pm/model';
-import getSuggestion from '@/components/mention/suggestions';
+import getSuggestion from '../components/mention/suggestions';
 
 const extensions = [
   Color.configure({ types: [TextStyle.name, ListItem.name] }),
