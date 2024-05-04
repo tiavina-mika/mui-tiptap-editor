@@ -141,7 +141,8 @@ const Toolbar = ({
       onClick: () => editor.chain().focus().toggleOrderedList().run(),
       disabled: !editor.can().chain().focus().toggleOrderedList().run(),
       split: true,
-      tooltip: 'Ordered list'
+      tooltip: 'Ordered list',
+      iconSize: 14
     },
     // alignment
     {
@@ -186,7 +187,8 @@ const Toolbar = ({
       icon: Quote,
       onClick: () => editor.chain().focus().toggleBlockquote().run(),
       disabled: false,
-      tooltip: 'Block quote'
+      tooltip: 'Block quote',
+      iconSize: 16
     },
     {
       name: "codeBlock",
@@ -266,8 +268,9 @@ const Toolbar = ({
             onClick={() => {
               editor.chain().focus().insertContent("@").run();
             }}
+            css={{ borderRadius: 2 }}
           >
-              <Icon>
+              <Icon size={15}>
                 <Mention />
               </Icon>
           </IconButton>
@@ -294,9 +297,7 @@ const Toolbar = ({
 
       {/* color picker */}
       {showTextEditorToolbarMenu(toolbar, "color") && (
-        <Tooltip title="Text color">
           <ColorPicker editor={editor} />
-        </Tooltip>
       )}
 
       {/* table menu to be opened */}

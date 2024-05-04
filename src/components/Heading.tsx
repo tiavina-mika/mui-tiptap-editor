@@ -49,6 +49,7 @@ const options: IOption[] = [
 const classes = {
   button: (isActive: boolean) => (theme: Theme) => ({
     backgroundColor: "transparent",
+    fontWeight: 700,
     // TODO: may be changed later
     border: isActive ? "0px solid gray" : "none",
     borderRight: `1px solid ${theme.palette.grey[100]}`,
@@ -82,7 +83,7 @@ const Heading = ({ editor }: Props) => {
   };
 
   const handleSelectNormalText = () => {
-    editor.chain().focus().setParagraph();
+    editor.chain().focus().setParagraph().run();
     setSelected(0);
     handleClose();
   }

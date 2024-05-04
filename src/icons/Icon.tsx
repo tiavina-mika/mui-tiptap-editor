@@ -7,7 +7,7 @@ type Props = {
 
 const Icon = ({ children, size = 18 }: Props) => {
   return (
-    <div css={{ '& svg': { fontSize: size }}}>
+    <div css={{ '& svg': { fontSize: size }}} className="flexCenter">
       {children}
     </div>
   )

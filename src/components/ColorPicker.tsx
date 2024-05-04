@@ -1,6 +1,9 @@
+import { IconButton, Tooltip } from "@mui/material";
 import { Editor } from "@tiptap/react";
 
-import { ChangeEvent } from "react";
+import { ChangeEvent, useEffect, useState } from "react";
+import Icon from "src/icons/Icon";
+import TextColor from "src/icons/TextColor";
 
 const classes = {
   color: {
@@ -9,6 +12,7 @@ const classes = {
     appearance: "none" as const,
     width: 28,
     height: 28,
+    visibility: "hidden" as const,
     backgroundColor: "transparent",
     border: "none",
     cursor: "pointer",
@@ -20,22 +24,49 @@ const classes = {
       borderRadius: 4,
       border: "none"
     }
-  }
+  },
+  colorPreview: (color: string) => ({
+    height: 4 ,
+    width: 18,
+    backgroundColor: color,
+    marginTop: -8,
+    borderRadius: 3,
+  })
 };
 type Props = {
   editor: Editor;
 };
 const ColorPicker = ({ editor }: Props) => {
+  const [color, setColor] = useState<string>("");
+
+  useEffect(() => {
+    const currentColor = editor.getAttributes("textStyle").color;
+    setColor(currentColor);
+  }, [editor])
+
   const handleInput = (event: ChangeEvent<HTMLInputElement>) => {
-    editor.chain().focus().setColor(event.target.value).run();
+    const value = event.target.value;
+    editor.chain().focus().setColor(value).run();
+    setColor(value);
   };
 
   return (
     <div className="flexRow center stretchSelf">
+      <label htmlFor="color-picker" className="flexCenter">
+          <Icon size={28}>
+            <Tooltip title="Text color">
+              <IconButton className="flexCenter" css={{ borderRadius: 2 }}>
+                <TextColor />
+                <div css={classes.colorPreview(color)} />
+              </IconButton>
+            </Tooltip>
+          </Icon>
+      </label>
       <input
+        id="color-picker"
         type="color"
         onInput={handleInput}
-        value={editor.getAttributes("textStyle").color}
+        value={color}
         css={classes.color}
       />
     </div>
