@@ -37,6 +37,9 @@ jobs:
       - name: Replace branch name in branches array
         run: sed -i 's|'current-branch'|'${{ github.ref_name }}'|' .releaserc
 
+      # this should be the same as the packageManager version in package.json
+      # issue: https://stackoverflow.com/questions/67062308/getting-yn0028-the-lockfile-would-have-been-modified-by-this-install-which-is-e
+      - run: yarn set version 4.2.1
       - run: yarn
       # for Yarn v1, use `yarn publish` instead
       # - run: yarn npm publish // if using yarn
