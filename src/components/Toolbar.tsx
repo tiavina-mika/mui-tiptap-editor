@@ -1,12 +1,12 @@
 import { Theme } from "@emotion/react";
 import { cx } from "@emotion/css";
-import { IconButton } from "@mui/material";
+import { IconButton, Tooltip } from "@mui/material";
 import { Editor } from "@tiptap/react";
 import { useState, MouseEvent, useMemo, useCallback } from "react";
 
 import TableMenuDialog from "./TableMenuDialog";
 import LinkDialog from "./LinkDialog";
-import HeadingMenu from "./HeadingMenu";
+import Heading from "./Heading";
 import ColorPicker from "./ColorPicker";
 import { IEditorToolbar } from "../type";
 import { defaultEditorToolbar, showTextEditorToolbarMenu } from "../utils/app.utils";
@@ -92,42 +92,48 @@ const Toolbar = ({
       icon: Bold,
       iconSize: 13,
       onClick: () => editor.chain().focus().toggleBold().run(),
-      disabled: !editor.can().chain().focus().toggleBold().run()
+      disabled: !editor.can().chain().focus().toggleBold().run(),
+      tooltip: 'Bold'
     },
     {
       name: "italic",
       icon: Italic,
       iconSize: 13,
       onClick: () => editor.chain().focus().toggleItalic().run(),
-      disabled: !editor.can().chain().focus().toggleItalic().run()
+      disabled: !editor.can().chain().focus().toggleItalic().run(),
+      tooltip: 'Italic'
     },
     {
       name: "strike",
       icon: Strike,
       iconSize: 14,
       onClick: () => editor.chain().focus().toggleStrike().run(),
-      disabled: !editor.can().chain().focus().toggleStrike().run()
+      disabled: !editor.can().chain().focus().toggleStrike().run(),
+      tooltip: 'Strike through'
     },
     {
       name: "underline",
       iconSize: 14,
       icon: Underline,
       onClick: () => editor.chain().focus().toggleUnderline().run(),
-      disabled: !editor.can().chain().focus().toggleUnderline().run()
+      disabled: !editor.can().chain().focus().toggleUnderline().run(),
+      tooltip: 'Underline'
     },
     {
       name: "link",
       icon: Link,
       onClick: toggleLinkDialog,
       disabled: false,
-      split: true
+      split: true,
+      tooltip: 'Link'
     },
     // order
     {
       name: "bulletList",
       icon: BulletList,
       onClick: () => editor.chain().focus().toggleBulletList().run(),
-      disabled: !editor.can().chain().focus().toggleBulletList().run()
+      disabled: !editor.can().chain().focus().toggleBulletList().run(),
+      tooltip: 'Bullet list'
     },
     {
       name: "orderedList",
@@ -135,6 +141,7 @@ const Toolbar = ({
       onClick: () => editor.chain().focus().toggleOrderedList().run(),
       disabled: !editor.can().chain().focus().toggleOrderedList().run(),
       split: true,
+      tooltip: 'Ordered list'
     },
     // alignment
     {
@@ -143,7 +150,8 @@ const Toolbar = ({
       onClick: () => editor.chain().focus().setTextAlign("left").run(),
       disabled: false,
       active: { textAlign: "left" },
-      group: "align"
+      group: "align",
+      tooltip: 'Left align'
     },
     {
       name: "align-center",
@@ -151,7 +159,8 @@ const Toolbar = ({
       onClick: () => editor.chain().focus().setTextAlign("center").run(),
       disabled: false,
       active: { textAlign: "center" },
-      group: "align"
+      group: "align",
+      tooltip: 'Center align'
     },
     {
       name: "align-right",
@@ -159,7 +168,8 @@ const Toolbar = ({
       onClick: () => editor.chain().focus().setTextAlign("right").run(),
       disabled: false,
       active: { textAlign: "right" },
-      group: "align"
+      group: "align",
+      tooltip: 'Right align'
     },
     {
       name: "align-justify",
@@ -168,20 +178,23 @@ const Toolbar = ({
       disabled: false,
       active: { textAlign: "justify" },
       split: true,
-      group: "align"
+      group: "align",
+      tooltip: 'Justify align'
     },
     {
       name: "blockquote",
       icon: Quote,
       onClick: () => editor.chain().focus().toggleBlockquote().run(),
-      disabled: false
+      disabled: false,
+      tooltip: 'Block quote'
     },
     {
       name: "codeBlock",
       icon: Code,
       onClick: () => editor.chain().focus().toggleCodeBlock().run(),
       disabled: false,
-      split: true
+      split: true,
+      tooltip: 'Code block'
     },
     {
       name: "table",
@@ -190,21 +203,24 @@ const Toolbar = ({
         handleOpenTableMenu(event);
       },
       disabled: false,
-      split: true
+      split: true,
+      tooltip: 'Table'
     },
     {
       name: "youtube",
       icon: Youtube,
       onClick: toggleYoutubeDialog,
       disabled: false,
-      split: true
+      split: true,
+      tooltip: 'Youtube'
     },
     {
       name: "undo",
       icon: Undo,
       onClick: () => editor.chain().focus().undo().run(),
       disabled: !editor.can().undo(),
-      default: true // always display
+      default: true, // always display
+      tooltip: 'Undo'
     },
     {
       name: "redo",
@@ -212,46 +228,50 @@ const Toolbar = ({
       onClick: () => editor.chain().focus().redo().run(),
       disabled: !editor.can().redo(),
       default: true, // always display
-      split: true
+      split: true,
+      tooltip: 'Redo'
     }
   ], [editor, toggleLinkDialog, toggleYoutubeDialog, handleOpenTableMenu]);
 
   return (
     <div className={cx(className, 'flexRow center')} css={classes.menu}>
       {/* heading */}
-      {showTextEditorToolbarMenu(toolbar, "heading") && <HeadingMenu editor={editor} />}
+      {showTextEditorToolbarMenu(toolbar, "heading") && <Heading editor={editor} />}
 
       {/* other options */}
       {menus.map((menu, index) => (
         showTextEditorToolbarMenu(toolbar, menu) && (
-          <IconButton
-            key={menu.name + index}
-            onClick={menu.onClick}
-            disabled={menu.disabled}
-            css={classes.button(
-              // the order is important
-              editor.isActive(menu.active || menu.name),
-              !!menu.split
-            )}
-          >
-            <Icon size={menu.iconSize}>
-              <menu.icon />
-            </Icon>
-          </IconButton>
-        )
+            <Tooltip title={menu.tooltip} key={menu.name + index}>
+              <IconButton
+                onClick={menu.onClick}
+                disabled={menu.disabled}
+                css={classes.button(
+                  // the order is important
+                  editor.isActive(menu.active || menu.name),
+                  !!menu.split
+                )}
+              >
+                <Icon size={menu.iconSize}>
+                  <menu.icon />
+                </Icon>
+              </IconButton>
+            </Tooltip>
+          )
       ))}
 
       {/* mention */}
       {showTextEditorToolbarMenu(toolbar, "mention") && (
-        <IconButton
-          onClick={() => {
-            editor.chain().focus().insertContent("@").run();
-          }}
-        >
-            <Icon>
-              <Mention />
-            </Icon>
-        </IconButton>
+        <Tooltip title="Mention user">
+          <IconButton
+            onClick={() => {
+              editor.chain().focus().insertContent("@").run();
+            }}
+          >
+              <Icon>
+                <Mention />
+              </Icon>
+          </IconButton>
+        </Tooltip>
       )}
 
       {/* youtube dialog */}
@@ -274,7 +294,9 @@ const Toolbar = ({
 
       {/* color picker */}
       {showTextEditorToolbarMenu(toolbar, "color") && (
-        <ColorPicker editor={editor} />
+        <Tooltip title="Text color">
+          <ColorPicker editor={editor} />
+        </Tooltip>
       )}
 
       {/* table menu to be opened */}

@@ -61,7 +61,7 @@ const classes = {
 type Props = {
   editor: Editor;
 };
-const HeadingMenu = ({ editor }: Props) => {
+const Heading = ({ editor }: Props) => {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(
     null
   );
@@ -89,6 +89,7 @@ const HeadingMenu = ({ editor }: Props) => {
 
   return (
     <div>
+      {/* button */}
       <button
         type="button"
         onClick={handleOpenHeadingMenu}
@@ -98,10 +99,12 @@ const HeadingMenu = ({ editor }: Props) => {
         <Typography>
           {options.find(option => option.value === selected)?.label || "Normal text"}
         </Typography>
+        {/* chevron icon */}
         <Icon>
           <ChevronDown />
         </Icon>
       </button>
+      {/* menu */}
       <Menu
         id="select-heading-menu"
         MenuListProps={{
@@ -135,4 +138,4 @@ const HeadingMenu = ({ editor }: Props) => {
   );
 };
 
-export default HeadingMenu;
+export default Heading;
