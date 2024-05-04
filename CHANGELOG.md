@@ -1,3 +1,10 @@
+## [1.3.1](https://github.com/tiavina-mika/mui-tiptap-editor/compare/v1.3.0...v1.3.1) (2024-05-04)
+
+
+### Bug Fixes
+
+* workflow ([08b7fb4](https://github.com/tiavina-mika/mui-tiptap-editor/commit/08b7fb40f026582db32a95aff63886ee0ceefcfb))
+
 # [1.3.0](https://github.com/tiavina-mika/mui-tiptap-editor/compare/v1.2.0...v1.3.0) (2024-05-04)
 
 
