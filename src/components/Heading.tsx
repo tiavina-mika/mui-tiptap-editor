@@ -50,6 +50,7 @@ const classes = {
   button: (isActive: boolean) => (theme: Theme) => ({
     backgroundColor: "transparent",
     fontWeight: 700,
+    textTransform: 'capitalize' as const,
     // TODO: may be changed later
     border: isActive ? "0px solid gray !important" : "none !important",
     borderRight: `1px solid ${theme.palette.grey[300]}`,
@@ -60,6 +61,10 @@ const classes = {
     '&:hover': {
       backgroundColor: 'transparent !important'
     }
+  }),
+  menuItem: (isActive: boolean, fontSize: number) => (theme: Theme) => ({
+    backgroundColor: isActive ? theme.palette.grey[100] : "transparent",
+    fontSize
   })
 }
 type Props = {
@@ -128,12 +133,10 @@ const Heading = ({ editor }: Props) => {
           <MenuItem
             key={index}
             onClick={() => handleSelectHeading(option.value)}
-            css={{
-              backgroundColor: editor.isActive("heading", { level: option.value })
-                ? "gray"
-                : "transparent",
-              fontSize: (10 - index) * 3
-            }}
+            css={classes.menuItem(
+              editor.isActive("heading", { level: option.value }), // isActive
+              (10 - index) * 3 // fontSize
+            )}
           >
             {option.label}
           </MenuItem>

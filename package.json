@@ -1,6 +1,6 @@
 {
   "name": "mui-tiptap-editor",
-  "version": "0.1.82",
+  "version": "0.1.83",
   "description": "Easy to use Tiptap WYSIWYG rich text editor using Material UI (MUI)",
   "keywords": [
     "mui",
@@ -54,9 +54,10 @@
     "preview": "vite preview",
     "lint": "eslint . --ext ts,tsx --fix --report-unused-disable-directives --max-warnings 0",
     "visualize": "npx vite-bundle-visualizer",
-    "publish": "yarn npm publish",
+    "publish": "yarn build && yarn npm publish",
     "copy-files": "copyfiles -u 1 src/*.css dist/",
-    "copy-files-esm": "copyfiles -u 1 src/*.css dist/esm"
+    "copy-files-esm": "copyfiles -u 1 src/*.css dist/esm",
+    "clean-cache": "yarn cache clean --all"
   },
   "dependencies": {
     "@tiptap/extension-bubble-menu": "^2.3.1",

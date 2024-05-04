@@ -7,6 +7,9 @@ export default defineConfig({
   optimizeDeps: {
     include: ['@emotion/react'],
   },
+  server: {
+    open: true,
+  },
   plugins: [
     react({
       jsxImportSource: '@emotion/react',

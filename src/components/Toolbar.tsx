@@ -46,7 +46,7 @@ const classes = {
     height: 24,
     width: 24,
     padding: 18,
-    backgroundColor: isActive ? theme.palette.primary.light : "#fff",
+    backgroundColor: isActive ? theme.palette.grey[100] : "#fff",
     "&.Mui-disabled": {
       opacity: 0.4
     }
