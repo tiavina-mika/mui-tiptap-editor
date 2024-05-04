@@ -1,3 +1,25 @@
+# [1.3.0](https://github.com/tiavina-mika/mui-tiptap-editor/compare/v1.2.0...v1.3.0) (2024-05-04)
+
+
+### Bug Fixes
+
+* example version ([3511e86](https://github.com/tiavina-mika/mui-tiptap-editor/commit/3511e86dfa951c89436813c8ccef2cdbb5943068))
+* imports ([e23e40a](https://github.com/tiavina-mika/mui-tiptap-editor/commit/e23e40aac558e3d914d8440fe674d0e8a2552fcc))
+* remove icon ([82f85a5](https://github.com/tiavina-mika/mui-tiptap-editor/commit/82f85a5ad4f84635860e3c03d55701584f3eefee))
+* toolbar icons ([5d74c70](https://github.com/tiavina-mika/mui-tiptap-editor/commit/5d74c70905a112212f6860e8a12cf6385c87fa9c))
+* update workflow ([e02179a](https://github.com/tiavina-mika/mui-tiptap-editor/commit/e02179a6b59d090d06428c58586c8dcceb46e518))
+* yarn cache ([ec914ff](https://github.com/tiavina-mika/mui-tiptap-editor/commit/ec914ff22a3ad1286f1e0179efcab5acde48c71b))
+
+
+### Features
+
+* add icon container ([0b7d00f](https://github.com/tiavina-mika/mui-tiptap-editor/commit/0b7d00fc985d340d682ee9380c27f4e0ee02aed8))
+* add tooltip ([0e8376d](https://github.com/tiavina-mika/mui-tiptap-editor/commit/0e8376dfa24126e0fb3ce28b31268c7d4fed11de))
+* change color picker icon size ([1893e60](https://github.com/tiavina-mika/mui-tiptap-editor/commit/1893e606bca6d2a91732ec4ba75b5a0866958b3c))
+* change editor styles ([9690a34](https://github.com/tiavina-mika/mui-tiptap-editor/commit/9690a3447d207fd6b56538a5bc3b069f0af4365e))
+* change text editor style ([9e78f2d](https://github.com/tiavina-mika/mui-tiptap-editor/commit/9e78f2df22024dfb48c2dddb780b66355808d508))
+* update heading selection ([6b58199](https://github.com/tiavina-mika/mui-tiptap-editor/commit/6b5819951746d83ba19ab71902f8d05a51030d3b))
+
 # [1.2.0](https://github.com/tiavina-mika/mui-tiptap-editor/compare/v1.1.20...v1.2.0) (2024-05-04)
 
 
