@@ -20,6 +20,10 @@ const defaultMenuToolbar: IEditorToolbar[] = ['bold', 'italic', 'underline', 'li
 const classes = {
   editorRoot: (theme: Theme) => ({
     paddingBottom: 0,
+    border: `1px solid ${theme.palette.grey[300]}`,
+    borderTopRightRadius: 4,
+    borderBottomRightRadius: 4,
+    borderBottomLeftRadius: 4,
     [theme.breakpoints.down('md')]: {
       paddingBottom: 40,
     },
@@ -179,14 +183,14 @@ const TextEditor = ({
                   {error}
                 </FormHelperText>
               )}
+              {editor && (
+                <Toolbar
+                  editor={editor}
+                  className={cx('stretchSelf', toolbarClassName)}
+                  toolbar={toolbar}
+                />
+              )}
             </div>
-            {editor && (
-              <Toolbar
-                editor={editor}
-                className={cx('stretchSelf', toolbarClassName)}
-                toolbar={toolbar}
-              />
-            )}
           </div>
         ) : (
           <EditorContent editor={editor} className={inputClassName} />

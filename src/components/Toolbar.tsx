@@ -32,13 +32,16 @@ import Mention from "src/icons/Mention";
 import Icon from "src/icons/Icon";
 
 const classes = {
-  menu: (theme: Theme) => ({
-    border: "1px solid " + theme.palette.grey[100]
+  toolbar: (theme: Theme) => ({
+    marginTop: -1,
+    borderTop: "1px solid " + theme.palette.grey[300],
+    paddingLeft: 8,
+    paddingRight: 8,
   }),
   button: (isActive: boolean, split: boolean) => (theme: Theme) => ({
     borderRadius: 0,
     border: "none",
-    borderRight: split ? `1px solid ${theme.palette.grey[100]}` : "none",
+    borderRight: split ? `1px solid ${theme.palette.grey[300]}` : "none",
     cursor: "pointer",
     height: 24,
     width: 24,
@@ -49,7 +52,7 @@ const classes = {
     }
   }),
   splittedBorder: (theme: Theme) => {
-    const borderColor = theme.palette.grey[100];
+    const borderColor = theme.palette.grey[300];
     return {
       borderRight: "1px solid " + borderColor
     };
@@ -235,7 +238,7 @@ const Toolbar = ({
   ], [editor, toggleLinkDialog, toggleYoutubeDialog, handleOpenTableMenu]);
 
   return (
-    <div className={cx(className, 'flexRow center')} css={classes.menu}>
+    <div className={cx(className, 'flexRow center')} css={classes.toolbar}>
       {/* heading */}
       {showTextEditorToolbarMenu(toolbar, "heading") && <Heading editor={editor} />}
 

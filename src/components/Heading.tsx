@@ -52,7 +52,7 @@ const classes = {
     fontWeight: 700,
     // TODO: may be changed later
     border: isActive ? "0px solid gray" : "none",
-    borderRight: `1px solid ${theme.palette.grey[100]}`,
+    borderRight: `1px solid ${theme.palette.grey[300]}`,
     cursor: 'pointer',
     '& .MuiTypography-root': {
       marginRight: 12

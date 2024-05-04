@@ -26,7 +26,7 @@ const classes = {
     }
   },
   colorPreview: (color: string) => ({
-    height: 4 ,
+    height: 3,
     width: 18,
     backgroundColor: color,
     marginTop: -8,
@@ -41,7 +41,7 @@ const ColorPicker = ({ editor }: Props) => {
 
   useEffect(() => {
     const currentColor = editor.getAttributes("textStyle").color;
-    setColor(currentColor);
+    setColor(currentColor || '#000000');
   }, [editor])
 
   const handleInput = (event: ChangeEvent<HTMLInputElement>) => {
