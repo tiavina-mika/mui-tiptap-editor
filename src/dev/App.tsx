@@ -5,7 +5,6 @@ import TextEditor from '../components/TextEditor';
 
 import { getTheme } from './theme.utils';
 
-
 const mentions = [
   { label: "Lea Thompson", value: "xxxx1" },
   { label: "Cyndi Lauper", value: "xxxx2" },
@@ -35,10 +34,9 @@ const mentions = [
 ];
 
 const currentUser = mentions[0];
+const theme = getTheme();
 
 const App = () => {
-  const theme = getTheme();
-
   return (
     <ThemeProvider theme={theme}>
       <EmotionThemeProvider theme={theme}>

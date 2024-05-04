@@ -1,5 +1,5 @@
 import { Editor } from "@tiptap/react";
-import { Menu, MenuItem, Fade, Typography, Theme } from "@mui/material";
+import { Menu, MenuItem, Fade, Typography, Theme, Button } from "@mui/material";
 import { Level } from "@tiptap/extension-heading";
 import { ITextEditorOption } from "../type";
 import { MouseEvent, useState } from "react";
@@ -51,11 +51,14 @@ const classes = {
     backgroundColor: "transparent",
     fontWeight: 700,
     // TODO: may be changed later
-    border: isActive ? "0px solid gray" : "none",
+    border: isActive ? "0px solid gray !important" : "none !important",
     borderRight: `1px solid ${theme.palette.grey[300]}`,
     cursor: 'pointer',
     '& .MuiTypography-root': {
       marginRight: 12
+    },
+    '&:hover': {
+      backgroundColor: 'transparent !important'
     }
   })
 }
@@ -91,11 +94,13 @@ const Heading = ({ editor }: Props) => {
   return (
     <div>
       {/* button */}
-      <button
+      <Button
         type="button"
         onClick={handleOpenHeadingMenu}
         css={classes.button(isActive(editor))}
         className="flexRow center"
+        variant="text"
+        color="inherit"
       >
         <Typography>
           {options.find(option => option.value === selected)?.label || "Normal text"}
@@ -104,7 +109,7 @@ const Heading = ({ editor }: Props) => {
         <Icon>
           <ChevronDown />
         </Icon>
-      </button>
+      </Button>
       {/* menu */}
       <Menu
         id="select-heading-menu"
