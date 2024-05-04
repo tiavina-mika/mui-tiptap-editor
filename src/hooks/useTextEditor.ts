@@ -17,11 +17,12 @@ import TableHeader from "@tiptap/extension-table-header";
 import TableRow from "@tiptap/extension-table-row";
 import CodeBlockLowlight from "@tiptap/extension-code-block-lowlight";
 import Youtube from "@tiptap/extension-youtube";
-import Mention from "@tiptap/extension-mention";
+import Mention, { MentionOptions } from "@tiptap/extension-mention";
 import Collaboration from "@tiptap/extension-collaboration";
 import CollaborationCursor from "@tiptap/extension-collaboration-cursor";
 import * as Y from "yjs";
 import { WebrtcProvider } from "y-webrtc";
+import BubbleMenu from '@tiptap/extension-bubble-menu';
 
 import { createLowlight, common } from "lowlight";
 import {
@@ -29,6 +30,8 @@ import {
   EditorOptions,
   AnyExtension,
   mergeAttributes,
+  Editor,
+  EditorEvents,
 } from '@tiptap/react';
 import StarterKit from '@tiptap/starter-kit';
 
@@ -36,6 +39,7 @@ import { useEffect } from 'react';
 import Heading from '@tiptap/extension-heading';
 import { ITextEditorOption, ITextEditorCollaborationUser } from 'src/type';
 import getSuggestion from 'src/components/mention/suggestions';
+import { Node } from '@tiptap/pm/model';
 
 const extensions = [
   Color.configure({ types: [TextStyle.name, ListItem.name] }),
@@ -94,7 +98,10 @@ const extensions = [
   CodeBlockLowlight.configure({
     lowlight: createLowlight(common),
     defaultLanguage: "javascript"
-  })
+  }),
+  BubbleMenu.configure({
+    element: document.querySelector('.bubble-menu'),
+  } as any),
 ];
 
 const CustomMention = Mention.extend({
@@ -191,7 +198,10 @@ export const useTextEditor = ({
         HTMLAttributes: {
           class: "mention"
         },
-        renderLabel({ options, node }: Record<string, any>) {
+        renderLabel({ options, node }: {
+          options: MentionOptions;
+          node: Node;
+      }) {
           return `${options.suggestion.char}${
             node.attrs.label ?? node.attrs.id.label
           }`;
@@ -208,7 +218,7 @@ export const useTextEditor = ({
       }),
       ...extensions,
     ] as AnyExtension[],
-    onUpdate: ({ editor }) => {
+    onUpdate: ({ editor }: EditorEvents['update']) => {
       const html = editor.getHTML();
       onChange?.(html);
     },
