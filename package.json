@@ -22,7 +22,7 @@
     "email": "tiavinamika@gmail.com",
     "github": "https://github.com/tiavina-mika"
   },
-  "version": "0.1.6",
+  "version": "0.1.7",
   "license": "MIT",
   "type": "module",
   "types": "./dist/index.d.ts",
@@ -54,6 +54,7 @@
     "preview": "vite preview",
     "lint": "eslint . --ext ts,tsx --fix --report-unused-disable-directives --max-warnings 0",
     "visualize": "npx vite-bundle-visualizer",
+    "publish": "yarn npm publish",
     "copy-files": "copyfiles -u 1 src/*.css dist/",
     "copy-files-esm": "copyfiles -u 1 src/*.css dist/esm"
   },
