@@ -19,6 +19,7 @@ const defaultMenuToolbar: IEditorToolbar[] = ['bold', 'italic', 'underline', 'li
 
 const classes = {
   editorRoot: (theme: Theme) => ({
+    paddingBottom: 0,
     [theme.breakpoints.down('md')]: {
       paddingBottom: 40,
     },
