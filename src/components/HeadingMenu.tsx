@@ -8,27 +8,27 @@ type IOption = ITextEditorOption<Level>;
 const options: IOption[] = [
   {
     value: 1,
-    label: "H1"
+    label: "Heading 1"
   },
   {
     value: 2,
-    label: "H2"
+    label: "Heading 2"
   },
   {
     value: 3,
-    label: "H3"
+    label: "Heading 2"
   },
   {
     value: 4,
-    label: "H4"
+    label: "Heading 3"
   },
   {
     value: 5,
-    label: "H5"
+    label: "Heading 5"
   },
   {
     value: 6,
-    label: "H6"
+    label: "Heading 6"
   }
 ];
 
@@ -61,7 +61,8 @@ const HeadingMenu = ({ editor, anchorEl, onClose }: Props) => {
           css={{
             backgroundColor: editor.isActive("heading", { level: option.value })
               ? "gray"
-              : "transparent"
+              : "transparent",
+            fontSize: (10 - index) * 3
           }}
         >
           {option.label}
