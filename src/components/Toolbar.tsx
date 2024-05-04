@@ -11,7 +11,6 @@ import ColorPicker from "./ColorPicker";
 import { IEditorToolbar } from "../type";
 import { defaultEditorToolbar, showTextEditorToolbarMenu } from "../utils/app.utils";
 import YoutubeDialog from "./YoutubeDialog";
-import Title from "../icons/Title";
 import Bold from "../icons/Bold";
 import Italic from "../icons/Italic";
 import Strike from "../icons/Strike";
@@ -270,9 +269,9 @@ const Toolbar = ({
             }}
             css={{ borderRadius: 2 }}
           >
-              <Icon size={15}>
-                <Mention />
-              </Icon>
+            <Icon size={15}>
+              <Mention />
+            </Icon>
           </IconButton>
         </Tooltip>
       )}
