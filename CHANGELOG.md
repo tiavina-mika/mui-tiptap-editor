@@ -1,3 +1,12 @@
+## [1.3.3](https://github.com/tiavina-mika/mui-tiptap-editor/compare/v1.3.2...v1.3.3) (2024-05-04)
+
+
+### Bug Fixes
+
+* import ([a8dd391](https://github.com/tiavina-mika/mui-tiptap-editor/commit/a8dd391a753103ab2f664b40cb0efe8f979405f5))
+* import ([c9a6df3](https://github.com/tiavina-mika/mui-tiptap-editor/commit/c9a6df3fdad98ffd49183dda2aa78f2cf2b8af30))
+* version ([739cece](https://github.com/tiavina-mika/mui-tiptap-editor/commit/739cece379c61fba5a1efc3793c5271476e5c884))
+
 ## [1.3.2](https://github.com/tiavina-mika/mui-tiptap-editor/compare/v1.3.1...v1.3.2) (2024-05-04)
 
 
