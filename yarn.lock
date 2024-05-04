@@ -6457,8 +6457,8 @@ __metadata:
   peerDependencies:
     "@emotion/react": ^11.11.3
     "@mui/material": ^5.15.2
-    "@tiptap/pm": ^2.2.5
-    "@tiptap/react": ^2.2.5
+    "@tiptap/pm": ^2.3.1
+    "@tiptap/react": ^2.3.1
     react: ^16.8.0 || ^17.0.2 || ^18.2.0
     react-dom: ^16.8.0 || ^17.0.2 || ^18.2.0
   languageName: unknown
