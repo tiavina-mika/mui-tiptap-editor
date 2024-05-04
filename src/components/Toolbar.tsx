@@ -301,7 +301,7 @@ const Toolbar = ({
       )}
 
       {/* table menu to be opened */}
-      {showTextEditorToolbarMenu(toolbar, "table") && (
+      {showTextEditorToolbarMenu(toolbar, "heading") && (
         <HeadingMenu
           editor={editor}
           anchorEl={headingAnchorEl}
