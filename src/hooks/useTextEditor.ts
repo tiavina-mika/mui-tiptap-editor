@@ -103,42 +103,43 @@ const extensions = [
     element: document.querySelector('.bubble-menu'),
   } as any),
 ];
-
-const CustomMention = Mention.extend({
-  // use a link (with url) instead of the default span
-  renderHTML({ node, HTMLAttributes }: Record<string, any>) {
-    return [
-      "a",
-      mergeAttributes(
-        { href: `/user/${HTMLAttributes["data-id"]}` },
-        this.options.HTMLAttributes,
-        HTMLAttributes
-      ),
-      (this.options as any)?.renderLabel({
-        options: this.options,
-        node
-      })
-    ];
-  },
-  // the attribute should be user id for exemple
-  addAttributes() {
-    return {
-      id: {
-        default: null,
-        parseHTML: (element: HTMLElement) => element.getAttribute("data-id"),
-        renderHTML: (attributes: any) => {
-          if (!attributes.id?.value) {
-            return {};
+const getCustomMention = (pathname = "/users") => {
+  return Mention.extend({
+    // use a link (with url) instead of the default span
+    renderHTML({ node, HTMLAttributes }: Record<string, any>) {
+      return [
+        "a",
+        mergeAttributes(
+          { href: `/user/${HTMLAttributes["data-id"]}` },
+          this.options.HTMLAttributes,
+          HTMLAttributes
+        ),
+        (this.options as any)?.renderLabel({
+          options: this.options,
+          node
+        })
+      ];
+    },
+    // the attribute should be user id for exemple
+    addAttributes() {
+      return {
+        id: {
+          default: null,
+          parseHTML: (element: HTMLElement) => element.getAttribute("data-id"),
+          renderHTML: (attributes: any) => {
+            if (!attributes.id?.value) {
+              return {};
+            }
+  
+            return {
+              "data-id": attributes.id.value
+            };
           }
-
-          return {
-            "data-id": attributes.id.value
-          };
         }
-      }
-    };
-  }
-});
+      };
+    }
+  });
+}
 
 const ydoc = new Y.Doc();
 const provider = new WebrtcProvider("workspace-04", ydoc);
@@ -172,6 +173,8 @@ export type TextEditorProps = {
   tab: 'editor' | 'preview';
   user?: ITextEditorOption;
   mentions?: ITextEditorOption[];
+  // url for user profile
+  userPathname?: string;
 } & Partial<EditorOptions>;
 
 export const useTextEditor = ({
@@ -182,6 +185,7 @@ export const useTextEditor = ({
   user,
   mentions,
   editable = true,
+  userPathname,
   ...editorOptions
 }: TextEditorProps) => {
   const theme = useTheme();
@@ -194,7 +198,7 @@ export const useTextEditor = ({
         placeholder,
       }),
       // collaborative editing extensions
-      CustomMention.configure({
+      getCustomMention(userPathname).configure({
         HTMLAttributes: {
           class: "mention"
         },

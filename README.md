@@ -26,7 +26,8 @@
 
 Try it yourself in this **[CodeSandbox live demo](https://codesandbox.io/s/github/tiavina-mika/mui-tiptap-editor-demo)**!
 
-https://github.com/tiavina-mika/mui-tiptap-editor/assets/42656064/cb323982-c711-4ecd-b5ef-37c8489c0540
+
+![mui-tiptap-editor demo](https://github.com/tiavina-mika/mui-tiptap-editor/assets/42656064/cb323982-c711-4ecd-b5ef-37c8489c0540)
 
 
 ## Installation

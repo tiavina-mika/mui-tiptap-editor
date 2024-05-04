@@ -95,6 +95,7 @@ const App = () => {
             tabClassName="my-tab"
             labelClassName="my-label"
             inputClassName="my-input"
+            toolbarClassName="my-toolbar"
           />
         )}
 

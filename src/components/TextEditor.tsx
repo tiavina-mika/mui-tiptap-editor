@@ -84,6 +84,8 @@ export type TextEditorProps = {
   floatingMenuToolbar?: IEditorToolbar[];
   user?: ITextEditorOption;
   mentions?: ITextEditorOption[];
+  // url for user profile
+  userPathname?: string;
 } & Partial<EditorOptions>;
 
 const TextEditor = ({
@@ -104,6 +106,7 @@ const TextEditor = ({
   labelClassName,
   user,
   mentions,
+  userPathname,
   editable = true,
   withFloatingMenu = false,
   withBubbleMenu = true,
@@ -121,6 +124,7 @@ const TextEditor = ({
     editable,
     user,
     mentions,
+    userPathname,
     ...editorOptions
   })
 
