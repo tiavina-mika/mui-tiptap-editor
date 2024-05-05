@@ -10,7 +10,7 @@ If you encounter a problem with this library or if you have a new feature you'd 
 
 ### GitHub pull requests
 
-Please leverage the repository's own tools to make sure the code is aligned with our standards. See the [Development setup](#development-setup) notes below. If you're using VSCode, it's easiest to use the recommended extensions (`.vscode/extensions.json`) to get integrated linting and autoformatting.
+Please leverage the repository's own tools to make sure the code is aligned with our standards. If you're using VSCode, it's easiest to use the recommended extensions (`.vscode/extensions.json`) to get integrated linting and autoformatting.
 
 It's recommended to run all check commands before submitting the PR (`type:check`, `format:check`, `lint:check`, `spell:check`).
 
