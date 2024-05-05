@@ -24,9 +24,10 @@
 
 ## Demo
 
-Try it yourself in this **[CodeSandbox live demo](https://codesandbox.io/s/github/tiavina-mika/mui-tiptap-editor-demo)**!
+Try it yourself in this **[CodeSandbox live demo](https://codesandbox.io/s/github/tiavina-mika/mui-tiptap-editor-demo)** or see the [Demo video](https://www.youtube.com/watch?v=_VhLVN51cwo)
 
-- [Demo video](https://www.youtube.com/watch?v=_VhLVN51cwo)
+
+<img alt="Screenshot" src="https://github.com/tiavina-mika/mui-tiptap-editor/blob/main/screenshots/screenshot.png" />
 
 ## Installation
 
@@ -40,6 +41,15 @@ or
 
 yarn  add  mui-tiptap-editor
 
+```
+Please note that [`@mui/material`](https://mui.com/material-ui/getting-started/installation/) (and their `@emotion/` peers) are peer dependencies, meaning you should ensure they are installed before installing `mui-tiptap-editor`.
+
+```shell
+npm install @mui/material @emotion/react @emotion/styled
+```
+or
+```shell
+yarn add @mui/material @emotion/react @emotion/styled
 ```
 
 ## Get started
@@ -137,6 +147,7 @@ function App () {
       tabClassName="my-tab"
       labelClassName="my-label"
       inputClassName="my-input"
+      toolbarClassName="my-toolbar"
     />
   )
 }
@@ -147,16 +158,16 @@ function App () {
 .my-tab.MuiTab-root.Mui-selected {
   background-color: pink !important;
 }
-
 .my-label {
   color: blue !important;
 }
-
 .my-input {
   border: 1px solid green;
 }
+.my-toolbar {
+  background-color: yellow;
+}
 ```
-
 
 ## Props
 
