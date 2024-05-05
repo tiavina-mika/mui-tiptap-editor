@@ -105,6 +105,7 @@ const App = () => {
             label="Content"
             mentions={mentions}
             user={currentUser}
+            userPathname="/profile"
           />
         )}
         {/* With React Hook Form */}
