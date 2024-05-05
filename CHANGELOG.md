@@ -1,3 +1,11 @@
+## [1.3.6](https://github.com/tiavina-mika/mui-tiptap-editor/compare/v1.3.5...v1.3.6) (2024-05-05)
+
+
+### Bug Fixes
+
+* font color picker ([5d64826](https://github.com/tiavina-mika/mui-tiptap-editor/commit/5d64826ed2782eddbc21428f2f51682339479dc2))
+* version ([83fc204](https://github.com/tiavina-mika/mui-tiptap-editor/commit/83fc204576070fe26f7403f43a0cb86248acb3a6))
+
 ## [1.3.5](https://github.com/tiavina-mika/mui-tiptap-editor/compare/v1.3.4...v1.3.5) (2024-05-04)
 
 
