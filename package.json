@@ -1,14 +1,14 @@
 {
   "name": "mui-tiptap-editor",
-  "version": "0.1.9",
-  "description": "Easy to use Tiptap WYSIWYG rich text editor using Material UI (MUI)",
+  "version": "0.2.0",
+  "description": "Easy to use Tiptap WYSIWYG rich text editor using Material UI (MUI) for React",
   "keywords": [
     "mui",
     "tiptap",
     "material-ui",
     "prosemirror",
     "rich text editor",
-    "rte",
+    "react text editor",
     "wysiwyg",
     "quill",
     "draftjs",
@@ -60,6 +60,7 @@
     "clean-cache": "yarn cache clean --all"
   },
   "dependencies": {
+    "@emotion/css": "^11.11.2",
     "@tiptap/extension-bubble-menu": "^2.3.1",
     "@tiptap/extension-code-block-lowlight": "^2.3.1",
     "@tiptap/extension-collaboration": "^2.3.1",
@@ -99,7 +100,6 @@
   },
   "devDependencies": {
     "@emotion/babel-plugin": "^11.11.0",
-    "@emotion/css": "^11.11.2",
     "@emotion/react": "^11.11.3",
     "@emotion/styled": "^11.11.5",
     "@mui/material": "^5.15.2",
