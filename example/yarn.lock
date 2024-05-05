@@ -351,6 +351,19 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@emotion/css@npm:^11.11.2":
+  version: 11.11.2
+  resolution: "@emotion/css@npm:11.11.2"
+  dependencies:
+    "@emotion/babel-plugin": "npm:^11.11.0"
+    "@emotion/cache": "npm:^11.11.0"
+    "@emotion/serialize": "npm:^1.1.2"
+    "@emotion/sheet": "npm:^1.2.2"
+    "@emotion/utils": "npm:^1.2.1"
+  checksum: 10c0/1300e64d60df0c88261fee614663cd5d2d0a77623dc79332814959b4486599c6fdc8c0af5d702994bf367acfcc0fb16d44b8b7935deb1ad622e588b1eb608d73
+  languageName: node
+  linkType: hard
+
 "@emotion/hash@npm:^0.9.1":
   version: 0.9.1
   resolution: "@emotion/hash@npm:0.9.1"
@@ -1997,7 +2010,7 @@ __metadata:
     eslint-plugin-prettier: "npm:^5.1.3"
     eslint-plugin-react-hooks: "npm:^4.6.0"
     eslint-plugin-react-refresh: "npm:^0.4.5"
-    mui-tiptap-editor: "npm:0.1.9"
+    mui-tiptap-editor: "npm:^0.2.0"
     prettier: "npm:^3.2.2"
     react: "npm:^18.2.0"
     react-dom: "npm:^18.2.0"
@@ -4539,10 +4552,11 @@ __metadata:
   languageName: node
   linkType: hard
 
-"mui-tiptap-editor@npm:0.1.9":
-  version: 0.1.9
-  resolution: "mui-tiptap-editor@npm:0.1.9"
+"mui-tiptap-editor@npm:^0.2.0":
+  version: 0.2.0
+  resolution: "mui-tiptap-editor@npm:0.2.0"
   dependencies:
+    "@emotion/css": "npm:^11.11.2"
     "@tiptap/extension-bubble-menu": "npm:^2.3.1"
     "@tiptap/extension-code-block-lowlight": "npm:^2.3.1"
     "@tiptap/extension-collaboration": "npm:^2.3.1"
@@ -4578,7 +4592,7 @@ __metadata:
     "@mui/material": ^5.15.2
     react: ^16.8.0 || ^17.0.2 || ^18.2.0
     react-dom: ^16.8.0 || ^17.0.2 || ^18.2.0
-  checksum: 10c0/86a83d1edfcb6665fb13906d5cfa0d9457271df5bf3ec6de29f88e4106ee4c50c68fd33b12c2fd6c677bcd9e8e55b64478efbbc74164f5bcb0ce98e9189ad530
+  checksum: 10c0/61e1fe93dd1fd290c25567e54b56659a08694dee9d3b854f115ddde798a42163317e295e5c0427ab8e3b310ff41a5bcd12f6a430d1704450ccdb2ff884484529
   languageName: node
   linkType: hard
 
