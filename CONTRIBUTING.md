@@ -12,7 +12,7 @@ If you encounter a problem with this library or if you have a new feature you'd 
 
 Please leverage the repository's own tools to make sure the code is aligned with our standards. See the [Development setup](#development-setup) notes below. If you're using VSCode, it's easiest to use the recommended extensions (`.vscode/extensions.json`) to get integrated linting and autoformatting.
 
-It's recommended to run all check commands before submitting the PR (`type:check`, `format:check`, `lint:check`).
+It's recommended to run all check commands before submitting the PR (`type:check`, `format:check`, `lint:check`, `spell:check`).
 
 ## Development setup
 
@@ -29,8 +29,15 @@ To instead test a "built" version of this package which is installed into an "ex
 When a new version should be cut since some new changes have landed on the `main` branch, do the following to publish it:
 
 1. Go to the `main` branch and pull in the latest changes.
-2. Run `npm version <major | minor | patch | premajor | preminor | prepatch | prerelease>`, depending on what's appropriate per semver conventions for the latest changes.
-   - This will create a commit that updates the `version` in `package.json`, and add a git tag for that new commit.
-3. Push the commit (ex: `git push origin main`), this will create automatically a tag
-4. The `release.yml` GitHub Actions workflow will run and should publish to npm upon completion.
-5. Once the new version has been successfully published to npm, create a "Release" in GitHub for to the newly pushed tag, per the steps [here](https://docs.github.com/en/repositories/releasing-projects-on-github/managing-releases-in-a-repository#creating-a-release), which can auto-generate release notes that can be edited and cleaned up for clarity and succinctness.
+2. Update the version in `package.json`.
+3. Commit change using (commit convention)[https://semantic-release.gitbook.io/semantic-release]
+3. Push the commit (ex: `git push origin main`)
+4. The `release.yml` GitHub Actions workflow will auto-generate a tag, change log and release note
+
+## Issue possibly encountered during installation
+- [with yarn](https://stackoverflow.com/questions/67062308/getting-yn0028-the-lockfile-would-have-been-modified-by-this-install-which-is-e)
+- solution:
+   . Remove `yarn.lock`
+   . `yarn cache clean --all`
+   . Create an empty `yarn.lock`
+   . run `yarn`

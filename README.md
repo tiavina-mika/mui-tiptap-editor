@@ -166,10 +166,10 @@ function App () {
 |toolbar|`string[]`| heading, bold, italic, strike, link, underline, image, code, orderedList, bulletList, align, codeBlock, blockquote, table, history, youtube, color, mention| The list of the menu buttons to be displayed|
 |placeholder|`string`|empty|input placeholder
 |label|`string`|empty|input label
-|error|`string`|empty| Error message to display 
+|error|`string`|empty| Error message to display
 |withFloatingMenu|`boolean`|false| Show or hide the [floating menu](https://tiptap.dev/docs/editor/api/extensions/floating-menu)
 |withBubbleMenu|`boolean`|true| Show or hide the [bubble menu](https://tiptap.dev/docs/editor/api/extensions/bubble-menu)
-|inputClassName|`string`|empty| Override input styles 
+|inputClassName|`string`|empty| Override input styles
 |toolbarClassName|`string`|empty|  Override the toolbar menu styles
 |tabsClassName|`string`|empty| Override the tabs (`preview`, `editor`) styles
 |tabClassName|`string`|empty| Override the tab (`preview` or `editor`) styles
@@ -178,7 +178,7 @@ function App () {
 |labelClassName|`string`|empty| Override the label styles
 |bubbleMenuToolbar|`string[]`|`['bold', 'italic', 'underline', 'link']`| Similar to `toolbar` props
 |floatingMenuToolbar|`string[]`|`['bold', 'italic', 'underline', 'link']`| Similar to `toolbar` props
-|mentions|`ITextEditorOption[]`|undefined| List of users to be mentionned when entering or selecting `@`
+|mentions|`ITextEditorOption[]`|undefined| List of users to be mentioned when entering or selecting `@`
 |user|`ITextEditorOption`|undefined| Current user
 |value|`string`|empty| Value of the input
 |onChange|`(value: string) => void`|-| Function to call when the input change
