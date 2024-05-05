@@ -39,6 +39,7 @@ type Props = {
 const ColorPicker = ({ editor }: Props) => {
   const [color, setColor] = useState<string>("");
 
+  // add default styles if not defined
   useEffect(() => {
     const currentColor = editor.getAttributes("textStyle").color;
     setColor(currentColor || '#000000');
@@ -52,16 +53,17 @@ const ColorPicker = ({ editor }: Props) => {
 
   return (
     <div className="flexRow center stretchSelf">
-      <label htmlFor="color-picker" className="flexCenter">
-          <Icon size={28}>
-            <Tooltip title="Text color">
-              <IconButton className="flexCenter" css={{ borderRadius: 2 }}>
-                <TextColor />
-                <div css={classes.colorPreview(color)} />
-              </IconButton>
-            </Tooltip>
+      {/* tooltip */}
+      <Tooltip title="Text color">
+        <label htmlFor="color-picker" className="flexCenter">
+          <Icon size={28} css={{ cursor: 'pointer' }}>
+            <TextColor />
+            <div css={classes.colorPreview(color)} />
           </Icon>
-      </label>
+        </label>
+      </Tooltip>
+
+      {/* input */}
       <input
         id="color-picker"
         type="color"
