@@ -52,12 +52,17 @@
     "build": "yarn clean && tsc --project tsconfig.build.json && tsc --project tsconfig.build-esm.json && yarn copy-files && yarn copy-files-esm",
     "prepare": "npm run build",
     "preview": "vite preview",
+    "type:check": "tsc --noEmit",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "lint:check": "eslint --max-warnings 0 --ext .js,.jsx,.ts,.tsx src",
     "lint": "eslint . --ext ts,tsx --fix --report-unused-disable-directives --max-warnings 0",
     "visualize": "npx vite-bundle-visualizer",
     "publish": "yarn build && yarn npm publish",
     "copy-files": "copyfiles -u 1 src/*.css dist/",
     "copy-files-esm": "copyfiles -u 1 src/*.css dist/esm",
-    "clean-cache": "yarn cache clean --all"
+    "clean-cache": "yarn cache clean --all",
+    "example": "cd example && yarn upgrade && rimraf ./example/node_modules && yarn && yarn dev"
   },
   "dependencies": {
     "@emotion/css": "^11.11.2",
