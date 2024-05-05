@@ -1,3 +1,10 @@
+# [1.7.0](https://github.com/tiavina-mika/mui-tiptap-editor/compare/v1.6.1...v1.7.0) (2024-05-05)
+
+
+### Features
+
+* add screenshot ([c76641c](https://github.com/tiavina-mika/mui-tiptap-editor/commit/c76641c6dd21b2919ca9a02e0ad1f76e0092149c))
+
 ## [1.6.1](https://github.com/tiavina-mika/mui-tiptap-editor/compare/v1.6.0...v1.6.1) (2024-05-05)
 
 
