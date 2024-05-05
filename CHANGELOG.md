@@ -1,3 +1,17 @@
+# [1.6.0](https://github.com/tiavina-mika/mui-tiptap-editor/compare/v1.5.1...v1.6.0) (2024-05-05)
+
+
+### Bug Fixes
+
+* update version ([4eb9646](https://github.com/tiavina-mika/mui-tiptap-editor/commit/4eb96461eb5f20de7d4f8f86bb56ee5eba476b72))
+
+
+### Features
+
+* add markdown link check ([bc7b77d](https://github.com/tiavina-mika/mui-tiptap-editor/commit/bc7b77d5120db770d9617a572ba92ab17df84e48))
+* update package ([2cb226a](https://github.com/tiavina-mika/mui-tiptap-editor/commit/2cb226a3f98eb7c181570e8e6d8264a4916da0d6))
+* use cspell ([6894d68](https://github.com/tiavina-mika/mui-tiptap-editor/commit/6894d68241844385d0eb917d50137b8b435a7b08))
+
 ## [1.5.1](https://github.com/tiavina-mika/mui-tiptap-editor/compare/v1.5.0...v1.5.1) (2024-05-05)
 
 
