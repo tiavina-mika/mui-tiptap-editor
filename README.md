@@ -26,7 +26,8 @@
 
 Try it yourself in this **[CodeSandbox live demo](https://codesandbox.io/s/github/tiavina-mika/mui-tiptap-editor-demo)**!
 
-https://github.com/tiavina-mika/mui-tiptap-editor/assets/42656064/cb323982-c711-4ecd-b5ef-37c8489c0540
+[![mui-tiptap-editor demo](https://img.youtube.com/vi/_VhLVN51cwo/0.jpg)](https://github.com/tiavina-mika/mui-tiptap-editor/assets/42656064/6886e1de-2367-41e8-820b-ac4782b1d15d)
+
 
 ## Installation
 
@@ -79,7 +80,7 @@ const currentUser: ITextEditorOption = mentions[0];
 
 function App() {
   return (
-    <TextEditor mentions={mentions} user={currentUser} />
+    <TextEditor mentions={mentions} user={currentUser} userPathname="/profile" />
   );
 }
 ```
@@ -93,13 +94,7 @@ See [`example/App.tsx`](..example/App.tsx) for a more thorough example of using 
 <p> Can display the menus as needed</p>
 
 ```tsx
-  import { TextEditor } from 'mui-tiptap-editor';
-
-  function App() {
-    return (
-      <TextEditor toolbar={['bold', 'italic', 'underline']} />
-    );
-  }
+  <TextEditor toolbar={['bold', 'italic', 'underline']} />
 ```
 
 ### Styles
@@ -187,4 +182,5 @@ function App () {
 |user|`ITextEditorOption`|undefined| Current user
 |value|`string`|empty| Value of the input
 |onChange|`(value: string) => void`|-| Function to call when the input change
+|userPathname|`boolean`|/user| URL pathname for the mentioned user (eg: /user/user_id)
 |...all tiptap features|[EditorOptions](https://github.com/ueberdosis/tiptap/blob/e73073c02069393d858ca7d8c44b56a651417080/packages/core/src/types.ts#L52)|empty| Can access to all tiptap `useEditor` props
