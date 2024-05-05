@@ -61,7 +61,21 @@ const classes = {
 
 export type ToolbarProps = {
   editor: Editor;
+  /**
+   * override the default class
+   */
   className?: string;
+    /**
+   * toolbar (each icon) to be displayed
+   * 
+   * possible values are: [
+   * "heading", "bold", "italic", "strike", "link", "underline", "image", "code",
+   * "orderedList", "bulletList", "align", "codeBlock", "blockquote", "table",
+   * "history", "youtube", "color", "mention"
+   * ]
+   * 
+   * default values is all the above
+   */
   toolbar?: IEditorToolbar[];
 };
 

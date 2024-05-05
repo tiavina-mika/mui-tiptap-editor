@@ -61,6 +61,12 @@ const classes = {
     '&.Mui-focusVisible': {
       backgroundColor: 'rgba(100, 95, 228, 0.32)',
     },
+  }),
+  menu: (theme: Theme) => ({
+    border: `1px solid ${theme.palette.grey[300]}`,
+    paddingLeft: 4,
+    paddingRight: 4,
+    borderRadius: 3
   })
 };
 
@@ -156,7 +162,6 @@ export type TextEditorProps = {
    * ]
    * 
    * default values is all the above
-   * 
    */
   toolbar?: IEditorToolbar[];
 
@@ -164,7 +169,6 @@ export type TextEditorProps = {
    * toolbar (each icon) to be displayed in bubble menu
    * 
    * default values are: ['bold', 'italic', 'underline', 'link']
-   * 
    */
   bubbleMenuToolbar?: IEditorToolbar[];
 
@@ -172,22 +176,18 @@ export type TextEditorProps = {
    * toolbar (each icon) to be displayed in floating menu
    * 
    * default values are: ['bold', 'italic', 'underline', 'link']
-   * 
    */
   floatingMenuToolbar?: IEditorToolbar[];
 
   /**
-   * 
    * user object for collaboration
    * the current user or selected user used for collaboration
    * 
    * eg: { label: 'John Doe', value: 'some_user_id' }
-   * 
    */
   user?: ITextEditorOption;
 
   /**
-   * 
    * list of users used for mentions
    * 
    * eg. [{ label: 'John Doe', value: 'some_user_id' }, { label: 'James Smith', value: 'some_user_id_2' }, ...]
@@ -197,7 +197,6 @@ export type TextEditorProps = {
   mentions?: ITextEditorOption[];
 
   /**
-   * 
    * user pathname for the mentioned user
    * 
    * eg. /profile
@@ -255,12 +254,17 @@ const TextEditor = ({
 
   return (
     <div className={rootClassName}>
-      {/* ----------- tabs ----------- */}
+      {/* ---------------------------- */}
+      {/* ----------- label ---------- */}
+      {/* ---------------------------- */}
       {label && (
         <Typography css={classes.label} className={labelClassName}>
           {label}
         </Typography>
       )}
+      {/* ---------------------------- */}
+      {/* ------------ tabs ---------- */}
+      {/* ---------------------------- */}
       <Tabs
         value={tab}
         onChange={handleTabChange}
@@ -272,6 +276,9 @@ const TextEditor = ({
         <Tab css={classes.tab} label="Editor" value="editor" className={tabClassName} />
         <Tab css={classes.tab} label="Preview" value="preview" className={tabClassName} />
       </Tabs>
+      {/* ---------------------------- */}
+      {/* ----------- editor --------- */}
+      {/* ---------------------------- */}
       {tab === 'editor'
         ? (
           <div className={cx('positionRelative flexColumn tiptap', inputClassName)} css={classes.input}>
@@ -281,6 +288,7 @@ const TextEditor = ({
                   <Toolbar
                     editor={editor}
                     toolbar={floatingMenuToolbar || defaultMenuToolbar}
+                    css={classes.menu}
                   />
                 </FloatingMenu>
               )}
@@ -289,6 +297,7 @@ const TextEditor = ({
                   <Toolbar
                     editor={editor}
                     toolbar={bubbleMenuToolbar || defaultMenuToolbar}
+                    css={classes.menu}
                   />
                 </BubbleMenu>
               )}
@@ -308,6 +317,9 @@ const TextEditor = ({
               )}
             </div>
           </div>
+        // ---------------------------- //
+        // ----------- preview -------- //
+        // ---------------------------- //
         ) : (
           <EditorContent editor={editor} className={inputClassName} />
         )
