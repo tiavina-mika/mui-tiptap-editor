@@ -1,3 +1,10 @@
+## [1.3.7](https://github.com/tiavina-mika/mui-tiptap-editor/compare/v1.3.6...v1.3.7) (2024-05-05)
+
+
+### Bug Fixes
+
+* alignment ([2085d6d](https://github.com/tiavina-mika/mui-tiptap-editor/commit/2085d6d9d27014997f28196a7c119e1d6230399a))
+
 ## [1.3.6](https://github.com/tiavina-mika/mui-tiptap-editor/compare/v1.3.5...v1.3.6) (2024-05-05)
 
 
