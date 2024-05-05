@@ -12,7 +12,7 @@ If you encounter a problem with this library or if you have a new feature you'd 
 
 Please leverage the repository's own tools to make sure the code is aligned with our standards. If you're using VSCode, it's easiest to use the recommended extensions (`.vscode/extensions.json`) to get integrated linting and autoformatting.
 
-It's recommended to run all check commands before submitting the PR (`type:check`, `format:check`, `lint:check`, `spell:check`).
+It's recommended to run all check commands before submitting the PR (`type:check`, `format:check`, `lint:check`, `spell:check` and `yarn lint`).
 
 ## Development setup
 
