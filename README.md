@@ -12,6 +12,7 @@
 <details>
 
 - [Demo](#demo)
+
 - [Installation](#installation)
 
 - [Get started](#get-started)
@@ -19,6 +20,8 @@
 - [Customization](#customization)
 
 - [Props](#props)
+
+- [Contributing](#contributing)
 
 </details>
 
@@ -194,3 +197,7 @@ function App () {
 |onChange|`(value: string) => void`|-| Function to call when the input change
 |userPathname|`boolean`|/user| URL pathname for the mentioned user (eg: /user/user_id)
 |...all tiptap features|[EditorOptions](https://github.com/ueberdosis/tiptap/blob/e73073c02069393d858ca7d8c44b56a651417080/packages/core/src/types.ts#L52)|empty| Can access to all tiptap `useEditor` props
+
+## Contributing
+
+Get started [here](./CONTRIBUTING.md).

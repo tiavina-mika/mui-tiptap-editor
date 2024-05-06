@@ -93,8 +93,6 @@
     "@tiptap/starter-kit": "^2.3.1",
     "@tiptap/suggestion": "^2.3.1",
     "lowlight": "3.1.0",
-    "vite": "5.0.8",
-    "vite-tsconfig-paths": "^4.3.1",
     "y-prosemirror": "^1.2.3",
     "y-webrtc": "^10.3.0",
     "yjs": "^13.6.15"
@@ -141,7 +139,9 @@
     "react-dom": "^18.2.0",
     "rimraf": "^5.0.5",
     "semantic-release": "^23.0.8",
-    "typescript": "^5.2.2"
+    "typescript": "^5.2.2",
+    "vite": "5.0.8",
+    "vite-tsconfig-paths": "^4.3.1"
   },
   "packageManager": "yarn@4.2.1"
 }
