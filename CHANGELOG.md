@@ -1,3 +1,10 @@
+## [1.8.2](https://github.com/tiavina-mika/mui-tiptap-editor/compare/v1.8.1...v1.8.2) (2024-05-06)
+
+
+### Performance Improvements
+
+* vite as dev dependecies ([acb5737](https://github.com/tiavina-mika/mui-tiptap-editor/commit/acb5737055596ae6ea79ff7c3238d93f1ec0c0f3))
+
 ## [1.8.1](https://github.com/tiavina-mika/mui-tiptap-editor/compare/v1.8.0...v1.8.1) (2024-05-05)
 
 
