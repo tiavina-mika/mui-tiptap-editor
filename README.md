@@ -200,4 +200,4 @@ function App () {
 
 ## Contributing
 
-Get started [here](./CONTRIBUTING.md).
+Get started [here](https://github.com/tiavina-mika/mui-tiptap-editor/blob/main/CONTRIBUTING.md).

@@ -18,7 +18,7 @@ See [MUI installation](https://mui.com/material-ui/getting-started/installation/
 
 ### To Reproduce
 
-Please include a CodeSandbox demo of the problem if possible. (You can fork [this CodeSandbox](https://codesandbox.io/s/github/tiavina-mika/mui-tiptpa-editor-bug-template).)
+Please include a CodeSandbox demo of the problem if possible. (You can fork [this CodeSandbox](https://codesandbox.io/s/github/tiavina-mika/mui-tiptap-editor-bug-template).)
 
 Steps to reproduce the behavior:
 
