@@ -230,11 +230,11 @@ export const useTextEditor = ({
 
   // set initial value for edition even if it's already set (below)
   useEffect(() => {
-    if (!(editor && value)) return;
+    if (!editor) return;
+    if (!(value && editor.isEmpty)) return;
     editor.commands.setContent(value);
     // !important: to avoid update for each taping, the value should be excluded from the dependencies
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [editor]);
+  }, [editor, value]);
 
   /**
    * change the editable state of the editor on the fly
