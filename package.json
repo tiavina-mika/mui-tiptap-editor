@@ -1,6 +1,6 @@
 {
   "name": "mui-tiptap-editor",
-  "version": "0.3.4",
+  "version": "0.3.5",
   "description": "Easy to use Tiptap WYSIWYG rich text editor using Material UI (MUI) for React",
   "keywords": [
     "mui",
@@ -60,7 +60,7 @@
     "md-link:check": "markdown-link-check -v -p README.md -v -p CONTRIBUTING.md -v -p .github/**/*.md -c .markdown-link-check-config.json",
     "spell:check": "cspell \"{README.md,CONTRIBUTING.md,.github/*.md}\"",
     "visualize": "npx vite-bundle-visualizer",
-    "publish": "yarn build && yarn npm publish",
+    "publish": "yarn build && yarn npm publish && yarn example",
     "copy-files": "copyfiles -u 1 src/*.css dist/",
     "copy-files-esm": "copyfiles -u 1 src/*.css dist/esm",
     "clean-cache": "yarn cache clean --all",
