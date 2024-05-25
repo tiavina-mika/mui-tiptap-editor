@@ -30,11 +30,11 @@ const options: IOption[] = [
   },
   {
     value: 3,
-    label: "Heading 2"
+    label: "Heading 3"
   },
   {
     value: 4,
-    label: "Heading 3"
+    label: "Heading 4"
   },
   {
     value: 5,
@@ -82,7 +82,7 @@ const Heading = ({ editor }: Props) => {
   const handleOpenHeadingMenu = (event: MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
   };
-  
+
   const handleClose = () => {
     setAnchorEl(null);
   };
