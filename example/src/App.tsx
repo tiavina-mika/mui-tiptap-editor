@@ -1,17 +1,18 @@
 
 import { Container, CssBaseline, Tab, Tabs, ThemeProvider, createTheme } from '@mui/material';
-import { SyntheticEvent, useState } from 'react';
+import { SyntheticEvent, useEffect, useState } from 'react';
 import { TextEditor, TextEditorReadOnly } from 'mui-tiptap-editor';
 import WithHookForm from './WithHookForm';
 
 const tabs = [
-  'Simple input',
-  'Select toolbar',
+  'Simple',
+  'Toolbar',
   'Read only',
   'Custom global styles',
   'Each element styles',
   'Mentions',
-  'With React Hook Form'
+  'Async initial value',
+  'React Hook Form'
 ];
 
 const mentions = [
@@ -44,15 +45,36 @@ const mentions = [
 
 const currentUser = mentions[0];
 
+
 const theme = createTheme({
   palette: {
     mode: 'light',
   },
 });
 
+/**
+ * mock long promise
+ * mainly for data from API for example
+ * @param time
+ * @returns
+ */
+const delay = (time: number) => new Promise((resolve) => {
+  setTimeout(resolve, time);
+});
+
 const App = () => {
   const [tab, setTab] = useState<number>(0);
-  
+  const [asyncDefaultValue, setAsyncDefaultValue] = useState<string>('');
+
+  // load async default value
+  useEffect(() => {
+    const fetchData = async () => {
+      await delay(1000)
+      setAsyncDefaultValue('<p>Initial value from API for example</p>')
+    }
+    fetchData()
+  }, [])
+
   const handleChange = (_: SyntheticEvent, newValue: number) => {
     setTab(newValue);
   };
@@ -108,8 +130,10 @@ const App = () => {
             userPathname="/profile"
           />
         )}
+        {/* With default async value */}
+        {tab === 6 && <TextEditor value={asyncDefaultValue} />}
         {/* With React Hook Form */}
-        {tab === 6 && <WithHookForm />}
+        {tab === 7 && <WithHookForm />}
       </Container>
     </ThemeProvider>
   )
