@@ -23,7 +23,6 @@ import CollaborationCursor from "@tiptap/extension-collaboration-cursor";
 import * as Y from "yjs";
 import { WebrtcProvider } from "y-webrtc";
 import BubbleMenu from '@tiptap/extension-bubble-menu';
-
 import { createLowlight, common } from "lowlight";
 import {
   useEditor,
@@ -74,7 +73,7 @@ const extensions = [
       keepMarks: true,
       keepAttributes: false, // TODO : Making this as `false` becase marks are not preserved when I try to preserve attrs, awaiting a bit of help
     },
-    // history: false, // important because history will now be handled by Y.js
+    history: false, // important because history will now be handled by Y.js
     codeBlock: false
   }),
   Heading.configure({
@@ -101,6 +100,7 @@ const extensions = [
   BubbleMenu.configure({
     element: document.querySelector('.bubble-menu'),
   } as any),
+  // History
 ];
 const getCustomMention = (pathname = "/users") => {
   return Mention.extend({
@@ -109,7 +109,7 @@ const getCustomMention = (pathname = "/users") => {
       return [
         "a",
         mergeAttributes(
-          { href: `/user/${HTMLAttributes["data-id"]}` },
+          { href: `${pathname}/${HTMLAttributes["data-id"]}` },
           this.options.HTMLAttributes,
           HTMLAttributes
         ),
@@ -129,7 +129,7 @@ const getCustomMention = (pathname = "/users") => {
             if (!attributes.id?.value) {
               return {};
             }
-  
+
             return {
               "data-id": attributes.id.value
             };
@@ -141,7 +141,7 @@ const getCustomMention = (pathname = "/users") => {
 }
 
 const ydoc = new Y.Doc();
-const provider = new WebrtcProvider("workspace-04", ydoc);
+const provider = new WebrtcProvider("webrtc-chanel", ydoc);
 
 const CustomCollaborationCursor = CollaborationCursor.extend({
   addOptions() {
