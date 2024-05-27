@@ -13,7 +13,7 @@ import { useState, SyntheticEvent, ReactNode } from 'react';
 import { useTextEditor } from "../hooks/useTextEditor";
 
 import Toolbar from './Toolbar';
-import { IEditorToolbar, ITextEditorOption } from "../type";
+import { IEditorToolbar } from "../type";
 
 const defaultMenuToolbar: IEditorToolbar[] = ['bold', 'italic', 'underline', 'link'];
 
@@ -49,7 +49,7 @@ const classes = {
   },
   tab: (theme: Theme) => ({
     textTransform: 'none' as const,
-    fontWeight: theme.typography.fontWeightRegular,
+    fontWeight: 500,
     fontSize: theme.typography.pxToRem(15),
     marginRight: theme.spacing(1),
     '&.Mui-selected': {
@@ -70,6 +70,12 @@ const classes = {
   })
 };
 
+export interface ITextEditorOption<T = string> {
+  label: string;
+  value: T,
+  icon?: string | ReactNode;
+  hide?: boolean;
+}
 
 export type TextEditorProps = {
   placeholder?: string;
@@ -100,7 +106,7 @@ export type TextEditorProps = {
   /**
    * input style override
    * it's the responsible of the whole input grey border and border radius
-   * 
+   *
    */
   inputClassName?: string;
 
@@ -154,27 +160,27 @@ export type TextEditorProps = {
 
   /**
    * toolbar (each icon) to be displayed
-   * 
+   *
    * possible values are: [
    * "heading", "bold", "italic", "strike", "link", "underline", "image", "code",
    * "orderedList", "bulletList", "align", "codeBlock", "blockquote", "table",
    * "history", "youtube", "color", "mention"
    * ]
-   * 
+   *
    * default values is all the above
    */
   toolbar?: IEditorToolbar[];
 
   /**
    * toolbar (each icon) to be displayed in bubble menu
-   * 
+   *
    * default values are: ['bold', 'italic', 'underline', 'link']
    */
   bubbleMenuToolbar?: IEditorToolbar[];
 
    /**
    * toolbar (each icon) to be displayed in floating menu
-   * 
+   *
    * default values are: ['bold', 'italic', 'underline', 'link']
    */
   floatingMenuToolbar?: IEditorToolbar[];
@@ -182,14 +188,14 @@ export type TextEditorProps = {
   /**
    * user object for collaboration
    * the current user or selected user used for collaboration
-   * 
+   *
    * eg: { label: 'John Doe', value: 'some_user_id' }
    */
   user?: ITextEditorOption;
 
   /**
    * list of users used for mentions
-   * 
+   *
    * eg. [{ label: 'John Doe', value: 'some_user_id' }, { label: 'James Smith', value: 'some_user_id_2' }, ...]
    * NOTE: the value should be unique, it's used for profile url
    * ex: /profile/:id or /profile/:slug, :id or :slug here is the value
@@ -198,7 +204,7 @@ export type TextEditorProps = {
 
   /**
    * user pathname for the mentioned user
-   * 
+   *
    * eg. /profile
    * so the final url will be /profile/:id
    * :id here is the value in mentions array (see above)

@@ -1,11 +1,6 @@
 import { ReactNode } from "react";
 
-export interface ITextEditorOption<T = string> {
-  label: string;
-  value: T,
-  icon?: string | ReactNode;
-  hide?: boolean;
-}
+
 
 export interface ITextEditorCollaborationUser {
   name: string;
