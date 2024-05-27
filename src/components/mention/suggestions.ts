@@ -3,7 +3,7 @@ import tippy from "tippy.js";
 
 import Mentions from "./Mentions";
 import { MentionOptions } from "@tiptap/extension-mention";
-import { ITextEditorOption } from "../../type";
+import { ITextEditorOption } from "../TextEditor";
 
 /**
  * Get suggestion for mention
