@@ -1,6 +1,6 @@
 {
   "name": "mui-tiptap-editor",
-  "version": "0.3.5",
+  "version": "0.4.1",
   "description": "Easy to use Tiptap WYSIWYG rich text editor using Material UI (MUI) for React",
   "keywords": [
     "mui",
@@ -49,7 +49,7 @@
   "scripts": {
     "clean": "rimraf dist",
     "dev": "vite",
-    "build": "yarn clean && tsc --project tsconfig.build.json && tsc --project tsconfig.build-esm.json && yarn copy-files && yarn copy-files-esm",
+    "build": "yarn clean && tsc --project tsconfig.build.json && tsc --project tsconfig.build-esm.json && yarn copy-files && yarn copy-files-esm && yarn fixImportExtension",
     "prepare": "npm run build",
     "preview": "vite preview",
     "type:check": "tsc --noEmit",
@@ -64,6 +64,7 @@
     "copy-files": "copyfiles -u 1 src/*.css dist/",
     "copy-files-esm": "copyfiles -u 1 src/*.css dist/esm",
     "clean-cache": "yarn cache clean --all",
+    "fixImportExtension": "ts-add-js-extension --dir=dist",
     "example": "cd example && yarn upgrade && rimraf ./example/node_modules && yarn && yarn dev"
   },
   "dependencies": {
@@ -139,6 +140,7 @@
     "react-dom": "^18.2.0",
     "rimraf": "^5.0.5",
     "semantic-release": "^23.0.8",
+    "ts-add-js-extension": "^1.6.4",
     "typescript": "^5.2.2",
     "vite": "5.0.8",
     "vite-tsconfig-paths": "^4.3.1"
