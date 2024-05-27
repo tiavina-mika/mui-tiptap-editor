@@ -17,3 +17,8 @@
 .my-input {
   border: 1px solid green;
 }
+
+.my-toolbar {
+  margin-top: -5px;
+}
+

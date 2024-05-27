@@ -17,25 +17,28 @@ import TableHeader from "@tiptap/extension-table-header";
 import TableRow from "@tiptap/extension-table-row";
 import CodeBlockLowlight from "@tiptap/extension-code-block-lowlight";
 import Youtube from "@tiptap/extension-youtube";
-import Mention from "@tiptap/extension-mention";
+import Mention, { MentionOptions } from "@tiptap/extension-mention";
 import Collaboration from "@tiptap/extension-collaboration";
 import CollaborationCursor from "@tiptap/extension-collaboration-cursor";
 import * as Y from "yjs";
 import { WebrtcProvider } from "y-webrtc";
-
+import BubbleMenu from '@tiptap/extension-bubble-menu';
 import { createLowlight, common } from "lowlight";
 import {
   useEditor,
   EditorOptions,
   AnyExtension,
   mergeAttributes,
+  EditorEvents,
 } from '@tiptap/react';
 import StarterKit from '@tiptap/starter-kit';
 
 import { useEffect } from 'react';
 import Heading from '@tiptap/extension-heading';
-import { ITextEditorOption, ITextEditorCollaborationUser } from 'src/type';
-import getSuggestion from 'src/components/mention/suggestions';
+import { ITextEditorCollaborationUser } from '../type';
+import { Node } from '@tiptap/pm/model';
+import getSuggestion from '../components/mention/suggestions';
+import { ITextEditorOption } from '../components/TextEditor';
 
 const extensions = [
   Color.configure({ types: [TextStyle.name, ListItem.name] }),
@@ -71,7 +74,7 @@ const extensions = [
       keepMarks: true,
       keepAttributes: false, // TODO : Making this as `false` becase marks are not preserved when I try to preserve attrs, awaiting a bit of help
     },
-    // history: false, // important because history will now be handled by Y.js
+    history: false, // important because history will now be handled by Y.js
     codeBlock: false
   }),
   Heading.configure({
@@ -94,47 +97,52 @@ const extensions = [
   CodeBlockLowlight.configure({
     lowlight: createLowlight(common),
     defaultLanguage: "javascript"
-  })
+  }),
+  BubbleMenu.configure({
+    element: document.querySelector('.bubble-menu'),
+  } as any),
+  // History
 ];
+const getCustomMention = (pathname = "/users") => {
+  return Mention.extend({
+    // use a link (with url) instead of the default span
+    renderHTML({ node, HTMLAttributes }: Record<string, any>) {
+      return [
+        "a",
+        mergeAttributes(
+          { href: `${pathname}/${HTMLAttributes["data-id"]}` },
+          this.options.HTMLAttributes,
+          HTMLAttributes
+        ),
+        (this.options as any)?.renderLabel({
+          options: this.options,
+          node
+        })
+      ];
+    },
+    // the attribute should be user id for exemple
+    addAttributes() {
+      return {
+        id: {
+          default: null,
+          parseHTML: (element: HTMLElement) => element.getAttribute("data-id"),
+          renderHTML: (attributes: any) => {
+            if (!attributes.id?.value) {
+              return {};
+            }
 
-const CustomMention = Mention.extend({
-  // use a link (with url) instead of the default span
-  renderHTML({ node, HTMLAttributes }: Record<string, any>) {
-    return [
-      "a",
-      mergeAttributes(
-        { href: `/user/${HTMLAttributes["data-id"]}` },
-        this.options.HTMLAttributes,
-        HTMLAttributes
-      ),
-      (this.options as any)?.renderLabel({
-        options: this.options,
-        node
-      })
-    ];
-  },
-  // the attribute should be user id for exemple
-  addAttributes() {
-    return {
-      id: {
-        default: null,
-        parseHTML: (element: HTMLElement) => element.getAttribute("data-id"),
-        renderHTML: (attributes: any) => {
-          if (!attributes.id?.value) {
-            return {};
+            return {
+              "data-id": attributes.id.value
+            };
           }
-
-          return {
-            "data-id": attributes.id.value
-          };
         }
-      }
-    };
-  }
-});
+      };
+    }
+  });
+}
 
 const ydoc = new Y.Doc();
-const provider = new WebrtcProvider("workspace-04", ydoc);
+const provider = new WebrtcProvider("webrtc-chanel", ydoc);
 
 const CustomCollaborationCursor = CollaborationCursor.extend({
   addOptions() {
@@ -165,6 +173,8 @@ export type TextEditorProps = {
   tab: 'editor' | 'preview';
   user?: ITextEditorOption;
   mentions?: ITextEditorOption[];
+  // url for user profile
+  userPathname?: string;
 } & Partial<EditorOptions>;
 
 export const useTextEditor = ({
@@ -175,6 +185,7 @@ export const useTextEditor = ({
   user,
   mentions,
   editable = true,
+  userPathname,
   ...editorOptions
 }: TextEditorProps) => {
   const theme = useTheme();
@@ -187,11 +198,14 @@ export const useTextEditor = ({
         placeholder,
       }),
       // collaborative editing extensions
-      CustomMention.configure({
+      getCustomMention(userPathname).configure({
         HTMLAttributes: {
           class: "mention"
         },
-        renderLabel({ options, node }: Record<string, any>) {
+        renderLabel({ options, node }: {
+          options: MentionOptions;
+          node: Node;
+      }) {
           return `${options.suggestion.char}${
             node.attrs.label ?? node.attrs.id.label
           }`;
@@ -208,7 +222,7 @@ export const useTextEditor = ({
       }),
       ...extensions,
     ] as AnyExtension[],
-    onUpdate: ({ editor }) => {
+    onUpdate: ({ editor }: EditorEvents['update']) => {
       const html = editor.getHTML();
       onChange?.(html);
     },
@@ -217,11 +231,11 @@ export const useTextEditor = ({
 
   // set initial value for edition even if it's already set (below)
   useEffect(() => {
-    if (!(editor && value)) return;
+    if (!editor) return;
+    if (!(value && editor.isEmpty)) return;
     editor.commands.setContent(value);
     // !important: to avoid update for each taping, the value should be excluded from the dependencies
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [editor]);
+  }, [editor, value]);
 
   /**
    * change the editable state of the editor on the fly

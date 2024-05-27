@@ -1,17 +1,18 @@
 
 import { Container, CssBaseline, Tab, Tabs, ThemeProvider, createTheme } from '@mui/material';
-import { SyntheticEvent, useState } from 'react';
+import { SyntheticEvent, useEffect, useState } from 'react';
 import { TextEditor, TextEditorReadOnly } from 'mui-tiptap-editor';
 import WithHookForm from './WithHookForm';
 
 const tabs = [
-  'Simple input',
-  'Select toolbar',
+  'Simple',
+  'Toolbar',
   'Read only',
   'Custom global styles',
   'Each element styles',
   'Mentions',
-  'With React Hook Form'
+  'Async initial value',
+  'React Hook Form'
 ];
 
 const mentions = [
@@ -44,15 +45,36 @@ const mentions = [
 
 const currentUser = mentions[0];
 
+
 const theme = createTheme({
   palette: {
     mode: 'light',
   },
 });
 
+/**
+ * mock long promise
+ * mainly for data from API for example
+ * @param time
+ * @returns
+ */
+const delay = (time: number) => new Promise((resolve) => {
+  setTimeout(resolve, time);
+});
+
 const App = () => {
   const [tab, setTab] = useState<number>(0);
-  
+  const [asyncDefaultValue, setAsyncDefaultValue] = useState<string>('');
+
+  // load async default value
+  useEffect(() => {
+    const fetchData = async () => {
+      await delay(1000)
+      setAsyncDefaultValue('<p>Initial value from API for example</p>')
+    }
+    fetchData()
+  }, [])
+
   const handleChange = (_: SyntheticEvent, newValue: number) => {
     setTab(newValue);
   };
@@ -62,35 +84,32 @@ const App = () => {
       <CssBaseline />
       <Container>
         {/* tabs */}
-        <Tabs value={setTab} onChange={handleChange} aria-label="tabs">
+        <Tabs value={tab} onChange={handleChange} aria-label="tabs"sx={{ mb: 2 }}>
           {tabs.map((label, index) => (
             <Tab key={index} label={label} value={index} />
           ))}
         </Tabs>
+        {/* ------ tabs panel ------ */}
+        {/* Simple input */}
+        {tab === 0 && <TextEditor placeholder='Type something here...' />}
 
-        {tab === 0 && (
-          <TextEditor
-            placeholder='Type something here...'
-            toolbar={['bold', 'italic', 'underline']}
-          />
-        )}
+        {/* Select toolbar */}
         {tab === 1 && (
           <TextEditor
             placeholder='Type something here...'
             toolbar={['bold', 'italic', 'underline']}
           />
         )}
-        {tab === 2 && (
-          <TextEditorReadOnly
-            value="<p>Hello word!</p>"
-          />
-        )}
+        {/* Read only */}
+        {tab === 2 && <TextEditorReadOnly value="<p>Hello word!</p>" />}
+        {/* Custom global styles */}
         {tab === 3 && (
           <TextEditor
             value="<p>Hello word!</p>"
             rootClassName="root"
           />
         )}
+        {/* Each element styles */}
         {tab === 4 && (
           <TextEditor
             value="<p>Hello word!</p>"
@@ -98,16 +117,23 @@ const App = () => {
             tabClassName="my-tab"
             labelClassName="my-label"
             inputClassName="my-input"
+            toolbarClassName="my-toolbar"
           />
         )}
+
+        {/* mentions */}
         {tab === 5 && (
           <TextEditor
             label="Content"
             mentions={mentions}
             user={currentUser}
+            userPathname="/profile"
           />
         )}
-        {tab === 6 && <WithHookForm />}
+        {/* With default async value */}
+        {tab === 6 && <TextEditor value={asyncDefaultValue} />}
+        {/* With React Hook Form */}
+        {tab === 7 && <WithHookForm />}
       </Container>
     </ThemeProvider>
   )

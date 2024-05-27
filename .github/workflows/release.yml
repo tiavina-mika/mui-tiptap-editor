@@ -36,8 +36,10 @@ jobs:
 
       - name: Replace branch name in branches array
         run: sed -i 's|'current-branch'|'${{ github.ref_name }}'|' .releaserc
+        
+      - name: Install dependencies
+        run: yarn
 
-      - run: yarn
       # for Yarn v1, use `yarn publish` instead
       # - run: yarn npm publish // if using yarn
       - name: Release
@@ -46,4 +48,3 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
         run: npx semantic-release
-

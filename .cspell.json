@@ -1,0 +1,35 @@
+{
+  "version": "0.2",
+  "language": "en",
+  "words": [
+    "colord",
+    "contenteditable",
+    "dropcursor",
+    "esbuild",
+    "gapcursor",
+    "keymap",
+    "queueMicrotask",
+    "mui-tiptap",
+    "mui",
+    "octocat",
+    "premajor",
+    "preminor",
+    "prepatch",
+    "prosemirror",
+    "selectednode",
+    "strikethrough",
+    "tinycolor",
+    "Tiptap",
+    "tiptap",
+    "Cyndi",
+    "Lauper"
+  ],
+  "flagWords": [],
+  "ignorePaths": [
+    "package.json",
+    "package-lock.json",
+    "yarn.lock",
+    "tsconfig.json",
+    "node_modules/**"
+  ]
+}

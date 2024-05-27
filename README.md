@@ -11,6 +11,7 @@
 
 <details>
 
+- [Demo](#demo)
 
 - [Installation](#installation)
 
@@ -19,8 +20,17 @@
 - [Customization](#customization)
 
 - [Props](#props)
-- 
+
+- [Contributing](#contributing)
+
 </details>
+
+## Demo
+
+Try it yourself in this **[CodeSandbox live demo](https://codesandbox.io/s/github/tiavina-mika/mui-tiptap-editor-demo)** or see the [Demo video](https://www.youtube.com/watch?v=_VhLVN51cwo)
+
+
+<img alt="Screenshot" src="https://github.com/tiavina-mika/mui-tiptap-editor/blob/main/screenshots/screenshot.png" />
 
 ## Installation
 
@@ -34,6 +44,15 @@ or
 
 yarn  add  mui-tiptap-editor
 
+```
+Please note that [`@mui/material`](https://mui.com/material-ui/getting-started/installation/) (and their `@emotion/` peers) are peer dependencies, meaning you should ensure they are installed before installing `mui-tiptap-editor`.
+
+```shell
+npm install @mui/material @emotion/react @emotion/styled
+```
+or
+```shell
+yarn add @mui/material @emotion/react @emotion/styled
 ```
 
 ## Get started
@@ -73,12 +92,12 @@ const currentUser: ITextEditorOption = mentions[0];
 
 function App() {
   return (
-    <TextEditor mentions={mentions} user={currentUser} />
+    <TextEditor mentions={mentions} user={currentUser} userPathname="/profile" />
   );
 }
 ```
 
-See [`example/App.tsx`](..example/App.tsx) for a more thorough example of using `TextEditor`.
+See [`example/App.tsx`](https://github.com/tiavina-mika/mui-tiptap-editor/tree/main/example) for a more thorough example of using `TextEditor`.
 
 
 ## Customization
@@ -87,13 +106,7 @@ See [`example/App.tsx`](..example/App.tsx) for a more thorough example of using 
 <p> Can display the menus as needed</p>
 
 ```tsx
-  import { TextEditor } from 'mui-tiptap-editor';
-
-  function App() {
-    return (
-      <TextEditor toolbar={['bold', 'italic', 'underline']} />
-    );
-  }
+  <TextEditor toolbar={['bold', 'italic', 'underline']} />
 ```
 
 ### Styles
@@ -137,6 +150,7 @@ function App () {
       tabClassName="my-tab"
       labelClassName="my-label"
       inputClassName="my-input"
+      toolbarClassName="my-toolbar"
     />
   )
 }
@@ -147,28 +161,28 @@ function App () {
 .my-tab.MuiTab-root.Mui-selected {
   background-color: pink !important;
 }
-
 .my-label {
   color: blue !important;
 }
-
 .my-input {
   border: 1px solid green;
 }
+.my-toolbar {
+  background-color: yellow;
+}
 ```
-
 
 ## Props
 
 |props |type                          | Default value                         | Description |
 |----------------|-------------------------------|-----------------------------|-----------------------------|
-|toolbar|`string[]`| heading, bold, italic, strike, link, underline, image, code, orderedList, bulletList, align, codeBlock, blockquote, table, history, youtube, color, mention, ai| The list of the menu buttons to be displayed|
+|toolbar|`string[]`| heading, bold, italic, strike, link, underline, image, code, orderedList, bulletList, align, codeBlock, blockquote, table, history, youtube, color, mention| The list of the menu buttons to be displayed|
 |placeholder|`string`|empty|input placeholder
 |label|`string`|empty|input label
-|error|`string`|empty| Error message to display 
+|error|`string`|empty| Error message to display
 |withFloatingMenu|`boolean`|false| Show or hide the [floating menu](https://tiptap.dev/docs/editor/api/extensions/floating-menu)
 |withBubbleMenu|`boolean`|true| Show or hide the [bubble menu](https://tiptap.dev/docs/editor/api/extensions/bubble-menu)
-|inputClassName|`string`|empty| Override input styles 
+|inputClassName|`string`|empty| Override input styles
 |toolbarClassName|`string`|empty|  Override the toolbar menu styles
 |tabsClassName|`string`|empty| Override the tabs (`preview`, `editor`) styles
 |tabClassName|`string`|empty| Override the tab (`preview` or `editor`) styles
@@ -177,8 +191,13 @@ function App () {
 |labelClassName|`string`|empty| Override the label styles
 |bubbleMenuToolbar|`string[]`|`['bold', 'italic', 'underline', 'link']`| Similar to `toolbar` props
 |floatingMenuToolbar|`string[]`|`['bold', 'italic', 'underline', 'link']`| Similar to `toolbar` props
-|mentions|`ITextEditorOption[]`|undefined| List of users to be mentionned when entering or selecting `@`
+|mentions|`ITextEditorOption[]`|undefined| List of users to be mentioned when entering or selecting `@`
 |user|`ITextEditorOption`|undefined| Current user
 |value|`string`|empty| Value of the input
 |onChange|`(value: string) => void`|-| Function to call when the input change
+|userPathname|`boolean`|/user| URL pathname for the mentioned user (eg: /user/user_id)
 |...all tiptap features|[EditorOptions](https://github.com/ueberdosis/tiptap/blob/e73073c02069393d858ca7d8c44b56a651417080/packages/core/src/types.ts#L52)|empty| Can access to all tiptap `useEditor` props
+
+## Contributing
+
+Get started [here](https://github.com/tiavina-mika/mui-tiptap-editor/blob/main/CONTRIBUTING.md).

@@ -105,15 +105,17 @@ code {
 /* ---------------------------------- */
 /* Basic editor styles */
 .tiptap {
-  > * + * {
-    margin-top: 0.75em;
-  }
+  border: none;
+}
+
+.tiptap:focus-visible {
+  outline: none;
+
 }
 
 .mui-tiptap-input {
   border-radius: 6px;
   border-top-left-radius: 0;
-  border: 1px solid #e0e0e0;
   padding-left: 16px;
   padding-right: 16px;
   min-height: 150px;

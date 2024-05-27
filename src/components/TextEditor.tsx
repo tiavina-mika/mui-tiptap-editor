@@ -13,15 +13,17 @@ import { useState, SyntheticEvent, ReactNode } from 'react';
 import { useTextEditor } from "../hooks/useTextEditor";
 
 import Toolbar from './Toolbar';
-import { IEditorToolbar, ITextEditorOption } from "../type";
+import { IEditorToolbar } from "../type";
 
 const defaultMenuToolbar: IEditorToolbar[] = ['bold', 'italic', 'underline', 'link'];
 
 const classes = {
-  editorRoot: (theme: Theme) => ({
-    [theme.breakpoints.down('md')]: {
-      paddingBottom: 40,
-    },
+  input: (theme: Theme) => ({
+    paddingBottom: 0,
+    border: `1px solid ${theme.palette.grey[300]} !important`,
+    borderTopRightRadius: 4,
+    borderBottomRightRadius: 4,
+    borderBottomLeftRadius: 4,
   }),
   label: (theme: Theme) => ({
     pointerEvents: 'none' as const,
@@ -59,30 +61,156 @@ const classes = {
     '&.Mui-focusVisible': {
       backgroundColor: 'rgba(100, 95, 228, 0.32)',
     },
+  }),
+  menu: (theme: Theme) => ({
+    border: `1px solid ${theme.palette.grey[300]}`,
+    paddingLeft: 4,
+    paddingRight: 4,
+    borderRadius: 3
   })
 };
 
+export interface ITextEditorOption<T = string> {
+  label: string;
+  value: T,
+  icon?: string | ReactNode;
+  hide?: boolean;
+}
 
 export type TextEditorProps = {
   placeholder?: string;
+
+  /**
+   * input label
+   * NOTE: it is placed above the tabs
+   */
   label?: ReactNode;
+
+  /**
+   * error message to be displayed if any
+   */
   error?: string;
-  onChange?: (value: string) => void;
-  inputClassName?: string;
+
+  /**
+   * value of the editor
+   * it's an html string, eg: <p>hello world</p>
+   */
   value?: string;
+
+  /**
+   * callback function to be called on change
+   * it returns the html string of the editor, eg: <p>hello world</p>
+   */
+  onChange?: (value: string) => void;
+
+  /**
+   * input style override
+   * it's the responsible of the whole input grey border and border radius
+   *
+   */
+  inputClassName?: string;
+
+  /**
+   * toolbar style override,
+   * it's mainly the responsible of the toolbar border top
+   */
   toolbarClassName?: string;
+
+  /**
+   * tabs style override
+   * the tabs 'editor' and 'preview' style
+   */
   tabsClassName?: string;
+
+  /**
+   * tab style override
+   * mainly used for the styles of the current selected tab
+   */
   tabClassName?: string;
+
+  /**
+   * error message style override
+   * eg: changing the color of the error message
+   * or its font size
+   */
   errorClassName?: string;
+
+  /*
+    * root class name
+    * it's the main class name of the all the editor
+    * label, tabs, input, toolbar, etc
+  */
   rootClassName?: string;
-  withFloatingMenu?: boolean;
-  withBubbleMenu?: boolean;
+
+  /**
+   * label styles override
+   * eg: changing the color of the label, its font size, color, etc
+   */
   labelClassName?: string;
+
+  /**
+   * if true, floating menu will be disabled
+   */
+  withFloatingMenu?: boolean;
+
+  /**
+   * if true, bubble menu will be displayed
+   */
+  withBubbleMenu?: boolean;
+
+  /**
+   * toolbar (each icon) to be displayed
+   *
+   * possible values are: [
+   * "heading", "bold", "italic", "strike", "link", "underline", "image", "code",
+   * "orderedList", "bulletList", "align", "codeBlock", "blockquote", "table",
+   * "history", "youtube", "color", "mention"
+   * ]
+   *
+   * default values is all the above
+   */
   toolbar?: IEditorToolbar[];
+
+  /**
+   * toolbar (each icon) to be displayed in bubble menu
+   *
+   * default values are: ['bold', 'italic', 'underline', 'link']
+   */
   bubbleMenuToolbar?: IEditorToolbar[];
+
+   /**
+   * toolbar (each icon) to be displayed in floating menu
+   *
+   * default values are: ['bold', 'italic', 'underline', 'link']
+   */
   floatingMenuToolbar?: IEditorToolbar[];
+
+  /**
+   * user object for collaboration
+   * the current user or selected user used for collaboration
+   *
+   * eg: { label: 'John Doe', value: 'some_user_id' }
+   */
   user?: ITextEditorOption;
+
+  /**
+   * list of users used for mentions
+   *
+   * eg. [{ label: 'John Doe', value: 'some_user_id' }, { label: 'James Smith', value: 'some_user_id_2' }, ...]
+   * NOTE: the value should be unique, it's used for profile url
+   * ex: /profile/:id or /profile/:slug, :id or :slug here is the value
+   */
   mentions?: ITextEditorOption[];
+
+  /**
+   * user pathname for the mentioned user
+   *
+   * eg. /profile
+   * so the final url will be /profile/:id
+   * :id here is the value in mentions array (see above)
+   * the final element is something like: <a href="/profile/some_user_id">{mentioned_user}</a>
+   */
+  userPathname?: string;
 } & Partial<EditorOptions>;
 
 const TextEditor = ({
@@ -103,6 +231,7 @@ const TextEditor = ({
   labelClassName,
   user,
   mentions,
+  userPathname,
   editable = true,
   withFloatingMenu = false,
   withBubbleMenu = true,
@@ -120,6 +249,7 @@ const TextEditor = ({
     editable,
     user,
     mentions,
+    userPathname,
     ...editorOptions
   })
 
@@ -130,12 +260,17 @@ const TextEditor = ({
 
   return (
     <div className={rootClassName}>
-      {/* ----------- tabs ----------- */}
+      {/* ---------------------------- */}
+      {/* ----------- label ---------- */}
+      {/* ---------------------------- */}
       {label && (
         <Typography css={classes.label} className={labelClassName}>
           {label}
         </Typography>
       )}
+      {/* ---------------------------- */}
+      {/* ------------ tabs ---------- */}
+      {/* ---------------------------- */}
       <Tabs
         value={tab}
         onChange={handleTabChange}
@@ -147,15 +282,19 @@ const TextEditor = ({
         <Tab css={classes.tab} label="Editor" value="editor" className={tabClassName} />
         <Tab css={classes.tab} label="Preview" value="preview" className={tabClassName} />
       </Tabs>
+      {/* ---------------------------- */}
+      {/* ----------- editor --------- */}
+      {/* ---------------------------- */}
       {tab === 'editor'
         ? (
-          <div className={cx('positionRelative flexColumn tiptap', inputClassName)} css={classes.editorRoot}>
+          <div className={cx('positionRelative flexColumn tiptap', inputClassName)} css={classes.input}>
             <div className="positionRelative stretchSelf">
               {editor && withFloatingMenu && (
                 <FloatingMenu editor={editor} tippyOptions={{ duration: 100 }}>
                   <Toolbar
                     editor={editor}
                     toolbar={floatingMenuToolbar || defaultMenuToolbar}
+                    css={classes.menu}
                   />
                 </FloatingMenu>
               )}
@@ -164,6 +303,7 @@ const TextEditor = ({
                   <Toolbar
                     editor={editor}
                     toolbar={bubbleMenuToolbar || defaultMenuToolbar}
+                    css={classes.menu}
                   />
                 </BubbleMenu>
               )}
@@ -174,15 +314,18 @@ const TextEditor = ({
                   {error}
                 </FormHelperText>
               )}
+              {editor && (
+                <Toolbar
+                  editor={editor}
+                  className={cx('stretchSelf', toolbarClassName)}
+                  toolbar={toolbar}
+                />
+              )}
             </div>
-            {editor && (
-              <Toolbar
-                editor={editor}
-                className={cx('stretchSelf', toolbarClassName)}
-                toolbar={toolbar}
-              />
-            )}
           </div>
+        // ---------------------------- //
+        // ----------- preview -------- //
+        // ---------------------------- //
         ) : (
           <EditorContent editor={editor} className={inputClassName} />
         )
