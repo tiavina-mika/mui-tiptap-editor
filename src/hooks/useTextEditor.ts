@@ -184,6 +184,8 @@ export const useTextEditor = ({
       }),
       ...extensions,
     ] as AnyExtension[],
+    /* The `onUpdate` function in the `useTextEditor` hook is a callback that is triggered whenever the
+    editor content is updated. Here's a breakdown of what it does: */
     onUpdate: ({ editor }: EditorEvents['update']) => {
       const html = editor.getHTML();
       onChange?.(html);
@@ -191,22 +193,14 @@ export const useTextEditor = ({
     ...editorOptions,
   });
 
-  // useEffect(() => {
-  //   if (!editor) return;
-  //   if (!(value && editor.isEmpty)) return;
-  //   editor.commands.setContent(value);
-  //   // !important: to avoid update for each taping, the value should be excluded from the dependencies
-  // }, [editor, value]);
-
   // set initial value for edition even if it's already set (below)
-  // useEffect(() => {
-  //   if (!editor) return;
-  //   if (editor.isDestroyed) return;
-  //   // if (!(value && editor.isEmpty)) return;
-  //   if (!value) return;
-  //   editor.commands.setContent(value);
-  //   // !important: to avoid update for each taping, the value should be excluded from the dependencies
-  // }, [editor, value]);
+  useEffect(() => {
+    if (!editor) return;
+    // if (editor.isDestroyed) return;
+    if (!(value && editor.isEmpty)) return;
+    editor.commands.setContent(value);
+    // !important: to avoid update for each taping, the value should be excluded from the dependencies
+  }, [editor]);
 
 
   // useEffect(() => {
