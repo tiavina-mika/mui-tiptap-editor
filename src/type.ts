@@ -1,12 +1,5 @@
 import { ReactNode } from "react";
 
-
-
-export interface ITextEditorCollaborationUser {
-  name: string;
-  color: string;
-}
-
 export enum EditorToolbarEnum {
   heading = 'heading',
   bold = 'bold',
