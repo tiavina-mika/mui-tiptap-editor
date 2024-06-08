@@ -1,12 +1,10 @@
 import { MouseEventHandler, ReactNode } from 'react';
 
-import { IconButton, Theme, Typography } from '@mui/material';
-import Button from '@mui/material/Button';
-import MUIDialog, { DialogProps } from '@mui/material/Dialog';
-import DialogActions from '@mui/material/DialogActions';
-import DialogContent from '@mui/material/DialogContent';
-import DialogContentText from '@mui/material/DialogContentText';
-import DialogTitle from '@mui/material/DialogTitle';
+import {
+  IconButton, Theme, Typography, Button, Dialog as MUIDialog, DialogProps,
+  DialogActions, DialogContent, DialogContentText, DialogTitle
+} from '@mui/material';
+
 import Close from '../icons/Close';
 
 const classes = {
