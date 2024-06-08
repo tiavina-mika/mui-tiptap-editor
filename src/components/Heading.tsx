@@ -1,5 +1,5 @@
 import { Editor } from "@tiptap/react";
-import { Menu, MenuItem, Fade, Typography, Theme, Button } from "@mui/material";
+import { Menu, MenuItem, Fade, Theme, Button } from "@mui/material";
 import { Level } from "@tiptap/extension-heading";
 import { MouseEvent, useState } from "react";
 import ChevronDown from "../icons/ChevronDown";
