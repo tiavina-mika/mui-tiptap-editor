@@ -2137,7 +2137,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@tiptap/extension-bubble-menu@npm:^2.3.1, @tiptap/extension-bubble-menu@npm:^2.4.0":
+"@tiptap/extension-bubble-menu@npm:^2.4.0":
   version: 2.4.0
   resolution: "@tiptap/extension-bubble-menu@npm:2.4.0"
   dependencies:
@@ -2158,7 +2158,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@tiptap/extension-code-block-lowlight@npm:^2.3.1":
+"@tiptap/extension-code-block-lowlight@npm:^2.4.0":
   version: 2.4.0
   resolution: "@tiptap/extension-code-block-lowlight@npm:2.4.0"
   peerDependencies:
@@ -2188,7 +2188,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@tiptap/extension-collaboration-cursor@npm:^2.3.1":
+"@tiptap/extension-collaboration-cursor@npm:^2.4.0":
   version: 2.4.0
   resolution: "@tiptap/extension-collaboration-cursor@npm:2.4.0"
   peerDependencies:
@@ -2198,7 +2198,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@tiptap/extension-collaboration@npm:^2.3.1":
+"@tiptap/extension-collaboration@npm:^2.4.0":
   version: 2.4.0
   resolution: "@tiptap/extension-collaboration@npm:2.4.0"
   peerDependencies:
@@ -2209,7 +2209,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@tiptap/extension-color@npm:^2.3.1":
+"@tiptap/extension-color@npm:^2.4.0":
   version: 2.4.0
   resolution: "@tiptap/extension-color@npm:2.4.0"
   peerDependencies:
@@ -2250,7 +2250,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@tiptap/extension-gapcursor@npm:^2.3.1, @tiptap/extension-gapcursor@npm:^2.4.0":
+"@tiptap/extension-gapcursor@npm:^2.4.0":
   version: 2.4.0
   resolution: "@tiptap/extension-gapcursor@npm:2.4.0"
   peerDependencies:
@@ -2269,7 +2269,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@tiptap/extension-heading@npm:^2.3.1, @tiptap/extension-heading@npm:^2.4.0":
+"@tiptap/extension-heading@npm:^2.4.0":
   version: 2.4.0
   resolution: "@tiptap/extension-heading@npm:2.4.0"
   peerDependencies:
@@ -2307,7 +2307,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@tiptap/extension-link@npm:^2.3.1":
+"@tiptap/extension-link@npm:^2.4.0":
   version: 2.4.0
   resolution: "@tiptap/extension-link@npm:2.4.0"
   dependencies:
@@ -2328,7 +2328,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@tiptap/extension-mention@npm:^2.3.1":
+"@tiptap/extension-mention@npm:^2.4.0":
   version: 2.4.0
   resolution: "@tiptap/extension-mention@npm:2.4.0"
   peerDependencies:
@@ -2357,7 +2357,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@tiptap/extension-placeholder@npm:^2.3.1":
+"@tiptap/extension-placeholder@npm:^2.4.0":
   version: 2.4.0
   resolution: "@tiptap/extension-placeholder@npm:2.4.0"
   peerDependencies:
@@ -2376,7 +2376,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@tiptap/extension-table-cell@npm:^2.3.1":
+"@tiptap/extension-table-cell@npm:^2.4.0":
   version: 2.4.0
   resolution: "@tiptap/extension-table-cell@npm:2.4.0"
   peerDependencies:
@@ -2385,7 +2385,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@tiptap/extension-table-header@npm:^2.3.1":
+"@tiptap/extension-table-header@npm:^2.4.0":
   version: 2.4.0
   resolution: "@tiptap/extension-table-header@npm:2.4.0"
   peerDependencies:
@@ -2394,7 +2394,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@tiptap/extension-table-row@npm:^2.3.1":
+"@tiptap/extension-table-row@npm:^2.4.0":
   version: 2.4.0
   resolution: "@tiptap/extension-table-row@npm:2.4.0"
   peerDependencies:
@@ -2403,7 +2403,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@tiptap/extension-table@npm:^2.3.1":
+"@tiptap/extension-table@npm:^2.4.0":
   version: 2.4.0
   resolution: "@tiptap/extension-table@npm:2.4.0"
   peerDependencies:
@@ -2413,7 +2413,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@tiptap/extension-text-align@npm:^2.3.1":
+"@tiptap/extension-text-align@npm:^2.4.0":
   version: 2.4.0
   resolution: "@tiptap/extension-text-align@npm:2.4.0"
   peerDependencies:
@@ -2422,7 +2422,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@tiptap/extension-text-style@npm:^2.3.1":
+"@tiptap/extension-text-style@npm:^2.4.0":
   version: 2.4.0
   resolution: "@tiptap/extension-text-style@npm:2.4.0"
   peerDependencies:
@@ -2431,7 +2431,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@tiptap/extension-text@npm:^2.3.1, @tiptap/extension-text@npm:^2.4.0":
+"@tiptap/extension-text@npm:^2.4.0":
   version: 2.4.0
   resolution: "@tiptap/extension-text@npm:2.4.0"
   peerDependencies:
@@ -2440,7 +2440,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@tiptap/extension-typography@npm:^2.3.1":
+"@tiptap/extension-typography@npm:^2.4.0":
   version: 2.4.0
   resolution: "@tiptap/extension-typography@npm:2.4.0"
   peerDependencies:
@@ -2449,7 +2449,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@tiptap/extension-underline@npm:^2.3.1":
+"@tiptap/extension-underline@npm:^2.4.0":
   version: 2.4.0
   resolution: "@tiptap/extension-underline@npm:2.4.0"
   peerDependencies:
@@ -2458,7 +2458,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@tiptap/extension-youtube@npm:^2.3.1":
+"@tiptap/extension-youtube@npm:^2.4.0":
   version: 2.4.0
   resolution: "@tiptap/extension-youtube@npm:2.4.0"
   peerDependencies:
@@ -2467,7 +2467,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@tiptap/pm@npm:^2.3.1":
+"@tiptap/pm@npm:^2.4.0":
   version: 2.4.0
   resolution: "@tiptap/pm@npm:2.4.0"
   dependencies:
@@ -2493,7 +2493,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@tiptap/react@npm:^2.3.1":
+"@tiptap/react@npm:^2.4.0":
   version: 2.4.0
   resolution: "@tiptap/react@npm:2.4.0"
   dependencies:
@@ -2508,7 +2508,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@tiptap/starter-kit@npm:^2.3.1":
+"@tiptap/starter-kit@npm:^2.4.0":
   version: 2.4.0
   resolution: "@tiptap/starter-kit@npm:2.4.0"
   dependencies:
@@ -2535,7 +2535,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@tiptap/suggestion@npm:^2.3.1":
+"@tiptap/suggestion@npm:^2.4.0":
   version: 2.4.0
   resolution: "@tiptap/suggestion@npm:2.4.0"
   peerDependencies:
@@ -7382,30 +7382,30 @@ __metadata:
     "@semantic-release/github": "npm:^10.0.3"
     "@semantic-release/npm": "npm:^12.0.0"
     "@semantic-release/release-notes-generator": "npm:^13.0.0"
-    "@tiptap/extension-bubble-menu": "npm:^2.3.1"
-    "@tiptap/extension-code-block-lowlight": "npm:^2.3.1"
-    "@tiptap/extension-collaboration": "npm:^2.3.1"
-    "@tiptap/extension-collaboration-cursor": "npm:^2.3.1"
-    "@tiptap/extension-color": "npm:^2.3.1"
-    "@tiptap/extension-gapcursor": "npm:^2.3.1"
-    "@tiptap/extension-heading": "npm:^2.3.1"
-    "@tiptap/extension-link": "npm:^2.3.1"
-    "@tiptap/extension-mention": "npm:^2.3.1"
-    "@tiptap/extension-placeholder": "npm:^2.3.1"
-    "@tiptap/extension-table": "npm:^2.3.1"
-    "@tiptap/extension-table-cell": "npm:^2.3.1"
-    "@tiptap/extension-table-header": "npm:^2.3.1"
-    "@tiptap/extension-table-row": "npm:^2.3.1"
-    "@tiptap/extension-text": "npm:^2.3.1"
-    "@tiptap/extension-text-align": "npm:^2.3.1"
-    "@tiptap/extension-text-style": "npm:^2.3.1"
-    "@tiptap/extension-typography": "npm:^2.3.1"
-    "@tiptap/extension-underline": "npm:^2.3.1"
-    "@tiptap/extension-youtube": "npm:^2.3.1"
-    "@tiptap/pm": "npm:^2.3.1"
-    "@tiptap/react": "npm:^2.3.1"
-    "@tiptap/starter-kit": "npm:^2.3.1"
-    "@tiptap/suggestion": "npm:^2.3.1"
+    "@tiptap/extension-bubble-menu": "npm:^2.4.0"
+    "@tiptap/extension-code-block-lowlight": "npm:^2.4.0"
+    "@tiptap/extension-collaboration": "npm:^2.4.0"
+    "@tiptap/extension-collaboration-cursor": "npm:^2.4.0"
+    "@tiptap/extension-color": "npm:^2.4.0"
+    "@tiptap/extension-gapcursor": "npm:^2.4.0"
+    "@tiptap/extension-heading": "npm:^2.4.0"
+    "@tiptap/extension-link": "npm:^2.4.0"
+    "@tiptap/extension-mention": "npm:^2.4.0"
+    "@tiptap/extension-placeholder": "npm:^2.4.0"
+    "@tiptap/extension-table": "npm:^2.4.0"
+    "@tiptap/extension-table-cell": "npm:^2.4.0"
+    "@tiptap/extension-table-header": "npm:^2.4.0"
+    "@tiptap/extension-table-row": "npm:^2.4.0"
+    "@tiptap/extension-text": "npm:^2.4.0"
+    "@tiptap/extension-text-align": "npm:^2.4.0"
+    "@tiptap/extension-text-style": "npm:^2.4.0"
+    "@tiptap/extension-typography": "npm:^2.4.0"
+    "@tiptap/extension-underline": "npm:^2.4.0"
+    "@tiptap/extension-youtube": "npm:^2.4.0"
+    "@tiptap/pm": "npm:^2.4.0"
+    "@tiptap/react": "npm:^2.4.0"
+    "@tiptap/starter-kit": "npm:^2.4.0"
+    "@tiptap/suggestion": "npm:^2.4.0"
     "@types/react": "npm:^18.2.43"
     "@types/react-dom": "npm:^18.2.17"
     "@typescript-eslint/eslint-plugin": "npm:^6.14.0"
@@ -7436,7 +7436,7 @@ __metadata:
     typescript: "npm:^5.2.2"
     vite: "npm:5.0.8"
     vite-tsconfig-paths: "npm:^4.3.1"
-    y-prosemirror: "npm:^1.2.3"
+    y-prosemirror: "npm:^1.2.5"
     y-webrtc: "npm:^10.3.0"
     yjs: "npm:^13.6.15"
   peerDependencies:
@@ -10619,7 +10619,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"y-prosemirror@npm:^1.2.3":
+"y-prosemirror@npm:^1.2.5":
   version: 1.2.5
   resolution: "y-prosemirror@npm:1.2.5"
   dependencies:
