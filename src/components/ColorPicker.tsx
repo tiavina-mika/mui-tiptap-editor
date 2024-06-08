@@ -1,4 +1,4 @@
-import { IconButton, Tooltip } from "@mui/material";
+import { Tooltip } from "@mui/material";
 import { Editor } from "@tiptap/react";
 
 import { ChangeEvent, useEffect, useState } from "react";
