@@ -8,6 +8,7 @@ import { ITextEditorOption } from "../TextEditor";
 /**
  * Get suggestion for mention
  */
+
 const getSuggestion = (options: ITextEditorOption[] = []): MentionOptions['suggestion'] => ({
   items: ({ query }: { query: string }) => {
     return options

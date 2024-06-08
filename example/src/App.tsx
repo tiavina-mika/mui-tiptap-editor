@@ -91,9 +91,49 @@ const App = () => {
         </Tabs>
         {/* ------ tabs panel ------ */}
         {/* Simple input */}
-        <h1>cool</h1>
         {tab === 0 && <TextEditor placeholder='Type something here...' />}
 
+        {/* Select toolbar */}
+        {tab === 1 && (
+          <TextEditor
+            placeholder='Type something here...'
+            toolbar={['bold', 'italic', 'underline']}
+          />
+        )}
+        {/* Read only */}
+        {tab === 2 && <TextEditorReadOnly value="<p>Hello word!</p>" />}
+        {/* Custom global styles */}
+        {tab === 3 && (
+          <TextEditor
+            value="<p>Hello word!</p>"
+            rootClassName="root"
+          />
+        )}
+        {/* Each element styles */}
+        {tab === 4 && (
+          <TextEditor
+            value="<p>Hello word!</p>"
+            label="Content"
+            tabClassName="my-tab"
+            labelClassName="my-label"
+            inputClassName="my-input"
+            toolbarClassName="my-toolbar"
+          />
+        )}
+
+        {/* mentions */}
+        {tab === 5 && (
+          <TextEditor
+            label="Content"
+            mentions={mentions}
+            user={currentUser}
+            userPathname="/profile"
+          />
+        )}
+        {/* With default async value */}
+        {tab === 6 && <TextEditor value={asyncDefaultValue} />}
+        {/* With React Hook Form */}
+        {tab === 7 && <WithHookForm />}
       </Container>
     </ThemeProvider>
   )

@@ -1,11 +1,3 @@
-# [2.0.0](https://github.com/tiavina-mika/mui-tiptap-editor/compare/v1.8.2...v2.0.0) (2024-05-27)
-
-
-### Bug Fixes
-
-* async value ([0398680](https://github.com/tiavina-mika/mui-tiptap-editor/commit/0398680f1c8acbbfdf90da24badfd470e5cfca97))
-* remove lock file ([76aa326](https://github.com/tiavina-mika/mui-tiptap-editor/commit/76aa326bbd6b1ee8080943ed6685fa34d2263e79))
-
 ## [1.8.2](https://github.com/tiavina-mika/mui-tiptap-editor/compare/v1.8.1...v1.8.2) (2024-05-06)
 
 

@@ -49,7 +49,7 @@ const classes = {
   },
   tab: (theme: Theme) => ({
     textTransform: 'none' as const,
-    fontWeight: 500,
+    fontWeight: theme.typography.fontWeightRegular,
     fontSize: theme.typography.pxToRem(15),
     marginRight: theme.spacing(1),
     '&.Mui-selected': {

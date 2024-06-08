@@ -4,7 +4,6 @@ import {
   IconButton, Theme, Typography, Button, Dialog as MUIDialog, DialogProps,
   DialogActions, DialogContent, DialogContentText, DialogTitle
 } from '@mui/material';
-
 import Close from '../icons/Close';
 
 const classes = {

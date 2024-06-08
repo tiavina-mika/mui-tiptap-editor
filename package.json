@@ -25,9 +25,21 @@
   },
   "license": "MIT",
   "type": "module",
+  "types": "./dist/index.d.ts",
   "main": "dist/index.js",
-  "module": "dist/index.js",
-  "types": "dist/index.d.ts",
+  "module": "dist/esm/index.js",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "require": "./dist/index.js",
+      "import": "./dist/esm/index.js"
+    },
+    "./icons": {
+      "types": "./dist/icons/index.d.ts",
+      "require": "./dist/icons/index.js",
+      "import": "./dist/esm/icons/index.js"
+    }
+  },
   "files": [
     "/dist"
   ],
@@ -106,7 +118,6 @@
     "babel-plugin-module-resolver": "^5.0.0",
     "copyfiles": "^2.4.1",
     "cspell": "^6.31.1",
-    "dts-bundle-generator": "^9.5.1",
     "eslint": "^8.56.0",
     "eslint-config-airbnb": "^19.0.4",
     "eslint-config-airbnb-typescript": "^17.1.0",
@@ -127,7 +138,6 @@
     "ts-add-js-extension": "^1.6.4",
     "typescript": "^5.2.2",
     "vite": "5.0.8",
-    "vite-plugin-dts": "^3.9.1",
     "vite-tsconfig-paths": "^4.3.1"
   },
   "packageManager": "yarn@4.2.1"
