@@ -18,10 +18,6 @@ import TableRow from "@tiptap/extension-table-row";
 import CodeBlockLowlight from "@tiptap/extension-code-block-lowlight";
 import Youtube from "@tiptap/extension-youtube";
 import Mention, { MentionOptions } from "@tiptap/extension-mention";
-import Collaboration from "@tiptap/extension-collaboration";
-import CollaborationCursor from "@tiptap/extension-collaboration-cursor";
-import * as Y from "yjs";
-import { WebrtcProvider } from "y-webrtc";
 import BubbleMenu from '@tiptap/extension-bubble-menu';
 import { createLowlight, common } from "lowlight";
 import {
@@ -35,7 +31,6 @@ import StarterKit from '@tiptap/starter-kit';
 
 import { useEffect } from 'react';
 import Heading from '@tiptap/extension-heading';
-import { ITextEditorCollaborationUser } from '../type';
 import { Node } from '@tiptap/pm/model';
 import getSuggestion from '../components/mention/suggestions';
 import { ITextEditorOption } from '../components/TextEditor';
@@ -74,7 +69,7 @@ const extensions = [
       keepMarks: true,
       keepAttributes: false, // TODO : Making this as `false` becase marks are not preserved when I try to preserve attrs, awaiting a bit of help
     },
-    history: false, // important because history will now be handled by Y.js
+    // history: false, // important because history will now be handled by Y.js
     codeBlock: false
   }),
   Heading.configure({
@@ -141,31 +136,6 @@ const getCustomMention = (pathname = "/users") => {
   });
 }
 
-const ydoc = new Y.Doc();
-const provider = new WebrtcProvider("webrtc-chanel", ydoc);
-
-const CustomCollaborationCursor = CollaborationCursor.extend({
-  addOptions() {
-    return {
-      ...this.parent?.(),
-      render: (user: ITextEditorCollaborationUser) => {
-        const cursor = document.createElement("div");
-
-        cursor.classList.add("collaboration-cursor-name-container");
-
-        const label = document.createElement("span");
-
-        label.classList.add("collaboration-cursor-name-label");
-        label.setAttribute("style", `background-color: ${user.color}`);
-        label.insertBefore(document.createTextNode(user.name), null);
-        cursor.insertBefore(label, null);
-
-        return cursor;
-      }
-    };
-  }
-});
-
 export type TextEditorProps = {
   placeholder?: string;
   onChange?: (value: string) => void;
@@ -212,16 +182,10 @@ export const useTextEditor = ({
         },
         suggestion: getSuggestion(mentions)
       }),
-      // collaboration
-      CustomCollaborationCursor.configure({
-        provider,
-        user
-      }),
-      Collaboration.configure({
-        document: ydoc
-      }),
       ...extensions,
     ] as AnyExtension[],
+    /* The `onUpdate` function in the `useTextEditor` hook is a callback that is triggered whenever the
+    editor content is updated. Here's a breakdown of what it does: */
     onUpdate: ({ editor }: EditorEvents['update']) => {
       const html = editor.getHTML();
       onChange?.(html);
@@ -232,10 +196,20 @@ export const useTextEditor = ({
   // set initial value for edition even if it's already set (below)
   useEffect(() => {
     if (!editor) return;
+    // if (editor.isDestroyed) return;
     if (!(value && editor.isEmpty)) return;
     editor.commands.setContent(value);
     // !important: to avoid update for each taping, the value should be excluded from the dependencies
-  }, [editor, value]);
+  }, [editor]);
+
+
+  // useEffect(() => {
+  //   editor?.off("selectionUpdate");
+  //   editor?.on("selectionUpdate", (editor) => {
+  //     const html = editor.editor.getHTML();
+  //     onChange?.(html);
+  //   });
+  // }, [editor, value]);
 
   /**
    * change the editable state of the editor on the fly
