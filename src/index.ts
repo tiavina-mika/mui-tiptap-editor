@@ -1,7 +1,7 @@
 export {
   default as TextEditor,
   type TextEditorProps,
-  type ITextEditorOption,
+  type ITextEditorOption
 } from './components/TextEditor';
 export {
   default as TextEditorReadOnly,
