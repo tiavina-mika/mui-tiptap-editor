@@ -1,3 +1,5 @@
+# [3.0.0](https://github.com/tiavina-mika/mui-tiptap-editor/compare/v2.0.0...v3.0.0) (2024-06-08)
+
 ## [1.8.2](https://github.com/tiavina-mika/mui-tiptap-editor/compare/v1.8.1...v1.8.2) (2024-05-06)
 
 
