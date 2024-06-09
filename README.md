@@ -11,23 +11,29 @@
 
 <details>
 
-- [Demo](#demo)
-
-- [Installation](#installation)
-
-- [Get started](#get-started)
-
-- [Customization](#customization)
-
-- [Props](#props)
-
-- [Contributing](#contributing)
+- [mui-tiptap-editor](#mui-tiptap-editor)
+  - [Table of Contents](#table-of-contents)
+  - [Demo](#demo)
+  - [Installation](#installation)
+  - [Get started](#get-started)
+    - [Simple usage](#simple-usage)
+    - [Using mentions](#using-mentions)
+    - [Read only](#read-only)
+  - [Customization](#customization)
+    - [Toolbar](#toolbar)
+    - [Styles](#styles)
+      - [Root styles](#root-styles)
+      - [Each element styles](#each-element-styles)
+  - [Props](#props)
+  - [Contributing](#contributing)
 
 </details>
 
 ## Demo
 
-Try it yourself in this **[CodeSandbox live demo](https://codesandbox.io/s/github/tiavina-mika/mui-tiptap-editor-demo)** or see the [Demo video](https://www.youtube.com/watch?v=_VhLVN51cwo)
+- **[CodeSandbox live demo](https://codesandbox.io/s/github/tiavina-mika/mui-tiptap-editor-demo)**
+- **[Live demo](https://mui-tiptap-editor.netlify.app/)**
+- **[Demo video](https://www.youtube.com/watch?v=_VhLVN51cwo)**
 
 
 <img alt="Screenshot" src="https://github.com/tiavina-mika/mui-tiptap-editor/blob/main/screenshots/screenshot.png" />
@@ -57,7 +63,7 @@ yarn add @mui/material @emotion/react @emotion/styled
 
 ## Get started
 
-#### Simple usage
+### Simple usage
 
 ```tsx
 import { TextEditor, TextEditorReadOnly } from 'mui-tiptap-editor';
@@ -77,7 +83,7 @@ function App() {
 }
 ```
 
-#### Using mentions
+### Using mentions
 
 ```tsx
 import { TextEditor, ITextEditorOption } from 'mui-tiptap-editor';
@@ -99,6 +105,27 @@ function App() {
 
 See [`example/App.tsx`](https://github.com/tiavina-mika/mui-tiptap-editor/tree/main/example) for a more thorough example of using `TextEditor`.
 
+### Read only
+
+1. If using the editor
+```tsx
+import { TextEditorReadOnly } from 'mui-tiptap-editor';
+
+<TextEditorReadOnly value="<h1>Hello word!</h1>" />
+```
+
+2. If it's just to display the value without using the editor, you can use this [`tiptap-parser`](https://www.npmjs.com/package/tiptap-parser) library. Example: The editor is used in the back office, but the content is to be displayed on the website
+```tsx
+import TiptapParser from "tiptap-parser";
+
+const html = `<h1>Hello world</h1>`;
+
+function App() {
+  return (
+    <TiptapParser content={html} />
+  );
+}
+```
 
 ## Customization
 
@@ -139,7 +166,6 @@ function App () {
 #### Each element styles
 
 ```tsx
-import './index.css';
 import { TextEditor } from 'mui-tiptap-editor';
 
 function App () {
@@ -147,28 +173,12 @@ function App () {
     <TextEditor
       value="<p>Hello word!</p>"
       label="Content"
-      tabClassName="my-tab"
-      labelClassName="my-label"
-      inputClassName="my-input"
-      toolbarClassName="my-toolbar"
+      tabClassName="bg-black"
+      labelClassName="text-sm"
+      inputClassName="border border-gray-200"
+      toolbarClassName="bg-gray-500"
     />
   )
-}
-```
-
-```css
-/* ./index.css */
-.my-tab.MuiTab-root.Mui-selected {
-  background-color: pink !important;
-}
-.my-label {
-  color: blue !important;
-}
-.my-input {
-  border: 1px solid green;
-}
-.my-toolbar {
-  background-color: yellow;
 }
 ```
 

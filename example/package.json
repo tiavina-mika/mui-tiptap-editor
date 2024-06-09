@@ -19,6 +19,7 @@
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-hook-form": "^7.49.2",
+    "tiptap-parser": "^0.0.8",
     "zod": "^3.22.4"
   },
   "devDependencies": {

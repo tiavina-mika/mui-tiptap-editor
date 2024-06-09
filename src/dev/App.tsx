@@ -41,26 +41,13 @@ const App = () => {
     <ThemeProvider theme={theme}>
       <EmotionThemeProvider theme={theme}>
         <Container>
-              <TextEditor
-              inputClassName="flexColumn stretchSelf flex1"
-              label={'Description fr'}
-              placeholder="French here"
-              mentions={mentions}
-              user={currentUser}
-              value="<h1>French</h1>"
-              // value={(values as any).fr}
-              // name={'title:' + locale}
-            />
-            <TextEditor
-              inputClassName="flexColumn stretchSelf flex1"
-              label={'Description en'}
-              placeholder="English here"
-              mentions={mentions}
-              user={currentUser}
-              // value={(values as any).en}
-              value="<h1>English</h1>"
-              // name={'title:' + locale}
-            />
+          <TextEditor
+            inputClassName="flexColumn stretchSelf flex1"
+            label="Content"
+            placeholder="French here"
+            mentions={mentions}
+            user={currentUser}
+          />
         </Container>
       </EmotionThemeProvider>
     </ThemeProvider>

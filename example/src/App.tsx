@@ -2,6 +2,7 @@
 import { Container, CssBaseline, Tab, Tabs, ThemeProvider, createTheme } from '@mui/material';
 import { SyntheticEvent, useEffect, useState } from 'react';
 import { TextEditor, TextEditorReadOnly } from 'mui-tiptap-editor';
+import TiptapParser from "tiptap-parser";
 import WithHookForm from './WithHookForm';
 
 const tabs = [
@@ -12,7 +13,8 @@ const tabs = [
   'Each element styles',
   'Mentions',
   'Async initial value',
-  'React Hook Form'
+  'React Hook Form',
+  'Read without editor'
 ];
 
 const mentions = [
@@ -61,6 +63,23 @@ const theme = createTheme({
 const delay = (time: number) => new Promise((resolve) => {
   setTimeout(resolve, time);
 });
+const htmlToParse = `
+<h1>Display the content without to install the editor</h1>
+<p>Use <a href="https://www.npmjs.com/package/tiptap-parser">tiptap-parse</a> for that</p>
+<pre>
+<code>
+  import TiptapParser from "tiptap-parser";
+
+  const html = "Hello world";
+
+  function App() {
+    return (
+      &lt;TiptapParser content={html} /&gt;
+    );
+  }
+</code>
+</pre>
+`;
 
 const App = () => {
   const [tab, setTab] = useState<number>(0);
@@ -72,7 +91,7 @@ const App = () => {
       await delay(1000)
       setAsyncDefaultValue('<p>Initial value from API for example</p>')
     }
-    fetchData()
+    fetchData();
   }, [])
 
   const handleChange = (_: SyntheticEvent, newValue: number) => {
@@ -82,14 +101,16 @@ const App = () => {
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
-      <Container>
-        {/* tabs */}
+      {/* ---------------- tabs ---------------- */}
+      <Container maxWidth="xl" className="spaceBetween">
         <Tabs value={tab} onChange={handleChange} aria-label="tabs"sx={{ mb: 2 }}>
           {tabs.map((label, index) => (
             <Tab key={index} label={label} value={index} />
           ))}
         </Tabs>
-        {/* ------ tabs panel ------ */}
+      </Container>
+      {/* ------------- tabs panels ------------- */}
+      <Container css={{ marginTop: 40 }}>
         {/* Simple input */}
         {tab === 0 && <TextEditor placeholder='Type something here...' />}
 
@@ -132,8 +153,14 @@ const App = () => {
         )}
         {/* With default async value */}
         {tab === 6 && <TextEditor value={asyncDefaultValue} />}
+
         {/* With React Hook Form */}
         {tab === 7 && <WithHookForm />}
+
+        {/* Read without editor */}
+        {tab === 8 && (
+          <TiptapParser content={htmlToParse} />
+        )}
       </Container>
     </ThemeProvider>
   )
