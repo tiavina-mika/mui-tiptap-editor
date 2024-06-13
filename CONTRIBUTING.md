@@ -12,7 +12,7 @@ If you encounter a problem with this library or if you have a new feature you'd 
 
 Please leverage the repository's own tools to make sure the code is aligned with our standards. If you're using VSCode, it's easiest to use the recommended extensions (`.vscode/extensions.json`) to get integrated linting and autoformatting.
 
-It's recommended to run all check commands before submitting the PR (`type:check`, `format:check`, `lint:check`, `spell:check` and `yarn lint`).
+It's recommended to run all check commands before submitting the PR (`type:check`, `format:check`, `lint:check`, `spell:check`, `yarn lint` and  `yarn test:coverage`).
 
 ## Development setup
 
@@ -42,3 +42,10 @@ When a new version should be cut since some new changes have landed on the `main
    . `yarn cache clean --all`
    . Create an empty `yarn.lock`
    . run `yarn`
+
+## TODO:
+#### upgrade eslint to v9
+- For now, linting is not working because the actual version of eslint does not support the latest Typescript
+  So the solution is to upgrade eslint. But many eslint plugins does not support the v9 yet.
+- upgrade [eslint-plugin-prefer-arrow-functions](https://github.com/JamieMason/eslint-plugin-prefer-arrow-functions/issues/33) using eslint v9
+- upgrade [eslint-config-airbnb-typescript](https://github.com/iamturns/eslint-config-airbnb-typescript/issues/331) using eslint v9
