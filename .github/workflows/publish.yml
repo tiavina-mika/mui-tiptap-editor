@@ -1,0 +1,46 @@
+# --------------------------------------------------- #
+# ------------------------ 3 ------------------------ #
+# --------------------------------------------------- #
+name: Publish to NPM
+run-name: ${{ github.actor }} publish to npm 🚀
+
+on:
+  # we are using workflow_run to trigger the workflow
+  # because we want to run this workflow only when the Approve PR and delete branch workflow is completed
+  # GitHub prevents workflows from running on events that were caused by other workflows to prevent unlimited recursion
+  # so we do not use the release event
+  # issue: https://github.com/orgs/community/discussions/25281
+  # see: https://docs.github.com/en/actions/using-workflows/events-that-trigger-workflows#workflow_run
+  workflow_run:
+    # the workflow we want to trigger this workflow (see .github/workflows/automerge.yml)
+    workflows: [Approve PR and delete branch]
+    types: [completed]
+  # run on release creation
+  #   release:
+    #     types: [created]
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    # if: github.actor == 'dependabot[bot]'
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+
+      # need this for using yarn v4
+      - name: Enable Corepack
+        run: corepack enable
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20.x'
+          registry-url: 'https://registry.npmjs.org'
+
+      # npm publish
+      - name: Publish package on NPM 📦
+        # if using yarn v4
+        run: yarn npm publish
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}

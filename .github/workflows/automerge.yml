@@ -1,0 +1,38 @@
+# --------------------------------------------------- #
+# ------------------------ 2 ------------------------ #
+# --------------------------------------------------- #
+
+name: Approve PR and delete branch
+on: pull_request_target
+
+env:
+  PR_BRANCH: release-ci-${{ github.sha }}
+
+jobs:
+  approve_pr_branch:
+    name: Approve PR branch
+    runs-on: ubuntu-latest
+    permissions:
+      pull-requests: write
+    steps:
+      # Automatically approve GitHub pull requests.
+      # see: https://github.com/hmarr/auto-approve-action
+      - uses: hmarr/auto-approve-action@v4
+
+  merge_pr_branch:
+    name: Merge PR branch
+    # we need to run this job after the approve_pr_branch job
+    needs: approve_pr_branch
+    runs-on: ubuntu-latest
+    permissions:
+      pull-requests: write
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Merge and delete Changelog PR
+        run: |
+          gh pr merge --squash --auto --delete-branch ${{ env.PR_BRANCH }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
