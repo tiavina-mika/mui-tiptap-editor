@@ -13,7 +13,7 @@ module.exports = {
   ],
   ignorePatterns: ['dist', 'node_modules/', '.eslintrc.cjs'],
   parser: '@typescript-eslint/parser',
-  plugins: ['react-refresh', 'prefer-arrow-functions'],
+  plugins: ['react-refresh', 'prefer-arrow-functions', 'jest'],
   parserOptions: {
     tsconfigRootDir: __dirname,
     project: "./tsconfig.json",
@@ -67,5 +67,11 @@ module.exports = {
         'singleReturnOnly': false,
       },
     ],
+    // ------------ jest ------------ //
+    "jest/no-disabled-tests": "warn",
+    "jest/no-focused-tests": "error",
+    "jest/no-identical-title": "error",
+    "jest/prefer-to-have-length": "warn",
+    "jest/valid-expect": "error"
   }
 }

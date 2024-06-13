@@ -46,7 +46,6 @@ export const showTextEditorToolbarMenu = (toolbar: IEditorToolbar[], menu: any):
  */
 export const checkIsValidUrl = (url: string): boolean => {
   return (
-    url.startsWith("http://") ||
     url.startsWith("https://") ||
     url.startsWith("mailto:") ||
     url.startsWith("tel:")
@@ -59,4 +58,3 @@ export const checkIsValidYoutubeUrl = (url: string): boolean => {
     url.includes("youtube")
   );
 }
-
