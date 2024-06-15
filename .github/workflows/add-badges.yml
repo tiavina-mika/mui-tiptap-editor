@@ -40,5 +40,5 @@ jobs:
                 "badge": "https://img.shields.io/github/last-commit/${{ env.repo_owner }}/${{ env.repo_name }}?style=flat-square",
                 "alt": "Last Commit",
                 "link": "${{ env.repo_url }}/commits/master"
-              },
+              }
             ]
