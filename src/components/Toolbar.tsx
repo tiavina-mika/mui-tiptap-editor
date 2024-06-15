@@ -8,7 +8,7 @@ import TableMenuDialog from "./TableMenuDialog";
 import LinkDialog from "./LinkDialog";
 import Heading from "./Heading";
 import ColorPicker from "./ColorPicker";
-import { IEditorToolbar } from "../type";
+import { IEditorToolbar } from "../types.d";
 import { defaultEditorToolbar, showTextEditorToolbarMenu } from "../utils/app.utils";
 import YoutubeDialog from "./YoutubeDialog";
 import Bold from "../icons/Bold";

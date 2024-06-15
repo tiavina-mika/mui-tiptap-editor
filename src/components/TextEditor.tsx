@@ -13,9 +13,9 @@ import { useState, SyntheticEvent, ReactNode } from 'react';
 import { useTextEditor } from "../hooks/useTextEditor";
 
 import Toolbar from './Toolbar';
-import { IEditorToolbar } from "../type";
+import { IEditorToolbar } from "../types";
 
-const defaultMenuToolbar: IEditorToolbar[] = ['bold', 'italic', 'underline', 'link'];
+const defaultMenuToolbar: IEditorToolbar[] = ['heading', 'bold', 'italic', 'underline', 'link', 'bulletList'];
 
 const classes = {
   input: (theme: Theme) => ({
@@ -66,7 +66,11 @@ const classes = {
     border: `1px solid ${theme.palette.grey[300]}`,
     paddingLeft: 4,
     paddingRight: 4,
-    borderRadius: 3
+    borderRadius: 3,
+    minWidth: 400
+  }),
+  bubbleMenu: (theme: Theme) => ({
+    backgroundColor: theme.palette.background.paper,
   })
 };
 
@@ -294,7 +298,7 @@ const TextEditor = ({
                   <Toolbar
                     editor={editor}
                     toolbar={floatingMenuToolbar || defaultMenuToolbar}
-                    css={classes.menu}
+                    css={[classes.menu, classes.bubbleMenu]}
                   />
                 </FloatingMenu>
               )}
@@ -303,7 +307,7 @@ const TextEditor = ({
                   <Toolbar
                     editor={editor}
                     toolbar={bubbleMenuToolbar || defaultMenuToolbar}
-                    css={classes.menu}
+                    css={[classes.menu, classes.bubbleMenu]}
                   />
                 </BubbleMenu>
               )}
