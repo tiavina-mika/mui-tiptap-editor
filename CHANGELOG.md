@@ -1,7 +1,7 @@
-## 0.5.0 (2024-06-13)
+## 0.5.1 (2024-06-15)
 
 
-### Features
+### Bug Fixes
 
-* change workflow ([7a0ca5a](https://github.com/tiavina-mika/mui-tiptap-editor/commit/7a0ca5a17154e997132ccc3cb776b48486139f36))
+* installation ([04f04b1](https://github.com/tiavina-mika/mui-tiptap-editor/commit/04f04b18c8113ba8e2c04a19e905bcbca90b9099))
 
