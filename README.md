@@ -6,12 +6,9 @@
 
 <!-- [START BADGES] -->
 <!-- Please keep comment here to allow auto update -->
-[![MIT License](https://img.shields.io/github/license/tiavina-mika/mui-tiptap-editor?style=flat-square)](https://github.com/tiavina-mika/mui-tiptap-editor/blob/master/LICENSE)
 [![NPM Version](https://img.shields.io/npm/v/mui-tiptap-editor?style=flat-square)](https://www.npmjs.com/package/mui-tiptap-editor)
 [![Language](https://img.shields.io/badge/language-TypeScript-blue.svg?style=flat-square)](https://www.typescriptlang.org)
-[![Contributors](https://img.shields.io/github/contributors/tiavina-mika/mui-tiptap-editor?style=flat-square)](https://github.com/tiavina-mika/mui-tiptap-editor/graphs/contributors)
 [![Last Commit](https://img.shields.io/github/last-commit/tiavina-mika/mui-tiptap-editor?style=flat-square)](https://github.com/tiavina-mika/mui-tiptap-editor/commits/master)
-[![Language grade: JavaScript](https://img.shields.io/lgtm/grade/javascript/g/tiavina-mika/mui-tiptap-editor.svg?logo=lgtm&style=flat-square)](https://lgtm.com/projects/g/tiavina-mika/mui-tiptap-editor/context:javascript)
 <!-- [END BADGES] -->
 ## Table of Contents
 
