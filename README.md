@@ -1,12 +1,11 @@
 # mui-tiptap-editor
 
 <p  align="center">
-
 <b>mui-tiptap-editor</b>: A customizable and easy to use <a href="https://tiptap.dev/">Tiptap</a> styled WYSIWYG rich text editor, using <a  href="https://mui.com/material-ui/getting-started/overview/">Material UI</a>.
-
 </p>
 
-
+<!-- [START BADGES] -->
+<!-- [END BADGES] -->
 ## Table of Contents
 
 <details>
