@@ -99,7 +99,7 @@ const YoutubeDialog = ({ editor, open, onClose }: Props) => {
     <Dialog
       title="Youtube link"
       open={open}
-      toggle={handleClose}
+      onClose={handleClose}
       onPrimaryButtonAction={handleConfirm}
       fullWidth
     >

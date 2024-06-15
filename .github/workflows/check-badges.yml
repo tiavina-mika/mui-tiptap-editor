@@ -1,6 +1,6 @@
 # This action use https://github.com/wow-actions/add-badges?tab=readme-ov-file to add badges to your README.md file.
 # this update the reame state every hour
-name: Chack Badges
+name: Check Badges
 
 on:
   schedule:
