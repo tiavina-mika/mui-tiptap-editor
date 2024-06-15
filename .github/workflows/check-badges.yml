@@ -1,17 +1,10 @@
 # This action use https://github.com/wow-actions/add-badges?tab=readme-ov-file to add badges to your README.md file.
-name: Add Badges
+# this update the reame state every hour
+name: Chack Badges
 
 on:
-  # we are using workflow_run to trigger the workflow
-  # because we want to run this workflow only when the Approve PR and delete branch workflow is completed
-  # GitHub prevents workflows from running on events that were caused by other workflows to prevent unlimited recursion
-  # so we do not use the release event
-  # issue: https://github.com/orgs/community/discussions/25281
-  # see: https://docs.github.com/en/actions/using-workflows/events-that-trigger-workflows#workflow_run
-  workflow_run:
-    # the workflow we want to trigger this workflow (see .github/workflows/automerge.yml)
-    workflows: [Approve PR and delete branch]
-    types: [completed]
+  schedule:
+    - cron: "* */1 * * *"
 
 jobs:
   run:
@@ -37,9 +30,3 @@ jobs:
                 "link": "https://www.typescriptlang.org"
               }
             ]
-      # if adding the last commit badge
-      #   {
-      #   "badge": "https://img.shields.io/github/last-commit/${{ env.repo_owner }}/${{ env.repo_name }}?style=flat-square",
-      #   "alt": "Last Commit",
-      #   "link": "${{ env.repo_url }}/commits/master"
-      # }
