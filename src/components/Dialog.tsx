@@ -25,7 +25,7 @@ type Props = {
   title: string;
   description?: string | ReactNode;
   open?: boolean;
-  toggle?: () => void;
+  onClose?: () => void;
   primaryButtonText?: string;
   secondaryButtonText?: string;
   onPrimaryButtonAction?: () => void;
@@ -40,7 +40,7 @@ const Dialog = ({
   title,
   description,
   open,
-  toggle,
+  onClose,
   onPrimaryButtonAction,
   primaryButtonText,
   secondaryButtonText,
@@ -53,15 +53,15 @@ const Dialog = ({
 }: Props) => {
   const handlePrimaryButtonAction = () => {
     if (onPrimaryButtonAction) onPrimaryButtonAction();
-    if (!toggle) return;
-    toggle();
+    if (!onClose) return;
+    onClose();
   };
 
   const closeIcon = (
     <IconButton
       edge="start"
       color="inherit"
-      onClick={toggle}
+      onClick={onClose}
       aria-label="close"
       sx={{ position: "absolute", right: 0, top: 0 }}
     >
@@ -74,7 +74,7 @@ const Dialog = ({
     <MUIDialog
       {...dialogProps}
       open={!!open}
-      onClose={toggle}
+      onClose={onClose}
       aria-labelledby="alert-dialog-title"
       aria-describedby="alert-dialog-description"
       maxWidth={maxWidth}
@@ -96,6 +96,9 @@ const Dialog = ({
         {children}
       </DialogContent>
       <DialogActions>
+        <Button onClick={onClose}>
+          {secondaryButtonText ?? 'Cancel'}
+        </Button>
         {/* confirm button */}
         {onPrimaryButtonAction && (
           <Button
@@ -107,7 +110,6 @@ const Dialog = ({
             {primaryButtonText ?? 'Confirm'}
           </Button>
         )}
-
       </DialogActions>
     </MUIDialog>
   );

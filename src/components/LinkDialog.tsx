@@ -51,7 +51,7 @@ const LinkDialog = ({ editor, open, onClose }: Props) => {
   };
 
   const handleClose = () => {
-    (editor.commands as any).unsetLink();
+    (editor.commands as any)?.unsetLink();
     onClose();
   };
 
