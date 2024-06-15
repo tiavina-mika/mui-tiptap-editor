@@ -10,7 +10,7 @@ on:
   # see: https://docs.github.com/en/actions/using-workflows/events-that-trigger-workflows#workflow_run
   workflow_run:
     # the workflow we want to trigger this workflow (see .github/workflows/automerge.yml)
-    workflows: [Publish to NPM]
+    workflows: [Approve PR and delete branch]
     types: [completed]
 
 jobs:
@@ -27,11 +27,6 @@ jobs:
           badges: |
             [
               {
-                "badge": "https://img.shields.io/github/license/${{ env.repo_owner }}/${{ env.repo_name }}?style=flat-square",
-                "alt": "MIT License",
-                "link": "${{ env.repo_url }}/blob/master/LICENSE"
-              },
-              {
                 "badge": "https://img.shields.io/npm/v/${{ env.repo_name }}?style=flat-square",
                 "alt": "NPM Version",
                 "link": "https://www.npmjs.com/package/${{ env.repo_name }}"
@@ -42,18 +37,8 @@ jobs:
                 "link": "https://www.typescriptlang.org"
               },
               {
-                "badge": "https://img.shields.io/github/contributors/${{ env.repo_owner }}/${{ env.repo_name }}?style=flat-square",
-                "alt": "Contributors",
-                "link": "${{ env.repo_url }}/graphs/contributors"
-              },
-              {
                 "badge": "https://img.shields.io/github/last-commit/${{ env.repo_owner }}/${{ env.repo_name }}?style=flat-square",
                 "alt": "Last Commit",
                 "link": "${{ env.repo_url }}/commits/master"
               },
-              {
-                "badge": "https://img.shields.io/lgtm/grade/javascript/g/${{ env.repo_owner }}/${{ env.repo_name }}.svg?logo=lgtm&style=flat-square",
-                "alt": "Language grade: JavaScript",
-                "link": "https://lgtm.com/projects/g/${{ env.repo_owner }}/${{ env.repo_name }}/context:javascript"
-              }
             ]
