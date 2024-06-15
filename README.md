@@ -8,7 +8,6 @@ A customizable and easy to use <a href="https://tiptap.dev/">Tiptap</a> styled W
 <!-- Please keep comment here to allow auto update -->
 [![NPM Version](https://img.shields.io/npm/v/mui-tiptap-editor?style=flat-square)](https://www.npmjs.com/package/mui-tiptap-editor)
 [![Language](https://img.shields.io/badge/language-TypeScript-blue.svg?style=flat-square)](https://www.typescriptlang.org)
-[![Last Commit](https://img.shields.io/github/last-commit/tiavina-mika/mui-tiptap-editor?style=flat-square)](https://github.com/tiavina-mika/mui-tiptap-editor/commits/master)
 <!-- [END BADGES] -->
 ## Table of Contents
 
