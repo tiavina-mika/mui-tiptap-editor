@@ -4,7 +4,7 @@ name: Check Badges
 
 on:
   schedule:
-    - cron: "* */1 * * *"
+    - cron: "0 1-23 * * *"
 
 jobs:
   run:
