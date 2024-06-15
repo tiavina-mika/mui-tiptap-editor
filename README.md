@@ -1,7 +1,7 @@
 # mui-tiptap-editor
 
-<p  align="center">
-<b>mui-tiptap-editor</b>: A customizable and easy to use <a href="https://tiptap.dev/">Tiptap</a> styled WYSIWYG rich text editor, using <a  href="https://mui.com/material-ui/getting-started/overview/">Material UI</a>.
+<p align="left">
+A customizable and easy to use <a href="https://tiptap.dev/">Tiptap</a> styled WYSIWYG rich text editor, using <a  href="https://mui.com/material-ui/getting-started/overview/">Material UI</a>.
 </p>
 
 <!-- [START BADGES] -->
@@ -45,13 +45,13 @@
 
 ```shell
 
-npm  install  mui-tiptap-editor
+npm install mui-tiptap-editor
 
 ```
 or
 ```shell
 
-yarn  add  mui-tiptap-editor
+yarn add mui-tiptap-editor
 
 ```
 Please note that [`@mui/material`](https://mui.com/material-ui/getting-started/installation/) (and their `@emotion/` peers) are peer dependencies, meaning you should ensure they are installed before installing `mui-tiptap-editor`.
