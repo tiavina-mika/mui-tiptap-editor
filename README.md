@@ -105,7 +105,7 @@ function App() {
 }
 ```
 
-See [`example/App.tsx`](https://github.com/tiavina-mika/mui-tiptap-editor/tree/main/example) for a more thorough example of using `TextEditor`.
+See [`here`](https://github.com/tiavina-mika/mui-tiptap-editor/tree/main/example) for more examples that use `TextEditor`.
 
 ### Read only
 

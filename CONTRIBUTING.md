@@ -29,7 +29,7 @@ To instead test a "built" version of this package which is installed into an "ex
 When a new version should be cut since some new changes have landed on the `main` branch, do the following to publish it:
 
 1. Go to the `main` branch and pull in the latest changes.
-2. Commit change using (commit convention)[https://www.conventionalcommits.org/en/v1.0.0-beta.4/]
+2. Commit change using (commit convention)[https://www.conventionalcommits.org]
 3. Push the commit (ex: `git push origin main`)
 4. The `release.yml` GitHub Actions workflow will auto-generate a tag, change log, release note and a PR branch
 5. The `automerge.yml` GitHub Actions workflow will merge and delete the PR branch
