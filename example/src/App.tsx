@@ -5,12 +5,80 @@ import { TextEditor, TextEditorReadOnly } from 'mui-tiptap-editor';
 import TiptapParser from "tiptap-parser";
 import WithHookForm from './WithHookForm';
 
+const customLabels = {
+  editor: {
+    editor: "Editeur",
+    preview: "Aperçu"
+  },
+  toolbar: {
+    bold: "Gras",
+    italic: "Italique",
+    strike: "Barré",
+    underline: "Souligné",
+    link: "Lien",
+    bulletList: "Liste à puces",
+    orderedList: "Liste ordonnée",
+    alignLeft: "Aligner à gauche",
+    alignCenter: "Aligner au centre",
+    alignRight: "Aligner à droite",
+    alignJustify: "Justifier",
+    blockquote: "Citation",
+    codeBlock: "Code",
+    table: "Table",
+    youtube: "Youtube",
+    undo: "Annuler",
+    redo: "Refaire",
+    mention: "Mention"
+  },
+  headings: {
+    normalText: "Text normal",
+    h1: "En-tête 1",
+    h2: "En-tête 2",
+    h3: "En-tête 3",
+    h4: "En-tête 4",
+    h5: "En-tête 5",
+    h6: "En-tête 6"
+  },
+  table: {
+    table: "Tableau",
+    addColumnBefore: "Ajouter une colonne avant",
+    addColumnAfter: "Ajouter une colonne après",
+    deleteColumn: "Supprimer la colonne",
+    addRowBefore: "Ajouter une ligne avant",
+    addRowAfter: "Ajouter une ligne après",
+    deleteRow: "Supprimer la ligne",
+    mergeCells: "Fusionner les cellules",
+    splitCell: "Diviser la cellule",
+    deleteTable: "Supprimer le tableau",
+    insertTable: "Insérer un tableau",
+    toggleHeaderCell: "Basculer la cellule d'en-tête",
+    toggleHeaderColumn: "Basculer la colonne d'en-tête",
+    toggleHeaderRow: "Basculer la ligne d'en-tête",
+    mergeOrSplit: "Fusionner ou diviser",
+    setCellAttribute: "Définir l'attribut de cellule"
+  },
+  link: {
+    link: "Lien",
+    insert: "Insérer le lien",
+    invalid: "Lien invalide",
+  },
+  youtube: {
+    link: "Lien",
+    insert: "Insérer la vidéo Youtube",
+    title: "Insérer une vidéo Youtube",
+    invalid: "Lien invalide",
+    enter: "Entrer le lien",
+    height: "Hauteur",
+    width: "Largeur"
+  }
+}
 const tabs = [
   'Simple',
   'Toolbar',
   'Read only',
   'Custom global styles',
   'Each element styles',
+  'Override labels',
   'Mentions',
   'Async initial value',
   'React Hook Form',
@@ -142,8 +210,16 @@ const App = () => {
           />
         )}
 
-        {/* mentions */}
+        {/* Override labels */}
         {tab === 5 && (
+          <TextEditor
+            label="Content"
+            labels={customLabels}
+          />
+        )}
+        
+        {/* mentions */}
+        {tab === 6 && (
           <TextEditor
             label="Content"
             mentions={mentions}
@@ -152,13 +228,13 @@ const App = () => {
           />
         )}
         {/* With default async value */}
-        {tab === 6 && <TextEditor value={asyncDefaultValue} />}
+        {tab === 7 && <TextEditor value={asyncDefaultValue} />}
 
         {/* With React Hook Form */}
-        {tab === 7 && <WithHookForm />}
+        {tab === 8 && <WithHookForm />}
 
         {/* Read without editor */}
-        {tab === 8 && (
+        {tab === 9 && (
           <TiptapParser content={htmlToParse} />
         )}
       </Container>
