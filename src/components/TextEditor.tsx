@@ -215,6 +215,11 @@ export type TextEditorProps = {
    * the final element is something like: <a href="/profile/some_user_id">{mentioned_user}</a>
    */
   userPathname?: string;
+
+  /**
+   * override labels
+   * it's useful for i18n or changing the default labels
+   */
   labels?: ILabels;
 } & Partial<EditorOptions>;
 

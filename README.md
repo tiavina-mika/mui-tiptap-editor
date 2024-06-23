@@ -23,6 +23,7 @@ A customizable and easy to use <a href="https://tiptap.dev/">Tiptap</a> styled W
     - [Read only](#read-only)
   - [Customization](#customization)
     - [Toolbar](#toolbar)
+    - [Override labels](#override-labels)
     - [Styles](#styles)
       - [Root styles](#root-styles)
       - [Each element styles](#each-element-styles)
@@ -93,7 +94,7 @@ import { TextEditor, ITextEditorOption } from 'mui-tiptap-editor';
 const mentions: ITextEditorOption[] = [
   { label: "Lea Thompson", value: "id1" },
   { label: "Cyndi Lauper", value: "id2" },
-  { label: "Tom Cruise", value: "id13" },
+  { label: "Tom Cruise", value: "id3" },
 ];
 
 const currentUser: ITextEditorOption = mentions[0];
@@ -116,16 +117,9 @@ import { TextEditorReadOnly } from 'mui-tiptap-editor';
 <TextEditorReadOnly value="<h1>Hello word!</h1>" />
 ```
 
-2. If it's just to display the value without using the editor, you can use this [`tiptap-parser`](https://www.npmjs.com/package/tiptap-parser) library. Example: The editor is used in the back office, but the content is to be displayed on the website
+2. If it is just displaying the value without using the editor, you can use this library [`tiptap-parser`](https://www.npmjs.com/package/tiptap-parser). Example: The editor is used in the back office, but the content must be displayed on the website
 ```tsx
-import TiptapParser from "tiptap-parser";
-
-const html = `<h1>Hello world</h1>`;
-
-function App() {
-  return (
-    <TiptapParser content={html} />
-  );
+<TiptapParser content={`<h1>Hello world</h1>`} />
 }
 ```
 
@@ -136,6 +130,79 @@ function App() {
 
 ```tsx
   <TextEditor toolbar={['bold', 'italic', 'underline']} />
+```
+
+### Override labels
+```tsx
+  <TextEditor
+    labels={{
+      editor: {
+        editor: "Editeur",
+        preview: "Aperçu"
+      },
+      toolbar: {
+        bold: "Gras",
+        italic: "Italique",
+        strike: "Barré",
+        underline: "Souligné",
+        link: "Lien",
+        bulletList: "Liste à puces",
+        orderedList: "Liste ordonnée",
+        alignLeft: "Aligner à gauche",
+        alignCenter: "Aligner au centre",
+        alignRight: "Aligner à droite",
+        alignJustify: "Justifier",
+        blockquote: "Citation",
+        codeBlock: "Code",
+        table: "Table",
+        youtube: "Youtube",
+        undo: "Annuler",
+        redo: "Refaire",
+        mention: "Mention"
+      },
+      headings: {
+        normalText: "Text normal",
+        h1: "En-tête 1",
+        h2: "En-tête 2",
+        h3: "En-tête 3",
+        h4: "En-tête 4",
+        h5: "En-tête 5",
+        h6: "En-tête 6"
+      },
+      table: {
+        table: "Tableau",
+        addColumnBefore: "Ajouter une colonne avant",
+        addColumnAfter: "Ajouter une colonne après",
+        deleteColumn: "Supprimer la colonne",
+        addRowBefore: "Ajouter une ligne avant",
+        addRowAfter: "Ajouter une ligne après",
+        deleteRow: "Supprimer la ligne",
+        mergeCells: "Fusionner les cellules",
+        splitCell: "Diviser la cellule",
+        deleteTable: "Supprimer le tableau",
+        insertTable: "Insérer un tableau",
+        toggleHeaderCell: "Basculer la cellule d'en-tête",
+        toggleHeaderColumn: "Basculer la colonne d'en-tête",
+        toggleHeaderRow: "Basculer la ligne d'en-tête",
+        mergeOrSplit: "Fusionner ou diviser",
+        setCellAttribute: "Définir l'attribut de cellule"
+      },
+      link: {
+        link: "Lien",
+        insert: "Insérer le lien",
+        invalid: "Lien invalide",
+      },
+      youtube: {
+        link: "Lien",
+        insert: "Insérer la vidéo Youtube",
+        title: "Insérer une vidéo Youtube",
+        invalid: "Lien invalide",
+        enter: "Entrer le lien",
+        height: "Hauteur",
+        width: "Largeur"
+      }
+    }}
+  />
 ```
 
 ### Styles
@@ -168,19 +235,14 @@ function App () {
 #### Each element styles
 
 ```tsx
-import { TextEditor } from 'mui-tiptap-editor';
-
-function App () {
-  return (
-    <TextEditor
-      value="<p>Hello word!</p>"
-      label="Content"
-      tabClassName="bg-black"
-      labelClassName="text-sm"
-      inputClassName="border border-gray-200"
-      toolbarClassName="bg-gray-500"
-    />
-  )
+<TextEditor
+  value="<p>Hello word!</p>"
+  label="Content"
+  tabClassName="bg-black"
+  labelClassName="text-sm"
+  inputClassName="border border-gray-200"
+  toolbarClassName="bg-gray-500"
+/>
 }
 ```
 
@@ -208,6 +270,7 @@ function App () {
 |value|`string`|empty| Value of the input
 |onChange|`(value: string) => void`|-| Function to call when the input change
 |userPathname|`boolean`|/user| URL pathname for the mentioned user (eg: /user/user_id)
+|labels|`ILabels`|null| Override labels, for example using `i18n`
 |...all tiptap features|[EditorOptions](https://github.com/ueberdosis/tiptap/blob/e73073c02069393d858ca7d8c44b56a651417080/packages/core/src/types.ts#L52)|empty| Can access to all tiptap `useEditor` props
 
 ## Contributing
