@@ -47,6 +47,73 @@ const App = () => {
             placeholder="French here"
             mentions={mentions}
             user={currentUser}
+            labels={{
+              editor: {
+                editor: "Editeur",
+                preview: "Aperçu"
+              },
+              toolbar: {
+                bold: "Gras",
+                italic: "Italique",
+                strike: "Barré",
+                underline: "Souligné",
+                link: "Lien",
+                bulletList: "Liste à puces",
+                orderedList: "Liste ordonnée",
+                alignLeft: "Aligner à gauche",
+                alignCenter: "Aligner au centre",
+                alignRight: "Aligner à droite",
+                alignJustify: "Justifier",
+                blockquote: "Citation",
+                codeBlock: "Code",
+                table: "Table",
+                youtube: "Youtube",
+                undo: "Annuler",
+                redo: "Refaire",
+                mention: "Mention"
+              },
+              headings: {
+                normalText: "Text normal",
+                h1: "En-tête 1",
+                h2: "En-tête 2",
+                h3: "En-tête 3",
+                h4: "En-tête 4",
+                h5: "En-tête 5",
+                h6: "En-tête 6"
+              },
+              table: {
+                table: "Tableau",
+                addColumnBefore: "Ajouter une colonne avant",
+                addColumnAfter: "Ajouter une colonne après",
+                deleteColumn: "Supprimer la colonne",
+                addRowBefore: "Ajouter une ligne avant",
+                addRowAfter: "Ajouter une ligne après",
+                deleteRow: "Supprimer la ligne",
+                mergeCells: "Fusionner les cellules",
+                splitCell: "Diviser la cellule",
+                deleteTable: "Supprimer le tableau",
+                insertTable: "Insérer un tableau",
+                toggleHeaderCell: "Basculer la cellule d'en-tête",
+                toggleHeaderColumn: "Basculer la colonne d'en-tête",
+                toggleHeaderRow: "Basculer la ligne d'en-tête",
+                mergeOrSplit: "Fusionner ou diviser",
+                setCellAttribute: "Définir l'attribut de cellule"
+              },
+              link: {
+                link: "Lien",
+                insert: "Insérer le lien",
+                invalid: "Lien invalide",
+              },
+              youtube: {
+                link: "Lien",
+                insert: "Insérer la vidéo Youtube",
+                title: "Insérer une vidéo Youtube",
+                invalid: "Lien invalide",
+                enter: "Entrer le lien",
+                height: "Hauteur",
+                width: "Largeur"
+              }
+            }}
           />
         </Container>
       </EmotionThemeProvider>

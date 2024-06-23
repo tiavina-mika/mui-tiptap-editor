@@ -1,13 +1,14 @@
 import { Editor } from "@tiptap/react";
 import { Menu, MenuItem, Fade } from "@mui/material";
+import { ILabels } from "../types";
 
 type IOption = {
   label: string;
   action: () => void;
 };
-const getTableMenus = (editor: Editor): IOption[] => [
+const getTableMenus = (editor: Editor, labels?: ILabels['table']): IOption[] => [
   {
-    label: "Insert table",
+    label: labels?.insertTable || "Insert table",
     action: () =>
       editor
         .chain()
@@ -16,55 +17,55 @@ const getTableMenus = (editor: Editor): IOption[] => [
         .run()
   },
   {
-    label: "Add column before",
+    label: labels?.addColumnBefore || "Add column before",
     action: () => editor.chain().focus().addColumnBefore().run()
   },
   {
-    label: "Add column after",
+    label: labels?.addColumnAfter || "Add column after",
     action: () => editor.chain().focus().addColumnAfter().run()
   },
   {
-    label: "Delete Column",
+    label: labels?.deleteColumn || "Delete Column",
     action: () => editor.chain().focus().deleteColumn().run()
   },
   {
-    label: "Add row before",
+    label: labels?.addRowBefore || "Add row before",
     action: () => editor.chain().focus().addRowBefore().run()
   },
   {
-    label: "Add row after",
+    label: labels?.addRowAfter || "Add row after",
     action: () => editor.chain().focus().addRowAfter().run()
   },
   {
-    label: "Delete row",
+    label: labels?.deleteRow || "Delete row",
     action: () => editor.chain().focus().deleteRow().run()
   },
   {
-    label: "Delete table",
+    label: labels?.deleteTable || "Delete table",
     action: () => editor.chain().focus().deleteTable().run()
   },
   {
-    label: "Merge cells",
+    label: labels?.mergeCells || "Merge cells",
     action: () => editor.chain().focus().mergeCells().run()
   },
   {
-    label: "Toggle header column",
+    label: labels?.toggleHeaderColumn || "Toggle header column",
     action: () => editor.chain().focus().toggleHeaderColumn().run()
   },
   {
-    label: "Toggle header row",
+    label: labels?.toggleHeaderRow || "Toggle header row",
     action: () => editor.chain().focus().toggleHeaderRow().run()
   },
   {
-    label: "Toggle header cell",
+    label: labels?.toggleHeaderCell || "Toggle header cell",
     action: () => editor.chain().focus().toggleHeaderCell().run()
   },
   {
-    label: "Merge or split",
+    label: labels?.mergeOrSplit || "Merge or split",
     action: () => editor.chain().focus().mergeOrSplit().run()
   },
   {
-    label: "Set cell attribute",
+    label: labels?.setCellAttribute || "Set cell attribute",
     action: () => editor.chain().focus().setCellAttribute("colspan", 2).run()
   }
 ];
@@ -73,8 +74,9 @@ type Props = {
   editor: Editor;
   anchorEl: null | HTMLElement;
   onClose: () => void;
+  labels?: ILabels["table"];
 };
-const TableMenuDialog = ({ editor, anchorEl, onClose }: Props) => {
+const TableMenuDialog = ({ editor, anchorEl, onClose, labels }: Props) => {
   const handleClick = (menu: IOption) => {
     menu.action();
     onClose();
@@ -91,7 +93,7 @@ const TableMenuDialog = ({ editor, anchorEl, onClose }: Props) => {
       onClose={onClose}
       TransitionComponent={Fade}
     >
-      {getTableMenus(editor).map((menu, index) => (
+      {getTableMenus(editor, labels).map((menu, index) => (
         <MenuItem value={index} key={index} onClick={() => handleClick(menu)}>
           {menu.label}
         </MenuItem>

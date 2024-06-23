@@ -1,10 +1,10 @@
 import { Editor } from "@tiptap/react";
 import { Menu, MenuItem, Fade, Theme, Button } from "@mui/material";
 import { Level } from "@tiptap/extension-heading";
-import { MouseEvent, useState } from "react";
+import { MouseEvent, useMemo, useState } from "react";
 import ChevronDown from "../icons/ChevronDown";
 import Icon from "../icons/Icon";
-import { ITextEditorOption } from "./TextEditor";
+import { ILabels } from "../types";
 
 const isActive = (editor: Editor) => {
   return (
@@ -17,34 +17,7 @@ const isActive = (editor: Editor) => {
   );
 }
 
-type IOption = ITextEditorOption<Level>;
-
-const options: IOption[] = [
-  {
-    value: 1,
-    label: "Heading 1"
-  },
-  {
-    value: 2,
-    label: "Heading 2"
-  },
-  {
-    value: 3,
-    label: "Heading 3"
-  },
-  {
-    value: 4,
-    label: "Heading 4"
-  },
-  {
-    value: 5,
-    label: "Heading 5"
-  },
-  {
-    value: 6,
-    label: "Heading 6"
-  }
-];
+const options: Level[] = [1, 2, 3, 4, 5, 6];
 
 const classes = {
   button: (isActive: boolean) => (theme: Theme) => ({
@@ -70,14 +43,33 @@ const classes = {
     fontSize
   })
 }
+
 type Props = {
   editor: Editor;
+  headingLabels?: ILabels["headings"];
 };
-const Heading = ({ editor }: Props) => {
+const Heading = ({ editor, headingLabels }: Props) => {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(
     null
   );
   const [selected, setSelected] = useState(0);
+
+  // get label for selected heading
+  const selectedLabel = useMemo(() => {
+    const heading = options.find(option => option === selected);
+
+    if (heading) {
+      if (headingLabels && headingLabels[`h${heading}`]) {
+        return headingLabels[`h${heading}`];
+      }
+      return `Heading ${heading}`;
+    }
+
+    if (headingLabels && headingLabels.normalText) {
+      return headingLabels.normalText;
+    }
+    return 'Normal text';
+  }, [selected, headingLabels]);
 
   const handleOpenHeadingMenu = (event: MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
@@ -111,7 +103,7 @@ const Heading = ({ editor }: Props) => {
         color="inherit"
       >
         <span>
-          {options.find(option => option.value === selected)?.label || "Normal text"}
+          {selectedLabel}
         </span>
         {/* chevron icon */}
         <Icon>
@@ -129,19 +121,22 @@ const Heading = ({ editor }: Props) => {
         onClose={handleClose}
         TransitionComponent={Fade}
       >
+        {/* normal text option */}
         <MenuItem onClick={handleSelectNormalText}>
-          Normal text
+          {headingLabels?.normalText || "Normal text"}
         </MenuItem>
+        {/* heading options */}
         {options.map((option, index) => (
           <MenuItem
             key={index}
-            onClick={() => handleSelectHeading(option.value)}
+            onClick={() => handleSelectHeading(option)}
             css={classes.menuItem(
-              editor.isActive("heading", { level: option.value }), // isActive
-              (10 - index) * 3 // fontSize
+              editor.isActive("heading", { level: option }), // isActive
+              (10 - index) * 3 // fontSize is decreasing
             )}
           >
-            {option.label}
+            {/* override labels or default ones */}
+            {headingLabels?.[`h${option}`] || `Heading ${option}`}
           </MenuItem>
         ))}
       </Menu>

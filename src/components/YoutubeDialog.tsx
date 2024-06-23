@@ -6,6 +6,7 @@ import { Editor } from "@tiptap/react";
 import { ChangeEvent, useState } from "react";
 import Dialog from "./Dialog";
 import { checkIsValidYoutubeUrl } from '../utils/app.utils';
+import { ILabels } from "../types";
 
 type YoutubeInput = {
   url: string;
@@ -47,8 +48,9 @@ type Props = {
   editor: Editor;
   open: boolean;
   onClose: () => void;
+  labels?: ILabels['youtube'];
 };
-const YoutubeDialog = ({ editor, open, onClose }: Props) => {
+const YoutubeDialog = ({ editor, open, onClose, labels }: Props) => {
   const [values, setValues] = useState<YoutubeInput>(initialValues);
   const [errors, setErrors] = useState<Record<string, string> | null>(null);
 
@@ -97,7 +99,7 @@ const YoutubeDialog = ({ editor, open, onClose }: Props) => {
 
   return (
     <Dialog
-      title="Youtube link"
+      title={labels?.title || 'Insert Youtube Video'}
       open={open}
       onClose={handleClose}
       onPrimaryButtonAction={handleConfirm}
@@ -106,8 +108,8 @@ const YoutubeDialog = ({ editor, open, onClose }: Props) => {
       <Stack spacing={3}>
         <TextField
           name="url"
-          label="Link"
-          placeholder="Enter the link"
+          label={labels?.link || 'Link'}
+          placeholder={labels?.insert || 'Enter the link'}
           variant="outlined"
           type="url"
           fullWidth
@@ -118,7 +120,7 @@ const YoutubeDialog = ({ editor, open, onClose }: Props) => {
         />
         <TextField
           name="width"
-          label="Width"
+          label={labels?.width || 'Width'}
           variant="outlined"
           type="number"
           fullWidth
@@ -129,7 +131,7 @@ const YoutubeDialog = ({ editor, open, onClose }: Props) => {
         />
         <TextField
           name="height"
-          label="Height"
+          label={labels?.height || 'Height'}
           variant="outlined"
           type="number"
           fullWidth

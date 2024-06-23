@@ -13,7 +13,7 @@ import { useState, SyntheticEvent, ReactNode } from 'react';
 import { useTextEditor } from "../hooks/useTextEditor";
 
 import Toolbar from './Toolbar';
-import { IEditorToolbar } from "../types";
+import { IEditorToolbar, ILabels } from "../types";
 
 const defaultMenuToolbar: IEditorToolbar[] = ['heading', 'bold', 'italic', 'underline', 'link', 'bulletList'];
 
@@ -215,6 +215,7 @@ export type TextEditorProps = {
    * the final element is something like: <a href="/profile/some_user_id">{mentioned_user}</a>
    */
   userPathname?: string;
+  labels?: ILabels;
 } & Partial<EditorOptions>;
 
 const TextEditor = ({
@@ -236,6 +237,7 @@ const TextEditor = ({
   user,
   mentions,
   userPathname,
+  labels,
   editable = true,
   withFloatingMenu = false,
   withBubbleMenu = true,
@@ -283,9 +285,10 @@ const TextEditor = ({
         css={classes.tabs}
         className={tabsClassName}
       >
-        <Tab css={classes.tab} label="Editor" value="editor" className={tabClassName} />
-        <Tab css={classes.tab} label="Preview" value="preview" className={tabClassName} />
+        <Tab css={classes.tab} label={labels?.editor?.editor || 'Editor'} value="editor" className={tabClassName} />
+        <Tab css={classes.tab} label={labels?.editor?.preview || 'Preview'} className={tabClassName} />
       </Tabs>
+
       {/* ---------------------------- */}
       {/* ----------- editor --------- */}
       {/* ---------------------------- */}
@@ -299,6 +302,7 @@ const TextEditor = ({
                     editor={editor}
                     toolbar={floatingMenuToolbar || defaultMenuToolbar}
                     css={[classes.menu, classes.bubbleMenu]}
+                    labels={labels}
                   />
                 </FloatingMenu>
               )}
@@ -323,6 +327,7 @@ const TextEditor = ({
                   editor={editor}
                   className={cx('stretchSelf', toolbarClassName)}
                   toolbar={toolbar}
+                  labels={labels}
                 />
               )}
             </div>

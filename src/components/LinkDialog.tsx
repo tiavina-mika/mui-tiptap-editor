@@ -4,13 +4,15 @@ import { useState, ChangeEvent } from 'react';
 import { TextField } from '@mui/material';
 import Dialog from './Dialog';
 import { checkIsValidUrl } from '../utils/app.utils';
+import { ILabels } from '../types';
 
 type Props = {
   editor: Editor;
   open: boolean;
   onClose: () => void;
+  labels?: ILabels['link'];
 };
-const LinkDialog = ({ editor, open, onClose }: Props) => {
+const LinkDialog = ({ editor, open, onClose, labels }: Props) => {
   const [link, setLink] = useState<string>('');
   const [error, setError] = useState<string>('');
 
@@ -25,12 +27,12 @@ const LinkDialog = ({ editor, open, onClose }: Props) => {
 
   const handleConfirm = () => {
     if (!link) {
-      setError('Please enter a link');
+      setError(labels?.enter || 'Please enter a link');
       return;
     }
     const isValidUrl = checkIsValidUrl(link);
     if (!isValidUrl) {
-      setError('Invalid URL');
+      setError(labels?.invalid || 'Invalid URL');
       return;
     }
 
@@ -65,7 +67,7 @@ const LinkDialog = ({ editor, open, onClose }: Props) => {
     >
       <TextField
         label="Link"
-        placeholder="Entrer le lien"
+        placeholder={labels?.insert || 'Insert link'}
         type="url"
         fullWidth
         onChange={handleChangeLink}

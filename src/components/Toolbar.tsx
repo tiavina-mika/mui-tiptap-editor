@@ -8,7 +8,7 @@ import TableMenuDialog from "./TableMenuDialog";
 import LinkDialog from "./LinkDialog";
 import Heading from "./Heading";
 import ColorPicker from "./ColorPicker";
-import { IEditorToolbar } from "../types.d";
+import { IEditorToolbar, ILabels } from "../types.d";
 import { defaultEditorToolbar, showTextEditorToolbarMenu } from "../utils/app.utils";
 import YoutubeDialog from "./YoutubeDialog";
 import Bold from "../icons/Bold";
@@ -77,11 +77,13 @@ export type ToolbarProps = {
    * default values is all the above
    */
   toolbar?: IEditorToolbar[];
+  labels?: Omit<ILabels, 'editor'>;
 };
 
 const Toolbar = ({
   editor,
   className,
+  labels,
   toolbar = defaultEditorToolbar
 }: ToolbarProps) => {
   const [openLinkDialog, setOpen] = useState<boolean>(false);
@@ -103,6 +105,7 @@ const Toolbar = ({
   };
 
   const menus = useMemo(() => {
+    const toolbarLabels = labels?.toolbar;
     return [
       {
         name: "bold",
@@ -110,7 +113,7 @@ const Toolbar = ({
         iconSize: 12,
         onClick: () => editor.chain().focus().toggleBold().run(),
         disabled: !editor.can().chain().focus().toggleBold().run(),
-        tooltip: 'Bold'
+        tooltip: toolbarLabels?.bold || 'Bold'
       },
       {
         name: "italic",
@@ -118,7 +121,7 @@ const Toolbar = ({
         iconSize: 12,
         onClick: () => editor.chain().focus().toggleItalic().run(),
         disabled: !editor.can().chain().focus().toggleItalic().run(),
-        tooltip: 'Italic'
+        tooltip: toolbarLabels?.italic || 'Italic'
       },
       {
         name: "strike",
@@ -126,7 +129,7 @@ const Toolbar = ({
         iconSize: 14,
         onClick: () => editor.chain().focus().toggleStrike().run(),
         disabled: !editor.can().chain().focus().toggleStrike().run(),
-        tooltip: 'Strike through'
+        tooltip: toolbarLabels?.strike || 'Strike through'
       },
       {
         name: "underline",
@@ -134,7 +137,7 @@ const Toolbar = ({
         icon: Underline,
         onClick: () => editor.chain().focus().toggleUnderline().run(),
         disabled: !editor.can().chain().focus().toggleUnderline().run(),
-        tooltip: 'Underline'
+        tooltip: toolbarLabels?.underline || 'Underline'
       },
       {
         name: "link",
@@ -142,7 +145,7 @@ const Toolbar = ({
         onClick: toggleLinkDialog,
         disabled: false,
         split: true,
-        tooltip: 'Link'
+        tooltip: toolbarLabels?.link || 'Link'
       },
       // order
       {
@@ -150,7 +153,7 @@ const Toolbar = ({
         icon: BulletList,
         onClick: () => editor.chain().focus().toggleBulletList().run(),
         disabled: !editor.can().chain().focus().toggleBulletList().run(),
-        tooltip: 'Bullet list'
+        tooltip: toolbarLabels?.bulletList || 'Bullet list'
       },
       {
         name: "orderedList",
@@ -158,7 +161,7 @@ const Toolbar = ({
         onClick: () => editor.chain().focus().toggleOrderedList().run(),
         disabled: !editor.can().chain().focus().toggleOrderedList().run(),
         split: true,
-        tooltip: 'Ordered list',
+        tooltip: toolbarLabels?.orderedList || 'Ordered list',
         iconSize: 14
       },
       // alignment
@@ -169,7 +172,7 @@ const Toolbar = ({
         disabled: false,
         active: { textAlign: "left" },
         group: "align",
-        tooltip: 'Left align'
+        tooltip: toolbarLabels?.alignLeft || 'Left align'
       },
       {
         name: "align-center",
@@ -178,7 +181,7 @@ const Toolbar = ({
         disabled: false,
         active: { textAlign: "center" },
         group: "align",
-        tooltip: 'Center align'
+        tooltip: toolbarLabels?.alignCenter || 'Center align'
       },
       {
         name: "align-right",
@@ -187,7 +190,7 @@ const Toolbar = ({
         disabled: false,
         active: { textAlign: "right" },
         group: "align",
-        tooltip: 'Right align'
+        tooltip: toolbarLabels?.alignRight || 'Right align'
       },
       {
         name: "align-justify",
@@ -197,14 +200,14 @@ const Toolbar = ({
         active: { textAlign: "justify" },
         split: true,
         group: "align",
-        tooltip: 'Justify align'
+        tooltip: toolbarLabels?.alignJustify || 'Justify align'
       },
       {
         name: "blockquote",
         icon: Quote,
         onClick: () => editor.chain().focus().toggleBlockquote().run(),
         disabled: false,
-        tooltip: 'Block quote',
+        tooltip: toolbarLabels?.blockquote || 'Block quote',
         iconSize: 16
       },
       {
@@ -213,7 +216,7 @@ const Toolbar = ({
         onClick: () => editor.chain().focus().toggleCodeBlock().run(),
         disabled: false,
         split: true,
-        tooltip: 'Code block'
+        tooltip: toolbarLabels?.codeBlock || 'Code block',
       },
       {
         name: "table",
@@ -223,7 +226,7 @@ const Toolbar = ({
         },
         disabled: false,
         split: true,
-        tooltip: 'Table'
+        tooltip: labels?.table?.table || 'Table'
       },
       {
         name: "youtube",
@@ -231,7 +234,7 @@ const Toolbar = ({
         onClick: toggleYoutubeDialog,
         disabled: false,
         split: true,
-        tooltip: 'Youtube'
+        tooltip: toolbarLabels?.youtube || 'Youtube'
       },
       {
         name: "undo",
@@ -239,7 +242,7 @@ const Toolbar = ({
         onClick: () => editor.chain().focus().undo().run(),
         disabled: !editor.can().undo(),
         default: true, // always display
-        tooltip: 'Undo'
+        tooltip: toolbarLabels?.undo || 'Undo'
       },
       {
         name: "redo",
@@ -248,7 +251,7 @@ const Toolbar = ({
         disabled: !editor.can().redo(),
         default: true, // always display
         split: true,
-        tooltip: 'Redo'
+        tooltip: toolbarLabels?.redo || 'Redo'
       }
     ]
   }, [
@@ -259,13 +262,14 @@ const Toolbar = ({
     editor.can().redo,
     toggleLinkDialog,
     toggleYoutubeDialog,
-    handleOpenTableMenu
+    handleOpenTableMenu,
+    labels
   ]);
 
   return (
     <div className={cx(className, 'flexRow center')} css={classes.toolbar}>
       {/* heading */}
-      {showTextEditorToolbarMenu(toolbar, "heading") && <Heading editor={editor} />}
+      {showTextEditorToolbarMenu(toolbar, "heading") && <Heading editor={editor} headingLabels={labels?.headings} />}
 
       {/* other options */}
       {menus.map((menu, index) => (
@@ -310,6 +314,7 @@ const Toolbar = ({
           editor={editor}
           open={openLinkDialog}
           onClose={toggleLinkDialog}
+          labels={labels?.link}
         />
       )}
 
@@ -319,6 +324,7 @@ const Toolbar = ({
           editor={editor}
           open={openYoutubeDialog}
           onClose={toggleYoutubeDialog}
+          labels={labels?.youtube}
         />
       )}
 
@@ -333,6 +339,7 @@ const Toolbar = ({
           editor={editor}
           anchorEl={tableAnchorEl}
           onClose={handleCloseTableMenu}
+          labels={labels?.table}
         />
       )}
     </div>
