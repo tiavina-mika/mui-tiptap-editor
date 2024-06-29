@@ -1,4 +1,4 @@
-import { Tooltip } from "@mui/material";
+import { Tooltip, useTheme } from "@mui/material";
 import { Editor } from "@tiptap/react";
 
 import { ChangeEvent, useEffect, useState } from "react";
@@ -39,11 +39,14 @@ type Props = {
 const ColorPicker = ({ editor }: Props) => {
   const [color, setColor] = useState<string>("");
 
+  const theme = useTheme();
+
   // add default styles if not defined
   useEffect(() => {
     const currentColor = editor.getAttributes("textStyle").color;
-    setColor(currentColor || '#000000');
-  }, [editor])
+    const defaultColor = theme.palette.mode === "dark" ? "#ffffff" : "#000000";
+    setColor(currentColor || defaultColor);
+  }, [editor, theme.palette.mode])
 
   const handleInput = (event: ChangeEvent<HTMLInputElement>) => {
     const value = event.target.value;

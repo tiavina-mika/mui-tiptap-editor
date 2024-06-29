@@ -9,7 +9,7 @@ import LinkDialog from "./LinkDialog";
 import Heading from "./Heading";
 import ColorPicker from "./ColorPicker";
 import { IEditorToolbar, ILabels } from "../types.d";
-import { defaultEditorToolbar, showTextEditorToolbarMenu } from "../utils/app.utils";
+import { defaultEditorToolbar, getBorderColor, showTextEditorToolbarMenu } from "../utils/app.utils";
 import YoutubeDialog from "./YoutubeDialog";
 import Bold from "../icons/Bold";
 import Italic from "../icons/Italic";
@@ -34,27 +34,38 @@ import Icon from "../icons/Icon";
 const classes = {
   toolbar: (theme: Theme) => ({
     marginTop: -1,
-    borderTop: "1px solid " + theme.palette.grey[300],
+    borderTop: '1px solid ' + getBorderColor(theme),
     paddingLeft: 8,
     paddingRight: 8,
   }),
-  button: (isActive: boolean, split: boolean) => (theme: Theme) => ({
-    borderRadius: 0,
-    border: "none",
-    borderRight: split ? `1px solid ${theme.palette.grey[300]}` : "none",
-    cursor: "pointer",
-    height: 24,
-    width: 24,
-    padding: 18,
-    backgroundColor: isActive ? theme.palette.grey[100] : "#fff",
-    "&.Mui-disabled": {
-      opacity: 0.4
+  button: (isActive: boolean, split: boolean) => (theme: Theme) => {
+    let backgroundColor = 'transparent';
+    const isLightMode = theme.palette.mode === "light";
+    if (isActive) {
+      if (isLightMode) {
+        backgroundColor = theme.palette.grey[100];
+      } else {
+        backgroundColor = theme.palette.grey[800];
+      }
     }
-  }),
-  splittedBorder: (theme: Theme) => {
-    const borderColor = theme.palette.grey[300];
+
     return {
-      borderRight: "1px solid " + borderColor
+      borderRadius: 0,
+      border: "none",
+      borderRight: split ? `1px solid ${getBorderColor(theme)}` : "none",
+      cursor: "pointer",
+      height: 24,
+      width: 24,
+      padding: 18,
+      backgroundColor,
+      "&.Mui-disabled": {
+        opacity: 0.4
+      }
+    };
+  },
+  splittedBorder: (theme: Theme) => {
+    return {
+      borderRight: "1px solid " + getBorderColor(theme)
     };
   },
 };

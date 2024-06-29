@@ -1,3 +1,4 @@
+import { Theme } from "@mui/material";
 import { IEditorToolbar } from "../types";
 
 export const defaultEditorToolbar: IEditorToolbar[] = [
@@ -22,6 +23,9 @@ export const defaultEditorToolbar: IEditorToolbar[] = [
   // "ai"
 ];
 
+export const getBorderColor = (theme: Theme) => {
+  return theme.palette.mode === "light" ? theme.palette.grey[300] : theme.palette.grey[800];
+}
 
 // menus to display
 export const showTextEditorToolbarMenu = (toolbar: IEditorToolbar[], menu: any): boolean => {

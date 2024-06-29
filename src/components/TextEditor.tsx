@@ -13,13 +13,14 @@ import { useTextEditor } from "../hooks/useTextEditor";
 
 import Toolbar from './Toolbar';
 import { IEditorToolbar, TextEditorProps } from "../types";
+import { getBorderColor } from "../utils/app.utils";
 
 const defaultMenuToolbar: IEditorToolbar[] = ['heading', 'bold', 'italic', 'underline', 'link', 'bulletList'];
 
 const classes = {
   input: (theme: Theme) => ({
     paddingBottom: 0,
-    border: `1px solid ${theme.palette.grey[300]} !important`,
+    border: `1px solid ${getBorderColor(theme)} !important`,
     borderTopRightRadius: 4,
     borderBottomRightRadius: 4,
     borderBottomLeftRadius: 4,
@@ -52,8 +53,8 @@ const classes = {
     fontSize: theme.typography.pxToRem(15),
     marginRight: theme.spacing(1),
     '&.Mui-selected': {
-      color: '#000',
-      backgroundColor: '#ededed',
+      color: theme.palette.mode === 'light' ? '#000' : '#fff',
+      backgroundColor: theme.palette.mode === 'light' ? theme.palette.grey[100] : theme.palette.grey[800],
       borderTopLeftRadius: 2,
       borderTopRightRadius: 2,
     },

@@ -1,8 +1,6 @@
 import { ThemeProvider as EmotionThemeProvider } from '@emotion/react';
-import { Container, ThemeProvider } from '@mui/material';
+import { Container, CssBaseline, ThemeProvider, createTheme } from '@mui/material';
 import TextEditor from '../components/TextEditor';
-
-import { getTheme } from './theme.utils';
 
 const mentions = [
   { label: "Lea Thompson", value: "xxxx1" },
@@ -32,13 +30,19 @@ const mentions = [
   { label: "Lisa Bonet", value: "xxxx25" }
 ];
 
-const html = "<h1>Hello world</h1>";
 const currentUser = mentions[0];
-const theme = getTheme();
+
+const theme = createTheme({
+  palette: {
+    mode: 'dark',
+  },
+});
 
 const App = () => {
   return (
     <ThemeProvider theme={theme}>
+      <CssBaseline />
+
       <EmotionThemeProvider theme={theme}>
         <Container>
           <TextEditor
