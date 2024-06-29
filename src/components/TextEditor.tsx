@@ -5,15 +5,14 @@ import { Theme } from '@emotion/react';
 import { FormHelperText, Tab, Tabs, Typography } from '@mui/material';
 import {
   EditorContent,
-  EditorOptions,
   FloatingMenu,
   BubbleMenu,
 } from '@tiptap/react';
-import { useState, SyntheticEvent, ReactNode } from 'react';
+import { useState, SyntheticEvent } from 'react';
 import { useTextEditor } from "../hooks/useTextEditor";
 
 import Toolbar from './Toolbar';
-import { IEditorToolbar, ILabels } from "../types";
+import { IEditorToolbar, TextEditorProps } from "../types";
 
 const defaultMenuToolbar: IEditorToolbar[] = ['heading', 'bold', 'italic', 'underline', 'link', 'bulletList'];
 
@@ -73,155 +72,6 @@ const classes = {
     backgroundColor: theme.palette.background.paper,
   })
 };
-
-export interface ITextEditorOption<T = string> {
-  label: string;
-  value: T,
-  icon?: string | ReactNode;
-  hide?: boolean;
-}
-
-export type TextEditorProps = {
-  placeholder?: string;
-
-  /**
-   * input label
-   * NOTE: it is placed above the tabs
-   */
-  label?: ReactNode;
-
-  /**
-   * error message to be displayed if any
-   */
-  error?: string;
-
-  /**
-   * value of the editor
-   * it's an html string, eg: <p>hello world</p>
-   */
-  value?: string;
-
-  /**
-   * callback function to be called on change
-   * it returns the html string of the editor, eg: <p>hello world</p>
-   */
-  onChange?: (value: string) => void;
-
-  /**
-   * input style override
-   * it's the responsible of the whole input grey border and border radius
-   *
-   */
-  inputClassName?: string;
-
-  /**
-   * toolbar style override,
-   * it's mainly the responsible of the toolbar border top
-   */
-  toolbarClassName?: string;
-
-  /**
-   * tabs style override
-   * the tabs 'editor' and 'preview' style
-   */
-  tabsClassName?: string;
-
-  /**
-   * tab style override
-   * mainly used for the styles of the current selected tab
-   */
-  tabClassName?: string;
-
-  /**
-   * error message style override
-   * eg: changing the color of the error message
-   * or its font size
-   */
-  errorClassName?: string;
-
-  /*
-    * root class name
-    * it's the main class name of the all the editor
-    * label, tabs, input, toolbar, etc
-  */
-  rootClassName?: string;
-
-  /**
-   * label styles override
-   * eg: changing the color of the label, its font size, color, etc
-   */
-  labelClassName?: string;
-
-  /**
-   * if true, floating menu will be disabled
-   */
-  withFloatingMenu?: boolean;
-
-  /**
-   * if true, bubble menu will be displayed
-   */
-  withBubbleMenu?: boolean;
-
-  /**
-   * toolbar (each icon) to be displayed
-   *
-   * possible values are: [
-   * "heading", "bold", "italic", "strike", "link", "underline", "image", "code",
-   * "orderedList", "bulletList", "align", "codeBlock", "blockquote", "table",
-   * "history", "youtube", "color", "mention"
-   * ]
-   *
-   * default values is all the above
-   */
-  toolbar?: IEditorToolbar[];
-
-  /**
-   * toolbar (each icon) to be displayed in bubble menu
-   *
-   * default values are: ['bold', 'italic', 'underline', 'link']
-   */
-  bubbleMenuToolbar?: IEditorToolbar[];
-
-   /**
-   * toolbar (each icon) to be displayed in floating menu
-   *
-   * default values are: ['bold', 'italic', 'underline', 'link']
-   */
-  floatingMenuToolbar?: IEditorToolbar[];
-
-  /**
-   * user object for collaboration
-   * the current user or selected user used for collaboration
-   *
-   * eg: { label: 'John Doe', value: 'some_user_id' }
-   */
-  user?: ITextEditorOption;
-
-  /**
-   * list of users used for mentions
-   *
-   * eg. [{ label: 'John Doe', value: 'some_user_id' }, { label: 'James Smith', value: 'some_user_id_2' }, ...]
-   * NOTE: the value should be unique, it's used for profile url
-   * ex: /profile/:id or /profile/:slug, :id or :slug here is the value
-   */
-  mentions?: ITextEditorOption[];
-
-  /**
-   * user pathname for the mentioned user
-   *
-   * eg. /profile
-   * so the final url will be /profile/:id
-   * :id here is the value in mentions array (see above)
-   * the final element is something like: <a href="/profile/some_user_id">{mentioned_user}</a>
-   */
-  userPathname?: string;
-
-  /**
-   * override labels
-   * it's useful for i18n or changing the default labels
-   */
-  labels?: ILabels;
-} & Partial<EditorOptions>;
 
 const TextEditor = ({
   placeholder,

@@ -1,7 +1,5 @@
 export {
   default as TextEditor,
-  type TextEditorProps,
-  type ITextEditorOption
 } from './components/TextEditor';
 export {
   default as TextEditorReadOnly,
@@ -10,3 +8,7 @@ export {
   default as Toolbar,
   type ToolbarProps,
 } from './components/Toolbar';
+export {
+  type TextEditorProps,
+  type ITextEditorOption
+} from './types.d';
