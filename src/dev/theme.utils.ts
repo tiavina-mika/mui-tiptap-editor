@@ -75,11 +75,5 @@ export const getTheme = (mode: PaletteMode = 'light'): Theme => {
     },
   });
 
-  theme.typography.h6 = {
-    [theme.breakpoints.down('md')]: {
-      fontSize: 14,
-    },
-  };
-
   return theme;
 };
