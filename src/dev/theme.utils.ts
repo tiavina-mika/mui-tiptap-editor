@@ -1,13 +1,5 @@
 import { PaletteMode, Theme, createTheme } from '@mui/material';
-import { grey, teal } from '@mui/material/colors';
-
-export const DASHBOARD_BACKGROUND_COLOR = '#FAFBFB';
-export const DEFAULT_THEME_COLOR = 'green';
-
-
-const textDarkColor = {
-  color: '#fff',
-};
+import { teal } from '@mui/material/colors';
 
 const defaultTheme = {
   palette: {
