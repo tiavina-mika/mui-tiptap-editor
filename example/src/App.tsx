@@ -118,7 +118,7 @@ const currentUser = mentions[0];
 
 const theme = createTheme({
   palette: {
-    mode: 'light',
+    mode: 'dark',
   },
 });
 
