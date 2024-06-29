@@ -120,7 +120,6 @@ import { TextEditorReadOnly } from 'mui-tiptap-editor';
 2. If it is just displaying the value without using the editor, you can use this library [`tiptap-parser`](https://www.npmjs.com/package/tiptap-parser). Example: The editor is used in the back office, but the content must be displayed on the website
 ```tsx
 <TiptapParser content={`<h1>Hello world</h1>`} />
-}
 ```
 
 ## Customization

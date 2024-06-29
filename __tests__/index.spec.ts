@@ -1,5 +1,5 @@
 // import {describe, expect, test} from '@jest/globals';
-import { checkIsValidUrl, checkIsValidYoutubeUrl } from '../utils/app.utils';
+import { checkIsValidUrl, checkIsValidYoutubeUrl } from '../src/utils/app.utils';
 
 describe('check valid url', () => {
   test('https url', () => {

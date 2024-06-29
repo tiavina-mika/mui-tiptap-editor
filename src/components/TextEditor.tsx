@@ -270,7 +270,7 @@ const TextEditor = ({
   }
 
   return (
-    <div className={rootClassName}>
+    <div className={rootClassName} css={{ position: 'relative' }}>
       {/* ---------------------------- */}
       {/* ----------- label ---------- */}
       {/* ---------------------------- */}
