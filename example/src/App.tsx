@@ -1,5 +1,5 @@
 
-import { Box, Container, CssBaseline, Tab, Tabs, ThemeProvider, createTheme } from '@mui/material';
+import { Box, Container, CssBaseline, FormControlLabel, Switch, Tab, Tabs, ThemeProvider, createTheme } from '@mui/material';
 import { SyntheticEvent, useEffect, useState } from 'react';
 import { TextEditor, TextEditorReadOnly } from 'mui-tiptap-editor';
 import TiptapParser from "tiptap-parser";
@@ -116,11 +116,11 @@ const mentions = [
 const currentUser = mentions[0];
 
 
-const theme = createTheme({
+const getTheme = (mode: 'light' | 'dark') => createTheme({
   palette: {
-    mode: 'dark',
-  },
-});
+    mode,
+    },
+  });
 
 /**
  * mock long promise
@@ -131,6 +131,8 @@ const theme = createTheme({
 const delay = (time: number) => new Promise((resolve) => {
   setTimeout(resolve, time);
 });
+
+const defaultMode = 'light';
 
 const htmlToParse = `
 <h1>Display the content without to install the editor</h1>
@@ -153,6 +155,7 @@ const htmlToParse = `
 const App = () => {
   const [tab, setTab] = useState<number>(0);
   const [asyncDefaultValue, setAsyncDefaultValue] = useState<string>('');
+  const [mode, setMode] = useState<'light' | 'dark'>(defaultMode);
 
   // load async default value
   useEffect(() => {
@@ -163,24 +166,41 @@ const App = () => {
     fetchData();
   }, [])
 
+  const handleChangeMode = () => {
+    setMode(mode === 'light' ? 'dark' : 'light');
+  }
+
   const handleChange = (_: SyntheticEvent, newValue: number) => {
     setTab(newValue);
   };
 
   return (
-    <ThemeProvider theme={theme}>
+    <ThemeProvider theme={getTheme(mode)}>
       <CssBaseline />
         <Box sx={{ bgcolor: 'background.paper', display: 'flex' }}>
+          {/* -------------------------------------- */}
           {/* ---------------- tabs ---------------- */}
-          {/* <Container maxWidth="xl" className="spaceBetween"> */}
-            <Tabs value={tab} onChange={handleChange} aria-label="tabs"sx={{ mb: 2 }}  orientation="vertical" variant="scrollable">
-              {tabs.map((label, index) => (
-                <Tab key={index} label={label} value={index} sx={{ textAlign: 'left', alignItems: 'start' }} />
-              ))}
-            </Tabs>
-          {/* </Container> */}
+          {/* -------------------------------------- */}
+          <Tabs value={tab} onChange={handleChange} aria-label="tabs"sx={{ mb: 2 }}  orientation="vertical" variant="scrollable">
+            {tabs.map((label, index) => (
+              <Tab key={index} label={label} value={index} sx={{ textAlign: 'left', alignItems: 'start' }} />
+            ))}
+          </Tabs>
+
+          {/* --------------------------------------- */}
           {/* ------------- tabs panels ------------- */}
-          <Container css={{ marginTop: 40 }}>
+          {/* --------------------------------------- */}
+          <Container css={{ marginTop: 10 }}>
+            {/* mode switch */}
+            <div css={{ marginBottom: 18 }}>
+              <FormControlLabel
+                control={
+                  <Switch checked={mode === defaultMode} onChange={handleChangeMode} />
+                }
+                label={mode}
+                css={{ textTransform: 'capitalize' }}
+              />
+            </div>
             {/* Simple input */}
             {tab === 0 && <TextEditor placeholder='Type something here...' />}
 
