@@ -1,5 +1,5 @@
 
-import { Container, CssBaseline, Tab, Tabs, ThemeProvider, createTheme } from '@mui/material';
+import { Box, Container, CssBaseline, Tab, Tabs, ThemeProvider, createTheme } from '@mui/material';
 import { SyntheticEvent, useEffect, useState } from 'react';
 import { TextEditor, TextEditorReadOnly } from 'mui-tiptap-editor';
 import TiptapParser from "tiptap-parser";
@@ -74,7 +74,7 @@ const customLabels = {
 }
 const tabs = [
   'Simple',
-  'Toolbar',
+  'Selected Toolbar',
   'Read only',
   'Custom global styles',
   'Each element styles',
@@ -170,75 +170,77 @@ const App = () => {
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
-      {/* ---------------- tabs ---------------- */}
-      <Container maxWidth="xl" className="spaceBetween">
-        <Tabs value={tab} onChange={handleChange} aria-label="tabs"sx={{ mb: 2 }}>
-          {tabs.map((label, index) => (
-            <Tab key={index} label={label} value={index} />
-          ))}
-        </Tabs>
-      </Container>
-      {/* ------------- tabs panels ------------- */}
-      <Container css={{ marginTop: 40 }}>
-        {/* Simple input */}
-        {tab === 0 && <TextEditor placeholder='Type something here...' />}
+        <Box sx={{ bgcolor: 'background.paper', display: 'flex' }}>
+          {/* ---------------- tabs ---------------- */}
+          {/* <Container maxWidth="xl" className="spaceBetween"> */}
+            <Tabs value={tab} onChange={handleChange} aria-label="tabs"sx={{ mb: 2 }}  orientation="vertical" variant="scrollable">
+              {tabs.map((label, index) => (
+                <Tab key={index} label={label} value={index} sx={{ textAlign: 'left', alignItems: 'start' }} />
+              ))}
+            </Tabs>
+          {/* </Container> */}
+          {/* ------------- tabs panels ------------- */}
+          <Container css={{ marginTop: 40 }}>
+            {/* Simple input */}
+            {tab === 0 && <TextEditor placeholder='Type something here...' />}
 
-        {/* Select toolbar */}
-        {tab === 1 && (
-          <TextEditor
-            placeholder='Type something here...'
-            toolbar={['bold', 'italic', 'underline']}
-          />
-        )}
-        {/* Read only */}
-        {tab === 2 && <TextEditorReadOnly value="<p>Hello word!</p>" />}
-        {/* Custom global styles */}
-        {tab === 3 && (
-          <TextEditor
-            value="<p>Hello word!</p>"
-            rootClassName="root"
-          />
-        )}
-        {/* Each element styles */}
-        {tab === 4 && (
-          <TextEditor
-            value="<p>Hello word!</p>"
-            label="Content"
-            tabClassName="my-tab"
-            labelClassName="my-label"
-            inputClassName="my-input"
-            toolbarClassName="my-toolbar"
-          />
-        )}
+            {/* Select toolbar */}
+            {tab === 1 && (
+              <TextEditor
+                placeholder='Type something here...'
+                toolbar={['bold', 'italic', 'underline']}
+              />
+            )}
+            {/* Read only */}
+            {tab === 2 && <TextEditorReadOnly value="<p>Hello word!</p>" />}
+            {/* Custom global styles */}
+            {tab === 3 && (
+              <TextEditor
+                value="<p>Hello word!</p>"
+                rootClassName="root"
+              />
+            )}
+            {/* Each element styles */}
+            {tab === 4 && (
+              <TextEditor
+                value="<p>Hello word!</p>"
+                label="Content"
+                tabClassName="my-tab"
+                labelClassName="my-label"
+                inputClassName="my-input"
+                toolbarClassName="my-toolbar"
+              />
+            )}
 
-        {/* Override labels */}
-        {tab === 5 && (
-          <TextEditor
-            label="Content"
-            labels={customLabels}
-          />
-        )}
+            {/* Override labels */}
+            {tab === 5 && (
+              <TextEditor
+                label="Content"
+                labels={customLabels}
+              />
+            )}
 
-        {/* mentions */}
-        {tab === 6 && (
-          <TextEditor
-            label="Content"
-            mentions={mentions}
-            user={currentUser}
-            userPathname="/profile"
-          />
-        )}
-        {/* With default async value */}
-        {tab === 7 && <TextEditor value={asyncDefaultValue} />}
+            {/* mentions */}
+            {tab === 6 && (
+              <TextEditor
+                label="Content"
+                mentions={mentions}
+                user={currentUser}
+                userPathname="/profile"
+              />
+            )}
+            {/* With default async value */}
+            {tab === 7 && <TextEditor value={asyncDefaultValue} />}
 
-        {/* With React Hook Form */}
-        {tab === 8 && <WithHookForm />}
+            {/* With React Hook Form */}
+            {tab === 8 && <WithHookForm />}
 
-        {/* Read without editor */}
-        {tab === 9 && (
-          <TiptapParser content={htmlToParse} />
-        )}
-      </Container>
+            {/* Read without editor */}
+            {tab === 9 && (
+              <TiptapParser content={htmlToParse} />
+            )}
+          </Container>
+      </Box>
     </ThemeProvider>
   )
 }
