@@ -72,6 +72,7 @@ const customLabels = {
     width: "Largeur"
   }
 }
+
 const tabs = [
   'Simple',
   'Selected Toolbar',
