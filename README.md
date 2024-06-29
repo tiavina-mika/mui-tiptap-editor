@@ -209,16 +209,11 @@ import { TextEditorReadOnly } from 'mui-tiptap-editor';
 
 ```tsx
 import './index.css';
-import { TextEditor } from 'mui-tiptap-editor';
 
-function App () {
-  return (
-    <TextEditor
-      value="<p>Hello word!</p>"
-      rootClassName="root"
-    />
-  )
-}
+<TextEditor
+  value="<p>Hello word!</p>"
+  rootClassName="root"
+/>
 ```
 
 ```css
@@ -227,7 +222,7 @@ function App () {
   background-color: #fff;
 }
 .root  .MuiTab-root.Mui-selected {
-  background-color: yellow  !important;
+  background-color: yellow;
 }
 ```
 
@@ -268,7 +263,7 @@ function App () {
 |user|`ITextEditorOption`|undefined| Current user
 |value|`string`|empty| Value of the input
 |onChange|`(value: string) => void`|-| Function to call when the input change
-|userPathname|`boolean`|/user| URL pathname for the mentioned user (eg: /user/user_id)
+|userPathname|`string`|/user| URL pathname for the mentioned user (eg: /user/user_id)
 |labels|`ILabels`|null| Override labels, for example using `i18n`
 |...all tiptap features|[EditorOptions](https://github.com/ueberdosis/tiptap/blob/e73073c02069393d858ca7d8c44b56a651417080/packages/core/src/types.ts#L52)|empty| Can access to all tiptap `useEditor` props
 
