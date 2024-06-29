@@ -33,7 +33,7 @@ import { useEffect } from 'react';
 import Heading from '@tiptap/extension-heading';
 import { Node } from '@tiptap/pm/model';
 import getSuggestion from '../components/mention/suggestions';
-import { ITextEditorOption } from '../components/TextEditor';
+import { ITextEditorOption } from '../types.d';
 
 const extensions = [
   Color.configure({ types: [TextStyle.name, ListItem.name] }),

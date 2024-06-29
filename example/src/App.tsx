@@ -131,6 +131,7 @@ const theme = createTheme({
 const delay = (time: number) => new Promise((resolve) => {
   setTimeout(resolve, time);
 });
+
 const htmlToParse = `
 <h1>Display the content without to install the editor</h1>
 <p>Use <a href="https://www.npmjs.com/package/tiptap-parser">tiptap-parse</a> for that</p>
@@ -217,7 +218,7 @@ const App = () => {
             labels={customLabels}
           />
         )}
-        
+
         {/* mentions */}
         {tab === 6 && (
           <TextEditor
