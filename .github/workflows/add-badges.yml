@@ -35,6 +35,11 @@ jobs:
                 "badge": "https://img.shields.io/badge/language-TypeScript-blue.svg?style=flat-square",
                 "alt": "Language",
                 "link": "https://www.typescriptlang.org"
+              },
+              {
+                "badge": "https://github.com/${{ env.repo_owner }}/${{ env.repo_name }}/actions/workflows/release.yml/badge.svg",
+                "alt": "Build",
+                "link": "https://github.com/${{ env.repo_owner }}/${{ env.repo_name }}/actions"
               }
             ]
       # if adding the last commit badge
