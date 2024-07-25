@@ -318,20 +318,7 @@ code {
   position: relative;
 }
 
-.tiptap-image .alt-text-indicator {
-  font-size: 0.8em;
-  position: absolute;
-  bottom: 10px;
-  left: 10px;
-  max-width: calc(100% - 20px);
-  padding: 0 0.5em;
-  border: 1px solid #242424;
-  background-color: rgba(255, 255, 255, 0.8);
-  display: inline-flex;
-  align-items: center;
-  overflow: hidden;
-  gap: 0.25em;
-}
+
 
 .tiptap-image .alt-text-indicator .symbol {
   flex: 0 0 auto;
@@ -359,8 +346,8 @@ code {
 
   border: 0;
   padding: 0;
-  background: transparent;
+  background-color: transparent;
   appearance: none;
 
-  text-decoration: underline;
+  text-decoration: none;
 }

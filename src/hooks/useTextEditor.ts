@@ -191,19 +191,15 @@ export const useTextEditor = ({
     },
     editorProps: {
       handleDrop: function(view, event, slice, moved) {
-        console.log('event: ', event);
-        console.log('view: ', view);
         if (!moved && event.dataTransfer && event.dataTransfer.files && event.dataTransfer.files[0]) { // if dropping external files
           let file = event.dataTransfer.files[0]; // the dropped file
           let filesize = ((file.size/1024)/1024).toFixed(4); // get the filesize in MB
           if ((file.type === "image/jpeg" || file.type === "image/png") && parseInt(filesize) < 10) { // check valid image type under 10MB
-            console.log('filesize: ', filesize);
             // check the dimensions
             let _URL = window.URL || window.webkitURL;
             let img = new Image(); /* global Image */
             const src = _URL.createObjectURL(file);
             img.src = src;
-            console.log('src: ', src);
             img.onload = function () {
               console.log("on load");
               if (this.width > 5000 || this.height > 5000) {
