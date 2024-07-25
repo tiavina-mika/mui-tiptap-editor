@@ -55,6 +55,7 @@ const App = () => {
               uploadImage: () => Promise.resolve('https://source.unsplash.com/random'),
               maxSize: 5,
               maxFilesNumber: 2,
+              allowedMimeTypes: ['image/jpeg', 'image/png', 'image/jpg'],
             }}
             labels={{
               editor: {
@@ -126,7 +127,8 @@ const App = () => {
                 fileTooLarge: "Fichier trop volumineux",
                 maximumNumberOfFiles: "Nombre maximum de fichiers atteint",
                 enterValidAltText: "Entrez un texte alternatif valide",
-                addAltText: "Ajouter un texte alternatif"
+                addAltText: "Ajouter un texte alternatif",
+                invalidMimeType: "Type de fichier invalide",
               },
             }}
           />

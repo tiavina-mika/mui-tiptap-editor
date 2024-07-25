@@ -29,15 +29,16 @@ export const onUpload = (
     maxSize = 10,
     maxFilesNumber = 5,
     type,
+    allowedMimeTypes = ['image/jpeg', 'image/png', 'image/jpg'],
   }: ImageUploadOptions,
   editor: Editor,
   labels?: ILabels['imageUpload'],
 ) => (view: EditorView, event: DragEvent | ClipboardEvent, _: Slice, moved: boolean): boolean | void => {
-  console.log("🚀 ~ editor:", editor)
   // labels
   const {
     maximumNumberOfFiles = `You can only upload ${maxFilesNumber} images at a time.`,
     fileTooLarge = `Images need to be less than ${maxSize}mb in size.`,
+    invalidMimeType = 'Invalid file type',
   } = labels || {};
 
   // check if event has files
@@ -49,17 +50,12 @@ export const onUpload = (
 
   if (type === 'drop' && moved) return;
 
-  const files = (type === 'drop' ? (event as DragEvent).dataTransfer?.files : (event as ClipboardEvent).clipboardData?.files) || [];
+  const images = (type === 'drop' ? (event as DragEvent).dataTransfer?.files : (event as ClipboardEvent).clipboardData?.files) || [];
 
-  if (files.length > maxFilesNumber) {
+  if (images.length > maxFilesNumber) {
     window.alert(maximumNumberOfFiles);
     return;
   }
-
-  // filter only images
-  const images = Array.from(files).filter((file: File) =>
-    /image/i.test(file.type)
-  );
 
   if (images.length === 0) return;
 
@@ -69,8 +65,13 @@ export const onUpload = (
 
   for (const image of images) {
     // file size in MB
-    let fileSize = ((image.size / 1024) / 1024).toFixed(4);
+    const fileSize = ((image.size / 1024) / 1024).toFixed(4);
 
+    if ((allowedMimeTypes.length && !allowedMimeTypes.includes(image.type)) || allowedMimeTypes.length === 0) {
+      window.alert(invalidMimeType);
+      return;
+    }
+    
     // check valid image type under 10MB
     if (+fileSize > maxSize) {
       window.alert(fileTooLarge);
@@ -81,9 +82,9 @@ export const onUpload = (
 
     reader.onload = (readerEvent: ProgressEvent<FileReader>) => {
       if (!readerEvent.target) return;
-      const node = schema.nodes.image.create({
-        src: readerEvent.target.result
-      });
+      // const node = schema.nodes.image.create({
+      //   src: readerEvent.target.result
+      // });
 
       // --------------------------- //
       // ---------- drop ---------- //

@@ -51,6 +51,10 @@ export type ImageUploadOptions = {
    */
   maxFilesNumber?: number;
   /**
+   * control which mime types are allowed to be uploaded (pasted or dropped)
+   */
+  allowedMimeTypes?: string[];
+  /**
    * type of the upload event
    */
   type: 'drop' | 'paste';
@@ -130,6 +134,7 @@ export type IRequiredLabels = {
     fileTooLarge: string;
     addAltText: string;
     enterValidAltText: string;
+    invalidMimeType: string;
   }
 };
 
