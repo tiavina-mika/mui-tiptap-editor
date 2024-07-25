@@ -34,6 +34,7 @@ import Heading from '@tiptap/extension-heading';
 import { Node } from '@tiptap/pm/model';
 import getSuggestion from '../components/mention/suggestions';
 import { ITextEditorOption } from '../types.d';
+import CustomImage from '../extensions/CustomImage';
 
 const extensions = [
   Color.configure({ types: [TextStyle.name, ListItem.name] }),
@@ -86,7 +87,7 @@ const extensions = [
   TableCell,
   Gapcursor,
   Youtube,
-  TiptapImage,
+  CustomImage,
   TextAlign.configure({
     types: ["heading", "paragraph", "table", "image"]
   }),
@@ -173,10 +174,7 @@ export const useTextEditor = ({
         HTMLAttributes: {
           class: "mention"
         },
-        renderLabel({ options, node }: {
-          options: MentionOptions;
-          node: Node;
-      }) {
+        renderLabel({ options, node }: { options: MentionOptions; node: Node }) {
           return `${options.suggestion.char}${
             node.attrs.label ?? node.attrs.id.label
           }`;
