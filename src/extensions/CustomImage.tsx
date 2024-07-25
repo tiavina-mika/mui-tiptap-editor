@@ -132,6 +132,9 @@ const classes = {
   tiptapImageRoot: {
     width: 'fit-content',
     position: 'relative' as const,
+    '&.ProseMirror-selectednode': {
+      outline: '2px solid blue',
+    },
   },
   altContainer: (theme: Theme) => ({
     position: 'absolute' as const,
@@ -167,7 +170,6 @@ const getClassName = (selected: boolean): string => {
 type Props = ILabels['imageUpload'] & NodeViewWrapperProps;
 
 const ImageNode = ({ labels, node, updateAttributes, editor, ...props }: Props) => {
-  console.log("🚀 ~ ImageNode ~ editor:", editor)
   const [open, setOpen] = useState<boolean>(false);
   const [clear, setClear] = useState<boolean>(false);
   const [alt, setAlt] = useState<string>('');
