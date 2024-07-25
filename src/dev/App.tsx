@@ -51,6 +51,11 @@ const App = () => {
             placeholder="French here"
             mentions={mentions}
             user={currentUser}
+            uploadImageOptions={{
+              uploadImage: () => Promise.resolve('https://source.unsplash.com/random'),
+              maxSize: 5,
+              maxFilesNumber: 1,
+            }}
             labels={{
               editor: {
                 editor: "Editeur",
@@ -116,7 +121,13 @@ const App = () => {
                 enter: "Entrer le lien",
                 height: "Hauteur",
                 width: "Largeur"
-              }
+              },
+              imageUpload: {
+                fileTooLarge: "Fichier trop volumineux",
+                maximumNumberOfFiles: "Nombre maximum de fichiers atteint",
+                enterValidAltText: "Entrez un texte alternatif valide",
+                addAltText: "Ajouter un texte alternatif"
+              },
             }}
           />
         </Container>

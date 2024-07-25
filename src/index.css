@@ -313,34 +313,6 @@ code {
 /* --------------------------------------- */
 /* ---------------- Image ---------------- */
 /* --------------------------------------- */
-.tiptap-image {
-  width: fit-content;
-  position: relative;
-}
-
-
-
-.tiptap-image .alt-text-indicator .symbol {
-  flex: 0 0 auto;
-  font-size: 1.4em;
-  font-weight: bold;
-}
-
-.tiptap-image .alt-text-indicator .symbol-positive {
-  color: #19961b;
-}
-
-.tiptap-image .alt-text-indicator .symbol-negative {
-  color: #961f1f;
-}
-
-.tiptap-image .alt-text-indicator .text {
-  flex: 1 1 auto;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
-
 .tiptap-image .alt-text-indicator .edit-button {
   flex: 0 0 auto;
 
