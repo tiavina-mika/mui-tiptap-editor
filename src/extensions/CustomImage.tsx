@@ -166,7 +166,8 @@ const getClassName = (selected: boolean): string => {
 
 type Props = ILabels['imageUpload'] & NodeViewWrapperProps;
 
-const ImageNode = ({ labels, node, updateAttributes, ...props }: Props) => {
+const ImageNode = ({ labels, node, updateAttributes, editor, ...props }: Props) => {
+  console.log("🚀 ~ ImageNode ~ editor:", editor)
   const [open, setOpen] = useState<boolean>(false);
   const [clear, setClear] = useState<boolean>(false);
   const [alt, setAlt] = useState<string>('');
@@ -208,12 +209,18 @@ const ImageNode = ({ labels, node, updateAttributes, ...props }: Props) => {
 
   return (
     <NodeViewWrapper className={getClassName(props.selected)} data-drag-handle css={classes.tiptapImageRoot}>
+      {/* ------------ image ------------ */}
       <p>
         <img src={node.attrs.src} alt={alt} />
       </p>
-      {!clear && (
+      {/* ------------ alt ------------ */}
+      {/*
+        * display only in editable mode
+        * NOTE: if displaying the html string outside of the editor, hide this by using css
+      */}
+      {(!clear && editor.options.editable) && (
         <>
-          <Stack css={classes.altContainer} className='alt-text-indicator' direction="row" alignItems="center" spacing={0}>
+          <Stack css={classes.altContainer} className='tiptap-alt-text' direction="row" alignItems="center" spacing={0}>
           {alt && !error
             ? (
               <Stack direction="row" alignItems="center" spacing={2}>
@@ -242,6 +249,7 @@ const ImageNode = ({ labels, node, updateAttributes, ...props }: Props) => {
         open={open}
         onClose={handleClose}
         onPrimaryButtonAction={onConfirm}
+        className='tiptap-alt-text-dialog'
       >
         <TextField
           value={alt}

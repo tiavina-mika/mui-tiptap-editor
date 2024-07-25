@@ -313,7 +313,7 @@ code {
 /* --------------------------------------- */
 /* ---------------- Image ---------------- */
 /* --------------------------------------- */
-.tiptap-image .alt-text-indicator .edit-button {
+.tiptap-image .tiptap-alt-text .edit-button {
   flex: 0 0 auto;
 
   border: 0;

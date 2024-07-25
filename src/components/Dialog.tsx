@@ -33,6 +33,7 @@ type Props = {
   onClick?: MouseEventHandler<HTMLDivElement>;
   loading?: boolean;
   withCloseButton?: boolean;
+  className?: string;
   buttonColor?: 'inherit' | 'primary' | 'secondary' | 'success' | 'error' | 'info' | 'warning';
 } & DialogProps;
 
@@ -48,6 +49,7 @@ const Dialog = ({
   onClick,
   loading,
   children,
+  className,
   withCloseButton = false,
   ...dialogProps
 }: Props) => {
@@ -79,7 +81,9 @@ const Dialog = ({
       aria-describedby="alert-dialog-description"
       maxWidth={maxWidth}
       css={classes.dialog}
-      onClick={onClick}>
+      onClick={onClick}
+      className={className}
+    >
       <DialogTitle id="alert-dialog-title">
         <div className="flexRow spaceBetween center">
           <Typography variant="h5">{title}</Typography>
