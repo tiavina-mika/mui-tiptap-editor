@@ -54,7 +54,7 @@ const App = () => {
             uploadImageOptions={{
               uploadImage: () => Promise.resolve('https://source.unsplash.com/random'),
               maxSize: 5,
-              maxFilesNumber: 1,
+              maxFilesNumber: 2,
             }}
             labels={{
               editor: {

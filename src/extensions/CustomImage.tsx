@@ -1,7 +1,7 @@
 /**
  *
  * Custom Image Extension
- * 
+ *
  * inspired by:
  * https://github.com/angelikatyborska/tiptap-image-alt-text/tree/main
  * https://angelika.me/2023/02/26/how-to-add-editing-image-alt-text-tiptap/
@@ -10,7 +10,7 @@
 */
 
 import TiptapImage from '@tiptap/extension-image'
-import { NodeViewWrapper, NodeViewWrapperProps, ReactNodeViewRenderer } from '@tiptap/react';
+import { Editor, NodeViewWrapper, NodeViewWrapperProps, ReactNodeViewRenderer } from '@tiptap/react';
 import Edit from '../icons/Edit';
 import { IconButton, Stack, TextField, Theme, Typography } from '@mui/material';
 import { ChangeEvent, ClipboardEvent, useEffect, useState } from 'react';
@@ -30,8 +30,10 @@ export const onUpload = (
     maxFilesNumber = 5,
     type,
   }: ImageUploadOptions,
-  labels?: ILabels['imageUpload']
+  editor: Editor,
+  labels?: ILabels['imageUpload'],
 ) => (view: EditorView, event: DragEvent | ClipboardEvent, _: Slice, moved: boolean): boolean | void => {
+  console.log("🚀 ~ editor:", editor)
   // labels
   const {
     maximumNumberOfFiles = `You can only upload ${maxFilesNumber} images at a time.`,
@@ -83,21 +85,42 @@ export const onUpload = (
         src: readerEvent.target.result
       });
 
-      // drop
+      // --------------------------- //
+      // ---------- drop ---------- //
+      // --------------------------- //
       if (type === 'drop') {
         const dropEvent = event as DragEvent;
         const coordinates = view.posAtCoords({ left: dropEvent.clientX, top: dropEvent.clientY }) as { pos: number; inside: number; };
-        const transaction = view.state.tr.insert(
-          coordinates.pos,
-          node
-        );
-        view.dispatch(transaction);
+
+        // if using the plugin, use this commented code
+        // const transaction = view.state.tr.insert(
+        //   coordinates.pos,
+        //   node
+        // );
+        // view.dispatch(transaction);
+
+        editor.chain().insertContentAt(coordinates.pos, {
+          type: 'image',
+          attrs: {
+            src: readerEvent.target.result,
+          },
+        }).focus().run();
         return;
       }
 
-      // paste
-      const transaction = view.state.tr.replaceSelectionWith(node);
-      view.dispatch(transaction);
+      // --------------------------- //
+      // ---------- paste ---------- //
+      // --------------------------- //
+        // if using the plugin, use this commented code
+      // const transaction = view.state.tr.replaceSelectionWith(node);
+      // view.dispatch(transaction);
+
+      editor.chain().insertContentAt(editor.state.selection.anchor, {
+        type: 'image',
+        attrs: {
+          src: readerEvent.target.result,
+        },
+      }).focus().run();
     }
     reader.readAsDataURL(image);
   }
@@ -239,11 +262,12 @@ const getCustomImage = (options?: Omit<ImageUploadOptions, 'type'>, labels?: ILa
     return ReactNodeViewRenderer((props: any) => <ImageNode {...props} labels={labels} />);
   },
   addProseMirrorPlugins() {
+    const editor = this.editor as Editor;
     return [
       new Plugin({
         props: {
-          handleDrop: onUpload({ ...options, type: 'drop' }, labels),
-          handlePaste: onUpload({ ...options, type: 'paste' }, labels),
+          handleDrop: onUpload({ ...options, type: 'drop' }, editor, labels),
+          handlePaste: onUpload({ ...options, type: 'paste' }, editor, labels),
         } as any,
       }),
     ];
