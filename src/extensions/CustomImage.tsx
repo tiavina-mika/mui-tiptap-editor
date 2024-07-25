@@ -166,18 +166,15 @@ const getClassName = (selected: boolean): string => {
 
 type Props = ILabels['imageUpload'] & NodeViewWrapperProps;
 
-const ImageNode = ({ labels, ...props}: Props) => {
+const ImageNode = ({ labels, node, updateAttributes, ...props }: Props) => {
   const [open, setOpen] = useState<boolean>(false);
   const [clear, setClear] = useState<boolean>(false);
   const [alt, setAlt] = useState<string>('');
   const [error, setError] = useState<string>('');
 
   useEffect(() => {
-    setAlt(props.node.attrs.alt || '');
-  }, [props.node.attrs.alt])
-
-  const { updateAttributes } = props
-  const { src } = props.node.attrs
+    setAlt(node.attrs.alt || '');
+  }, [node.attrs.alt])
 
   const altLabel = labels?.addAltText || 'Add alt text';
 
@@ -198,7 +195,9 @@ const ImageNode = ({ labels, ...props}: Props) => {
 
   const onConfirm = async () => {
     await updateAttributes({ alt });
-    setOpen(false)
+    setOpen(false);
+    // if delete this current node (each image)
+    // deleteNode();
   }
 
   const handleDelete = () => {
@@ -209,7 +208,9 @@ const ImageNode = ({ labels, ...props}: Props) => {
 
   return (
     <NodeViewWrapper className={getClassName(props.selected)} data-drag-handle css={classes.tiptapImageRoot}>
-      <img src={src} alt={alt} />
+      <p>
+        <img src={node.attrs.src} alt={alt} />
+      </p>
       {!clear && (
         <>
           <Stack css={classes.altContainer} className='alt-text-indicator' direction="row" alignItems="center" spacing={0}>
