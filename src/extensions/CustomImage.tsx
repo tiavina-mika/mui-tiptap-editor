@@ -6,6 +6,7 @@
  * https://github.com/angelikatyborska/tiptap-image-alt-text/tree/main
  * https://angelika.me/2023/02/26/how-to-add-editing-image-alt-text-tiptap/
  * https://github.com/ueberdosis/tiptap/issues/2912
+ * https://tiptap.dev/docs/editor/extensions/functionality/filehandler
  *
 */
 
@@ -71,7 +72,7 @@ export const onUpload = (
       window.alert(invalidMimeType);
       return;
     }
-    
+
     // check valid image type under 10MB
     if (+fileSize > maxSize) {
       window.alert(fileTooLarge);
