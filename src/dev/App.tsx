@@ -46,6 +46,7 @@ const App = () => {
       method: "POST",
       body: formData,
     });
+
     const data = await response.json();
     return { id: data.filename, src: data.location };
   };
@@ -64,7 +65,7 @@ const App = () => {
             user={currentUser}
             bubbleMenuToolbar={['align']}
             uploadFileOptions={{
-              // uploadFile,
+              uploadFile,
               maxSize: 5,
               maxFilesNumber: 2,
               allowedMimeTypes: ['image/jpeg', 'image/png', 'image/jpg'],
