@@ -8,7 +8,7 @@ import TableMenuDialog from "./TableMenuDialog";
 import LinkDialog from "./LinkDialog";
 import Heading from "./Heading";
 import ColorPicker from "./ColorPicker";
-import { IEditorToolbar, ILabels } from "../types.d";
+import { IEditorToolbar, ILabels, TextEditorProps } from "../types.d";
 import { defaultEditorToolbar, getBorderColor, showTextEditorToolbarMenu } from "../utils/app.utils";
 import YoutubeDialog from "./YoutubeDialog";
 import Bold from "../icons/Bold";
@@ -31,8 +31,8 @@ import Redo from "../icons/Redo";
 import Mention from "../icons/Mention";
 import Icon from "../icons/Icon";
 import Picture from "../icons/Picture";
-import UploadImage from "./UploadImage";
 import TextColor from "../icons/TextColor";
+import UploadFile from "./UploadFile";
 
 const classes = {
   toolbar: (theme: Theme) => ({
@@ -92,13 +92,22 @@ export type ToolbarProps = {
    * default values is all the above
    */
   toolbar?: IEditorToolbar[];
+  /**
+   * Custom labels for the toolbar
+   */
   labels?: Omit<ILabels, 'editor'>;
+  /**
+   * upload file options
+   * ex: file size, number of files, allowed mime types, api callback, etc
+   */
+  uploadFileOptions?: TextEditorProps['uploadFileOptions'];
 };
 
 const Toolbar = ({
   editor,
   className,
   labels,
+  uploadFileOptions,
   toolbar = defaultEditorToolbar
 }: ToolbarProps) => {
   const [openLinkDialog, setOpen] = useState<boolean>(false);
@@ -162,26 +171,9 @@ const Toolbar = ({
         icon: TextColor,
         disabled: false,
         component: <ColorPicker editor={editor} id="color" />,
-        tooltip: 'Text color',
+        tooltip: toolbarLabels?.color || 'Text color',
         split: true,
         iconSize: 24
-      },
-      // order
-      {
-        name: "bulletList",
-        icon: BulletList,
-        onClick: () => editor.chain().focus().toggleBulletList().run(),
-        disabled: !editor.can().chain().focus().toggleBulletList().run(),
-        tooltip: toolbarLabels?.bulletList || 'Bullet list'
-      },
-      {
-        name: "orderedList",
-        icon: OrderedList,
-        onClick: () => editor.chain().focus().toggleOrderedList().run(),
-        disabled: !editor.can().chain().focus().toggleOrderedList().run(),
-        split: true,
-        tooltip: toolbarLabels?.orderedList || 'Ordered list',
-        iconSize: 14
       },
       // alignment
       {
@@ -221,6 +213,23 @@ const Toolbar = ({
         group: "align",
         tooltip: toolbarLabels?.alignJustify || 'Justify align'
       },
+      // order
+      {
+        name: "bulletList",
+        icon: BulletList,
+        onClick: () => editor.chain().focus().toggleBulletList().run(),
+        disabled: !editor.can().chain().focus().toggleBulletList().run(),
+        tooltip: toolbarLabels?.bulletList || 'Bullet list'
+      },
+      {
+        name: "orderedList",
+        icon: OrderedList,
+        onClick: () => editor.chain().focus().toggleOrderedList().run(),
+        disabled: !editor.can().chain().focus().toggleOrderedList().run(),
+        split: true,
+        tooltip: toolbarLabels?.orderedList || 'Ordered list',
+        iconSize: 14
+      },
       {
         name: "link",
         icon: Link,
@@ -233,8 +242,8 @@ const Toolbar = ({
         id: "upload", // id for the label with htmlFor
         icon: Picture,
         disabled: false,
-        component: <UploadImage editor={editor} id="upload" />,
-        tooltip: 'Upload image',
+        component: <UploadFile editor={editor} id="upload" {...uploadFileOptions} />,
+        tooltip: toolbarLabels?.upload || 'Upload image',
         iconSize: 16
       },
       {
