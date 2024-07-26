@@ -118,27 +118,31 @@ function App() {
 
 <ul>
 <li>The image can be uploaded to the server via an API call or directly into the content as base64 string. </li>
-<li>For the moment we can only upload via drag and drop and copy paste.</li>
+<li>The image can be uploaded using upload button or pasted or dropped.</li>
 <li>Add or modify the alt text of the image</li>
 <li>Delete the selected image using `Delete` keyboard key</li>
 </ul>
 
 ```tsx
-// example of API using axios
-// note that the response should be directly the image url
-// so it can be displayed in the editor
-function uploadImage(file) {
-  const data = new FormData();
-  data.append('file', file);
-  const response = axios.post('/documents/image/upload', data);
-  return response.data;
-};
+// example of API  upload using fetch
+// the return data must be the image url (string) or image attributes (object) like src, alt, id, title, ...
+const uploadFile = async (file: File) => {
+    const formData = new FormData();
+    formData.append("file", file);
+    const response = await fetch("https://api.escuelajs.co/api/v1/files/upload", {
+      method: "POST",
+      body: formData,
+    });
+    const data = await response.json();
+    // or return data.location
+    return { id: data.filename, src: data.location };
+  };
 
 function App() {
   return (
     <TextEditor
-      uploadImageOptions={{
-        uploadImage: uploadImage, // the image is stored and used as base64 string if not specified
+      uploadFileOptions={{
+        uploadFile, // the image is stored and used as base64 string if not specified
         maxSize: 5, // max size to 10MB if not specified
         maxFilesNumber: 2,  // max 5 files if not specified
         allowedMimeTypes: ['image/jpeg', 'image/png', 'image/jpg'], // all image types if not specified
@@ -161,7 +165,7 @@ import { TextEditorReadOnly } from 'mui-tiptap-editor';
 
 2. If it is just displaying the value without using the editor, you can use this library [`tiptap-parser`](https://www.npmjs.com/package/tiptap-parser). Example: The editor is used in the back office, but the content must be displayed on the website
 ```tsx
-<TiptapParser content={`<h1>Hello world</h1>`} />
+<TiptapParser content="<h1>Hello world</h1>" />
 ```
 
 ## Customization
@@ -199,7 +203,9 @@ import { TextEditorReadOnly } from 'mui-tiptap-editor';
         youtube: "Youtube",
         undo: "Annuler",
         redo: "Refaire",
-        mention: "Mention"
+        mention: "Mention",
+        color: "Couleur du texte",
+        upload: "Ajouter une image"
       },
       headings: {
         normalText: "Text normal",
@@ -242,13 +248,14 @@ import { TextEditorReadOnly } from 'mui-tiptap-editor';
         height: "Hauteur",
         width: "Largeur"
       },
-      imageUpload: {
+      upload: {
         fileTooLarge: "Fichier trop volumineux",
         maximumNumberOfFiles: "Nombre maximum de fichiers atteint",
         enterValidAltText: "Entrez un texte alternatif valide",
         addAltText: "Ajouter un texte alternatif",
         invalidMimeType: "Type de fichier invalide",
-      },
+        shouldBeAnImage: "Le fichier doit être une image"
+      }
     }}
   />
 ```
@@ -314,13 +321,13 @@ import './index.css';
 |onChange|`(value: string) => void`|-| Function to call when the input change
 |userPathname|`string`|/user| URL pathname for the mentioned user (eg: /user/user_id)
 |labels|`ILabels`|null| Override labels, for example using `i18n`
-|uploadImageOptions|`ImageUploadOptions`|null| Override image upload default options like max size, max file number, ...
+|uploadFileOptions|`ImageUploadOptions`|null| Override image upload default options like max size, max file number, ...
 |...all tiptap features|[EditorOptions](https://github.com/ueberdosis/tiptap/blob/e73073c02069393d858ca7d8c44b56a651417080/packages/core/src/types.ts#L52)|empty| Can access to all tiptap `useEditor` props
 
 ## Image upload props `ImageUploadOptions`
 |props |type                          | Default value                         | Description |
 |----------------|-------------------------------|-----------------------------|-----------------------------|
-|uploadImage|`function`|undefined|an API call to your server to handle and store the image
+|uploadFile|`function`|undefined|an API call to your server to handle and store the image
 |maxSize|`number`|10|maximum size of the image in MB
 |maxFilesNumber|`number`|5|maximum number of files to be uploaded at once
 |allowedMimeTypes|`string[]`|all image types|allowed mime types to be uploaded
