@@ -332,26 +332,29 @@ const Toolbar = ({
         // label props if the menu has an id
         const labelProps = menu.id ? { htmlFor: menu.id, css: { cursor: 'pointer' } } : {};
         return (
-          <>
-            <Tooltip title={menu.tooltip} key={menu.name + index}>
-              <IconButton
-                onClick={menu.onClick}
-                disabled={menu.disabled}
-                css={classes.button(
-                  editor.isActive(menu.active || menu.name), // the order is important
-                  !!menu.split
-                )}
-              >
-                <LabelComponent {...labelProps}>
-                  <Icon size={menu.iconSize}>
-                    <menu.icon />
-                  </Icon>
-                </LabelComponent>
-                {/* component used with label */}
-                {menu.component}
-              </IconButton>
+          <Fragment key={menu.name + index}>
+            <Tooltip title={menu.tooltip}>
+              {/* add span wrapper to avoid disabled child to the tooltip */}
+              <span>
+                <IconButton
+                  onClick={menu.onClick}
+                  disabled={menu.disabled}
+                  css={classes.button(
+                    editor.isActive(menu.active || menu.name), // the order is important
+                    !!menu.split
+                  )}
+                >
+                  <LabelComponent {...labelProps}>
+                    <Icon size={menu.iconSize}>
+                      <menu.icon />
+                    </Icon>
+                  </LabelComponent>
+                  {/* component used with label */}
+                  {menu.component}
+                </IconButton>
+              </span>
             </Tooltip>
-          </>
+          </Fragment>
         );
       })}
 
