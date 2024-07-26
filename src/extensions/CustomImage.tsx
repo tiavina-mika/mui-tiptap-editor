@@ -89,7 +89,7 @@ export const onUpload = (
       window.alert(invalidMimeType);
       return;
     }
-    
+
     if (
       (allowedMimeTypes && allowedMimeTypes.length && !allowedMimeTypes.includes(image.type))
       || Array.isArray(allowedMimeTypes) && allowedMimeTypes.length === 0
@@ -334,28 +334,30 @@ const ImageNode = ({ labels, node, updateAttributes, editor, ...props }: Props) 
  * @param labels custom or override labels
  * @returns
  */
-const getCustomImage = (options?: Omit<ImageUploadOptions, 'type'>, labels?: ILabels['imageUpload']) => TiptapImage.extend({
-  defaultOptions: {
-    ...TiptapImage.options,
-    sizes: ["inline", "block", "left", "right"]
-  },
-  addNodeView() {
-    return ReactNodeViewRenderer(
-      (props: any) => <ImageNode {...props} labels={labels} />,
-      { className: 'tiptap-image' }
-    );
-  },
-  addProseMirrorPlugins() {
-    const editor = this.editor as Editor;
-    return [
-      new Plugin({
-        props: {
-          handleDrop: onUpload({ ...options, type: 'drop' }, editor, labels),
-          handlePaste: onUpload({ ...options, type: 'paste' }, editor, labels),
-        } as any,
-      }),
-    ];
-  }
-})
+const getCustomImage = (options?: Omit<ImageUploadOptions, 'type'>, labels?: ILabels['imageUpload']) => TiptapImage
+  .extend({
+    defaultOptions: {
+      ...TiptapImage.options,
+      sizes: ["inline", "block", "left", "right"]
+    },
+    addNodeView() {
+      return ReactNodeViewRenderer(
+        (props: any) => <ImageNode {...props} labels={labels} />,
+        { className: 'tiptap-image' }
+      );
+    },
+    addProseMirrorPlugins() {
+      const editor = this.editor as Editor;
+      return [
+        new Plugin({
+          props: {
+            handleDrop: onUpload({ ...options, type: 'drop' }, editor, labels),
+            handlePaste: onUpload({ ...options, type: 'paste' }, editor, labels),
+          } as any,
+        }),
+      ];
+    }
+  })
+  .configure({ allowBase64: true });
 
 export default getCustomImage;
