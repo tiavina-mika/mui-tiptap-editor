@@ -30,6 +30,7 @@ const classes = {
     border: isActive ? "0px solid gray !important" : "none !important",
     borderRight: `1px solid ${theme.palette.grey[300]}`,
     fontSize: 14,
+    lineHeight: 1,
     cursor: 'pointer',
     '& span': {
       marginRight: 10
@@ -49,9 +50,7 @@ type Props = {
   headingLabels?: ILabels["headings"];
 };
 const Heading = ({ editor, headingLabels }: Props) => {
-  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(
-    null
-  );
+  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const [selected, setSelected] = useState(0);
 
   // get label for selected heading
@@ -75,9 +74,7 @@ const Heading = ({ editor, headingLabels }: Props) => {
     setAnchorEl(event.currentTarget);
   };
 
-  const handleClose = () => {
-    setAnchorEl(null);
-  };
+  const handleClose = () => setAnchorEl(null);
 
   const handleSelectHeading = (heading: Level) => {
     editor.chain().focus().toggleHeading({ level: heading }).run();
@@ -92,7 +89,7 @@ const Heading = ({ editor, headingLabels }: Props) => {
   }
 
   return (
-    <div>
+    <span>
       {/* button */}
       <Button
         type="button"
@@ -104,7 +101,7 @@ const Heading = ({ editor, headingLabels }: Props) => {
       >
         <span>
           {selectedLabel}
-        </span>
+        </span> 
         {/* chevron icon */}
         <Icon>
           <ChevronDown />
@@ -140,7 +137,7 @@ const Heading = ({ editor, headingLabels }: Props) => {
           </MenuItem>
         ))}
       </Menu>
-    </div>
+    </span>
 
   );
 };
