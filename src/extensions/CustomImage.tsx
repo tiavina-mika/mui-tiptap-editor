@@ -15,7 +15,7 @@ import { Editor, NodeViewWrapper, NodeViewWrapperProps, ReactNodeViewRenderer } 
 import Edit from '../icons/Edit';
 import { IconButton, Stack, TextField, Theme, Typography } from '@mui/material';
 import { ChangeEvent, ClipboardEvent, useEffect, useState } from 'react';
-import { checkAlt } from '../utils/app.utils';
+import { checkAlt, checkFilesNumber, checkIsImage, checkValidMimeType, getIsFileSizeValid } from '../utils/app.utils';
 import Dialog from '../components/Dialog';
 import Add from '../icons/Add';
 import Close from '../icons/Close';
@@ -37,9 +37,9 @@ const FROM_TIPTAP = true;
 export const onUpload = (
   {
     // upload callback, should return the image src, used mainly for uploading to a server
-    uploadImage,
+    uploadFile,
     // max file size in MB
-    maxSize = 10,
+    maxSize,
     // max number of files
     maxFilesNumber = 5,
     // drop or paste
@@ -50,15 +50,8 @@ export const onUpload = (
   // tiptap editor instance
   editor: Editor,
   // custom labels
-  labels?: ILabels['imageUpload'],
+  labels?: ILabels['upload'],
 ) => (view: EditorView, event: DragEvent | ClipboardEvent, _: Slice, moved: boolean): boolean | void => {
-  // default labels
-  const {
-    maximumNumberOfFiles = `You can only upload ${maxFilesNumber} images at a time.`,
-    fileTooLarge = `Images need to be less than ${maxSize}mb in size.`,
-    invalidMimeType = 'Invalid file type',
-  } = labels || {};
-
   // check if event has files
   const hasFiles = type === 'drop'
     ? (event as DragEvent).dataTransfer?.files?.length
@@ -68,88 +61,78 @@ export const onUpload = (
 
   if (type === 'drop' && moved) return;
 
-  const images = (type === 'drop' ? (event as DragEvent).dataTransfer?.files : (event as ClipboardEvent).clipboardData?.files) || [];
+  const files = (type === 'drop' ? (event as DragEvent).dataTransfer?.files : (event as ClipboardEvent).clipboardData?.files) || [];
 
-  if (images.length > maxFilesNumber) {
-    window.alert(maximumNumberOfFiles);
+  // check if the number of files is valid
+  const { isValid: isFilesNumberValid, message: filesNumberMessage } = checkFilesNumber(files as FileList, maxFilesNumber);
+  if (!isFilesNumberValid) {
+    window.alert(labels?.maximumNumberOfFiles || filesNumberMessage);
     return;
   }
 
-  if (images.length === 0) return;
+  if (files.length === 0) return;
 
   event.preventDefault();
 
-  // const { schema } = view.state;
-
-  for (const image of images) {
-    // file size in MB
-    const fileSize = ((image.size / 1024) / 1024).toFixed(4);
-
-    if (!/image/i.test(image.type)) {
-      window.alert(invalidMimeType);
+  for (const file of files) {
+    // 1. check if the file is an image
+    const { isValid: isImage, message: isImageMessage } = checkIsImage(file);
+    if (!isImage) {
+      window.alert(labels?.shouldBeAnImage || isImageMessage);
       return;
     }
 
-    if (
-      (allowedMimeTypes && allowedMimeTypes.length && !allowedMimeTypes.includes(image.type))
-      || Array.isArray(allowedMimeTypes) && allowedMimeTypes.length === 0
-    ) {
-      window.alert(invalidMimeType);
+    // 2. check if the mime type is allowed
+    const { isValid: isValidMimeTypes, message: isValidMimeTypesMessage } = checkValidMimeType(file, allowedMimeTypes);
+    if (!isValidMimeTypes) {
+      window.alert(labels?.invalidMimeType || isValidMimeTypesMessage);
       return;
     }
 
-    // check valid image type under 10MB
-    if (+fileSize > maxSize) {
-      window.alert(fileTooLarge);
+    // 3. file size in MB
+    const { isValid: isFileSizeValid, message: isFileSizeValidMessage } = getIsFileSizeValid(file, maxSize);
+    if (!isFileSizeValid) {
+      window.alert(labels?.fileTooLarge || isFileSizeValidMessage);
       return;
     }
 
     const reader = new FileReader();
-
-    reader.onload = (readerEvent: ProgressEvent<FileReader>) => {
+    reader.onload = async (readerEvent: ProgressEvent<FileReader>) => {
       if (!readerEvent.target) return;
-      // const node = schema.nodes.image.create({
-      //   src: readerEvent.target.result
-      // });
 
-      // --------------------------- //
+      let attrs = { src: readerEvent.target.result as string };
+      // default position for paste
+      let position = editor.state.selection.anchor;
+
       // ---------- drop ---------- //
-      // --------------------------- //
       if (type === 'drop') {
         const dropEvent = event as DragEvent;
         const coordinates = view.posAtCoords({ left: dropEvent.clientX, top: dropEvent.clientY }) as { pos: number; inside: number; };
-
-        // if using the plugin, use this commented code
-        // const transaction = view.state.tr.insert(
-        //   coordinates.pos,
-        //   node
-        // );
-        // view.dispatch(transaction);
-
-        editor.chain().insertContentAt(coordinates.pos, {
-          type: 'image',
-          attrs: {
-            src: readerEvent.target.result,
-          },
-        }).focus().run();
-        return;
+        position = coordinates.pos;
       }
 
-      // --------------------------- //
-      // ---------- paste ---------- //
-      // --------------------------- //
-        // if using the plugin, use this commented code
-      // const transaction = view.state.tr.replaceSelectionWith(node);
-      // view.dispatch(transaction);
+      // ----- upload callback ----- //
+      if (uploadFile) {
+        const response = await uploadFile(file);
+        if (response) {
+          if (typeof response === 'string') {
+            // only src attribute
+            attrs.src = response;
+          } else {
+            // other attributes like alt, title, etc
+            attrs = { ...attrs, ...response };
+          }
+        }
+      }
 
-      editor.chain().insertContentAt(editor.state.selection.anchor, {
+      // insert the image into the editor
+      editor.chain().insertContentAt(position, {
         type: 'image',
-        attrs: {
-          src: readerEvent.target.result,
-        },
+        attrs,
       }).focus().run();
     }
-    reader.readAsDataURL(image);
+
+    reader.readAsDataURL(file);
   }
 }
 
@@ -211,7 +194,7 @@ const getClassName = (selected: boolean): string => {
   return className
 }
 
-type Props = ILabels['imageUpload'] & NodeViewWrapperProps;
+type Props = ILabels['upload'] & NodeViewWrapperProps;
 
 const ImageNode = ({ labels, node, updateAttributes, editor, ...props }: Props) => {
   const [open, setOpen] = useState<boolean>(false);
@@ -334,7 +317,7 @@ const ImageNode = ({ labels, node, updateAttributes, editor, ...props }: Props) 
  * @param labels custom or override labels
  * @returns
  */
-const getCustomImage = (options?: Omit<ImageUploadOptions, 'type'>, labels?: ILabels['imageUpload']) => TiptapImage
+const getCustomImage = (options?: Omit<ImageUploadOptions, 'type'>, labels?: ILabels['upload']) => TiptapImage
   .extend({
     defaultOptions: {
       ...TiptapImage.options,
