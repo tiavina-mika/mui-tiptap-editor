@@ -45,7 +45,7 @@ export const onUpload = (
     // drop or paste
     type,
     // allowed file types to upload
-    allowedMimeTypes = ['image/jpeg', 'image/png', 'image/jpg'],
+    allowedMimeTypes = null,
   }: ImageUploadOptions,
   // tiptap editor instance
   editor: Editor,
@@ -85,7 +85,15 @@ export const onUpload = (
     // file size in MB
     const fileSize = ((image.size / 1024) / 1024).toFixed(4);
 
-    if ((allowedMimeTypes.length && !allowedMimeTypes.includes(image.type)) || allowedMimeTypes.length === 0) {
+    if (!/image/i.test(image.type)) {
+      window.alert(invalidMimeType);
+      return;
+    }
+    
+    if (
+      (allowedMimeTypes && allowedMimeTypes.length && !allowedMimeTypes.includes(image.type))
+      || Array.isArray(allowedMimeTypes) && allowedMimeTypes.length === 0
+    ) {
       window.alert(invalidMimeType);
       return;
     }

@@ -30,6 +30,7 @@ export enum EditorToolbarEnum {
 
 /**
  * Image upload options from drop or paste event
+ * the image can be uploaded to the server via an API or saved inside as a base64 string
  */
 export type ImageUploadOptions = {
   /**
@@ -44,16 +45,19 @@ export type ImageUploadOptions = {
   uploadImage?: (file: File) => Promise<string>;
   /**
    * maximum size of the image in MB (each image)
+   * @default 10mb
    */
   maxSize?: number;
   /**
    * maximum number of files to be uploaded at once
+   * @default 5
    */
   maxFilesNumber?: number;
   /**
    * control which mime types are allowed to be uploaded (pasted or dropped)
+   * @default all image mime types
    */
-  allowedMimeTypes?: string[];
+  allowedMimeTypes?: string[] | null;
   /**
    * type of the upload event
    */
