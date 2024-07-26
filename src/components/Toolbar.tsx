@@ -2,7 +2,7 @@ import { Theme } from "@emotion/react";
 import { cx } from "@emotion/css";
 import { IconButton, Tooltip } from "@mui/material";
 import { Editor } from "@tiptap/react";
-import { useState, MouseEvent, useMemo, useCallback } from "react";
+import { useState, MouseEvent, useMemo, useCallback, Fragment } from "react";
 
 import TableMenuDialog from "./TableMenuDialog";
 import LinkDialog from "./LinkDialog";
@@ -30,6 +30,9 @@ import Undo from "../icons/Undo";
 import Redo from "../icons/Redo";
 import Mention from "../icons/Mention";
 import Icon from "../icons/Icon";
+import Picture from "../icons/Picture";
+import UploadImage from "./UploadImage";
+import TextColor from "../icons/TextColor";
 
 const classes = {
   toolbar: (theme: Theme) => ({
@@ -50,6 +53,7 @@ const classes = {
     }
 
     return {
+      position: 'relative' as const,
       borderRadius: 0,
       border: "none",
       borderRight: split ? `1px solid ${getBorderColor(theme)}` : "none",
@@ -148,15 +152,19 @@ const Toolbar = ({
         icon: Underline,
         onClick: () => editor.chain().focus().toggleUnderline().run(),
         disabled: !editor.can().chain().focus().toggleUnderline().run(),
-        tooltip: toolbarLabels?.underline || 'Underline'
-      },
-      {
-        name: "link",
-        icon: Link,
-        onClick: toggleLinkDialog,
-        disabled: false,
+        tooltip: toolbarLabels?.underline || 'Underline',
         split: true,
-        tooltip: toolbarLabels?.link || 'Link'
+      },
+      // color use a label with htmlFor
+      {
+        name: "color",
+        id: "color", // id for the label
+        icon: TextColor,
+        disabled: false,
+        component: <ColorPicker editor={editor} id="color" />,
+        tooltip: 'Text color',
+        split: true,
+        iconSize: 24
       },
       // order
       {
@@ -214,6 +222,40 @@ const Toolbar = ({
         tooltip: toolbarLabels?.alignJustify || 'Justify align'
       },
       {
+        name: "link",
+        icon: Link,
+        onClick: toggleLinkDialog,
+        disabled: false,
+        tooltip: toolbarLabels?.link || 'Link'
+      },
+      {
+        name: "upload",
+        id: "upload", // id for the label with htmlFor
+        icon: Picture,
+        disabled: false,
+        component: <UploadImage editor={editor} id="upload" />,
+        tooltip: 'Upload image',
+        iconSize: 16
+      },
+      {
+        name: "mention",
+        icon: Mention,
+        onClick: () => editor.chain().focus().insertContent("@").run(),
+        disabled: false,
+        tooltip: toolbarLabels?.mention || 'Mention user',
+        iconSize: 16
+      },
+      {
+        name: "table",
+        icon: Table,
+        onClick: (event: MouseEvent<HTMLElement>) => {
+          handleOpenTableMenu(event);
+        },
+        disabled: false,
+        split: true,
+        tooltip: labels?.table?.table || 'Table'
+      },
+      {
         name: "blockquote",
         icon: Quote,
         onClick: () => editor.chain().focus().toggleBlockquote().run(),
@@ -228,16 +270,6 @@ const Toolbar = ({
         disabled: false,
         split: true,
         tooltip: toolbarLabels?.codeBlock || 'Code block',
-      },
-      {
-        name: "table",
-        icon: Table,
-        onClick: (event: MouseEvent<HTMLElement>) => {
-          handleOpenTableMenu(event);
-        },
-        disabled: false,
-        split: true,
-        tooltip: labels?.table?.table || 'Table'
       },
       {
         name: "youtube",
@@ -283,43 +315,38 @@ const Toolbar = ({
       {showTextEditorToolbarMenu(toolbar, "heading") && <Heading editor={editor} headingLabels={labels?.headings} />}
 
       {/* other options */}
-      {menus.map((menu, index) => (
-        showTextEditorToolbarMenu(toolbar, menu) && (
+      {menus.map((menu, index) => {
+        if (!showTextEditorToolbarMenu(toolbar, menu)) return null;
+
+        // if the menu has an id, we need to use a label (use htmlFor)
+        const LabelComponent = menu.id ? 'label' : Fragment;
+        // label props if the menu has an id
+        const labelProps = menu.id ? { htmlFor: menu.id, css: { cursor: 'pointer' } } : {};
+        return (
+          <>
             <Tooltip title={menu.tooltip} key={menu.name + index}>
               <IconButton
                 onClick={menu.onClick}
                 disabled={menu.disabled}
                 css={classes.button(
-                  // the order is important
-                  editor.isActive(menu.active || menu.name),
+                  editor.isActive(menu.active || menu.name), // the order is important
                   !!menu.split
                 )}
               >
-                <Icon size={menu.iconSize}>
-                  <menu.icon />
-                </Icon>
+                <LabelComponent {...labelProps}>
+                  <Icon size={menu.iconSize}>
+                    <menu.icon />
+                  </Icon>
+                </LabelComponent>
+                {/* component used with label */}
+                {menu.component}
               </IconButton>
             </Tooltip>
-          )
-      ))}
+          </>
+        );
+      })}
 
-      {/* mention */}
-      {showTextEditorToolbarMenu(toolbar, "mention") && (
-        <Tooltip title="Mention user">
-          <IconButton
-            onClick={() => {
-              editor.chain().focus().insertContent("@").run();
-            }}
-            css={{ borderRadius: 2 }}
-          >
-            <Icon size={15}>
-              <Mention />
-            </Icon>
-          </IconButton>
-        </Tooltip>
-      )}
-
-      {/* youtube dialog */}
+      {/* link dialog */}
       {showTextEditorToolbarMenu(toolbar, "link") && (
         <LinkDialog
           editor={editor}
@@ -339,12 +366,7 @@ const Toolbar = ({
         />
       )}
 
-      {/* color picker */}
-      {showTextEditorToolbarMenu(toolbar, "color") && (
-          <ColorPicker editor={editor} />
-      )}
-
-      {/* table menu to be opened */}
+      {/* table menu dialog */}
       {showTextEditorToolbarMenu(toolbar, "table") && (
         <TableMenuDialog
           editor={editor}

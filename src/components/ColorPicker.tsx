@@ -1,9 +1,7 @@
-import { Tooltip, useTheme } from "@mui/material";
+import { useTheme } from "@mui/material";
 import { Editor } from "@tiptap/react";
 
 import { ChangeEvent, useEffect, useState } from "react";
-import Icon from "../icons/Icon";
-import TextColor from "../icons/TextColor";
 
 const classes = {
   color: {
@@ -26,55 +24,55 @@ const classes = {
     }
   },
   colorPreview: (color: string) => ({
+    position: 'absolute' as const,
+    bottom: 10,
     height: 3,
-    width: 18,
+    width: 14,
     backgroundColor: color,
-    marginTop: -8,
     borderRadius: 3,
   })
 };
 type Props = {
   editor: Editor;
+  id: string;
 };
-const ColorPicker = ({ editor }: Props) => {
+const ColorPicker = ({ editor, id }: Props) => {
   const [color, setColor] = useState<string>("");
 
   const theme = useTheme();
 
   // add default styles if not defined
   useEffect(() => {
+    // get current color from editor instance
     const currentColor = editor.getAttributes("textStyle").color;
+    // set default color based on theme
     const defaultColor = theme.palette.mode === "dark" ? "#ffffff" : "#000000";
     setColor(currentColor || defaultColor);
   }, [editor, theme.palette.mode])
 
   const handleInput = (event: ChangeEvent<HTMLInputElement>) => {
     const value = event.target.value;
+    // set color in editor instance
     editor.chain().focus().setColor(value).run();
     setColor(value);
   };
 
   return (
-    <div className="flexRow center stretchSelf">
-      {/* tooltip */}
-      <Tooltip title="Text color">
-        <label htmlFor="color-picker" className="flexCenter">
-          <Icon size={28} css={{ cursor: 'pointer' }}>
-            <TextColor />
-            <div css={classes.colorPreview(color)} />
-          </Icon>
-        </label>
-      </Tooltip>
-
-      {/* input */}
+    <>
       <input
-        id="color-picker"
+        id={id}
         type="color"
         onInput={handleInput}
         value={color}
-        css={classes.color}
+        // css={classes.color}
+        css={{ display: 'none' }}
       />
-    </div>
+      {/*
+        * The `colorPreview` div displays the selected color as a small rectangle below the color picker.
+        * see Toolbar component for the implementation of icon
+      */}
+      <div css={classes.colorPreview(color)} />
+    </>
   );
 };
 
