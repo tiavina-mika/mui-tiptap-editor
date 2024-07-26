@@ -125,7 +125,7 @@ export const onUpload = (
         }
       }
 
-      // insert the image into the editor
+      // insert theimage into the editor
       editor.chain().insertContentAt(position, {
         type: 'image',
         attrs,
@@ -144,9 +144,6 @@ const classes = {
       justifyContent: 'center', // default
       width: 'fit-content',
       position: 'relative' as const,
-      '&.ProseMirror-selectednode .tiptap-image-content': {
-        outline: '2px solid blue',
-      },
     };
 
     if (isRight) {
