@@ -94,7 +94,7 @@ const TextEditor = ({
   mentions,
   userPathname,
   labels,
-  uploadImageOptions,
+  uploadFileOptions,
   editable = true,
   withFloatingMenu = false,
   withBubbleMenu = true,
@@ -113,8 +113,8 @@ const TextEditor = ({
     user,
     mentions,
     userPathname,
-    uploadImageOptions,
-    uploadImageLabels: labels?.imageUpload,
+    uploadFileOptions,
+    uploadFileLabels: labels?.upload,
     ...editorOptions
   })
 
@@ -162,6 +162,7 @@ const TextEditor = ({
                     toolbar={floatingMenuToolbar || defaultMenuToolbar}
                     css={[classes.menu, classes.bubbleMenu]}
                     labels={labels}
+                    uploadFileOptions={uploadFileOptions}
                   />
                 </FloatingMenu>
               )}
@@ -171,6 +172,7 @@ const TextEditor = ({
                     editor={editor}
                     toolbar={bubbleMenuToolbar || defaultMenuToolbar}
                     css={[classes.menu, classes.bubbleMenu]}
+                    uploadFileOptions={uploadFileOptions}
                   />
                 </BubbleMenu>
               )}
@@ -187,6 +189,7 @@ const TextEditor = ({
                   className={cx('stretchSelf', toolbarClassName)}
                   toolbar={toolbar}
                   labels={labels}
+                  uploadFileOptions={uploadFileOptions}
                 />
               )}
             </div>
