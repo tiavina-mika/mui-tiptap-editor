@@ -325,8 +325,6 @@ import './index.css';
 |maxFilesNumber|`number`|5|maximum number of files to be uploaded at once
 |allowedMimeTypes|`string[]`|all image types|allowed mime types to be uploaded
 
-
-
 ## New features
 #### [v0.9.9](https://github.com/tiavina-mika/mui-tiptap-editor/pull/52)
 - Upload image via drop or paste
