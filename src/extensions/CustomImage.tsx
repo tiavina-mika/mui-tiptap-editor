@@ -12,20 +12,13 @@
 
 import TiptapImage from '@tiptap/extension-image'
 import { Editor, NodeViewWrapper, NodeViewWrapperProps, ReactNodeViewRenderer } from '@tiptap/react';
-import Edit from '../icons/Edit';
-import { IconButton, Stack, TextField, Theme, Typography } from '@mui/material';
-import { ChangeEvent, ClipboardEvent, useEffect, useState } from 'react';
-import { checkAlt, checkFilesNumber, checkIsImage, checkValidMimeType, getIsFileSizeValid } from '../utils/app.utils';
-import Dialog from '../components/Dialog';
-import Add from '../icons/Add';
-import Close from '../icons/Close';
+import { ClipboardEvent } from 'react';
+import { checkFilesNumber, checkIsImage, checkValidMimeType, getIsFileSizeValid } from '../utils/app.utils';
 import { EditorView } from '@tiptap/pm/view';
 import { Slice } from '@tiptap/pm/model';
 import { ILabels, ImageUploadOptions } from '../types';
 import { Plugin } from '@tiptap/pm/state';
-
-// check if the image is from tiptap or not
-const FROM_TIPTAP = true;
+import ImageAlt from './image/ImageAlt';
 
 /**
  * function to handle image upload, on drop or paste
@@ -159,27 +152,6 @@ const classes = {
       outline: '2px solid blue',
     },
   },
-  altContainer: (theme: Theme) => ({
-    position: 'absolute' as const,
-    bottom: 10,
-    left: 10,
-    maxWidth: 'calc(100% - 20px)',
-    padding: '0 4px',
-    border: '1px solid ' + theme.palette.divider,
-    backgroundColor: theme.palette.background.paper,
-    overflow: 'hidden',
-  }),
-  buttonIconSx: {
-    '& svg': { width: 18 },
-  },
-  addButton: {
-    backgroundColor: 'transparent',
-    border: 'none',
-    cursor: 'pointer',
-    borderRadius: 4,
-    padding: '4px 4px 4px 12px !important',
-    fontSize: '14px !important'
-  }
 }
 
 const getClassName = (selected: boolean): string => {
@@ -194,43 +166,8 @@ const getClassName = (selected: boolean): string => {
 type Props = ILabels['upload'] & NodeViewWrapperProps;
 
 const ImageNode = ({ labels, node, updateAttributes, editor, ...props }: Props) => {
-  const [open, setOpen] = useState<boolean>(false);
-  const [clear, setClear] = useState<boolean>(false);
-  const [alt, setAlt] = useState<string>('');
-  const [error, setError] = useState<string>('');
-
-  useEffect(() => {
-    setAlt(node.attrs.alt || '');
-  }, [node.attrs.alt])
-
-  const altLabel = labels?.addAltText || 'Add alt text';
-
-  const handleOpen = () => setOpen(true);
-  const handleClose = () => setOpen(false);
-
-  const toggleClear = () => setClear(!clear);
-
-  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
-    const { value } = e.target;
-    if (checkAlt(value)) {
-      setAlt(value);
-      return;
-    }
-
-    setError(labels?.enterValidAltText || 'Please enter a valid alt text');
-  }
-
-  const onConfirm = async () => {
+  const onConfirm = async (alt: string) => {
     await updateAttributes({ alt });
-    setOpen(false);
-    // if delete this current node (each image)
-    // deleteNode();
-  }
-
-  const handleDelete = () => {
-    updateAttributes({ alt: '' });
-    setAlt('');
-    toggleClear();
   }
 
   return (
@@ -248,60 +185,19 @@ const ImageNode = ({ labels, node, updateAttributes, editor, ...props }: Props) 
     >
       <div className="tiptap-image-content" style={{ position: 'relative' }}>
         {/* ------------ image ------------ */}
-        <img src={node.attrs.src} alt={alt} />
-        {/* ------------ alt ------------ */}
-        {/*
-          * display only in editable mode
-          * NOTE: if displaying the html string outside of the editor, hide this by using css
-        */}
-        {(!clear && editor.options.editable) && (
-          <>
-            <Stack
-              css={classes.altContainer}
-              className='tiptap-alt-text'
-              direction="row"
-              alignItems="center"
-              spacing={0}
-              // this block should not be displayed if not from tiptap, ex: from html string parser
-              // hide it using in inline style
-              style={!FROM_TIPTAP ? { display: 'none' } : {}}
-            >
-            {alt && !error
-              ? (
-                <Stack direction="row" alignItems="center" spacing={2}>
-                  <Typography>{alt}</Typography>
-                  <IconButton size="small" sx={classes.buttonIconSx} type="button" onClick={handleOpen}>
-                    <Edit />
-                  </IconButton>
-                </Stack>
-              ) : (
-                <button type="button" onClick={handleOpen} css={[classes.buttonIconSx, classes.addButton]} className="flexRow itemsCenter">
-                  <Add />
-                  <Typography>{altLabel}</Typography>
-                </button>
-              )}
-              <IconButton size="small" sx={classes.buttonIconSx} type="button" onClick={handleDelete}>
-                <Close />
-              </IconButton>
-            </Stack>
-            {error && (
-              <Typography color="error">{error}</Typography>
-            )}
-          </>
+        <figure>
+          <img src={node.attrs.src} alt={node.attrs.alt} />
+          {node.attrs.title && <figcaption>{node.attrs.title}</figcaption>}
+        </figure>
+        {/* --------- alt editor ---------- */}
+        {(editor.options.editable) && (
+          <ImageAlt
+            defaultValue={node.attrs.alt}
+            onConfirm={onConfirm}
+            labels={labels}
+          />
         )}
       </div>
-      <Dialog
-        title={altLabel}
-        open={open}
-        onClose={handleClose}
-        onPrimaryButtonAction={onConfirm}
-        className='tiptap-alt-text-dialog'
-      >
-        <TextField
-          value={alt}
-          onChange={handleChange}
-        />
-      </Dialog>
     </NodeViewWrapper>
   )
 }
