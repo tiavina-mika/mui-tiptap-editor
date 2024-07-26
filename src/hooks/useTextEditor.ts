@@ -105,8 +105,8 @@ export type TextEditorProps = {
   mentions?: ITextEditorOption[];
   // url for user profile
   userPathname?: string;
-  uploadImageOptions?: Omit<ImageUploadOptions, 'type'>;
-  uploadImageLabels?: ILabels['imageUpload'];
+  uploadFileOptions?: Omit<ImageUploadOptions, 'type'>;
+  uploadFileLabels?: ILabels['upload'];
 } & Partial<EditorOptions>;
 
 export const useTextEditor = ({
@@ -116,8 +116,8 @@ export const useTextEditor = ({
   tab,
   user,
   mentions,
-  uploadImageOptions,
-  uploadImageLabels,
+  uploadFileOptions,
+  uploadFileLabels,
   userPathname,
   editable = true,
   ...editorOptions
@@ -134,7 +134,7 @@ export const useTextEditor = ({
       // user mentions editing extension
       getCustomMention({ pathname: userPathname, mentions }),
       // upload image extension
-      getCustomImage(uploadImageOptions, uploadImageLabels),
+      getCustomImage(uploadFileOptions, uploadFileLabels),
       ...extensions,
     ] as AnyExtension[],
     /* The `onUpdate` function in the `useTextEditor` hook is a callback that is triggered whenever the
