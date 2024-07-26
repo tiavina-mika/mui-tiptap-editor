@@ -51,6 +51,7 @@ const App = () => {
             placeholder="French here"
             mentions={mentions}
             user={currentUser}
+            bubbleMenuToolbar={['align']}
             uploadImageOptions={{
               uploadImage: () => Promise.resolve('https://source.unsplash.com/random'),
               maxSize: 5,

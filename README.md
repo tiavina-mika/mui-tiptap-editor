@@ -109,10 +109,15 @@ function App() {
 }
 ```
 ### Image upload
-<p>
-The image can be uploaded to the server via an API call or directly into the content as base64 string. <br />
-For the moment we can only upload via drag and drop and copy paste.
-<p>
+
+![Gif](https://github.com/tiavina-mika/mui-tiptap-editor/blob/main/screenshots/image-upload.gif)
+
+<ul>
+<li>The image can be uploaded to the server via an API call or directly into the content as base64 string. </li>
+<li>For the moment we can only upload via drag and drop and copy paste.</li>
+<li>Add or modify the alt text of the image</li>
+<li>Delete the selected image using `Delete` keyboard key</li>
+</ul>
 
 ```tsx
 // example of API using axios
