@@ -31,6 +31,10 @@ A customizable and easy to use <a href="https://tiptap.dev/">Tiptap</a> styled W
       - [Each element styles](#each-element-styles)
   - [Props](#props)
   - [Image upload props `ImageUploadOptions`](#image-upload-props-imageuploadoptions)
+  - [New features](#new-features)
+      - [v0.9.9](#v099)
+      - [v0.9.6](#v096)
+      - [v0.9.0](#v090)
   - [Contributing](#contributing)
 
 </details>
@@ -320,6 +324,18 @@ import './index.css';
 |maxSize|`number`|10|maximum size of the image in MB
 |maxFilesNumber|`number`|5|maximum number of files to be uploaded at once
 |allowedMimeTypes|`string[]`|all image types|allowed mime types to be uploaded
+
+
+
+## New features
+#### [v0.9.9](https://github.com/tiavina-mika/mui-tiptap-editor/pull/52)
+- Upload image via drop or paste
+- Add or edit the image alt text
+
+#### v0.9.6
+- Work with dark mode
+#### v0.9.0
+- Customize and override all messages and labels
 
 ## Contributing
 
