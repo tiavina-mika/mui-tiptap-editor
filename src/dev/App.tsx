@@ -58,6 +58,7 @@ const App = () => {
       <EmotionThemeProvider theme={theme}>
         <Container>
           <TextEditor
+            // value="<h1>Exemaple using image</h1><img src='https://via.placeholder.com/150' alt='Hello there' />"
             inputClassName="flexColumn stretchSelf flex1"
             label="Content"
             placeholder="Enter your content here"
