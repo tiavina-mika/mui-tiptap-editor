@@ -35,12 +35,6 @@ code {
   justify-content: center;
 }
 
-.flexStretch {
-  display: flex;
-  flex-direction: column;
-  align-items: stretch;
-}
-
 .stretch {
   align-items: stretch;
 }
@@ -57,17 +51,11 @@ code {
   align-items: flex-end;
 }
 
-.flexBaseline {
-  align-items: baseline;
-}
 
 .spaceBetween {
   justify-content: space-between;
 }
 
-.spaceAround {
-  justify-content: space-around;
-}
 
 .justifyStart {
   justify-content: flex-start;
@@ -83,17 +71,6 @@ code {
 
 .stretchSelf {
   align-self: stretch;
-}
-
-.justifySelf {
-  justify-self: stretch;
-}
-
-.centerSelf {
-  align-self: center;
-}
-.endSelf {
-  align-self: flex-end;
 }
 
 .flex1 {
@@ -121,6 +98,11 @@ code {
   min-height: 150px;
 }
 
+.mui-tiptap-input .tiptap-image {
+  margin-top: 12px;
+  margin-bottom: 12px;
+}
+
 .mui-tiptap-input p.is-editor-empty:first-child::before {
   content: attr(data-placeholder);
   float: left;
@@ -138,6 +120,7 @@ code {
   padding-left: 0;
   padding-right: 0;
   min-height: initial;
+  align-self: stretch;
 }
 
 .tiptap blockquote {
@@ -308,4 +291,22 @@ code {
 .tiptap .resize-cursor {
   cursor: ew-resize;
   cursor: col-resize;
+}
+
+/* --------------------------------------- */
+/* ---------------- Image ---------------- */
+/* --------------------------------------- */
+.tiptap-image .tiptap-alt-text .edit-button {
+  flex: 0 0 auto;
+
+  border: 0;
+  padding: 0;
+  background-color: transparent;
+  appearance: none;
+
+  text-decoration: none;
+}
+
+.tiptap-image {
+  display: flex;
 }

@@ -62,3 +62,10 @@ export const checkIsValidYoutubeUrl = (url: string): boolean => {
     url.includes("youtube")
   );
 }
+
+export const checkAlt = (text: string): boolean => {
+  return (
+    text.length > 0 &&
+    typeof text === "string"
+  );
+}

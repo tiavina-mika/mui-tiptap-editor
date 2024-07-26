@@ -34,7 +34,7 @@ const currentUser = mentions[0];
 
 const theme = createTheme({
   palette: {
-    mode: 'dark',
+    mode: 'light',
   },
 });
 
@@ -51,6 +51,13 @@ const App = () => {
             placeholder="French here"
             mentions={mentions}
             user={currentUser}
+            bubbleMenuToolbar={['align']}
+            uploadImageOptions={{
+              uploadImage: () => Promise.resolve('https://source.unsplash.com/random'),
+              maxSize: 5,
+              maxFilesNumber: 2,
+              allowedMimeTypes: ['image/jpeg', 'image/png', 'image/jpg'],
+            }}
             labels={{
               editor: {
                 editor: "Editeur",
@@ -116,7 +123,14 @@ const App = () => {
                 enter: "Entrer le lien",
                 height: "Hauteur",
                 width: "Largeur"
-              }
+              },
+              imageUpload: {
+                fileTooLarge: "Fichier trop volumineux",
+                maximumNumberOfFiles: "Nombre maximum de fichiers atteint",
+                enterValidAltText: "Entrez un texte alternatif valide",
+                addAltText: "Ajouter un texte alternatif",
+                invalidMimeType: "Type de fichier invalide",
+              },
             }}
           />
         </Container>

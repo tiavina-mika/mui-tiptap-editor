@@ -21,6 +21,7 @@ A customizable and easy to use <a href="https://tiptap.dev/">Tiptap</a> styled W
   - [Get started](#get-started)
     - [Simple usage](#simple-usage)
     - [Using mentions](#using-mentions)
+    - [Image upload](#image-upload)
     - [Read only](#read-only)
   - [Customization](#customization)
     - [Toolbar](#toolbar)
@@ -29,6 +30,7 @@ A customizable and easy to use <a href="https://tiptap.dev/">Tiptap</a> styled W
       - [Root styles](#root-styles)
       - [Each element styles](#each-element-styles)
   - [Props](#props)
+  - [Image upload props `ImageUploadOptions`](#image-upload-props-imageuploadoptions)
   - [Contributing](#contributing)
 
 </details>
@@ -103,6 +105,41 @@ const currentUser: ITextEditorOption = mentions[0];
 function App() {
   return (
     <TextEditor mentions={mentions} user={currentUser} userPathname="/profile" />
+  );
+}
+```
+### Image upload
+
+![Gif](https://github.com/tiavina-mika/mui-tiptap-editor/blob/main/screenshots/image-upload.gif)
+
+<ul>
+<li>The image can be uploaded to the server via an API call or directly into the content as base64 string. </li>
+<li>For the moment we can only upload via drag and drop and copy paste.</li>
+<li>Add or modify the alt text of the image</li>
+<li>Delete the selected image using `Delete` keyboard key</li>
+</ul>
+
+```tsx
+// example of API using axios
+// note that the response should be directly the image url
+// so it can be displayed in the editor
+function uploadImage(file) {
+  const data = new FormData();
+  data.append('file', file);
+  const response = axios.post('/documents/image/upload', data);
+  return response.data;
+};
+
+function App() {
+  return (
+    <TextEditor
+      uploadImageOptions={{
+        uploadImage: uploadImage, // the image is stored and used as base64 string if not specified
+        maxSize: 5, // max size to 10MB if not specified
+        maxFilesNumber: 2,  // max 5 files if not specified
+        allowedMimeTypes: ['image/jpeg', 'image/png', 'image/jpg'], // all image types if not specified
+      }}
+    />
   );
 }
 ```
@@ -200,7 +237,14 @@ import { TextEditorReadOnly } from 'mui-tiptap-editor';
         enter: "Entrer le lien",
         height: "Hauteur",
         width: "Largeur"
-      }
+      },
+      imageUpload: {
+        fileTooLarge: "Fichier trop volumineux",
+        maximumNumberOfFiles: "Nombre maximum de fichiers atteint",
+        enterValidAltText: "Entrez un texte alternatif valide",
+        addAltText: "Ajouter un texte alternatif",
+        invalidMimeType: "Type de fichier invalide",
+      },
     }}
   />
 ```
@@ -266,7 +310,16 @@ import './index.css';
 |onChange|`(value: string) => void`|-| Function to call when the input change
 |userPathname|`string`|/user| URL pathname for the mentioned user (eg: /user/user_id)
 |labels|`ILabels`|null| Override labels, for example using `i18n`
+|uploadImageOptions|`ImageUploadOptions`|null| Override image upload default options like max size, max file number, ...
 |...all tiptap features|[EditorOptions](https://github.com/ueberdosis/tiptap/blob/e73073c02069393d858ca7d8c44b56a651417080/packages/core/src/types.ts#L52)|empty| Can access to all tiptap `useEditor` props
+
+## Image upload props `ImageUploadOptions`
+|props |type                          | Default value                         | Description |
+|----------------|-------------------------------|-----------------------------|-----------------------------|
+|uploadImage|`function`|undefined|an API call to your server to handle and store the image
+|maxSize|`number`|10|maximum size of the image in MB
+|maxFilesNumber|`number`|5|maximum number of files to be uploaded at once
+|allowedMimeTypes|`string[]`|all image types|allowed mime types to be uploaded
 
 ## Contributing
 

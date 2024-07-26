@@ -28,12 +28,13 @@ import {
   EditorEvents,
 } from '@tiptap/react';
 import StarterKit from '@tiptap/starter-kit';
-
+import TiptapImage from '@tiptap/extension-image';
 import { useEffect } from 'react';
 import Heading from '@tiptap/extension-heading';
 import { Node } from '@tiptap/pm/model';
 import getSuggestion from '../components/mention/suggestions';
-import { ITextEditorOption } from '../types.d';
+import { ILabels, ImageUploadOptions, ITextEditorOption } from '../types.d';
+import getCustomImage from '../extensions/CustomImage';
 
 const extensions = [
   Color.configure({ types: [TextStyle.name, ListItem.name] }),
@@ -87,7 +88,7 @@ const extensions = [
   Gapcursor,
   Youtube,
   TextAlign.configure({
-    types: ["heading", "paragraph"]
+    types: ["heading", "paragraph", "table", "image"]
   }),
   CodeBlockLowlight.configure({
     lowlight: createLowlight(common),
@@ -145,6 +146,8 @@ export type TextEditorProps = {
   mentions?: ITextEditorOption[];
   // url for user profile
   userPathname?: string;
+  uploadImageOptions?: Omit<ImageUploadOptions, 'type'>;
+  uploadImageLabels?: ILabels['imageUpload'];
 } & Partial<EditorOptions>;
 
 export const useTextEditor = ({
@@ -154,8 +157,10 @@ export const useTextEditor = ({
   tab,
   user,
   mentions,
-  editable = true,
+  uploadImageOptions,
+  uploadImageLabels,
   userPathname,
+  editable = true,
   ...editorOptions
 }: TextEditorProps) => {
   const theme = useTheme();
@@ -172,15 +177,15 @@ export const useTextEditor = ({
         HTMLAttributes: {
           class: "mention"
         },
-        renderLabel({ options, node }: {
-          options: MentionOptions;
-          node: Node;
-      }) {
+        renderLabel({ options, node }: { options: MentionOptions; node: Node }) {
           return `${options.suggestion.char}${
             node.attrs.label ?? node.attrs.id.label
           }`;
         },
         suggestion: getSuggestion(mentions)
+      }),
+      getCustomImage(uploadImageOptions, uploadImageLabels).configure({
+        allowBase64: true
       }),
       ...extensions,
     ] as AnyExtension[],

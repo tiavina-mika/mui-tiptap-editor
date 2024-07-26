@@ -94,6 +94,7 @@ const TextEditor = ({
   mentions,
   userPathname,
   labels,
+  uploadImageOptions,
   editable = true,
   withFloatingMenu = false,
   withBubbleMenu = true,
@@ -112,6 +113,8 @@ const TextEditor = ({
     user,
     mentions,
     userPathname,
+    uploadImageOptions,
+    uploadImageLabels: labels?.imageUpload,
     ...editorOptions
   })
 
