@@ -1,6 +1,11 @@
 import { Theme } from "@mui/material";
 import { IEditorToolbar } from "../types";
 
+type FileValidationOutput = {
+  isValid: boolean;
+  message: string;
+};
+
 export const defaultEditorToolbar: IEditorToolbar[] = [
   "heading",
   "bold",
@@ -70,3 +75,71 @@ export const checkAlt = (text: string): boolean => {
     typeof text === "string"
   );
 }
+
+const getFileSize = (file: File): number => {
+  const size = (file.size / 1024) / 1024;
+  return +size.toFixed(4);
+}
+
+/**
+ * check if the file size is valid
+ * below the maximum size
+ * @param file
+ * @param maxSize
+ * @returns
+ */
+export const getIsFileSizeValid = (file: File, maxSize = 10): FileValidationOutput => {
+  return {
+    isValid: getFileSize(file) <= maxSize,
+    message: `Files need to be less than ${maxSize}mb in size.`
+  }
+}
+
+/**
+ * check if the file is an image
+ * by checking the file mime type
+ * starts with "image/"
+ * @param file
+ * @returns
+ */
+export const checkIsImage = (file: File): FileValidationOutput => {
+  return {
+    isValid: file.type.startsWith("image/"),
+    message: "Files need to be of type image."
+  };
+}
+
+/**
+ * check if the file mime type is valid
+ * example: image/png, image/jpeg
+ * @param file
+ * @param allowedMimeTypes
+ * @returns
+ */
+export const checkValidMimeType = (file: File, allowedMimeTypes: string[] | null): FileValidationOutput => {
+  if (!allowedMimeTypes) {
+    return {
+      isValid: true,
+      message: ""
+    };
+  }
+
+  return {
+    isValid: allowedMimeTypes.includes(file.type),
+    message: `Files need to be of type ${allowedMimeTypes.join(", ")}.`
+  };
+}
+
+/**
+ * check if the number of files is lower than the maximum number required
+ * @param files
+ * @param maxFilesNumber
+ * @returns
+ */
+export const checkFilesNumber = (files: FileList, maxFilesNumber = 5): FileValidationOutput => {
+  return {
+    isValid: files.length <= maxFilesNumber,
+    message: `You can only upload ${maxFilesNumber} files at once.`
+  };
+}
+
