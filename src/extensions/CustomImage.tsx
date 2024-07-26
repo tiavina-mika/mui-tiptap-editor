@@ -24,18 +24,35 @@ import { Slice } from '@tiptap/pm/model';
 import { ILabels, ImageUploadOptions } from '../types';
 import { Plugin } from '@tiptap/pm/state';
 
+// check if the image is from tiptap or not
+const FROM_TIPTAP = true;
+
+/**
+ * function to handle image upload, on drop or paste
+ * @param options
+ * @param editor
+ * @param labels
+ * @returns
+ */
 export const onUpload = (
   {
+    // upload callback, should return the image src, used mainly for uploading to a server
     uploadImage,
+    // max file size in MB
     maxSize = 10,
+    // max number of files
     maxFilesNumber = 5,
+    // drop or paste
     type,
+    // allowed file types to upload
     allowedMimeTypes = ['image/jpeg', 'image/png', 'image/jpg'],
   }: ImageUploadOptions,
+  // tiptap editor instance
   editor: Editor,
+  // custom labels
   labels?: ILabels['imageUpload'],
 ) => (view: EditorView, event: DragEvent | ClipboardEvent, _: Slice, moved: boolean): boolean | void => {
-  // labels
+  // default labels
   const {
     maximumNumberOfFiles = `You can only upload ${maxFilesNumber} images at a time.`,
     fileTooLarge = `Images need to be less than ${maxSize}mb in size.`,
@@ -62,7 +79,7 @@ export const onUpload = (
 
   event.preventDefault();
 
-  const { schema } = view.state;
+  // const { schema } = view.state;
 
   for (const image of images) {
     // file size in MB
@@ -129,10 +146,28 @@ export const onUpload = (
 }
 
 const classes = {
+  tiptapImageRootStyle: ({ isRight, isLeft }: { isRight: boolean; isLeft: boolean; }) => {
+    const values = {
+      display: 'flex',
+      flex: 1,
+      justifyContent: 'center', // default
+      width: 'fit-content',
+      position: 'relative' as const,
+      '&.ProseMirror-selectednode .tiptap-image-content': {
+        outline: '2px solid blue',
+      },
+    };
+
+    if (isRight) {
+      values.justifyContent = 'flex-end';
+    } else if (isLeft) {
+      values.justifyContent = 'flex-start';
+    }
+
+    return values
+  },
   tiptapImageRoot: {
-    width: 'fit-content',
-    position: 'relative' as const,
-    '&.ProseMirror-selectednode': {
+    '&.ProseMirror-selectednode .tiptap-image-content': {
       outline: '2px solid blue',
     },
   },
@@ -158,6 +193,7 @@ const classes = {
     fontSize: '14px !important'
   }
 }
+
 const getClassName = (selected: boolean): string => {
   // this className is used in the css file
   let className = 'tiptap-image';
@@ -210,42 +246,62 @@ const ImageNode = ({ labels, node, updateAttributes, editor, ...props }: Props) 
   }
 
   return (
-    <NodeViewWrapper className={getClassName(props.selected)} data-drag-handle css={classes.tiptapImageRoot}>
-      {/* ------------ image ------------ */}
-      <p>
+    <NodeViewWrapper
+      // className to check if node is selected, used in editor
+      className={getClassName(props.selected)}
+      // used in editor
+      css={classes.tiptapImageRoot}
+      data-drag-handle
+      // used to display the content outside of the editor library
+      style={classes.tiptapImageRootStyle({
+        isRight: editor.isActive({ textAlign: "right" }),
+        isLeft: editor.isActive({ textAlign: "left" }),
+      })}
+    >
+      <div className="tiptap-image-content" style={{ position: 'relative' }}>
+        {/* ------------ image ------------ */}
         <img src={node.attrs.src} alt={alt} />
-      </p>
-      {/* ------------ alt ------------ */}
-      {/*
-        * display only in editable mode
-        * NOTE: if displaying the html string outside of the editor, hide this by using css
-      */}
-      {(!clear && editor.options.editable) && (
-        <>
-          <Stack css={classes.altContainer} className='tiptap-alt-text' direction="row" alignItems="center" spacing={0}>
-          {alt && !error
-            ? (
-              <Stack direction="row" alignItems="center" spacing={2}>
-                <Typography>{alt}</Typography>
-                <IconButton size="small" sx={classes.buttonIconSx} type="button" onClick={handleOpen}>
-                  <Edit />
-                </IconButton>
-              </Stack>
-            ) : (
-              <button type="button" onClick={handleOpen} css={[classes.buttonIconSx, classes.addButton]} className="flexRow itemsCenter">
-                <Add />
-                <Typography>{altLabel}</Typography>
-              </button>
+        {/* ------------ alt ------------ */}
+        {/*
+          * display only in editable mode
+          * NOTE: if displaying the html string outside of the editor, hide this by using css
+        */}
+        {(!clear && editor.options.editable) && (
+          <>
+            <Stack
+              css={classes.altContainer}
+              className='tiptap-alt-text'
+              direction="row"
+              alignItems="center"
+              spacing={0}
+              // this block should not be displayed if not from tiptap, ex: from html string parser
+              // hide it using in inline style
+              style={!FROM_TIPTAP ? { display: 'none' } : {}}
+            >
+            {alt && !error
+              ? (
+                <Stack direction="row" alignItems="center" spacing={2}>
+                  <Typography>{alt}</Typography>
+                  <IconButton size="small" sx={classes.buttonIconSx} type="button" onClick={handleOpen}>
+                    <Edit />
+                  </IconButton>
+                </Stack>
+              ) : (
+                <button type="button" onClick={handleOpen} css={[classes.buttonIconSx, classes.addButton]} className="flexRow itemsCenter">
+                  <Add />
+                  <Typography>{altLabel}</Typography>
+                </button>
+              )}
+              <IconButton size="small" sx={classes.buttonIconSx} type="button" onClick={handleDelete}>
+                <Close />
+              </IconButton>
+            </Stack>
+            {error && (
+              <Typography color="error">{error}</Typography>
             )}
-            <IconButton size="small" sx={classes.buttonIconSx} type="button" onClick={handleDelete}>
-              <Close />
-            </IconButton>
-          </Stack>
-          {error && (
-            <Typography color="error">{error}</Typography>
-          )}
-        </>
-      )}
+          </>
+        )}
+      </div>
       <Dialog
         title={altLabel}
         open={open}
@@ -271,8 +327,15 @@ const ImageNode = ({ labels, node, updateAttributes, editor, ...props }: Props) 
  * @returns
  */
 const getCustomImage = (options?: Omit<ImageUploadOptions, 'type'>, labels?: ILabels['imageUpload']) => TiptapImage.extend({
+  defaultOptions: {
+    ...TiptapImage.options,
+    sizes: ["inline", "block", "left", "right"]
+  },
   addNodeView() {
-    return ReactNodeViewRenderer((props: any) => <ImageNode {...props} labels={labels} />);
+    return ReactNodeViewRenderer(
+      (props: any) => <ImageNode {...props} labels={labels} />,
+      { className: 'tiptap-image' }
+    );
   },
   addProseMirrorPlugins() {
     const editor = this.editor as Editor;
