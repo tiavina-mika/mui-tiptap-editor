@@ -38,9 +38,9 @@ const classes = {
       overflow: 'hidden',
     };
 
-    if (attrName === 'title') {
-      values.bottom = -230;
-    } else {
+    if (attrName === 'title') { // title (label)
+      values.top = 10;
+    } else { // alt
       values.bottom = 10;
     }
 
