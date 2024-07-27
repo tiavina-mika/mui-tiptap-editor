@@ -30,7 +30,7 @@ A customizable and easy to use <a href="https://tiptap.dev/">Tiptap</a> styled W
       - [Root styles](#root-styles)
       - [Each element styles](#each-element-styles)
   - [Props](#props)
-  - [`ImageUploadOptions`](#imageuploadoptions)
+    - [`ImageUploadOptions`](#imageuploadoptions)
   - [New features](#new-features)
   - [Contributing](#contributing)
 
@@ -281,7 +281,7 @@ See [`here`](https://github.com/tiavina-mika/mui-tiptap-editor/blob/main/src/dev
 
 <br />
 
-## `ImageUploadOptions`
+### `ImageUploadOptions`
 |props |type                          | Default value                         | Description |
 |----------------|-------------------------------|-----------------------------|-----------------------------|
 |uploadFile|`function`|undefined|an API call to your server to handle and store the image
@@ -298,7 +298,7 @@ See [`here`](https://github.com/tiavina-mika/mui-tiptap-editor/blob/main/src/dev
 
 <table>
   <tr>
-    <td>Versions<td>
+    <td>Versions</td>
     <td>Features</td>
   <tr>
   <tr>

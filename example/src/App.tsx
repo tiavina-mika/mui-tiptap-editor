@@ -28,7 +28,9 @@ const customLabels = {
     youtube: "Youtube",
     undo: "Annuler",
     redo: "Refaire",
-    mention: "Mention"
+    mention: "Mention",
+    color: "Couleur du texte",
+    upload: "Ajouter une image"
   },
   headings: {
     normalText: "Text normal",
@@ -59,8 +61,7 @@ const customLabels = {
   },
   link: {
     link: "Lien",
-    insert: "Insérer le lien",
-    invalid: "Lien invalide",
+    invalid: "Lien invalid",
   },
   youtube: {
     link: "Lien",
@@ -70,8 +71,19 @@ const customLabels = {
     enter: "Entrer le lien",
     height: "Hauteur",
     width: "Largeur"
-  }
-}
+  },
+  upload: {
+    fileTooLarge: "Fichier trop volumineux",
+    maximumNumberOfFiles: "Nombre maximum de fichiers atteint",
+    enterValidAltText: "Entrez un texte alternatif valide",
+    addAltText: "Ajouter un texte alternatif",
+    invalidMimeType: "Type de fichier invalide",
+    shouldBeAnImage: "Le fichier doit être une image",
+    addLegendText: "Ajouter un texte de légende",
+    enterValidLegendText: "Entrez un texte de légende valide",
+    imageMaxSize: "Taille maximale de l'image"
+  },
+};
 
 const tabs = [
   'Simple',
@@ -83,7 +95,8 @@ const tabs = [
   'Mentions',
   'Async initial value',
   'React Hook Form',
-  'Read without editor'
+  'Read without editor',
+  'Upload image'
 ];
 
 const mentions = [
@@ -175,6 +188,19 @@ const App = () => {
     setTab(newValue);
   };
 
+    // API call to upload file
+    const uploadFile = async (file: File) => {
+      const formData = new FormData();
+      formData.append("file", file);
+      const response = await fetch("https://api.escuelajs.co/api/v1/files/upload", {
+        method: "POST",
+        body: formData,
+      });
+
+      const data = await response.json();
+      return { id: data.filename, src: data.location };
+    };
+
   return (
     <ThemeProvider theme={getTheme(mode)}>
       <CssBaseline />
@@ -259,6 +285,22 @@ const App = () => {
             {/* Read without editor */}
             {tab === 9 && (
               <TiptapParser content={htmlToParse} />
+            )}
+
+
+            {/* Upload image */}
+            {tab === 10 && (
+              <TextEditor
+                content="<img alt='Cute cat' src='https://png.pngtree.com/png-clipart/20230511/ourmid/pngtree-isolated-cat-on-white-background-png-image_7094927.png' />"
+                uploadFileOptions={{
+                  uploadFile,
+                  maxSize: 5,
+                  maxFilesNumber: 2,
+                  allowedMimeTypes: ['image/jpeg', 'image/png', 'image/jpg'],
+                  imageMaxWidth: 900,
+                  imageMaxHeight: 500,
+                }}
+              />
             )}
           </Container>
       </Box>

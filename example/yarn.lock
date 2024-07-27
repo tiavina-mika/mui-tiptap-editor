@@ -1281,6 +1281,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@tiptap/extension-image@npm:^2.5.6":
+  version: 2.5.7
+  resolution: "@tiptap/extension-image@npm:2.5.7"
+  peerDependencies:
+    "@tiptap/core": ^2.5.7
+  checksum: 10c0/c01c4e2d3f80ba0b6b3d643c9c19b810793bc1b6bdcb222d334d959e431cfc1f0ad4572c5da8d96f18833675105c3633f79c30a99304b0bfdf80797cf11c75fb
+  languageName: node
+  linkType: hard
+
 "@tiptap/extension-italic@npm:^2.4.0":
   version: 2.4.0
   resolution: "@tiptap/extension-italic@npm:2.4.0"
@@ -1290,15 +1299,15 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@tiptap/extension-link@npm:^2.4.0":
-  version: 2.4.0
-  resolution: "@tiptap/extension-link@npm:2.4.0"
+"@tiptap/extension-link@npm:^2.5.7":
+  version: 2.5.7
+  resolution: "@tiptap/extension-link@npm:2.5.7"
   dependencies:
     linkifyjs: "npm:^4.1.0"
   peerDependencies:
-    "@tiptap/core": ^2.0.0
-    "@tiptap/pm": ^2.0.0
-  checksum: 10c0/260d89b349d59728a948ac098b38fbb96ed8472a923ee56ff78e3f3486662abca777d1c19a7ec85120723eaabe97f08dae85fcae09e0c040714ca85e5deb4780
+    "@tiptap/core": ^2.5.7
+    "@tiptap/pm": ^2.5.7
+  checksum: 10c0/c27e3c624092234f151faad404fd931a0dceba9a1bceb4df1e05b037c5d8d80f636b62e998dbe6e549ead07bde00ab3adb80287c3f8f129d37d50f9f5c9dc656
   languageName: node
   linkType: hard
 
@@ -1992,7 +2001,7 @@ __metadata:
     eslint-plugin-prettier: "npm:^5.1.3"
     eslint-plugin-react-hooks: "npm:^4.6.0"
     eslint-plugin-react-refresh: "npm:^0.4.5"
-    mui-tiptap-editor: "npm:^0.9.5"
+    mui-tiptap-editor: "npm:^0.9.13"
     prettier: "npm:^3.2.2"
     react: "npm:^18.2.0"
     react-dom: "npm:^18.2.0"
@@ -4875,9 +4884,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"mui-tiptap-editor@npm:^0.9.5":
-  version: 0.9.5
-  resolution: "mui-tiptap-editor@npm:0.9.5"
+"mui-tiptap-editor@npm:^0.9.13":
+  version: 0.9.13
+  resolution: "mui-tiptap-editor@npm:0.9.13"
   dependencies:
     "@emotion/css": "npm:^11.11.2"
     "@tiptap/extension-bubble-menu": "npm:^2.4.0"
@@ -4885,7 +4894,8 @@ __metadata:
     "@tiptap/extension-color": "npm:^2.4.0"
     "@tiptap/extension-gapcursor": "npm:^2.4.0"
     "@tiptap/extension-heading": "npm:^2.4.0"
-    "@tiptap/extension-link": "npm:^2.4.0"
+    "@tiptap/extension-image": "npm:^2.5.6"
+    "@tiptap/extension-link": "npm:^2.5.7"
     "@tiptap/extension-mention": "npm:^2.4.0"
     "@tiptap/extension-placeholder": "npm:^2.4.0"
     "@tiptap/extension-table": "npm:^2.4.0"
@@ -4908,7 +4918,7 @@ __metadata:
     "@mui/material": ^5.15.2
     react: ^16.8.0 || ^17.0.2 || ^18.2.0
     react-dom: ^16.8.0 || ^17.0.2 || ^18.2.0
-  checksum: 10c0/b8c14e2c677ac5d30a7b7ca2facb4cb78aa861e2b080e1bde7bd84d4744dd4a7bfa53426fb922eec00d03cbcae44b37ec504b53b108a657cb11aa64c17346264
+  checksum: 10c0/33e56930826b422520caee755839863f3f4a979fa1d9d00f027b98310ae38821dfff46be6ec820ceec7b231720adaba4b83f76881ef5f4d2cc9969d3a4c50350
   languageName: node
   linkType: hard
 
