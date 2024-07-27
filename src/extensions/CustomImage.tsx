@@ -3,6 +3,7 @@
  * Custom Image Extension
  *
  * inspired by:
+ * https://www.codemzy.com/blog/tiptap-drag-drop-image
  * https://github.com/angelikatyborska/tiptap-image-alt-text/tree/main
  * https://angelika.me/2023/02/26/how-to-add-editing-image-alt-text-tiptap/
  * https://github.com/ueberdosis/tiptap/issues/2912
@@ -12,20 +13,13 @@
 
 import TiptapImage from '@tiptap/extension-image'
 import { Editor, NodeViewWrapper, NodeViewWrapperProps, ReactNodeViewRenderer } from '@tiptap/react';
-import Edit from '../icons/Edit';
-import { IconButton, Stack, TextField, Theme, Typography } from '@mui/material';
-import { ChangeEvent, ClipboardEvent, useEffect, useState } from 'react';
-import { checkAlt } from '../utils/app.utils';
-import Dialog from '../components/Dialog';
-import Add from '../icons/Add';
-import Close from '../icons/Close';
+import { ClipboardEvent, SyntheticEvent } from 'react';
+import { checkFilesNumber, checkIsImage, checkValidMimeType, checkValidFileDimensions, getIsFileSizeValid } from '../utils/app.utils';
 import { EditorView } from '@tiptap/pm/view';
 import { Slice } from '@tiptap/pm/model';
 import { ILabels, ImageUploadOptions } from '../types';
 import { Plugin } from '@tiptap/pm/state';
-
-// check if the image is from tiptap or not
-const FROM_TIPTAP = true;
+import ImageText from './image/ImageText';
 
 /**
  * function to handle image upload, on drop or paste
@@ -37,28 +31,25 @@ const FROM_TIPTAP = true;
 export const onUpload = (
   {
     // upload callback, should return the image src, used mainly for uploading to a server
-    uploadImage,
+    uploadFile,
     // max file size in MB
-    maxSize = 10,
-    // max number of files
+    maxSize,
+    // allowed max number of files
     maxFilesNumber = 5,
     // drop or paste
     type,
+    // allowed max width of the image
+    imageMaxWidth,
+    // allowed max height of the image
+    imageMaxHeight,
     // allowed file types to upload
     allowedMimeTypes = null,
   }: ImageUploadOptions,
   // tiptap editor instance
   editor: Editor,
   // custom labels
-  labels?: ILabels['imageUpload'],
+  labels?: ILabels['upload'],
 ) => (view: EditorView, event: DragEvent | ClipboardEvent, _: Slice, moved: boolean): boolean | void => {
-  // default labels
-  const {
-    maximumNumberOfFiles = `You can only upload ${maxFilesNumber} images at a time.`,
-    fileTooLarge = `Images need to be less than ${maxSize}mb in size.`,
-    invalidMimeType = 'Invalid file type',
-  } = labels || {};
-
   // check if event has files
   const hasFiles = type === 'drop'
     ? (event as DragEvent).dataTransfer?.files?.length
@@ -68,88 +59,85 @@ export const onUpload = (
 
   if (type === 'drop' && moved) return;
 
-  const images = (type === 'drop' ? (event as DragEvent).dataTransfer?.files : (event as ClipboardEvent).clipboardData?.files) || [];
+  const files = (type === 'drop' ? (event as DragEvent).dataTransfer?.files : (event as ClipboardEvent).clipboardData?.files) || [];
 
-  if (images.length > maxFilesNumber) {
-    window.alert(maximumNumberOfFiles);
+  // check if the number of files is valid
+  const { isValid: isFilesNumberValid, message: filesNumberMessage } = checkFilesNumber(files as FileList, maxFilesNumber);
+  if (!isFilesNumberValid) {
+    window.alert(labels?.maximumNumberOfFiles || filesNumberMessage);
     return;
   }
 
-  if (images.length === 0) return;
+  if (files.length === 0) return;
 
   event.preventDefault();
 
-  // const { schema } = view.state;
-
-  for (const image of images) {
-    // file size in MB
-    const fileSize = ((image.size / 1024) / 1024).toFixed(4);
-
-    if (!/image/i.test(image.type)) {
-      window.alert(invalidMimeType);
-      return;
-    }
-    
-    if (
-      (allowedMimeTypes && allowedMimeTypes.length && !allowedMimeTypes.includes(image.type))
-      || Array.isArray(allowedMimeTypes) && allowedMimeTypes.length === 0
-    ) {
-      window.alert(invalidMimeType);
+  for (const file of files) {
+    // 1. check if the file is an image
+    // for now we only support images
+    const { isValid: isImage, message: isImageMessage } = checkIsImage(file);
+    if (!isImage) {
+      window.alert(labels?.shouldBeAnImage || isImageMessage);
       return;
     }
 
-    // check valid image type under 10MB
-    if (+fileSize > maxSize) {
-      window.alert(fileTooLarge);
+    // 2. check if the mime type is allowed
+    const { isValid: isValidMimeTypes, message: isValidMimeTypesMessage } = checkValidMimeType(file, allowedMimeTypes);
+    if (!isValidMimeTypes) {
+      window.alert(labels?.invalidMimeType || isValidMimeTypesMessage);
+      return;
+    }
+
+    // 3. file size in MB
+    const { isValid: isFileSizeValid, message: isFileSizeValidMessage } = getIsFileSizeValid(file, maxSize);
+    if (!isFileSizeValid) {
+      window.alert(labels?.fileTooLarge || isFileSizeValidMessage);
       return;
     }
 
     const reader = new FileReader();
-
-    reader.onload = (readerEvent: ProgressEvent<FileReader>) => {
+    reader.onload = async (readerEvent: ProgressEvent<FileReader>) => {
       if (!readerEvent.target) return;
-      // const node = schema.nodes.image.create({
-      //   src: readerEvent.target.result
-      // });
-
-      // --------------------------- //
-      // ---------- drop ---------- //
-      // --------------------------- //
-      if (type === 'drop') {
-        const dropEvent = event as DragEvent;
-        const coordinates = view.posAtCoords({ left: dropEvent.clientX, top: dropEvent.clientY }) as { pos: number; inside: number; };
-
-        // if using the plugin, use this commented code
-        // const transaction = view.state.tr.insert(
-        //   coordinates.pos,
-        //   node
-        // );
-        // view.dispatch(transaction);
-
-        editor.chain().insertContentAt(coordinates.pos, {
-          type: 'image',
-          attrs: {
-            src: readerEvent.target.result,
-          },
-        }).focus().run();
+      // 4. check if the image dimensions are valid
+      const { isValid: isImageDimensionValid, message: isImageDimensionValidMessage } = await checkValidFileDimensions(file, imageMaxWidth, imageMaxHeight);
+      if (!isImageDimensionValid) {
+        window.alert(labels?.imageMaxSize || isImageDimensionValidMessage);
         return;
       }
 
-      // --------------------------- //
-      // ---------- paste ---------- //
-      // --------------------------- //
-        // if using the plugin, use this commented code
-      // const transaction = view.state.tr.replaceSelectionWith(node);
-      // view.dispatch(transaction);
+      let attrs = { src: readerEvent.target.result as string };
+      // default position for paste
+      let position = editor.state.selection.anchor;
 
-      editor.chain().insertContentAt(editor.state.selection.anchor, {
+      // ---------- drop ---------- //
+      if (type === 'drop') {
+        const dropEvent = event as DragEvent;
+        const coordinates = view.posAtCoords({ left: dropEvent.clientX, top: dropEvent.clientY }) as { pos: number; inside: number; };
+        position = coordinates.pos;
+      }
+
+      // ----- upload callback ----- //
+      if (uploadFile) {
+        const response = await uploadFile(file);
+        if (response) {
+          if (typeof response === 'string') {
+            // only src attribute
+            attrs.src = response;
+          } else {
+            // other attributes like alt, title, etc
+            attrs = { ...attrs, ...response };
+          }
+        }
+      }
+
+      // insert theimage into the editor
+      editor.chain().insertContentAt(position, {
         type: 'image',
-        attrs: {
-          src: readerEvent.target.result,
-        },
+        attrs,
       }).focus().run();
     }
-    reader.readAsDataURL(image);
+
+    reader.readAsDataURL(file);
   }
 }
 
@@ -161,9 +149,6 @@ const classes = {
       justifyContent: 'center', // default
       width: 'fit-content',
       position: 'relative' as const,
-      '&.ProseMirror-selectednode .tiptap-image-content': {
-        outline: '2px solid blue',
-      },
     };
 
     if (isRight) {
@@ -179,27 +164,6 @@ const classes = {
       outline: '2px solid blue',
     },
   },
-  altContainer: (theme: Theme) => ({
-    position: 'absolute' as const,
-    bottom: 10,
-    left: 10,
-    maxWidth: 'calc(100% - 20px)',
-    padding: '0 4px',
-    border: '1px solid ' + theme.palette.divider,
-    backgroundColor: theme.palette.background.paper,
-    overflow: 'hidden',
-  }),
-  buttonIconSx: {
-    '& svg': { width: 18 },
-  },
-  addButton: {
-    backgroundColor: 'transparent',
-    border: 'none',
-    cursor: 'pointer',
-    borderRadius: 4,
-    padding: '4px 4px 4px 12px !important',
-    fontSize: '14px !important'
-  }
 }
 
 const getClassName = (selected: boolean): string => {
@@ -211,46 +175,22 @@ const getClassName = (selected: boolean): string => {
   return className
 }
 
-type Props = ILabels['imageUpload'] & NodeViewWrapperProps;
+type Props = ILabels['upload'] & NodeViewWrapperProps;
 
 const ImageNode = ({ labels, node, updateAttributes, editor, ...props }: Props) => {
-  const [open, setOpen] = useState<boolean>(false);
-  const [clear, setClear] = useState<boolean>(false);
-  const [alt, setAlt] = useState<string>('');
-  const [error, setError] = useState<string>('');
-
-  useEffect(() => {
-    setAlt(node.attrs.alt || '');
-  }, [node.attrs.alt])
-
-  const altLabel = labels?.addAltText || 'Add alt text';
-
-  const handleOpen = () => setOpen(true);
-  const handleClose = () => setOpen(false);
-
-  const toggleClear = () => setClear(!clear);
-
-  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
-    const { value } = e.target;
-    if (checkAlt(value)) {
-      setAlt(value);
-      return;
-    }
-
-    setError(labels?.enterValidAltText || 'Please enter a valid alt text');
+  /**
+   * update the alt or title attribute
+   * @param attr { alt: "Alt" } or { title: "Title" }
+   */
+  const handleConfirm = async (attr: Record<string, string>) => {
+    await updateAttributes(attr);
   }
 
-  const onConfirm = async () => {
-    await updateAttributes({ alt });
-    setOpen(false);
-    // if delete this current node (each image)
-    // deleteNode();
-  }
-
-  const handleDelete = () => {
-    updateAttributes({ alt: '' });
-    setAlt('');
-    toggleClear();
+  const onLoadImage = (e: SyntheticEvent<HTMLImageElement, Event>) => {
+    const target = e.target as HTMLImageElement;
+    // remove the width and height after the image is loaded
+    target.removeAttribute('width');
+    target.removeAttribute('height');
   }
 
   return (
@@ -268,60 +208,39 @@ const ImageNode = ({ labels, node, updateAttributes, editor, ...props }: Props) 
     >
       <div className="tiptap-image-content" style={{ position: 'relative' }}>
         {/* ------------ image ------------ */}
-        <img src={node.attrs.src} alt={alt} />
-        {/* ------------ alt ------------ */}
-        {/*
-          * display only in editable mode
-          * NOTE: if displaying the html string outside of the editor, hide this by using css
-        */}
-        {(!clear && editor.options.editable) && (
+        <figure>
+          <img
+            title={node.attrs.title}
+            src={node.attrs.src}
+            alt={node.attrs.alt}
+            // add temporary width and height to show the image while loading
+            width="300"
+            height="300"
+            onLoad={onLoadImage}
+          />
+          {node.attrs.title && <figcaption>{node.attrs.title}</figcaption>}
+        </figure>
+        {/* --------- alt editor ---------- */}
+        {(editor.options.editable) && (
           <>
-            <Stack
-              css={classes.altContainer}
-              className='tiptap-alt-text'
-              direction="row"
-              alignItems="center"
-              spacing={0}
-              // this block should not be displayed if not from tiptap, ex: from html string parser
-              // hide it using in inline style
-              style={!FROM_TIPTAP ? { display: 'none' } : {}}
-            >
-            {alt && !error
-              ? (
-                <Stack direction="row" alignItems="center" spacing={2}>
-                  <Typography>{alt}</Typography>
-                  <IconButton size="small" sx={classes.buttonIconSx} type="button" onClick={handleOpen}>
-                    <Edit />
-                  </IconButton>
-                </Stack>
-              ) : (
-                <button type="button" onClick={handleOpen} css={[classes.buttonIconSx, classes.addButton]} className="flexRow itemsCenter">
-                  <Add />
-                  <Typography>{altLabel}</Typography>
-                </button>
-              )}
-              <IconButton size="small" sx={classes.buttonIconSx} type="button" onClick={handleDelete}>
-                <Close />
-              </IconButton>
-            </Stack>
-            {error && (
-              <Typography color="error">{error}</Typography>
-            )}
+            <ImageText
+              defaultValue={node.attrs.alt}
+              onConfirm={handleConfirm}
+              label={labels?.addAltText || 'Add alt text'}
+              attrName="alt"
+              invalidErrorMessage={labels?.enterValidAltText || 'Please enter a valid alt text'}
+
+            />
+            <ImageText
+              defaultValue={node.attrs.title}
+              onConfirm={handleConfirm}
+              label={labels?.addLegendText || 'Add legend'}
+              attrName="title"
+              invalidErrorMessage={labels?.enterValidLegendText || 'Please enter a valid legend'}
+            />
           </>
         )}
       </div>
-      <Dialog
-        title={altLabel}
-        open={open}
-        onClose={handleClose}
-        onPrimaryButtonAction={onConfirm}
-        className='tiptap-alt-text-dialog'
-      >
-        <TextField
-          value={alt}
-          onChange={handleChange}
-        />
-      </Dialog>
     </NodeViewWrapper>
   )
 }
@@ -334,28 +253,30 @@ const ImageNode = ({ labels, node, updateAttributes, editor, ...props }: Props) 
  * @param labels custom or override labels
  * @returns
  */
-const getCustomImage = (options?: Omit<ImageUploadOptions, 'type'>, labels?: ILabels['imageUpload']) => TiptapImage.extend({
-  defaultOptions: {
-    ...TiptapImage.options,
-    sizes: ["inline", "block", "left", "right"]
-  },
-  addNodeView() {
-    return ReactNodeViewRenderer(
-      (props: any) => <ImageNode {...props} labels={labels} />,
-      { className: 'tiptap-image' }
-    );
-  },
-  addProseMirrorPlugins() {
-    const editor = this.editor as Editor;
-    return [
-      new Plugin({
-        props: {
-          handleDrop: onUpload({ ...options, type: 'drop' }, editor, labels),
-          handlePaste: onUpload({ ...options, type: 'paste' }, editor, labels),
-        } as any,
-      }),
-    ];
-  }
-})
+const getCustomImage = (options?: Omit<ImageUploadOptions, 'type'>, labels?: ILabels['upload']) => TiptapImage
+  .extend({
+    defaultOptions: {
+      ...TiptapImage.options,
+      sizes: ["inline", "block", "left", "right"]
+    },
+    addNodeView() {
+      return ReactNodeViewRenderer(
+        (props: any) => <ImageNode {...props} labels={labels} />,
+        { className: 'tiptap-image' }
+      );
+    },
+    addProseMirrorPlugins() {
+      const editor = this.editor as Editor;
+      return [
+        new Plugin({
+          props: {
+            handleDrop: onUpload({ ...options, type: 'drop' }, editor, labels),
+            handlePaste: onUpload({ ...options, type: 'paste' }, editor, labels),
+          } as any,
+        }),
+      ];
+    }
+  })
+  .configure({ allowBase64: true });
 
 export default getCustomImage;

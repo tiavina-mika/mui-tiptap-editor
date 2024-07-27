@@ -17,24 +17,20 @@ import TableHeader from "@tiptap/extension-table-header";
 import TableRow from "@tiptap/extension-table-row";
 import CodeBlockLowlight from "@tiptap/extension-code-block-lowlight";
 import Youtube from "@tiptap/extension-youtube";
-import Mention, { MentionOptions } from "@tiptap/extension-mention";
 import BubbleMenu from '@tiptap/extension-bubble-menu';
 import { createLowlight, common } from "lowlight";
 import {
   useEditor,
   EditorOptions,
   AnyExtension,
-  mergeAttributes,
   EditorEvents,
 } from '@tiptap/react';
 import StarterKit from '@tiptap/starter-kit';
-import TiptapImage from '@tiptap/extension-image';
 import { useEffect } from 'react';
 import Heading from '@tiptap/extension-heading';
-import { Node } from '@tiptap/pm/model';
-import getSuggestion from '../components/mention/suggestions';
 import { ILabels, ImageUploadOptions, ITextEditorOption } from '../types.d';
 import getCustomImage from '../extensions/CustomImage';
+import { getCustomMention } from '../extensions/CustomMention';
 
 const extensions = [
   Color.configure({ types: [TextStyle.name, ListItem.name] }),
@@ -99,43 +95,6 @@ const extensions = [
   } as any),
   // History
 ];
-const getCustomMention = (pathname = "/users") => {
-  return Mention.extend({
-    // use a link (with url) instead of the default span
-    renderHTML({ node, HTMLAttributes }: Record<string, any>) {
-      return [
-        "a",
-        mergeAttributes(
-          { href: `${pathname}/${HTMLAttributes["data-id"]}` },
-          this.options.HTMLAttributes,
-          HTMLAttributes
-        ),
-        (this.options as any)?.renderLabel({
-          options: this.options,
-          node
-        })
-      ];
-    },
-    // the attribute should be user id for exemple
-    addAttributes() {
-      return {
-        id: {
-          default: null,
-          parseHTML: (element: HTMLElement) => element.getAttribute("data-id"),
-          renderHTML: (attributes: any) => {
-            if (!attributes.id?.value) {
-              return {};
-            }
-
-            return {
-              "data-id": attributes.id.value
-            };
-          }
-        }
-      };
-    }
-  });
-}
 
 export type TextEditorProps = {
   placeholder?: string;
@@ -146,8 +105,8 @@ export type TextEditorProps = {
   mentions?: ITextEditorOption[];
   // url for user profile
   userPathname?: string;
-  uploadImageOptions?: Omit<ImageUploadOptions, 'type'>;
-  uploadImageLabels?: ILabels['imageUpload'];
+  uploadFileOptions?: Omit<ImageUploadOptions, 'type'>;
+  uploadFileLabels?: ILabels['upload'];
 } & Partial<EditorOptions>;
 
 export const useTextEditor = ({
@@ -157,8 +116,8 @@ export const useTextEditor = ({
   tab,
   user,
   mentions,
-  uploadImageOptions,
-  uploadImageLabels,
+  uploadFileOptions,
+  uploadFileLabels,
   userPathname,
   editable = true,
   ...editorOptions
@@ -172,21 +131,10 @@ export const useTextEditor = ({
       Placeholder.configure({
         placeholder,
       }),
-      // collaborative editing extensions
-      getCustomMention(userPathname).configure({
-        HTMLAttributes: {
-          class: "mention"
-        },
-        renderLabel({ options, node }: { options: MentionOptions; node: Node }) {
-          return `${options.suggestion.char}${
-            node.attrs.label ?? node.attrs.id.label
-          }`;
-        },
-        suggestion: getSuggestion(mentions)
-      }),
-      getCustomImage(uploadImageOptions, uploadImageLabels).configure({
-        allowBase64: true
-      }),
+      // user mentions editing extension
+      getCustomMention({ pathname: userPathname, mentions }),
+      // upload image extension
+      getCustomImage(uploadFileOptions, uploadFileLabels),
       ...extensions,
     ] as AnyExtension[],
     /* The `onUpdate` function in the `useTextEditor` hook is a callback that is triggered whenever the

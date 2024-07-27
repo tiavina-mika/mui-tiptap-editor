@@ -32,9 +32,6 @@ A customizable and easy to use <a href="https://tiptap.dev/">Tiptap</a> styled W
   - [Props](#props)
   - [Image upload props `ImageUploadOptions`](#image-upload-props-imageuploadoptions)
   - [New features](#new-features)
-      - [v0.9.9](#v099)
-      - [v0.9.6](#v096)
-      - [v0.9.0](#v090)
   - [Contributing](#contributing)
 
 </details>
@@ -112,36 +109,40 @@ function App() {
   );
 }
 ```
+
 ### Image upload
-
-![Gif](https://github.com/tiavina-mika/mui-tiptap-editor/blob/main/screenshots/image-upload.gif)
-
 <ul>
 <li>The image can be uploaded to the server via an API call or directly into the content as base64 string. </li>
-<li>For the moment we can only upload via drag and drop and copy paste.</li>
-<li>Add or modify the alt text of the image</li>
+<li>The image can be uploaded using upload button or pasted or dropped.</li>
+<li>Add or modify the alt text and the legend (title) of the image</li>
 <li>Delete the selected image using `Delete` keyboard key</li>
 </ul>
 
 ```tsx
-// example of API using axios
-// note that the response should be directly the image url
-// so it can be displayed in the editor
-function uploadImage(file) {
-  const data = new FormData();
-  data.append('file', file);
-  const response = axios.post('/documents/image/upload', data);
-  return response.data;
+// example of API  upload using fetch
+// the return data must be the image url (string) or image attributes (object) like src, alt, id, title, ...
+const uploadFile = async (file: File) => {
+  const formData = new FormData();
+  formData.append("file", file);
+  const response = await fetch("https://api.escuelajs.co/api/v1/files/upload", {
+    method: "POST",
+    body: formData,
+  });
+  const data = await response.json();
+  // or return data.location
+  return { id: data.filename, src: data.location };
 };
 
 function App() {
   return (
     <TextEditor
-      uploadImageOptions={{
-        uploadImage: uploadImage, // the image is stored and used as base64 string if not specified
+      uploadFileOptions={{
+        uploadFile, // the image is stored and used as base64 string if not specified
         maxSize: 5, // max size to 10MB if not specified
         maxFilesNumber: 2,  // max 5 files if not specified
         allowedMimeTypes: ['image/jpeg', 'image/png', 'image/jpg'], // all image types if not specified
+        imageMaxWidth: 400, // default to 1920
+        imageMaxHeight: 400, // default to 1080
       }}
     />
   );
@@ -161,7 +162,7 @@ import { TextEditorReadOnly } from 'mui-tiptap-editor';
 
 2. If it is just displaying the value without using the editor, you can use this library [`tiptap-parser`](https://www.npmjs.com/package/tiptap-parser). Example: The editor is used in the back office, but the content must be displayed on the website
 ```tsx
-<TiptapParser content={`<h1>Hello world</h1>`} />
+<TiptapParser content="<h1>Hello world</h1>" />
 ```
 
 ## Customization
@@ -183,72 +184,31 @@ import { TextEditorReadOnly } from 'mui-tiptap-editor';
       },
       toolbar: {
         bold: "Gras",
-        italic: "Italique",
-        strike: "Barré",
-        underline: "Souligné",
-        link: "Lien",
-        bulletList: "Liste à puces",
-        orderedList: "Liste ordonnée",
-        alignLeft: "Aligner à gauche",
-        alignCenter: "Aligner au centre",
-        alignRight: "Aligner à droite",
-        alignJustify: "Justifier",
-        blockquote: "Citation",
-        codeBlock: "Code",
-        table: "Table",
-        youtube: "Youtube",
-        undo: "Annuler",
-        redo: "Refaire",
-        mention: "Mention"
+        upload: "Ajouter une image",
+        // ...
       },
       headings: {
-        normalText: "Text normal",
         h1: "En-tête 1",
-        h2: "En-tête 2",
-        h3: "En-tête 3",
-        h4: "En-tête 4",
-        h5: "En-tête 5",
-        h6: "En-tête 6"
+        // ...
       },
       table: {
         table: "Tableau",
-        addColumnBefore: "Ajouter une colonne avant",
-        addColumnAfter: "Ajouter une colonne après",
         deleteColumn: "Supprimer la colonne",
-        addRowBefore: "Ajouter une ligne avant",
-        addRowAfter: "Ajouter une ligne après",
-        deleteRow: "Supprimer la ligne",
-        mergeCells: "Fusionner les cellules",
-        splitCell: "Diviser la cellule",
-        deleteTable: "Supprimer le tableau",
-        insertTable: "Insérer un tableau",
-        toggleHeaderCell: "Basculer la cellule d'en-tête",
-        toggleHeaderColumn: "Basculer la colonne d'en-tête",
-        toggleHeaderRow: "Basculer la ligne d'en-tête",
-        mergeOrSplit: "Fusionner ou diviser",
-        setCellAttribute: "Définir l'attribut de cellule"
+        // ....
       },
       link: {
         link: "Lien",
-        insert: "Insérer le lien",
-        invalid: "Lien invalide",
+        // ...
       },
       youtube: {
         link: "Lien",
         insert: "Insérer la vidéo Youtube",
         title: "Insérer une vidéo Youtube",
-        invalid: "Lien invalide",
-        enter: "Entrer le lien",
-        height: "Hauteur",
-        width: "Largeur"
       },
-      imageUpload: {
+      upload: {
         fileTooLarge: "Fichier trop volumineux",
-        maximumNumberOfFiles: "Nombre maximum de fichiers atteint",
-        enterValidAltText: "Entrez un texte alternatif valide",
-        addAltText: "Ajouter un texte alternatif",
-        invalidMimeType: "Type de fichier invalide",
-      },
+        // ...
+      }
     }}
   />
 ```
@@ -314,28 +274,48 @@ import './index.css';
 |onChange|`(value: string) => void`|-| Function to call when the input change
 |userPathname|`string`|/user| URL pathname for the mentioned user (eg: /user/user_id)
 |labels|`ILabels`|null| Override labels, for example using `i18n`
-|uploadImageOptions|`ImageUploadOptions`|null| Override image upload default options like max size, max file number, ...
+|uploadFileOptions|`ImageUploadOptions`|null| Override image upload default options like max size, max file number, ...
 |...all tiptap features|[EditorOptions](https://github.com/ueberdosis/tiptap/blob/e73073c02069393d858ca7d8c44b56a651417080/packages/core/src/types.ts#L52)|empty| Can access to all tiptap `useEditor` props
+
+See [`here`](https://github.com/tiavina-mika/mui-tiptap-editor/blob/main/src/dev/App.tsx) how to use all the `TextEditor` props.
 
 ## Image upload props `ImageUploadOptions`
 |props |type                          | Default value                         | Description |
 |----------------|-------------------------------|-----------------------------|-----------------------------|
-|uploadImage|`function`|undefined|an API call to your server to handle and store the image
+|uploadFile|`function`|undefined|an API call to your server to handle and store the image
 |maxSize|`number`|10|maximum size of the image in MB
 |maxFilesNumber|`number`|5|maximum number of files to be uploaded at once
-|allowedMimeTypes|`string[]`|all image types|allowed mime types to be uploaded
-
-
+|allowedMimeTypes|`string[]`|null|all image types|allowed mime types to be uploaded
+|imageMaxWidth|`number`|1920|maximum width of the image
+|imageMaxHeight|`number`|1080|maximum height of the image
 
 ## New features
-#### [v0.9.9](https://github.com/tiavina-mika/mui-tiptap-editor/pull/52)
-- Upload image via drop or paste
-- Add or edit the image alt text
 
-#### v0.9.6
-- Work with dark mode
-#### v0.9.0
-- Customize and override all messages and labels
+<table>
+  <tr>
+    <td>Versions<td>
+    <td>Features</td>
+  <tr>
+  <tr>
+    <th><a href="https://github.com/tiavina-mika/mui-tiptap-editor/pull/52">v0.9.11</a><th>
+    <td>
+      <ul>
+        <li>Upload image via drop, paste or upload button</li>
+        <li>Add or edit the image alt text and legend</li>
+        <li>Reorder toolbar menus</li>
+      </ul>
+    </td>
+  <tr>
+  <tr>
+    <th><a href="https://github.com/tiavina-mika/mui-tiptap-editor/pull/52">v0.9.9</a><th>
+    <td>
+      <ul>
+        <li>Work with dark mode</li>
+        <li>Customize and override all messages and labels</li>
+      </ul>
+    </td>
+  <tr>
+</table>
 
 ## Contributing
 

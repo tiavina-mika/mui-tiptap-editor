@@ -9,13 +9,13 @@ type Props = {
 
 const Icon = ({ children, className, size = 18 }: Props) => {
   return (
-    <div
+    <span
       // the size of the icon is applied to the font-size of the svg
       css={{ '& svg': { fontSize: size }}}
       className={cx('flexCenter', className)}
     >
       {children}
-    </div>
+    </span>
   )
 }
 

@@ -24,10 +24,16 @@ export enum EditorToolbarEnum {
   youtube = 'youtube',
   color = 'color',
   mention = 'mention',
+  upload = 'upload',
   // does not exist yet
   ai = 'ai'
 }
 
+export type UploadResponse = {
+  src: string;
+  id?: string;
+  alt?: string;
+};
 /**
  * Image upload options from drop or paste event
  * the image can be uploaded to the server via an API or saved inside as a base64 string
@@ -42,7 +48,7 @@ export type ImageUploadOptions = {
    * @param file
    * @returns
    */
-  uploadImage?: (file: File) => Promise<string>;
+  uploadFile?: (file: File) => Promise<string | UploadResponse>;
   /**
    * maximum size of the image in MB (each image)
    * @default 10mb
@@ -53,6 +59,16 @@ export type ImageUploadOptions = {
    * @default 5
    */
   maxFilesNumber?: number;
+  /**
+   * maximum width of the image
+   * @default 1920
+   */
+  imageMaxWidth?: number;
+  /**
+   * maximum height of the image
+   * @default 1080
+   */
+  imageMaxHeight?: number;
   /**
    * control which mime types are allowed to be uploaded (pasted or dropped)
    * @default all image mime types
@@ -84,6 +100,8 @@ export type IRequiredLabels = {
     alignRight: string;
     alignJustify: string;
     blockquote: string;
+    upload: string;
+    color: string;
     codeBlock: string;
     table: string;
     youtube: string;
@@ -133,12 +151,16 @@ export type IRequiredLabels = {
     height: string;
     width: string;
   };
-  imageUpload: {
+  upload: {
     maximumNumberOfFiles: string;
     fileTooLarge: string;
     addAltText: string;
     enterValidAltText: string;
     invalidMimeType: string;
+    shouldBeAnImage: string;
+    addLegendText: string;
+    enterValidLegendText: string;
+    imageMaxSize: string;
   }
 };
 
@@ -293,7 +315,8 @@ export type TextEditorProps = {
   labels?: ILabels;
 
   /**
-   * upload image options
+   * upload file options
+   * ex: file size, number of files, allowed mime types, api callback, etc
    */
-  uploadImageOptions?: Omit<ImageUploadOptions, 'type'>;
+  uploadFileOptions?: Omit<ImageUploadOptions, 'type'>;
 } & Partial<EditorOptions>;

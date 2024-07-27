@@ -2,13 +2,13 @@ import { Theme } from "@emotion/react";
 import { cx } from "@emotion/css";
 import { IconButton, Tooltip } from "@mui/material";
 import { Editor } from "@tiptap/react";
-import { useState, MouseEvent, useMemo, useCallback } from "react";
+import { useState, MouseEvent, useMemo, useCallback, Fragment } from "react";
 
 import TableMenuDialog from "./TableMenuDialog";
 import LinkDialog from "./LinkDialog";
 import Heading from "./Heading";
 import ColorPicker from "./ColorPicker";
-import { IEditorToolbar, ILabels } from "../types.d";
+import { IEditorToolbar, ILabels, TextEditorProps } from "../types.d";
 import { defaultEditorToolbar, getBorderColor, showTextEditorToolbarMenu } from "../utils/app.utils";
 import YoutubeDialog from "./YoutubeDialog";
 import Bold from "../icons/Bold";
@@ -30,6 +30,9 @@ import Undo from "../icons/Undo";
 import Redo from "../icons/Redo";
 import Mention from "../icons/Mention";
 import Icon from "../icons/Icon";
+import Picture from "../icons/Picture";
+import TextColor from "../icons/TextColor";
+import UploadFile from "./UploadFile";
 
 const classes = {
   toolbar: (theme: Theme) => ({
@@ -50,6 +53,7 @@ const classes = {
     }
 
     return {
+      position: 'relative' as const,
       borderRadius: 0,
       border: "none",
       borderRight: split ? `1px solid ${getBorderColor(theme)}` : "none",
@@ -88,13 +92,22 @@ export type ToolbarProps = {
    * default values is all the above
    */
   toolbar?: IEditorToolbar[];
+  /**
+   * Custom labels for the toolbar
+   */
   labels?: Omit<ILabels, 'editor'>;
+  /**
+   * upload file options
+   * ex: file size, number of files, allowed mime types, api callback, etc
+   */
+  uploadFileOptions?: TextEditorProps['uploadFileOptions'];
 };
 
 const Toolbar = ({
   editor,
   className,
   labels,
+  uploadFileOptions,
   toolbar = defaultEditorToolbar
 }: ToolbarProps) => {
   const [openLinkDialog, setOpen] = useState<boolean>(false);
@@ -148,32 +161,19 @@ const Toolbar = ({
         icon: Underline,
         onClick: () => editor.chain().focus().toggleUnderline().run(),
         disabled: !editor.can().chain().focus().toggleUnderline().run(),
-        tooltip: toolbarLabels?.underline || 'Underline'
+        tooltip: toolbarLabels?.underline || 'Underline',
+        split: true,
       },
+      // color use a label with htmlFor
       {
-        name: "link",
-        icon: Link,
-        onClick: toggleLinkDialog,
+        name: "color",
+        id: "color", // id for the label
+        icon: TextColor,
         disabled: false,
+        component: <ColorPicker editor={editor} id="color" />,
+        tooltip: toolbarLabels?.color || 'Text color',
         split: true,
-        tooltip: toolbarLabels?.link || 'Link'
-      },
-      // order
-      {
-        name: "bulletList",
-        icon: BulletList,
-        onClick: () => editor.chain().focus().toggleBulletList().run(),
-        disabled: !editor.can().chain().focus().toggleBulletList().run(),
-        tooltip: toolbarLabels?.bulletList || 'Bullet list'
-      },
-      {
-        name: "orderedList",
-        icon: OrderedList,
-        onClick: () => editor.chain().focus().toggleOrderedList().run(),
-        disabled: !editor.can().chain().focus().toggleOrderedList().run(),
-        split: true,
-        tooltip: toolbarLabels?.orderedList || 'Ordered list',
-        iconSize: 14
+        iconSize: 24
       },
       // alignment
       {
@@ -213,6 +213,57 @@ const Toolbar = ({
         group: "align",
         tooltip: toolbarLabels?.alignJustify || 'Justify align'
       },
+      // order
+      {
+        name: "bulletList",
+        icon: BulletList,
+        onClick: () => editor.chain().focus().toggleBulletList().run(),
+        disabled: !editor.can().chain().focus().toggleBulletList().run(),
+        tooltip: toolbarLabels?.bulletList || 'Bullet list'
+      },
+      {
+        name: "orderedList",
+        icon: OrderedList,
+        onClick: () => editor.chain().focus().toggleOrderedList().run(),
+        disabled: !editor.can().chain().focus().toggleOrderedList().run(),
+        split: true,
+        tooltip: toolbarLabels?.orderedList || 'Ordered list',
+        iconSize: 14
+      },
+      {
+        name: "link",
+        icon: Link,
+        onClick: toggleLinkDialog,
+        disabled: false,
+        tooltip: toolbarLabels?.link || 'Link'
+      },
+      {
+        name: "upload",
+        id: "upload", // id for the label with htmlFor
+        icon: Picture,
+        disabled: false,
+        component: <UploadFile editor={editor} id="upload" {...uploadFileOptions} />,
+        tooltip: toolbarLabels?.upload || 'Upload image',
+        iconSize: 16
+      },
+      {
+        name: "mention",
+        icon: Mention,
+        onClick: () => editor.chain().focus().insertContent("@").run(),
+        disabled: false,
+        tooltip: toolbarLabels?.mention || 'Mention user',
+        iconSize: 16
+      },
+      {
+        name: "table",
+        icon: Table,
+        onClick: (event: MouseEvent<HTMLElement>) => {
+          handleOpenTableMenu(event);
+        },
+        disabled: false,
+        split: true,
+        tooltip: labels?.table?.table || 'Table'
+      },
       {
         name: "blockquote",
         icon: Quote,
@@ -228,16 +279,6 @@ const Toolbar = ({
         disabled: false,
         split: true,
         tooltip: toolbarLabels?.codeBlock || 'Code block',
-      },
-      {
-        name: "table",
-        icon: Table,
-        onClick: (event: MouseEvent<HTMLElement>) => {
-          handleOpenTableMenu(event);
-        },
-        disabled: false,
-        split: true,
-        tooltip: labels?.table?.table || 'Table'
       },
       {
         name: "youtube",
@@ -283,43 +324,41 @@ const Toolbar = ({
       {showTextEditorToolbarMenu(toolbar, "heading") && <Heading editor={editor} headingLabels={labels?.headings} />}
 
       {/* other options */}
-      {menus.map((menu, index) => (
-        showTextEditorToolbarMenu(toolbar, menu) && (
-            <Tooltip title={menu.tooltip} key={menu.name + index}>
-              <IconButton
-                onClick={menu.onClick}
-                disabled={menu.disabled}
-                css={classes.button(
-                  // the order is important
-                  editor.isActive(menu.active || menu.name),
-                  !!menu.split
-                )}
-              >
-                <Icon size={menu.iconSize}>
-                  <menu.icon />
-                </Icon>
-              </IconButton>
+      {menus.map((menu, index) => {
+        if (!showTextEditorToolbarMenu(toolbar, menu)) return null;
+
+        // if the menu has an id, we need to use a label (use htmlFor)
+        const LabelComponent = menu.id ? 'label' : Fragment;
+        // label props if the menu has an id
+        const labelProps = menu.id ? { htmlFor: menu.id, css: { cursor: 'pointer' } } : {};
+        return (
+          <Fragment key={menu.name + index}>
+            <Tooltip title={menu.tooltip}>
+              {/* add span wrapper to avoid disabled child to the tooltip */}
+              <span>
+                <IconButton
+                  onClick={menu.onClick}
+                  disabled={menu.disabled}
+                  css={classes.button(
+                    editor.isActive(menu.active || menu.name), // the order is important
+                    !!menu.split
+                  )}
+                >
+                  <LabelComponent {...labelProps}>
+                    <Icon size={menu.iconSize}>
+                      <menu.icon />
+                    </Icon>
+                  </LabelComponent>
+                  {/* component used with label */}
+                  {menu.component}
+                </IconButton>
+              </span>
             </Tooltip>
-          )
-      ))}
+          </Fragment>
+        );
+      })}
 
-      {/* mention */}
-      {showTextEditorToolbarMenu(toolbar, "mention") && (
-        <Tooltip title="Mention user">
-          <IconButton
-            onClick={() => {
-              editor.chain().focus().insertContent("@").run();
-            }}
-            css={{ borderRadius: 2 }}
-          >
-            <Icon size={15}>
-              <Mention />
-            </Icon>
-          </IconButton>
-        </Tooltip>
-      )}
-
-      {/* youtube dialog */}
+      {/* link dialog */}
       {showTextEditorToolbarMenu(toolbar, "link") && (
         <LinkDialog
           editor={editor}
@@ -339,12 +378,7 @@ const Toolbar = ({
         />
       )}
 
-      {/* color picker */}
-      {showTextEditorToolbarMenu(toolbar, "color") && (
-          <ColorPicker editor={editor} />
-      )}
-
-      {/* table menu to be opened */}
+      {/* table menu dialog */}
       {showTextEditorToolbarMenu(toolbar, "table") && (
         <TableMenuDialog
           editor={editor}

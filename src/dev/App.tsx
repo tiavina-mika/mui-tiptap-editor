@@ -39,6 +39,19 @@ const theme = createTheme({
 });
 
 const App = () => {
+  // API call to upload file
+  const uploadFile = async (file: File) => {
+    const formData = new FormData();
+    formData.append("file", file);
+    const response = await fetch("https://api.escuelajs.co/api/v1/files/upload", {
+      method: "POST",
+      body: formData,
+    });
+
+    const data = await response.json();
+    return { id: data.filename, src: data.location };
+  };
+
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
@@ -46,17 +59,24 @@ const App = () => {
       <EmotionThemeProvider theme={theme}>
         <Container>
           <TextEditor
+            value="<h1>Exemaple using image</h1><img src='https://via.placeholder.com/150' alt='Hello there' title='This is used as legend' />"
             inputClassName="flexColumn stretchSelf flex1"
             label="Content"
-            placeholder="French here"
+            placeholder="Enter your content here"
             mentions={mentions}
             user={currentUser}
             bubbleMenuToolbar={['align']}
-            uploadImageOptions={{
-              uploadImage: () => Promise.resolve('https://source.unsplash.com/random'),
+            floatingMenuToolbar={['align', 'link', 'heading', 'image', 'table', 'youtube']}
+            withFloatingMenu
+            withBubbleMenu
+            userPathname="/users"
+            uploadFileOptions={{
+              uploadFile,
               maxSize: 5,
               maxFilesNumber: 2,
               allowedMimeTypes: ['image/jpeg', 'image/png', 'image/jpg'],
+              imageMaxWidth: 900,
+              imageMaxHeight: 500,
             }}
             labels={{
               editor: {
@@ -81,7 +101,9 @@ const App = () => {
                 youtube: "Youtube",
                 undo: "Annuler",
                 redo: "Refaire",
-                mention: "Mention"
+                mention: "Mention",
+                color: "Couleur du texte",
+                upload: "Ajouter une image"
               },
               headings: {
                 normalText: "Text normal",
@@ -124,12 +146,16 @@ const App = () => {
                 height: "Hauteur",
                 width: "Largeur"
               },
-              imageUpload: {
+              upload: {
                 fileTooLarge: "Fichier trop volumineux",
                 maximumNumberOfFiles: "Nombre maximum de fichiers atteint",
                 enterValidAltText: "Entrez un texte alternatif valide",
                 addAltText: "Ajouter un texte alternatif",
                 invalidMimeType: "Type de fichier invalide",
+                shouldBeAnImage: "Le fichier doit être une image",
+                addLegendText: "Ajouter un texte de légende",
+                enterValidLegendText: "Entrez un texte de légende valide",
+                imageMaxSize: "Taille maximale de l'image"
               },
             }}
           />
