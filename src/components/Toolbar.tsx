@@ -258,7 +258,7 @@ const Toolbar = ({
         name: "link",
         icon: Link,
         onClick: setLink,
-        disabled: !false,
+        disabled: false,
         tooltip: toolbarLabels?.link || 'Link'
       },
       {

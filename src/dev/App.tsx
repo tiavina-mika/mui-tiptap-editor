@@ -59,17 +59,17 @@ const App = () => {
       <EmotionThemeProvider theme={theme}>
         <Container>
           <TextEditor
-            value="<h1>Exemaple using image</h1><img src='https://via.placeholder.com/150' alt='Hello there' title='This is used as legend' />"
+            // value="<h1>Exemaple using image</h1><img src='https://via.placeholder.com/150' alt='Hello there' title='This is used as legend' />"
             inputClassName="flexColumn stretchSelf flex1"
             label="Content"
             placeholder="Enter your content here"
             mentions={mentions}
             user={currentUser}
-            bubbleMenuToolbar={['align']}
-            floatingMenuToolbar={['align', 'link', 'heading', 'image', 'table', 'youtube']}
+            // bubbleMenuToolbar={['align']}
+            // floatingMenuToolbar={['align', 'link', 'heading', 'image', 'table', 'youtube']}
             withFloatingMenu
-            withBubbleMenu
-            userPathname="/users"
+            // withBubbleMenu
+            // userPathname="/users"
             uploadFileOptions={{
               uploadFile,
               maxSize: 5,
@@ -134,8 +134,7 @@ const App = () => {
               },
               link: {
                 link: "Lien",
-                insert: "Insérer le lien",
-                invalid: "Lien invalide",
+                invalid: "Lien invalid",
               },
               youtube: {
                 link: "Lien",
