@@ -290,6 +290,7 @@ See [`here`](https://github.com/tiavina-mika/mui-tiptap-editor/blob/main/src/dev
 |allowedMimeTypes|`string[]`|null|all image types|allowed mime types to be uploaded
 |imageMaxWidth|`number`|1920|maximum width of the image
 |imageMaxHeight|`number`|1080|maximum height of the image
+|maxMediaLegendLength|`number`|100|maximum character length of the image legend
 
 <br />
 
