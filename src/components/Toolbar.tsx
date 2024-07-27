@@ -234,7 +234,7 @@ const Toolbar = ({
         name: "link",
         icon: Link,
         onClick: toggleLinkDialog,
-        disabled: false,
+        disabled: !editor.isActive('link'),
         tooltip: toolbarLabels?.link || 'Link'
       },
       {

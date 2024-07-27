@@ -1,5 +1,5 @@
 import { Editor } from '@tiptap/react';
-import { useState, ChangeEvent } from 'react';
+import { useState, ChangeEvent, useEffect } from 'react';
 
 import { TextField } from '@mui/material';
 import Dialog from './Dialog';
@@ -15,6 +15,13 @@ type Props = {
 const LinkDialog = ({ editor, open, onClose, labels }: Props) => {
   const [link, setLink] = useState<string>('');
   const [error, setError] = useState<string>('');
+
+  useEffect(() => {
+    const previousUrl = editor.getAttributes('link').href;
+    console.log("🚀 ~ useEffect ~ previousUrl:", previousUrl)
+    if (!previousUrl) return;
+    setLink(previousUrl);
+  }, [editor])
 
   if (!editor) {
     return null;
@@ -43,17 +50,20 @@ const LinkDialog = ({ editor, open, onClose, labels }: Props) => {
 
     // empty
     if (link === '') {
-      (editor.commands as any).unsetLink();
+      editor.chain().focus().extendMarkRange('link').unsetLink().run()
       return;
     }
 
+    // editor.chain().focus().extendMarkRange('link').setLink({ href: link }).run();
+    editor.commands.setLink({ href: link })
     // update link
-    (editor.commands as any).setLink({ href: link });
     onClose();
   };
 
   const handleClose = () => {
-    (editor.commands as any)?.unsetLink();
+    editor.chain().focus().unsetLink().run();
+    setLink('');
+    setError('');
     onClose();
   };
 

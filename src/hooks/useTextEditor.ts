@@ -41,6 +41,7 @@ const extensions = [
   TipTapTypography,
   Underline,
   Link.configure({
+    openOnClick: false,
     protocols: [
       "https",
       "mailto",
