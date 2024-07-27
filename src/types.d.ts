@@ -144,9 +144,7 @@ export type IRequiredLabels = {
   };
   link: {
     link: string;
-    insert: string;
     invalid: string;
-    enter: string;
   };
   youtube: {
     link: string;

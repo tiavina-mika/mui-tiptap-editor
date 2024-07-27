@@ -5,11 +5,10 @@ import { Editor } from "@tiptap/react";
 import { useState, MouseEvent, useMemo, useCallback, Fragment } from "react";
 
 import TableMenuDialog from "./TableMenuDialog";
-import LinkDialog from "./LinkDialog";
 import Heading from "./Heading";
 import ColorPicker from "./ColorPicker";
 import { IEditorToolbar, ILabels, TextEditorProps } from "../types.d";
-import { defaultEditorToolbar, getBorderColor, showTextEditorToolbarMenu } from "../utils/app.utils";
+import { checkIsValidUrl, defaultEditorToolbar, getBorderColor, showTextEditorToolbarMenu } from "../utils/app.utils";
 import YoutubeDialog from "./YoutubeDialog";
 import Bold from "../icons/Bold";
 import Italic from "../icons/Italic";
@@ -128,6 +127,30 @@ const Toolbar = ({
     setTableAnchorEl(null);
   };
 
+  // set link
+  const setLink = useCallback(() => {
+    const previousUrl = editor.getAttributes('link').href
+    const url = window.prompt('URL', previousUrl)
+
+    // cancelled
+    if (url === null) return;
+
+    // empty
+    if (url === '') {
+      editor.chain().focus().extendMarkRange('link').unsetLink().run()
+      return
+    }
+
+    const isValidUrl = checkIsValidUrl(url);
+    if (!isValidUrl) {
+      window.alert(labels?.link?.invalid || 'Invalid URL');
+      return;
+    }
+
+    // update link
+    editor.chain().focus().extendMarkRange('link').setLink({ href: url }).run()
+  }, [editor])
+
   const menus = useMemo(() => {
     const toolbarLabels = labels?.toolbar;
     return [
@@ -230,11 +253,12 @@ const Toolbar = ({
         tooltip: toolbarLabels?.orderedList || 'Ordered list',
         iconSize: 14
       },
+      // link
       {
         name: "link",
         icon: Link,
-        onClick: toggleLinkDialog,
-        disabled: !editor.isActive('link'),
+        onClick: setLink,
+        disabled: !false,
         tooltip: toolbarLabels?.link || 'Link'
       },
       {
@@ -357,16 +381,6 @@ const Toolbar = ({
           </Fragment>
         );
       })}
-
-      {/* link dialog */}
-      {showTextEditorToolbarMenu(toolbar, "link") && (
-        <LinkDialog
-          editor={editor}
-          open={openLinkDialog}
-          onClose={toggleLinkDialog}
-          labels={labels?.link}
-        />
-      )}
 
       {/* youtube dialog */}
       {showTextEditorToolbarMenu(toolbar, "youtube") && (
