@@ -26,6 +26,7 @@ const classes = {
   colorPreview: (color: string) => ({
     position: 'absolute' as const,
     bottom: 10,
+    transform: 'translate(-20%, 0px)',
     height: 3,
     width: 14,
     backgroundColor: color,
@@ -64,8 +65,9 @@ const ColorPicker = ({ editor, id }: Props) => {
         type="color"
         onInput={handleInput}
         value={color}
-        // css={classes.color}
-        css={{ display: 'none' }}
+        // Use width and height to hide the color picker instead of display: none
+        // Otherwise browser will place the picker in the corner (out of the Visual DOM tree)
+        css={{ width: 0, height: 0 }}
       />
       {/*
         * The `colorPreview` div displays the selected color as a small rectangle below the color picker.
