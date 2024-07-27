@@ -14,7 +14,7 @@
 import TiptapImage from '@tiptap/extension-image'
 import { Editor, NodeViewWrapper, NodeViewWrapperProps, ReactNodeViewRenderer } from '@tiptap/react';
 import { ClipboardEvent, SyntheticEvent } from 'react';
-import { checkFilesNumber, checkIsImage, checkValidMimeType, getIsFileSizeValid } from '../utils/app.utils';
+import { checkFilesNumber, checkIsImage, checkValidMimeType, checkValidFileDimensions, getIsFileSizeValid } from '../utils/app.utils';
 import { EditorView } from '@tiptap/pm/view';
 import { Slice } from '@tiptap/pm/model';
 import { ILabels, ImageUploadOptions } from '../types';
@@ -34,10 +34,14 @@ export const onUpload = (
     uploadFile,
     // max file size in MB
     maxSize,
-    // max number of files
+    // allowed max number of files
     maxFilesNumber = 5,
     // drop or paste
     type,
+    // allowed max width of the image
+    imageMaxWidth,
+    // allowed max height of the image
+    imageMaxHeight,
     // allowed file types to upload
     allowedMimeTypes = null,
   }: ImageUploadOptions,
@@ -70,6 +74,7 @@ export const onUpload = (
 
   for (const file of files) {
     // 1. check if the file is an image
+    // for now we only support images
     const { isValid: isImage, message: isImageMessage } = checkIsImage(file);
     if (!isImage) {
       window.alert(labels?.shouldBeAnImage || isImageMessage);
@@ -93,6 +98,12 @@ export const onUpload = (
     const reader = new FileReader();
     reader.onload = async (readerEvent: ProgressEvent<FileReader>) => {
       if (!readerEvent.target) return;
+      // 4. check if the image dimensions are valid
+      const { isValid: isImageDimensionValid, message: isImageDimensionValidMessage } = await checkValidFileDimensions(file, imageMaxWidth, imageMaxHeight);
+      if (!isImageDimensionValid) {
+        window.alert(labels?.imageMaxSize || isImageDimensionValidMessage);
+        return;
+      }
 
       let attrs = { src: readerEvent.target.result as string };
       // default position for paste

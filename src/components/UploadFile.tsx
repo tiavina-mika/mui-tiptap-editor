@@ -1,6 +1,6 @@
 import { Editor } from "@tiptap/react";
 import { useRef } from "react";
-import { checkIsImage, checkValidMimeType, getIsFileSizeValid } from "../utils/app.utils";
+import { checkIsImage, checkValidFileDimensions, checkValidMimeType, getIsFileSizeValid } from "../utils/app.utils";
 import { ILabels, ImageUploadOptions, UploadResponse } from "../types";
 
 type Props = {
@@ -15,6 +15,8 @@ const UploadFile = ({
   id,
   uploadFile,
   maxSize,
+  imageMaxWidth,
+  imageMaxHeight,
   allowedMimeTypes = null,
 }: Props) => {
   const fileUploadRef = useRef<HTMLInputElement | null>(null);
@@ -50,6 +52,13 @@ const UploadFile = ({
     reader.onload = async (readerEvent: ProgressEvent<FileReader>) => {
       const target = readerEvent.target;
       if (!target) return;
+
+      const { isValid: isImageDimensionValid, message: isImageDimensionValidMessage } = await checkValidFileDimensions(file, imageMaxWidth, imageMaxHeight);
+      if (!isImageDimensionValid) {
+        window.alert(labels?.imageMaxSize || isImageDimensionValidMessage);
+        return;
+      }
+
       let attrs: UploadResponse = { src: target.result as string };
 
       // upload the file to the server (API callback)

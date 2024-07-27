@@ -39,6 +39,7 @@ const theme = createTheme({
 });
 
 const App = () => {
+  // API call to upload file
   const uploadFile = async (file: File) => {
     const formData = new FormData();
     formData.append("file", file);
@@ -58,18 +59,24 @@ const App = () => {
       <EmotionThemeProvider theme={theme}>
         <Container>
           <TextEditor
-            // value="<h1>Exemaple using image</h1><img src='https://via.placeholder.com/150' alt='Hello there' />"
+            value="<h1>Exemaple using image</h1><img src='https://via.placeholder.com/150' alt='Hello there' title='This is used as legend' />"
             inputClassName="flexColumn stretchSelf flex1"
             label="Content"
             placeholder="Enter your content here"
             mentions={mentions}
             user={currentUser}
             bubbleMenuToolbar={['align']}
+            floatingMenuToolbar={['align', 'link', 'heading', 'image', 'table', 'youtube']}
+            withFloatingMenu
+            withBubbleMenu
+            userPathname="/users"
             uploadFileOptions={{
               uploadFile,
               maxSize: 5,
               maxFilesNumber: 2,
               allowedMimeTypes: ['image/jpeg', 'image/png', 'image/jpg'],
+              imageMaxWidth: 900,
+              imageMaxHeight: 500,
             }}
             labels={{
               editor: {
@@ -148,6 +155,7 @@ const App = () => {
                 shouldBeAnImage: "Le fichier doit être une image",
                 addLegendText: "Ajouter un texte de légende",
                 enterValidLegendText: "Entrez un texte de légende valide",
+                imageMaxSize: "Taille maximale de l'image"
               },
             }}
           />

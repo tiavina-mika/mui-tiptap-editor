@@ -60,6 +60,16 @@ export type ImageUploadOptions = {
    */
   maxFilesNumber?: number;
   /**
+   * maximum width of the image
+   * @default 1920
+   */
+  imageMaxWidth?: number;
+  /**
+   * maximum height of the image
+   * @default 1080
+   */
+  imageMaxHeight?: number;
+  /**
    * control which mime types are allowed to be uploaded (pasted or dropped)
    * @default all image mime types
    */
@@ -150,6 +160,7 @@ export type IRequiredLabels = {
     shouldBeAnImage: string;
     addLegendText: string;
     enterValidLegendText: string;
+    imageMaxSize: string;
   }
 };
 

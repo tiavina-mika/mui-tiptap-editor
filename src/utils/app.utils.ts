@@ -46,13 +46,29 @@ export const showTextEditorToolbarMenu = (toolbar: IEditorToolbar[], menu: any):
 };
 
 /**
+ * get the image size by creating a new image element
+ * from the file object and returning the width and height
+ * @param file
+ * @returns
+ */
+const getImageSize = (file: File): Promise<{ width: number; height: number }> => {
+  return new Promise((resolve) => {
+    const image = new Image();
+    image.src = URL.createObjectURL(file);
+    image.onload = () => {
+      resolve({ width: image.width, height: image.height });
+    };
+  });
+}
+
+// ------------------------------------------------ //
+// ------------- validation functions ------------- //
+// ------------------------------------------------ //
+
+/**
  * The function `checkIsValidUrl` in TypeScript checks if a given URL string starts with "http://",
  * "https://", "mailto:", or "tel:".
- * @param {string} url - The `checkIsValidUrl` function takes a URL string as input and checks if it
- * starts with either "http://", "https://", "mailto:", or "tel:". If it starts with any of these
- * prefixes, the function returns `true`, indicating that the URL is valid. Otherwise, it
- * @returns A boolean value is being returned, indicating whether the input URL is valid based on the
- * specified conditions.
+ * @param {string} url
  */
 export const checkIsValidUrl = (url: string): boolean => {
   return (
@@ -144,5 +160,13 @@ export const checkFilesNumber = (files: FileList, maxFilesNumber = 5): FileValid
   return {
     isValid: files.length <= maxFilesNumber,
     message: `You can only upload ${maxFilesNumber} files at once.`
+  };
+}
+
+export const checkValidFileDimensions = async (file: File, maxWidth = 1920, maxHeight = 1080): Promise<FileValidationOutput> => {
+  const size = await getImageSize(file);
+  return {
+    isValid: size.width <= maxWidth && size.height <= maxHeight,
+    message: `Image dimensions should be less than ${maxWidth}x${maxHeight}.`
   };
 }
