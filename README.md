@@ -301,7 +301,7 @@ See [`here`](https://github.com/tiavina-mika/mui-tiptap-editor/blob/main/src/dev
     <td>Features</td>
   <tr>
   <tr>
-    <th><a href="https://github.com/tiavina-mika/mui-tiptap-editor/pull/55">v0.9.11</a><th>
+    <th><a href="https://github.com/tiavina-mika/mui-tiptap-editor/pull/55">v0.9.11</a></th>
     <td>
       <ul>
         <li>Upload image via drop, paste or upload button</li>
@@ -311,7 +311,7 @@ See [`here`](https://github.com/tiavina-mika/mui-tiptap-editor/blob/main/src/dev
     </td>
   <tr>
   <tr>
-    <th><a href="https://github.com/tiavina-mika/mui-tiptap-editor/pull/52">v0.9.9</a><th>
+    <th><a href="https://github.com/tiavina-mika/mui-tiptap-editor/pull/52">v0.9.9</a></th>
     <td>
       <ul>
         <li>Work with dark mode</li>
@@ -322,6 +322,7 @@ See [`here`](https://github.com/tiavina-mika/mui-tiptap-editor/blob/main/src/dev
 </table>
 
 <br />
+
 ## Contributing
 
 Get started [here](https://github.com/tiavina-mika/mui-tiptap-editor/blob/main/CONTRIBUTING.md).
