@@ -78,6 +78,12 @@ export type ImageUploadOptions = {
    * type of the upload event
    */
   type: 'drop' | 'paste';
+
+  /**
+   * maximum character length of the image legend
+   * @default 100
+   */
+  maxMediaLegendLength?: number;
 };
 
 export type IEditorToolbar = `${EditorToolbarEnum}`;

@@ -24,6 +24,7 @@ type Props = {
   label: string;
   attrName?: 'alt' | 'title';
   invalidErrorMessage?: string;
+  maxLegendLength?: number;
 }
 
 const classes = {
@@ -69,7 +70,8 @@ const ImageText = ({
   onConfirm,
   label,
   attrName = 'alt',
-  invalidErrorMessage
+  invalidErrorMessage,
+  maxLegendLength = 100
 }: Props) => {
   const [open, setOpen] = useState<boolean>(false);
   const [clear, setClear] = useState<boolean>(false);
@@ -80,21 +82,35 @@ const ImageText = ({
     setValue(defaultValue || '');
   }, [defaultValue])
 
-  const handleOpen = () => setOpen(true);
+  const handleOpen = () => {
+    setOpen(true);
+    setError('');
+  };
   const handleClose = () => setOpen(false);
 
   const toggleClear = () => setClear(!clear);
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { value } = e.target;
-    const validate = attrName === 'alt' ? checkAlt : checkLegend;
-    if (validate(value)) {
+    let isValidInput;
+    let errorMessage;
+    if (attrName === 'alt') {
+      const { isValid, message } = checkAlt(value);
+      isValidInput = isValid;
+      errorMessage = message;
+    } else {
+      const { isValid, message } = checkLegend(value, maxLegendLength);
+      isValidInput = isValid;
+      errorMessage = message;
+    }
+    console.log("🚀 ~ handleChange ~ errorMessage:", errorMessage)
+
+    if (isValidInput) {
       setValue(value);
+      setError('');
       return;
     }
-
-    if (!invalidErrorMessage) return;
-    setError(invalidErrorMessage);
+    setError(invalidErrorMessage || errorMessage);
   }
 
   const handleConfirm = async () => {
@@ -140,20 +156,23 @@ const ImageText = ({
           <Close />
         </IconButton>
       </Stack>
-      {/* error message */}
-      {error && (
-        <Typography color="error">{error}</Typography>
-      )}
       {/* dialog form */}
       <Dialog
         title={label}
         open={open}
         onClose={handleClose}
         onPrimaryButtonAction={handleConfirm}
+        maxWidth="xs"
+        fullWidth
       >
         <TextField
           value={value}
           onChange={handleChange}
+          fullWidth
+          error={!!error}
+          helperText={error || (attrName === 'title' ? `${value.length}/${maxLegendLength}`  : '')}
+          // legend has multiple lines
+          {...(attrName === 'title' ? { rows: 4, multiline: true } : {})}
         />
       </Dialog>
     </>

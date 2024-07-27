@@ -175,9 +175,11 @@ const getClassName = (selected: boolean): string => {
   return className
 }
 
-type Props = ILabels['upload'] & NodeViewWrapperProps;
+type Props = {
+  maxLegendLength?: number;
+} & ILabels['upload'] & NodeViewWrapperProps;
 
-const ImageNode = ({ labels, node, updateAttributes, editor, ...props }: Props) => {
+const ImageNode = ({ labels, node, updateAttributes, editor, maxLegendLength, ...props }: Props) => {
   /**
    * update the alt or title attribute
    * @param attr { alt: "Alt" } or { title: "Title" }
@@ -242,6 +244,7 @@ const ImageNode = ({ labels, node, updateAttributes, editor, ...props }: Props) 
               label={labels?.addLegendText || 'Add legend'}
               attrName="title"
               invalidErrorMessage={labels?.enterValidLegendText || 'Please enter a valid legend'}
+              maxLegendLength={maxLegendLength}
             />
           </>
         )}
@@ -258,7 +261,7 @@ const ImageNode = ({ labels, node, updateAttributes, editor, ...props }: Props) 
  * @param labels custom or override labels
  * @returns
  */
-const getCustomImage = (options?: Omit<ImageUploadOptions, 'type'>, labels?: ILabels['upload']) => TiptapImage
+const getCustomImage = (options?: Omit<ImageUploadOptions, 'type'>, labels?: ILabels['upload'], maxLegendLength?: number) => TiptapImage
   .extend({
     defaultOptions: {
       ...TiptapImage.options,
@@ -266,7 +269,7 @@ const getCustomImage = (options?: Omit<ImageUploadOptions, 'type'>, labels?: ILa
     },
     addNodeView() {
       return ReactNodeViewRenderer(
-        (props: any) => <ImageNode {...props} labels={labels} />,
+        (props: any) => <ImageNode {...props} labels={labels} maxLegendLength={maxLegendLength} />,
         { className: 'tiptap-image' }
       );
     },

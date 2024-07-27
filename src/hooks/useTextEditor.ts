@@ -134,7 +134,7 @@ export const useTextEditor = ({
       // user mentions editing extension
       getCustomMention({ pathname: userPathname, mentions }),
       // upload image extension
-      getCustomImage(uploadFileOptions, uploadFileLabels),
+      getCustomImage(uploadFileOptions, uploadFileLabels, uploadFileOptions?.maxMediaLegendLength),
       ...extensions,
     ] as AnyExtension[],
     /* The `onUpdate` function in the `useTextEditor` hook is a callback that is triggered whenever the

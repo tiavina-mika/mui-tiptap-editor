@@ -85,15 +85,29 @@ export const checkIsValidYoutubeUrl = (url: string): boolean => {
   );
 }
 
-export const checkAlt = (text: string): boolean => {
-  return (
-    text.length > 0 &&
-    typeof text === "string"
-  );
+/**
+ * check if the alt text is valid
+ * @param text
+ * @returns
+ */
+export const checkAlt = (text: string): FileValidationOutput => {
+  return {
+    isValid: text.length > 0 && typeof text === 'string',
+    message: "Alt text is required."
+  };
 }
 
-export const checkLegend = (text: string): boolean => {
-  return checkAlt(text) && text.length <= 100;
+/**
+ * check if the legend text is valid
+ * @param text
+ * @param maxLength
+ * @returns
+ */
+export const checkLegend = (text: string, maxLength: number): FileValidationOutput => {
+  return {
+    isValid: checkAlt(text) && text.length <= maxLength,
+    message: `Legend is required and be less than ${maxLength} characters.`
+  };
 }
 
 const getFileSize = (file: File): number => {
