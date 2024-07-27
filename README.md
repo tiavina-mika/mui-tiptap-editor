@@ -30,7 +30,7 @@ A customizable and easy to use <a href="https://tiptap.dev/">Tiptap</a> styled W
       - [Root styles](#root-styles)
       - [Each element styles](#each-element-styles)
   - [Props](#props)
-  - [Image upload props `ImageUploadOptions`](#image-upload-props-imageuploadoptions)
+  - [`ImageUploadOptions`](#imageuploadoptions)
   - [New features](#new-features)
   - [Contributing](#contributing)
 
@@ -279,7 +279,9 @@ import './index.css';
 
 See [`here`](https://github.com/tiavina-mika/mui-tiptap-editor/blob/main/src/dev/App.tsx) how to use all the `TextEditor` props.
 
-## Image upload props `ImageUploadOptions`
+<br />
+
+## `ImageUploadOptions`
 |props |type                          | Default value                         | Description |
 |----------------|-------------------------------|-----------------------------|-----------------------------|
 |uploadFile|`function`|undefined|an API call to your server to handle and store the image
@@ -289,6 +291,8 @@ See [`here`](https://github.com/tiavina-mika/mui-tiptap-editor/blob/main/src/dev
 |imageMaxWidth|`number`|1920|maximum width of the image
 |imageMaxHeight|`number`|1080|maximum height of the image
 
+<br />
+
 ## New features
 
 <table>
@@ -297,7 +301,7 @@ See [`here`](https://github.com/tiavina-mika/mui-tiptap-editor/blob/main/src/dev
     <td>Features</td>
   <tr>
   <tr>
-    <th><a href="https://github.com/tiavina-mika/mui-tiptap-editor/pull/52">v0.9.11</a><th>
+    <th><a href="https://github.com/tiavina-mika/mui-tiptap-editor/pull/55">v0.9.11</a><th>
     <td>
       <ul>
         <li>Upload image via drop, paste or upload button</li>
@@ -317,6 +321,7 @@ See [`here`](https://github.com/tiavina-mika/mui-tiptap-editor/blob/main/src/dev
   <tr>
 </table>
 
+<br />
 ## Contributing
 
 Get started [here](https://github.com/tiavina-mika/mui-tiptap-editor/blob/main/CONTRIBUTING.md).
