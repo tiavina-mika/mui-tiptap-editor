@@ -94,7 +94,7 @@ const Heading = ({ editor, headingLabels, split = false }: Props) => {
   }
 
   return (
-      <span css={classes.heading(split)}>
+    <span css={classes.heading(split)}>
       {/* button */}
       <Button
         type="button"

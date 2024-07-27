@@ -218,7 +218,12 @@ const ImageNode = ({ labels, node, updateAttributes, editor, ...props }: Props) 
             height="300"
             onLoad={onLoadImage}
           />
-          {node.attrs.title && <figcaption>{node.attrs.title}</figcaption>}
+          {/* legend */}
+          {node.attrs.title && (
+            <figcaption style={{ display: 'flex', justifyContent: 'center' }}>
+              {node.attrs.title}
+            </figcaption>
+          )}
         </figure>
         {/* --------- alt editor ---------- */}
         {(editor.options.editable) && (
