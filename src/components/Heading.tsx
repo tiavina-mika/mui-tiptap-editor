@@ -5,6 +5,7 @@ import { MouseEvent, useMemo, useState } from "react";
 import ChevronDown from "../icons/ChevronDown";
 import Icon from "../icons/Icon";
 import { ILabels } from "../types";
+import { getBorderColor } from "../utils/app.utils";
 
 const isActive = (editor: Editor) => {
   return (
@@ -20,6 +21,12 @@ const isActive = (editor: Editor) => {
 const options: Level[] = [1, 2, 3, 4, 5, 6];
 
 const classes = {
+  heading: (split: boolean) => (theme: Theme) => ({
+    display: "flex",
+    alignItems: "center",
+    alignSelf: "stretch",
+    borderRight: split ? `1px solid ${getBorderColor(theme)}` : "none",
+  }),
   button: (isActive: boolean) => (theme: Theme) => ({
     backgroundColor: "transparent",
     fontWeight: 500,
@@ -32,9 +39,6 @@ const classes = {
     fontSize: 14,
     lineHeight: 1,
     cursor: 'pointer',
-    '& span': {
-      marginRight: 10
-    },
     '&:hover': {
       backgroundColor: 'transparent !important'
     }
@@ -48,8 +52,9 @@ const classes = {
 type Props = {
   editor: Editor;
   headingLabels?: ILabels["headings"];
+  split?: boolean;
 };
-const Heading = ({ editor, headingLabels }: Props) => {
+const Heading = ({ editor, headingLabels, split = false }: Props) => {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const [selected, setSelected] = useState(0);
 
@@ -89,7 +94,7 @@ const Heading = ({ editor, headingLabels }: Props) => {
   }
 
   return (
-    <span>
+      <span css={classes.heading(split)}>
       {/* button */}
       <Button
         type="button"
@@ -99,9 +104,9 @@ const Heading = ({ editor, headingLabels }: Props) => {
         variant="text"
         color="inherit"
       >
-        <span>
+        <span css={{ marginRight: 8 }}>
           {selectedLabel}
-        </span> 
+        </span>
         {/* chevron icon */}
         <Icon>
           <ChevronDown />

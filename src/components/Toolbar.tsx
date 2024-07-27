@@ -321,7 +321,7 @@ const Toolbar = ({
   return (
     <div className={cx(className, 'flexRow center')} css={classes.toolbar}>
       {/* heading */}
-      {showTextEditorToolbarMenu(toolbar, "heading") && <Heading editor={editor} headingLabels={labels?.headings} />}
+      {showTextEditorToolbarMenu(toolbar, "heading") && <Heading editor={editor} headingLabels={labels?.headings} split />}
 
       {/* other options */}
       {menus.map((menu, index) => {
