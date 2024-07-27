@@ -145,7 +145,9 @@ const App = () => {
                 enterValidAltText: "Entrez un texte alternatif valide",
                 addAltText: "Ajouter un texte alternatif",
                 invalidMimeType: "Type de fichier invalide",
-                shouldBeAnImage: "Le fichier doit être une image"
+                shouldBeAnImage: "Le fichier doit être une image",
+                addLegendText: "Ajouter un texte de légende",
+                enterValidLegendText: "Entrez un texte de légende valide",
               },
             }}
           />

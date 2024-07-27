@@ -76,6 +76,10 @@ export const checkAlt = (text: string): boolean => {
   );
 }
 
+export const checkLegend = (text: string): boolean => {
+  return checkAlt(text) && text.length <= 100;
+}
+
 const getFileSize = (file: File): number => {
   const size = (file.size / 1024) / 1024;
   return +size.toFixed(4);
@@ -142,4 +146,3 @@ export const checkFilesNumber = (files: FileList, maxFilesNumber = 5): FileValid
     message: `You can only upload ${maxFilesNumber} files at once.`
   };
 }
-

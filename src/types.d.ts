@@ -148,6 +148,8 @@ export type IRequiredLabels = {
     enterValidAltText: string;
     invalidMimeType: string;
     shouldBeAnImage: string;
+    addLegendText: string;
+    enterValidLegendText: string;
   }
 };
 
