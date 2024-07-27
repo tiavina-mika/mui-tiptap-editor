@@ -3,6 +3,7 @@
  * Custom Image Extension
  *
  * inspired by:
+ * https://www.codemzy.com/blog/tiptap-drag-drop-image
  * https://github.com/angelikatyborska/tiptap-image-alt-text/tree/main
  * https://angelika.me/2023/02/26/how-to-add-editing-image-alt-text-tiptap/
  * https://github.com/ueberdosis/tiptap/issues/2912
@@ -12,13 +13,13 @@
 
 import TiptapImage from '@tiptap/extension-image'
 import { Editor, NodeViewWrapper, NodeViewWrapperProps, ReactNodeViewRenderer } from '@tiptap/react';
-import { ClipboardEvent } from 'react';
+import { ClipboardEvent, SyntheticEvent } from 'react';
 import { checkFilesNumber, checkIsImage, checkValidMimeType, getIsFileSizeValid } from '../utils/app.utils';
 import { EditorView } from '@tiptap/pm/view';
 import { Slice } from '@tiptap/pm/model';
 import { ILabels, ImageUploadOptions } from '../types';
 import { Plugin } from '@tiptap/pm/state';
-import ImageAlt from './image/ImageAlt';
+import ImageText from './image/ImageText';
 
 /**
  * function to handle image upload, on drop or paste
@@ -166,8 +167,19 @@ const getClassName = (selected: boolean): string => {
 type Props = ILabels['upload'] & NodeViewWrapperProps;
 
 const ImageNode = ({ labels, node, updateAttributes, editor, ...props }: Props) => {
-  const onConfirm = async (alt: string) => {
-    await updateAttributes({ alt });
+  /**
+   * update the alt or title attribute
+   * @param attr { alt: "Alt" } or { title: "Title" }
+   */
+  const handleConfirm = async (attr: Record<string, string>) => {
+    await updateAttributes(attr);
+  }
+
+  const onLoadImage = (e: SyntheticEvent<HTMLImageElement, Event>) => {
+    const target = e.target as HTMLImageElement;
+    // remove the width and height after the image is loaded
+    target.removeAttribute('width');
+    target.removeAttribute('height');
   }
 
   return (
@@ -186,16 +198,36 @@ const ImageNode = ({ labels, node, updateAttributes, editor, ...props }: Props) 
       <div className="tiptap-image-content" style={{ position: 'relative' }}>
         {/* ------------ image ------------ */}
         <figure>
-          <img src={node.attrs.src} alt={node.attrs.alt} />
+          <img
+            title={node.attrs.title}
+            src={node.attrs.src}
+            alt={node.attrs.alt}
+            // add temporary width and height to show the image while loading
+            width="300"
+            height="300"
+            onLoad={onLoadImage}
+          />
           {node.attrs.title && <figcaption>{node.attrs.title}</figcaption>}
         </figure>
         {/* --------- alt editor ---------- */}
         {(editor.options.editable) && (
-          <ImageAlt
-            defaultValue={node.attrs.alt}
-            onConfirm={onConfirm}
-            labels={labels}
-          />
+          <>
+            <ImageText
+              defaultValue={node.attrs.alt}
+              onConfirm={handleConfirm}
+              label={labels?.addAltText || 'Add alt text'}
+              attrName="alt"
+              invalidErrorMessage={labels?.enterValidAltText || 'Please enter a valid alt text'}
+
+            />
+            <ImageText
+              defaultValue={node.attrs.title}
+              onConfirm={handleConfirm}
+              label={labels?.addLegendText || 'Add legend'}
+              attrName="title"
+              invalidErrorMessage={labels?.enterValidLegendText || 'Please enter a valid legend'}
+            />
+          </>
         )}
       </div>
     </NodeViewWrapper>

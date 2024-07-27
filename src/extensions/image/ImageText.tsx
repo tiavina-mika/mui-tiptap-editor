@@ -13,26 +13,39 @@
 import Edit from '../../icons/Edit';
 import { IconButton, Stack, TextField, Theme, Typography } from '@mui/material';
 import { ChangeEvent, useEffect, useState } from 'react';
-import { checkAlt } from '../../utils/app.utils';
+import { checkAlt, checkLegend } from '../../utils/app.utils';
 import Dialog from '../../components/Dialog';
 import Add from '../../icons/Add';
 import Close from '../../icons/Close';
-import { ILabels } from '../../types';
 
-// check if the image is from tiptap or not
-const FROM_TIPTAP = true;
+type Props = {
+  defaultValue: string;
+  onConfirm: (value: Record<string, string>) => void;
+  label: string;
+  attrName?: 'alt' | 'title';
+  invalidErrorMessage?: string;
+}
 
 const classes = {
-  altContainer: (theme: Theme) => ({
-    position: 'absolute' as const,
-    bottom: 10,
-    left: 10,
-    maxWidth: 'calc(100% - 20px)',
-    padding: '0 4px',
-    border: '1px solid ' + theme.palette.divider,
-    backgroundColor: theme.palette.background.paper,
-    overflow: 'hidden',
-  }),
+  imageTextRoot: (attrName: Props['attrName']) => (theme: Theme) => {
+    const values: Record<string, string | number> = {
+      position: 'absolute' as const,
+      left: 10,
+      maxWidth: 'calc(100% - 20px)',
+      padding: '0 4px',
+      border: '1px solid ' + theme.palette.divider,
+      backgroundColor: theme.palette.background.paper,
+      overflow: 'hidden',
+    };
+
+    if (attrName === 'title') {
+      values.bottom = -230;
+    } else {
+      values.bottom = 10;
+    }
+
+    return values;
+  },
   buttonIconSx: {
     '& svg': { width: 18 },
   },
@@ -50,22 +63,22 @@ const classes = {
   * display only in editable mode
   * NOTE: if displaying the html string outside of the editor, hide this by using css
 */
-type Props = {
-  labels: ILabels['upload'];
-  defaultValue: string;
-  onConfirm: (alt: string) => void;
-}
-const ImageAlt = ({ labels, defaultValue, onConfirm }: Props) => {
+
+const ImageText = ({
+  defaultValue,
+  onConfirm,
+  label,
+  attrName = 'alt',
+  invalidErrorMessage
+}: Props) => {
   const [open, setOpen] = useState<boolean>(false);
   const [clear, setClear] = useState<boolean>(false);
-  const [alt, setAlt] = useState<string>('');
+  const [value, setValue] = useState<string>('');
   const [error, setError] = useState<string>('');
 
   useEffect(() => {
-    setAlt(defaultValue || '');
+    setValue(defaultValue || '');
   }, [defaultValue])
-
-  const altLabel = labels?.addAltText || 'Add alt text';
 
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
@@ -74,24 +87,27 @@ const ImageAlt = ({ labels, defaultValue, onConfirm }: Props) => {
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { value } = e.target;
-    if (checkAlt(value)) {
-      setAlt(value);
+    const validate = attrName === 'alt' ? checkAlt : checkLegend;
+    if (validate(value)) {
+      setValue(value);
       return;
     }
 
-    setError(labels?.enterValidAltText || 'Please enter a valid alt text');
+    if (!invalidErrorMessage) return;
+    setError(invalidErrorMessage);
   }
 
   const handleConfirm = async () => {
-    await onConfirm(alt);
+    await onConfirm({ [attrName]: value });
     setOpen(false);
     // if delete this current node (each image)
     // deleteNode();
   }
 
+  // remove the current node
   const handleDelete = async () => {
-    await onConfirm('');
-    setAlt('');
+    await onConfirm({ [attrName]: '' });
+    setValue('');
     toggleClear();
   }
 
@@ -100,19 +116,16 @@ const ImageAlt = ({ labels, defaultValue, onConfirm }: Props) => {
   return (
     <>
       <Stack
-        css={classes.altContainer}
-        className='tiptap-alt-text'
+        css={classes.imageTextRoot(attrName)}
+        className='tiptap-legend-text'
         direction="row"
         alignItems="center"
         spacing={0}
-        // this block should not be displayed if not from tiptap, ex: from html string parser
-        // hide it using in inline style
-        style={!FROM_TIPTAP ? { display: 'none' } : {}}
       >
-        {alt && !error
+        {value && !error
           ? (
             <Stack direction="row" alignItems="center" spacing={2}>
-              <Typography>{alt}</Typography>
+              <Typography>{value}</Typography>
               <IconButton size="small" sx={classes.buttonIconSx} type="button" onClick={handleOpen}>
                 <Edit />
               </IconButton>
@@ -120,25 +133,26 @@ const ImageAlt = ({ labels, defaultValue, onConfirm }: Props) => {
           ) : (
             <button type="button" onClick={handleOpen} css={[classes.buttonIconSx, classes.addButton]} className="flexRow itemsCenter">
               <Add />
-              <Typography>{altLabel}</Typography>
+              <Typography>{label}</Typography>
             </button>
           )}
         <IconButton size="small" sx={classes.buttonIconSx} type="button" onClick={handleDelete}>
           <Close />
         </IconButton>
       </Stack>
+      {/* error message */}
       {error && (
         <Typography color="error">{error}</Typography>
       )}
+      {/* dialog form */}
       <Dialog
-        title={altLabel}
+        title={label}
         open={open}
         onClose={handleClose}
         onPrimaryButtonAction={handleConfirm}
-        className='tiptap-alt-text-dialog'
       >
         <TextField
-          value={alt}
+          value={value}
           onChange={handleChange}
         />
       </Dialog>
@@ -146,4 +160,4 @@ const ImageAlt = ({ labels, defaultValue, onConfirm }: Props) => {
   )
 }
 
-export default ImageAlt;
+export default ImageText;
