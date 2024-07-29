@@ -153,8 +153,7 @@ export const useTextEditor = ({
     // if (editor.isDestroyed) return;
     if (!(value && editor.isEmpty)) return;
     editor.commands.setContent(value);
-    // !important: to avoid update for each taping, the value should be excluded from the dependencies
-  }, [editor]);
+  }, [editor, value]);
 
 
   // useEffect(() => {
