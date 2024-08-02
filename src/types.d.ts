@@ -48,7 +48,7 @@ export type ImageUploadOptions = {
    * @param file
    * @returns
    */
-  uploadFile?: (file: File) => Promise<string | UploadResponse>;
+  uploadFile?: (file: File) => Promise<string | UploadResponse | undefined>;
   /**
    * maximum size of the image in MB (each image)
    * @default 10mb
