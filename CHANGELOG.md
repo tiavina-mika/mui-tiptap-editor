@@ -1,7 +1,7 @@
-## 0.9.16 (2024-08-02)
+## 0.9.17 (2024-08-15)
 
 
-### Bug Fixes
+### Features
 
-* return type of upload file callback ([3da1fda](https://github.com/tiavina-mika/mui-tiptap-editor/commit/3da1fda660ccb2f6e095310a661ae9580ac20df9))
+* fix readonly value change ([5bba5b5](https://github.com/tiavina-mika/mui-tiptap-editor/commit/5bba5b52362b807e2371a703713ce4cc90ca4efb))
 
