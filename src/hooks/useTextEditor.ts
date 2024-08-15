@@ -147,12 +147,30 @@ export const useTextEditor = ({
     ...editorOptions,
   });
 
-  // set initial value for edition even if it's already set (below)
+  /**
+   * EDITABLE = true
+   * this updates the editor content on every value change
+   * set initial value for edition even if it's already set (below)
+   */
   useEffect(() => {
     if (!editor) return;
     // if (editor.isDestroyed) return;
     if (!(value && editor.isEmpty)) return;
+
     editor.commands.setContent(value);
+  }, [editor, value]);
+
+  /**
+   * EDITABLE = false
+   * this updates the editor content on every value change for readonly mode
+   * it's useful for content that changed externally
+   * @example tab change
+   */
+  useEffect(() => {
+    if (!editor) return;
+    if (value && !editable && tab === 'preview') {
+      editor.commands.setContent(value);
+    }
   }, [editor, value]);
 
 

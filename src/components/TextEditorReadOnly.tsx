@@ -9,18 +9,16 @@ import { useTextEditor } from "../hooks/useTextEditor";
 type TextEditorProps = {
   className?: string;
   value?: string;
-  tab?: 'editor' | 'preview';
 };
 
 const TextEditorReadOnly = ({
   value,
   className,
-  tab = 'preview',
   ...editorOptions
 }: TextEditorProps) => {
   const editor = useTextEditor({
     value,
-    tab,
+    tab: 'preview',
     editable: false,
     ...editorOptions
   })
