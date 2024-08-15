@@ -173,15 +173,6 @@ export const useTextEditor = ({
     }
   }, [editor, value]);
 
-
-  // useEffect(() => {
-  //   editor?.off("selectionUpdate");
-  //   editor?.on("selectionUpdate", (editor) => {
-  //     const html = editor.editor.getHTML();
-  //     onChange?.(html);
-  //   });
-  // }, [editor, value]);
-
   /**
    * change the editable state of the editor on the fly
    * for every tab change
