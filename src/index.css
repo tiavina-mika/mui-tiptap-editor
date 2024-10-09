@@ -127,20 +127,7 @@ code {
   border-left: 3px solid rgba(13, 13, 13, 0.1);
   padding-left: 1rem;
 }
-.tiptap pre {
-  background: #0d0d0d;
-  color: #fff;
-  font-family: "JetBrainsMono", monospace;
-  padding: 0.75rem 1rem;
-  border-radius: 0.5rem;
-}
-/* code highlight */
-.tiptap pre code {
-  color: inherit;
-  padding: 0;
-  background: none;
-  font-size: 0.8rem;
-}
+
 
 .tiptap  .hljs-comment,
 .tiptap .hljs-quote {
@@ -310,3 +297,45 @@ code {
 .tiptap-image {
   display: flex;
 }
+
+/* --------- code block ----------- */
+.tiptap .code-block-root {
+ position: relative;
+}
+/* important: code container */
+.tiptap .code-block-root pre {
+  background: #0d0d0d;
+  color: #fff;
+  font-family: "JetBrainsMono", monospace;
+  padding: 1rem;
+  border-radius: 0.5rem;
+}
+/* code highlight */
+.tiptap .code-block-root pre code {
+  color: inherit;
+  padding: 0;
+  background: none;
+  font-size: 0.8rem;
+}
+.tiptap .code-block-root button {
+  position: absolute;
+  right: 1rem;
+  top: 1rem;
+  background: transparent;
+  border: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 1px solid rgb(255 255 255 / 0.3);
+  width: 2rem;
+  height: 2rem;
+  cursor: pointer;
+  z-index: 1000;
+  color: #fff;
+  font-size: 12px;
+  border-radius: .25rem;
+ }
+
+.tiptap .code-block-root button svg {
+  width: 1rem;
+ }

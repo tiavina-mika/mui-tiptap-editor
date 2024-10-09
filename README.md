@@ -111,16 +111,20 @@ function App() {
 ```
 
 ### Image upload
+Here is the corrected English version:
+
+```html
 <ul>
-<li>The image can be uploaded to the server via an API call or directly into the content as base64 string. </li>
-<li>The image can be uploaded using upload button or pasted or dropped.</li>
-<li>Add or modify the alt text and the legend (title) of the image</li>
-<li>Delete the selected image using `Delete` keyboard key</li>
+  <li>The image can be uploaded to the server via an API call or inserted directly into the content as a base64 string.</li>
+  <li>The image can be uploaded using the upload button, or pasted or dropped.</li>
+  <li>Add or modify the alt text and the caption (title) of the image.</li>
+  <li>Delete the selected image using the `Delete` key on the keyboard.</li>
 </ul>
+```
 
 ```tsx
-// example of API  upload using fetch
-// the return data must be the image url (string) or image attributes (object) like src, alt, id, title, ...
+// Example of an API upload using fetch
+// The returned data must be the image URL (string) or image attributes (object) such as src, alt, id, title, etc.
 const uploadFile = async (file: File) => {
   const formData = new FormData();
   formData.append("file", file);
@@ -160,7 +164,7 @@ import { TextEditorReadOnly } from 'mui-tiptap-editor';
 <TextEditorReadOnly value="<h1>Hello word!</h1>" />
 ```
 
-2. If it is just displaying the value without using the editor, you can use this library [`tiptap-parser`](https://www.npmjs.com/package/tiptap-parser). Example: The editor is used in the back office, but the content must be displayed on the website
+2. If you only need to display the value without using the editor, you can use this library: [`tiptap-parser`](https://www.npmjs.com/package/tiptap-parser). Example: The editor is used in the back office, but the content must be displayed on the website.
 ```tsx
 <TiptapParser content="<h1>Hello world</h1>" />
 ```
@@ -168,7 +172,7 @@ import { TextEditorReadOnly } from 'mui-tiptap-editor';
 ## Customization
 
 ### Toolbar
-<p> Can display the menus as needed</p>
+<p>Can display the menus as required.</p>
 
 ```tsx
   <TextEditor toolbar={['bold', 'italic', 'underline']} />
@@ -300,6 +304,14 @@ See [`here`](https://github.com/tiavina-mika/mui-tiptap-editor/blob/main/src/dev
   <tr>
     <td>Versions</td>
     <td>Features</td>
+  <tr>
+    <tr>
+    <th><a href="https://github.com/tiavina-mika/mui-tiptap-editor/pull/55">v0.9.19</a></th>
+    <td>
+      <ul>
+        <li>Copy the code block</li>
+      </ul>
+    </td>
   <tr>
   <tr>
     <th><a href="https://github.com/tiavina-mika/mui-tiptap-editor/pull/55">v0.9.11</a></th>

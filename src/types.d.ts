@@ -34,6 +34,11 @@ export type UploadResponse = {
   id?: string;
   alt?: string;
 };
+
+export type CodeBlockWithCopyProps = {
+  language?: string;
+  className?: string;
+}
 /**
  * Image upload options from drop or paste event
  * the image can be uploaded to the server via an API or saved inside as a base64 string
