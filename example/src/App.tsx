@@ -96,7 +96,8 @@ const tabs = [
   'Async initial value',
   'React Hook Form',
   'Read without editor',
-  'Upload image'
+  'Upload image',
+  'Code block'
 ];
 
 const mentions = [
@@ -166,6 +167,16 @@ const htmlToParse = `
 </pre>
 `;
 
+const code = `
+<pre><code class="language-typescript">export const suggestIndex = (query: string, data: Article[]) =&gt; {
+  const suggestions = data.filter((item: Article) =&gt; {
+    const maxDistance = item.title.length - leven(query.toLocaleLowerCase(), item.title.toLocaleLowerCase());
+    return maxDistance &gt;= 6;
+  });
+  return suggestions;
+};</code></pre><p></p>
+`;
+
 const App = () => {
   const [tab, setTab] = useState<number>(0);
   const [asyncDefaultValue, setAsyncDefaultValue] = useState<string>('');
@@ -229,7 +240,7 @@ const App = () => {
               />
             </div>
             {/* Simple input */}
-            {tab === 0 && <TextEditor placeholder='Type something here...' />}
+            {tab === 0 && <TextEditor placeholder='Type something here...' onChange={v => console.log(v)} />}
 
             {/* Select toolbar */}
             {tab === 1 && (
@@ -300,6 +311,13 @@ const App = () => {
                   imageMaxWidth: 900,
                   imageMaxHeight: 500,
                 }}
+              />
+            )}
+
+            {/* With code */}
+            {tab === 11 && (
+              <TextEditor
+                content={code}
               />
             )}
           </Container>
