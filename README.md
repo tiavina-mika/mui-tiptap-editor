@@ -306,7 +306,7 @@ See [`here`](https://github.com/tiavina-mika/mui-tiptap-editor/blob/main/src/dev
     <td>Features</td>
   <tr>
     <tr>
-    <th><a href="https://github.com/tiavina-mika/mui-tiptap-editor/pull/55">v0.9.19</a></th>
+    <th><a href="https://github.com/tiavina-mika/mui-tiptap-editor/pull/64">v0.9.19</a></th>
     <td>
       <ul>
         <li>Copy the code block</li>
