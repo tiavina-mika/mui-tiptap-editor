@@ -15,10 +15,8 @@ import Table from "@tiptap/extension-table";
 import TableCell from "@tiptap/extension-table-cell";
 import TableHeader from "@tiptap/extension-table-header";
 import TableRow from "@tiptap/extension-table-row";
-import CodeBlockLowlight from "@tiptap/extension-code-block-lowlight";
 import Youtube from "@tiptap/extension-youtube";
 import BubbleMenu from '@tiptap/extension-bubble-menu';
-import { createLowlight, common } from "lowlight";
 import {
   useEditor,
   EditorOptions,
@@ -28,9 +26,10 @@ import {
 import StarterKit from '@tiptap/starter-kit';
 import { useEffect } from 'react';
 import Heading from '@tiptap/extension-heading';
-import { ILabels, ImageUploadOptions, ITextEditorOption } from '../types.d';
+import { CodeBlockWithCopyProps, ILabels, ImageUploadOptions, ITextEditorOption } from '../types.d';
 import getCustomImage from '../extensions/CustomImage';
 import { getCustomMention } from '../extensions/CustomMention';
+import { getCodeBlockWithCopy } from '../extensions/CodeBlockWithCopy';
 
 const extensions = [
   Color.configure({ types: [TextStyle.name, ListItem.name] }),
@@ -86,15 +85,10 @@ const extensions = [
   Youtube,
   TextAlign.configure({
     types: ["heading", "paragraph", "table", "image"]
-  }),
-  CodeBlockLowlight.configure({
-    lowlight: createLowlight(common),
-    defaultLanguage: "javascript"
-  }),
+  }),,
   BubbleMenu.configure({
     element: document.querySelector('.bubble-menu'),
   } as any),
-  // History
 ];
 
 export type TextEditorProps = {
@@ -108,6 +102,10 @@ export type TextEditorProps = {
   userPathname?: string;
   uploadFileOptions?: Omit<ImageUploadOptions, 'type'>;
   uploadFileLabels?: ILabels['upload'];
+  /**
+   * props for the block code extension
+   */
+  codeBlock?: CodeBlockWithCopyProps;
 } & Partial<EditorOptions>;
 
 export const useTextEditor = ({
@@ -121,6 +119,7 @@ export const useTextEditor = ({
   uploadFileLabels,
   userPathname,
   editable = true,
+  codeBlock,
   ...editorOptions
 }: TextEditorProps) => {
   const theme = useTheme();
@@ -136,6 +135,7 @@ export const useTextEditor = ({
       getCustomMention({ pathname: userPathname, mentions }),
       // upload image extension
       getCustomImage(uploadFileOptions, uploadFileLabels, uploadFileOptions?.maxMediaLegendLength),
+      getCodeBlockWithCopy(codeBlock),
       ...extensions,
     ] as AnyExtension[],
     /* The `onUpdate` function in the `useTextEditor` hook is a callback that is triggered whenever the
