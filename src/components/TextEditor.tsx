@@ -115,13 +115,6 @@ const TextEditor = ({
     userPathname,
     uploadFileOptions,
     uploadFileLabels: labels?.upload,
-    value: `<pre><code class="language-typescript">export const suggestIndex = (query: string, data: Article[]) =&gt; {
-  const suggestions = data.filter((item: Article) =&gt; {
-    const maxDistance = item.title.length - leven(query.toLocaleLowerCase(), item.title.toLocaleLowerCase());
-    return maxDistance &gt;= 6;
-  });
-  return suggestions;
-};</code></pre><p></p>`,
     ...editorOptions
   })
 
