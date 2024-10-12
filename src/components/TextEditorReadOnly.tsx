@@ -1,10 +1,10 @@
-import "../index.css";
+import '../index.css';
 
 import {
   EditorContent,
 } from '@tiptap/react';
 
-import { useTextEditor } from "../hooks/useTextEditor";
+import { useTextEditor } from '../hooks/useTextEditor';
 
 type TextEditorProps = {
   className?: string;
@@ -20,10 +20,10 @@ const TextEditorReadOnly = ({
     value,
     tab: 'preview',
     editable: false,
-    ...editorOptions
-  })
+    ...editorOptions,
+  });
 
-  return <EditorContent editor={editor} className={className} />;
+  return <EditorContent className={className} editor={editor} />;
 };
 
 export default TextEditorReadOnly;

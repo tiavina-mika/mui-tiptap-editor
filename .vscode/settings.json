@@ -1,0 +1,59 @@
+{
+  "// editor": "-------------------------------------",
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": "explicit",
+    "source.organizeImports": "never"
+  },
+  "editor.defaultFormatter": "dbaeumer.vscode-eslint",
+  "editor.formatOnSave": true,
+  "editor.tabSize": 2,
+  "eslint.format.enable": true,
+  "[javascript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[javascriptreact]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[typescript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[typescriptreact]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[markdown]": {
+    "editor.defaultFormatter": "DavidAnson.vscode-markdownlint"
+  },
+  "// files": "-------------------------------------",
+  "files.trimTrailingWhitespace": true,
+  "files.insertFinalNewline": true,
+  "files.associations": {
+    "*.ignore": "plaintext",
+    "*.txt": "plaintext",
+    "*.tsx": "typescriptreact", // Associe .tsx à TypeScript pour React
+    "*.ts": "typescript"
+  },
+  "files.exclude": {
+    "**/*.js": {
+      "when": "$(basename).ts"
+    } // Cache les fichiers .js générés si vous utilisez TypeScript
+  },
+  "// typescript": "-------------------------------------",
+  "typescript.tsdk": "./node_modules/typescript/lib",
+  "typescript.enablePromptUseWorkspaceTsdk": true,
+  "typescript.validate.enable": true,
+  "// eslint": "-------------------------------------",
+  "eslint.validate": [
+    "javascript",
+    "javascriptreact",
+    "typescript",
+    "typescriptreact",
+    "html",
+    "markdown",
+    "json",
+    "jsonc",
+    "yaml"
+  ],
+  "prettier.enable": true,
+  "typescript.tsserver.allowLocalPluginLoads": true,
+  "typescript.tsserver.pluginPaths": ["./"]
+}

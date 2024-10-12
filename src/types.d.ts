@@ -1,8 +1,8 @@
-import { EditorOptions } from "@tiptap/react";
-import { ReactNode } from "react";
+import { EditorOptions } from '@tiptap/react';
+import { ReactNode } from 'react';
 
 type DeepPartial<T> = {
-	[P in keyof T]?: T[P] extends object ? DeepPartial<T[P]> : T[P];
+  [P in keyof T]?: T[P] extends object ? DeepPartial<T[P]> : T[P];
 };
 
 export enum EditorToolbarEnum {
@@ -38,7 +38,7 @@ export type UploadResponse = {
 export type CodeBlockWithCopyProps = {
   language?: string;
   className?: string;
-}
+};
 /**
  * Image upload options from drop or paste event
  * the image can be uploaded to the server via an API or saved inside as a base64 string
@@ -170,14 +170,14 @@ export type IRequiredLabels = {
     addLegendText: string;
     enterValidLegendText: string;
     imageMaxSize: string;
-  }
+  };
 };
 
 export type ILabels = DeepPartial<IRequiredLabels>;
 
 export interface ITextEditorOption<T = string> {
   label: string;
-  value: T,
+  value: T;
   icon?: string | ReactNode;
   hide?: boolean;
 }
@@ -241,10 +241,10 @@ export type TextEditorProps = {
   errorClassName?: string;
 
   /*
-    * root class name
-    * it's the main class name of the all the editor
-    * label, tabs, input, toolbar, etc
-  */
+   * root class name
+   * it's the main class name of the all the editor
+   * label, tabs, input, toolbar, etc
+   */
   rootClassName?: string;
 
   /**
@@ -283,7 +283,7 @@ export type TextEditorProps = {
    */
   bubbleMenuToolbar?: IEditorToolbar[];
 
-   /**
+  /**
    * toolbar (each icon) to be displayed in floating menu
    *
    * default values are: ['bold', 'italic', 'underline', 'link']

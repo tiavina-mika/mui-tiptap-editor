@@ -1,8 +1,8 @@
-import Mention, { MentionOptions } from "@tiptap/extension-mention";
+import Mention, { MentionOptions } from '@tiptap/extension-mention';
 import { mergeAttributes } from '@tiptap/react';
-import getSuggestion from "../components/mention/suggestions";
-import { Node } from "@tiptap/pm/model";
-import { ITextEditorOption } from "../types";
+import getSuggestion from '../components/mention/suggestions';
+import { Node } from '@tiptap/pm/model';
+import { ITextEditorOption } from '../types';
 
 type Props = {
   pathname?: string;
@@ -14,56 +14,54 @@ type Props = {
  * mention user in the editor, and link to the select profile
  */
 export const getCustomMention = ({
-  pathname = "/users",
-  mentions
+  pathname = '/users',
+  mentions,
 }: Props) => {
   const extendsOption = {
     // use a link (with url) instead of the default span
+    // eslint-disable-next-line @typescript-eslint/naming-convention
     renderHTML({ node, HTMLAttributes }: Record<string, any>) {
       return [
-        "a",
+        'a',
         mergeAttributes(
-          { href: `${pathname}/${HTMLAttributes["data-id"]}` },
+          { href: `${pathname}/${HTMLAttributes['data-id']}` },
           this.options.HTMLAttributes,
           HTMLAttributes
         ),
-        (this.options as any)?.renderLabel({
+        (this.options)?.renderLabel({
           options: this.options,
-          node
-        })
+          node,
+        }),
       ];
     },
     // the attribute should be user id for exemple
-    addAttributes() {
-      return {
-        id: {
-          default: null,
-          parseHTML: (element: HTMLElement) => element.getAttribute("data-id"),
-          renderHTML: (attributes: any) => {
-            if (!attributes.id?.value) {
-              return {};
-            }
-
-            return {
-              "data-id": attributes.id.value
-            };
+    addAttributes: () => ({
+      id: {
+        default: null,
+        parseHTML: (element: HTMLElement) => element.getAttribute('data-id'),
+        renderHTML: (attributes: any) => {
+          if (!attributes.id?.value) {
+            return {};
           }
-        }
-      };
-    }
+
+          return {
+            'data-id': attributes.id.value,
+          };
+        },
+      },
+    }),
   } as any;
 
   return Mention
     .extend(extendsOption)
     .configure({
       HTMLAttributes: {
-        class: "mention"
+        class: 'mention',
       },
-      renderLabel({ options, node }: { options: MentionOptions; node: Node }) {
-        return `${options.suggestion.char}${
+      renderLabel: ({ options, node }: { options: MentionOptions; node: Node }) =>
+        `${options.suggestion.char}${
           node.attrs.label ?? node.attrs.id.label
-        }`;
-      },
-      suggestion: getSuggestion(mentions)
+        }`,
+      suggestion: getSuggestion(mentions),
     });
-}
+};

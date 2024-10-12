@@ -20,7 +20,9 @@ export default tseslint.config(
             "**/build",
             "**/vite.config.ts",
             "**/.prettierrc.cjs",
+            "**/.eslint.config.mjs",
             "**/example/",
+            "**/coverage/",
         ]
     },
     eslint.configs.recommended,
@@ -39,7 +41,7 @@ export default tseslint.config(
                     allowDefaultProject: ['*.mjs', '*.js'],
                     defaultProject: 'tsconfig.json',
                 },
-                // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+
                 tsconfigRootDir: import.meta.dirname,
             },
             sourceType: "module",
@@ -268,7 +270,7 @@ export default tseslint.config(
                 // e.g: IProject, IUser, IProjectData, ...
                 { "selector": "interface", "format": ["PascalCase"], "prefix": ["I"] },
                 { "selector": "typeAlias", "format": ["PascalCase"] },
-                { "selector": "enumMember", "format": ["UPPER_CASE"] },
+                { "selector": "enumMember", "format": ["UPPER_CASE", "camelCase"] },
                 { "selector": "class", "format": ["PascalCase"] },
                 { "selector": "classProperty", "format": ["camelCase", "UPPER_CASE"] },
                 { "selector": "classMethod", "format": ["camelCase"] },
@@ -331,13 +333,16 @@ export default tseslint.config(
             }],
         },
     },
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
     {
         languageOptions: {
             globals: { ...globals.jest }
         },
         files: ['**/__tests__/?(*.)+(spec|test).ts?(x)'],
         ...jest.configs['flat/recommended'],
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
         rules: {
+            // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
             ...jest.configs['flat/recommended'].rules
         }
     }

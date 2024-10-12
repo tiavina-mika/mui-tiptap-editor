@@ -2,7 +2,7 @@ import { MouseEventHandler, ReactNode } from 'react';
 
 import {
   IconButton, Theme, Typography, Button, Dialog as MUIDialog, DialogProps,
-  DialogActions, DialogContent, DialogContentText, DialogTitle
+  DialogActions, DialogContent, DialogContentText, DialogTitle,
 } from '@mui/material';
 import Close from '../icons/Close';
 
@@ -18,8 +18,8 @@ const classes = {
     '& .MuiDialogActions-root': {
       padding: theme.spacing(1),
     },
-  })
-}
+  }),
+};
 
 type Props = {
   title: string;
@@ -61,11 +61,11 @@ const Dialog = ({
 
   const closeIcon = (
     <IconButton
-      edge="start"
-      color="inherit"
-      onClick={onClose}
       aria-label="close"
-      sx={{ position: "absolute", right: 0, top: 0 }}
+      color="inherit"
+      edge="start"
+      sx={{ position: 'absolute', right: 0, top: 0 }}
+      onClick={onClose}
     >
       {/* <img alt="close" src="/icons/close.svg" /> */}
       <Close />
@@ -75,14 +75,14 @@ const Dialog = ({
   return (
     <MUIDialog
       {...dialogProps}
-      open={!!open}
-      onClose={onClose}
-      aria-labelledby="alert-dialog-title"
       aria-describedby="alert-dialog-description"
-      maxWidth={maxWidth}
-      css={classes.dialog}
-      onClick={onClick}
+      aria-labelledby="alert-dialog-title"
       className={className}
+      css={classes.dialog}
+      maxWidth={maxWidth}
+      open={!!open}
+      onClick={onClick}
+      onClose={onClose}
     >
       <DialogTitle id="alert-dialog-title">
         <div className="flexRow spaceBetween center">
@@ -106,10 +106,9 @@ const Dialog = ({
         {/* confirm button */}
         {onPrimaryButtonAction && (
           <Button
-            onClick={handlePrimaryButtonAction}
-            autoFocus
-            variant="contained"
             sx={{ textTransform: 'capitalize' }}
+            variant="contained"
+            onClick={handlePrimaryButtonAction}
           >
             {primaryButtonText ?? 'Confirm'}
           </Button>

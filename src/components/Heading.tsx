@@ -1,57 +1,59 @@
-import { Editor } from "@tiptap/react";
-import { Menu, MenuItem, Fade, Theme, Button } from "@mui/material";
-import { Level } from "@tiptap/extension-heading";
-import { MouseEvent, useMemo, useState } from "react";
-import ChevronDown from "../icons/ChevronDown";
-import Icon from "../icons/Icon";
-import { ILabels } from "../types";
-import { getBorderColor } from "../utils/app.utils";
+import { Editor } from '@tiptap/react';
+import {
+  Menu, MenuItem, Fade, Theme, Button,
+} from '@mui/material';
+import { Level } from '@tiptap/extension-heading';
+import { MouseEvent, useMemo, useState } from 'react';
+import ChevronDown from '../icons/ChevronDown';
+import Icon from '../icons/Icon';
+import { ILabels } from '../types';
+import { getBorderColor } from '../utils/app.utils';
 
 const isActive = (editor: Editor) => {
   return (
-    editor.isActive("heading", { level: 1 }) ||
-    editor.isActive("heading", { level: 2 }) ||
-    editor.isActive("heading", { level: 3 }) ||
-    editor.isActive("heading", { level: 4 }) ||
-    editor.isActive("heading", { level: 5 }) ||
-    editor.isActive("heading", { level: 6 })
+    editor.isActive('heading', { level: 1 }) ||
+    editor.isActive('heading', { level: 2 }) ||
+    editor.isActive('heading', { level: 3 }) ||
+    editor.isActive('heading', { level: 4 }) ||
+    editor.isActive('heading', { level: 5 }) ||
+    editor.isActive('heading', { level: 6 })
   );
-}
+};
 
 const options: Level[] = [1, 2, 3, 4, 5, 6];
 
 const classes = {
   heading: (split: boolean) => (theme: Theme) => ({
-    display: "flex",
-    alignItems: "center",
-    alignSelf: "stretch",
-    borderRight: split ? `1px solid ${getBorderColor(theme)}` : "none",
+    display: 'flex',
+    alignItems: 'center',
+    alignSelf: 'stretch',
+    borderRight: split ? `1px solid ${getBorderColor(theme)}` : 'none',
   }),
   button: (isActive: boolean) => (theme: Theme) => ({
-    backgroundColor: "transparent",
+    backgroundColor: 'transparent',
     fontWeight: 500,
     paddingLeft: 8,
     paddingRight: 8,
     textTransform: 'capitalize' as const,
     // TODO: may be changed later
-    border: isActive ? "0px solid gray !important" : "none !important",
+    border: isActive ? '0px solid gray !important' : 'none !important',
     borderRight: `1px solid ${theme.palette.grey[300]}`,
     fontSize: 14,
     lineHeight: 1,
     cursor: 'pointer',
     '&:hover': {
-      backgroundColor: 'transparent !important'
-    }
+      backgroundColor: 'transparent !important',
+    },
   }),
   menuItem: (isActive: boolean, fontSize: number) => (theme: Theme) => ({
-    backgroundColor: isActive ? theme.palette.grey[100] : "transparent",
-    fontSize
-  })
-}
+    backgroundColor: isActive ? theme.palette.grey[100] : 'transparent',
+    fontSize,
+  }),
+};
 
 type Props = {
   editor: Editor;
-  headingLabels?: ILabels["headings"];
+  headingLabels?: ILabels['headings'];
   split?: boolean;
 };
 const Heading = ({ editor, headingLabels, split = false }: Props) => {
@@ -63,13 +65,13 @@ const Heading = ({ editor, headingLabels, split = false }: Props) => {
     const heading = options.find(option => option === selected);
 
     if (heading) {
-      if (headingLabels && headingLabels[`h${heading}`]) {
+      if (headingLabels?.[`h${heading}`]) {
         return headingLabels[`h${heading}`];
       }
       return `Heading ${heading}`;
     }
 
-    if (headingLabels && headingLabels.normalText) {
+    if (headingLabels?.normalText) {
       return headingLabels.normalText;
     }
     return 'Normal text';
@@ -91,18 +93,18 @@ const Heading = ({ editor, headingLabels, split = false }: Props) => {
     editor.chain().focus().setParagraph().run();
     setSelected(0);
     handleClose();
-  }
+  };
 
   return (
     <span css={classes.heading(split)}>
       {/* button */}
       <Button
-        type="button"
-        onClick={handleOpenHeadingMenu}
-        css={classes.button(isActive(editor))}
         className="flexRow center"
-        variant="text"
         color="inherit"
+        css={classes.button(isActive(editor))}
+        type="button"
+        variant="text"
+        onClick={handleOpenHeadingMenu}
       >
         <span css={{ marginRight: 8 }}>
           {selectedLabel}
@@ -114,28 +116,28 @@ const Heading = ({ editor, headingLabels, split = false }: Props) => {
       </Button>
       {/* menu */}
       <Menu
-        id="select-heading-menu"
-        MenuListProps={{
-          "aria-labelledby": "select-heading-button"
-        }}
         anchorEl={anchorEl}
+        id="select-heading-menu"
         open={Boolean(anchorEl)}
-        onClose={handleClose}
         TransitionComponent={Fade}
+        MenuListProps={{
+          'aria-labelledby': 'select-heading-button',
+        }}
+        onClose={handleClose}
       >
         {/* normal text option */}
         <MenuItem onClick={handleSelectNormalText}>
-          {headingLabels?.normalText || "Normal text"}
+          {headingLabels?.normalText || 'Normal text'}
         </MenuItem>
         {/* heading options */}
         {options.map((option, index) => (
           <MenuItem
             key={index}
-            onClick={() => handleSelectHeading(option)}
             css={classes.menuItem(
-              editor.isActive("heading", { level: option }), // isActive
+              editor.isActive('heading', { level: option }), // isActive
               (10 - index) * 3 // fontSize is decreasing
             )}
+            onClick={() => handleSelectHeading(option)}
           >
             {/* override labels or default ones */}
             {headingLabels?.[`h${option}`] || `Heading ${option}`}

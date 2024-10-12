@@ -13,6 +13,7 @@
     "outDir": "./dist",
     "sourceMap": false,
     "esModuleInterop": true,
+    "strictNullChecks": true,
 
     // Linting
     "strict": true,
@@ -22,5 +23,5 @@
     "jsxImportSource": "@emotion/react",
     "noFallthroughCasesInSwitch": true
   },
-  "include": ["./src", "vite.config.ts", "jest.config.js"]
+  "include": ["./src", "vite.config.ts", "jest.config.js", "dts-bundle-generator.config.ts", "./__tests__"]
 }

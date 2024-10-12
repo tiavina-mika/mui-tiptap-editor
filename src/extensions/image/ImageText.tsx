@@ -8,10 +8,12 @@
  * https://github.com/ueberdosis/tiptap/issues/2912
  * https://tiptap.dev/docs/editor/extensions/functionality/filehandler
  *
-*/
+ */
 
 import Edit from '../../icons/Edit';
-import { IconButton, Stack, TextField, Theme, Typography } from '@mui/material';
+import {
+  IconButton, Stack, TextField, Theme, Typography,
+} from '@mui/material';
 import { ChangeEvent, useEffect, useState } from 'react';
 import { checkAlt, checkLegend } from '../../utils/app.utils';
 import Dialog from '../../components/Dialog';
@@ -25,7 +27,7 @@ type Props = {
   attrName?: 'alt' | 'title';
   invalidErrorMessage?: string;
   maxLegendLength?: number;
-}
+};
 
 const classes = {
   imageTextRoot: (attrName: Props['attrName']) => (theme: Theme) => {
@@ -41,7 +43,8 @@ const classes = {
 
     if (attrName === 'title') { // title (label)
       values.top = 10;
-    } else { // alt
+    }
+    else { // alt
       values.bottom = 10;
     }
 
@@ -56,14 +59,14 @@ const classes = {
     cursor: 'pointer',
     borderRadius: 4,
     padding: '4px 4px 4px 12px !important',
-    fontSize: '14px !important'
-  }
-}
+    fontSize: '14px !important',
+  },
+};
 
 /*
-  * display only in editable mode
-  * NOTE: if displaying the html string outside of the editor, hide this by using css
-*/
+ * display only in editable mode
+ * NOTE: if displaying the html string outside of the editor, hide this by using css
+ */
 
 const ImageText = ({
   defaultValue,
@@ -71,16 +74,16 @@ const ImageText = ({
   label,
   attrName = 'alt',
   invalidErrorMessage,
-  maxLegendLength = 100
+  maxLegendLength = 100,
 }: Props) => {
   const [open, setOpen] = useState<boolean>(false);
-  const [clear, setClear] = useState<boolean>(false);
+  const [isClear, setIsClear] = useState<boolean>(false);
   const [value, setValue] = useState<string>('');
   const [error, setError] = useState<string>('');
 
   useEffect(() => {
     setValue(defaultValue || '');
-  }, [defaultValue])
+  }, [defaultValue]);
 
   const handleOpen = () => {
     setOpen(true);
@@ -88,22 +91,26 @@ const ImageText = ({
   };
   const handleClose = () => setOpen(false);
 
-  const toggleClear = () => setClear(!clear);
+  const toggleClear = () => setIsClear(!isClear);
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { value } = e.target;
     let isValidInput;
     let errorMessage;
+
     if (attrName === 'alt') {
       const { isValid, message } = checkAlt(value);
-      isValidInput = isValid;
-      errorMessage = message;
-    } else {
-      const { isValid, message } = checkLegend(value, maxLegendLength);
+
       isValidInput = isValid;
       errorMessage = message;
     }
-    console.log("🚀 ~ handleChange ~ errorMessage:", errorMessage)
+    else {
+      const { isValid, message } = checkLegend(value, maxLegendLength);
+
+      isValidInput = isValid;
+      errorMessage = message;
+    }
+    console.log('🚀 ~ handleChange ~ errorMessage:', errorMessage);
 
     if (isValidInput) {
       setValue(value);
@@ -111,72 +118,88 @@ const ImageText = ({
       return;
     }
     setError(invalidErrorMessage || errorMessage);
-  }
+  };
 
   const handleConfirm = async () => {
     await onConfirm({ [attrName]: value });
     setOpen(false);
-    // if delete this current node (each image)
-    // deleteNode();
-  }
+    /*
+     * if delete this current node (each image)
+     * deleteNode();
+     */
+  };
 
   // remove the current node
   const handleDelete = async () => {
     await onConfirm({ [attrName]: '' });
     setValue('');
     toggleClear();
-  }
+  };
 
-  if (clear) return;
+  if (isClear) return;
 
   return (
     <>
       <Stack
-        css={classes.imageTextRoot(attrName)}
-        className='tiptap-legend-text'
-        direction="row"
         alignItems="center"
+        className="tiptap-legend-text"
+        css={classes.imageTextRoot(attrName)}
+        direction="row"
         spacing={0}
       >
         {value && !error
           ? (
-            <Stack direction="row" alignItems="center" spacing={2}>
+            <Stack alignItems="center" direction="row" spacing={2}>
               <Typography>{value}</Typography>
-              <IconButton size="small" sx={classes.buttonIconSx} type="button" onClick={handleOpen}>
+              <IconButton
+                size="small"
+                sx={classes.buttonIconSx}
+                type="button"
+                onClick={handleOpen}
+              >
                 <Edit />
               </IconButton>
             </Stack>
           ) : (
-            <button type="button" onClick={handleOpen} css={[classes.buttonIconSx, classes.addButton]} className="flexRow itemsCenter">
+            <button
+              className="flexRow itemsCenter"
+              css={[classes.buttonIconSx, classes.addButton]}
+              type="button"
+              onClick={handleOpen}
+            >
               <Add />
               <Typography>{label}</Typography>
             </button>
           )}
-        <IconButton size="small" sx={classes.buttonIconSx} type="button" onClick={handleDelete}>
+        <IconButton
+          size="small"
+          sx={classes.buttonIconSx}
+          type="button"
+          onClick={handleDelete}
+        >
           <Close />
         </IconButton>
       </Stack>
       {/* dialog form */}
       <Dialog
-        title={label}
+        fullWidth
+        maxWidth="xs"
         open={open}
+        title={label}
         onClose={handleClose}
         onPrimaryButtonAction={handleConfirm}
-        maxWidth="xs"
-        fullWidth
       >
         <TextField
-          value={value}
-          onChange={handleChange}
           fullWidth
           error={!!error}
-          helperText={error || (attrName === 'title' ? `${value.length}/${maxLegendLength}`  : '')}
-          // legend has multiple lines
+          helperText={error || (attrName === 'title' ? `${value.length}/${maxLegendLength}` : '')}
+          value={value}
+          onChange={handleChange}
           {...(attrName === 'title' ? { rows: 4, multiline: true } : {})}
         />
       </Dialog>
     </>
-  )
-}
+  );
+};
 
 export default ImageText;

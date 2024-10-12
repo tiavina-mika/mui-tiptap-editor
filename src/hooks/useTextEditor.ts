@@ -1,4 +1,4 @@
-import {  useTheme } from '@mui/material';
+import { useTheme } from '@mui/material';
 import { Color } from '@tiptap/extension-color';
 import Document from '@tiptap/extension-document';
 import Link from '@tiptap/extension-link';
@@ -9,13 +9,13 @@ import Text from '@tiptap/extension-text';
 import TextStyle from '@tiptap/extension-text-style';
 import TipTapTypography from '@tiptap/extension-typography';
 import Underline from '@tiptap/extension-underline';
-import Gapcursor from "@tiptap/extension-gapcursor";
-import TextAlign from "@tiptap/extension-text-align";
-import Table from "@tiptap/extension-table";
-import TableCell from "@tiptap/extension-table-cell";
-import TableHeader from "@tiptap/extension-table-header";
-import TableRow from "@tiptap/extension-table-row";
-import Youtube from "@tiptap/extension-youtube";
+import Gapcursor from '@tiptap/extension-gapcursor';
+import TextAlign from '@tiptap/extension-text-align';
+import Table from '@tiptap/extension-table';
+import TableCell from '@tiptap/extension-table-cell';
+import TableHeader from '@tiptap/extension-table-header';
+import TableRow from '@tiptap/extension-table-row';
+import Youtube from '@tiptap/extension-youtube';
 import BubbleMenu from '@tiptap/extension-bubble-menu';
 import {
   useEditor,
@@ -26,7 +26,9 @@ import {
 import StarterKit from '@tiptap/starter-kit';
 import { useEffect } from 'react';
 import Heading from '@tiptap/extension-heading';
-import { CodeBlockWithCopyProps, ILabels, ImageUploadOptions, ITextEditorOption } from '../types.d';
+import {
+  CodeBlockWithCopyProps, ILabels, ImageUploadOptions, ITextEditorOption,
+} from '../types.d';
 import getCustomImage from '../extensions/CustomImage';
 import { getCustomMention } from '../extensions/CustomMention';
 import { getCodeBlockWithCopy } from '../extensions/CodeBlockWithCopy';
@@ -42,16 +44,18 @@ const extensions = [
   Link.configure({
     openOnClick: false,
     protocols: [
-      "https",
-      "mailto",
+      'https',
+      'mailto',
       {
-        scheme: "tel",
-        optionalSlashes: true
-      }
+        scheme: 'tel',
+        optionalSlashes: true,
+      },
     ],
     HTMLAttributes: {
-      // Change rel to different value
-      // Allow search engines to follow links(remove nofollow)
+      /*
+       * Change rel to different value
+       * Allow search engines to follow links(remove nofollow)
+       */
       rel: 'noopener noreferrer',
       // Remove target entirely so links open in current tab
       target: null,
@@ -67,7 +71,7 @@ const extensions = [
       keepAttributes: false, // TODO : Making this as `false` becase marks are not preserved when I try to preserve attrs, awaiting a bit of help
     },
     // history: false, // important because history will now be handled by Y.js
-    codeBlock: false
+    codeBlock: false,
   }),
   Heading.configure({
     HTMLAttributes: {
@@ -76,7 +80,7 @@ const extensions = [
     levels: [1, 2, 3, 3, 4, 5, 6],
   }),
   Table.configure({
-    resizable: true
+    resizable: true,
   }),
   TableRow,
   TableHeader,
@@ -84,8 +88,8 @@ const extensions = [
   Gapcursor,
   Youtube,
   TextAlign.configure({
-    types: ["heading", "paragraph", "table", "image"]
-  }),,
+    types: ['heading', 'paragraph', 'table', 'image'],
+  }),
   BubbleMenu.configure({
     element: document.querySelector('.bubble-menu'),
   } as any),
@@ -138,10 +142,13 @@ export const useTextEditor = ({
       getCodeBlockWithCopy(codeBlock),
       ...extensions,
     ] as AnyExtension[],
-    /* The `onUpdate` function in the `useTextEditor` hook is a callback that is triggered whenever the
-    editor content is updated. Here's a breakdown of what it does: */
+    /*
+     * The `onUpdate` function in the `useTextEditor` hook is a callback that is triggered whenever the
+     * editor content is updated. Here's a breakdown of what it does:
+     */
     onUpdate: ({ editor }: EditorEvents['update']) => {
       const html = editor.getHTML();
+
       onChange?.(html);
     },
     ...editorOptions,
@@ -171,6 +178,7 @@ export const useTextEditor = ({
     if (value && !editable && tab === 'preview') {
       editor.commands.setContent(value);
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [editor, value]);
 
   /**
@@ -181,23 +189,24 @@ export const useTextEditor = ({
     // preview tab or not editable
     if (editable) {
       const className = tab === 'editor' ? 'mui-tiptap-input' : 'mui-tiptap-input mui-tiptap-input-preview';
+
       // editor tab
       editor?.setOptions({
         editable: tab === 'editor',
         editorProps: {
           attributes: {
-            class: className
+            class: className,
           },
         },
       });
-      return ;
-    };
+      return;
+    }
 
     editor?.setOptions({
       editable: false,
       editorProps: {
         attributes: {
-          class: 'mui-tiptap-input mui-tiptap-input-preview'
+          class: 'mui-tiptap-input mui-tiptap-input-preview',
         },
       },
     });
