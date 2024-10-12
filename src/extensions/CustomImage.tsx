@@ -9,12 +9,16 @@
  * https://github.com/ueberdosis/tiptap/issues/2912
  * https://tiptap.dev/docs/editor/extensions/functionality/filehandler
  *
-*/
+ */
 
-import TiptapImage from '@tiptap/extension-image'
-import { Editor, NodeViewWrapper, NodeViewWrapperProps, ReactNodeViewRenderer } from '@tiptap/react';
+import TiptapImage from '@tiptap/extension-image';
+import {
+  Editor, NodeViewWrapper, NodeViewWrapperProps, ReactNodeViewRenderer,
+} from '@tiptap/react';
 import { ClipboardEvent, SyntheticEvent } from 'react';
-import { checkFilesNumber, checkIsImage, checkValidMimeType, checkValidFileDimensions, getIsFileSizeValid } from '../utils/app.utils';
+import {
+  checkFilesNumber, checkIsImage, checkValidMimeType, checkValidFileDimensions, getIsFileSizeValid,
+} from '../utils/app.utils';
 import { EditorView } from '@tiptap/pm/view';
 import { Slice } from '@tiptap/pm/model';
 import { ILabels, ImageUploadOptions } from '../types';
@@ -48,7 +52,7 @@ export const onUpload = (
   // tiptap editor instance
   editor: Editor,
   // custom labels
-  labels?: ILabels['upload'],
+  labels?: ILabels['upload']
 ) => (view: EditorView, event: DragEvent | ClipboardEvent, _: Slice, moved: boolean): boolean | void => {
   // check if event has files
   const hasFiles = type === 'drop'
@@ -62,7 +66,11 @@ export const onUpload = (
   const files = (type === 'drop' ? (event as DragEvent).dataTransfer?.files : (event as ClipboardEvent).clipboardData?.files) || [];
 
   // check if the number of files is valid
-  const { isValid: isFilesNumberValid, message: filesNumberMessage } = checkFilesNumber(files as FileList, maxFilesNumber);
+  const {
+    isValid: isFilesNumberValid,
+    message: filesNumberMessage,
+  } = checkFilesNumber(files as FileList, maxFilesNumber);
+
   if (!isFilesNumberValid) {
     window.alert(labels?.maximumNumberOfFiles || filesNumberMessage);
     return;
@@ -73,16 +81,23 @@ export const onUpload = (
   event.preventDefault();
 
   for (const file of files) {
-    // 1. check if the file is an image
-    // for now we only support images
+    /*
+     * 1. check if the file is an image
+     * for now we only support images
+     */
     const { isValid: isImage, message: isImageMessage } = checkIsImage(file);
+
     if (!isImage) {
       window.alert(labels?.shouldBeAnImage || isImageMessage);
       return;
     }
 
     // 2. check if the mime type is allowed
-    const { isValid: isValidMimeTypes, message: isValidMimeTypesMessage } = checkValidMimeType(file, allowedMimeTypes);
+    const {
+      isValid: isValidMimeTypes,
+      message: isValidMimeTypesMessage,
+    } = checkValidMimeType(file, allowedMimeTypes);
+
     if (!isValidMimeTypes) {
       window.alert(labels?.invalidMimeType || isValidMimeTypesMessage);
       return;
@@ -90,16 +105,22 @@ export const onUpload = (
 
     // 3. file size in MB
     const { isValid: isFileSizeValid, message: isFileSizeValidMessage } = getIsFileSizeValid(file, maxSize);
+
     if (!isFileSizeValid) {
       window.alert(labels?.fileTooLarge || isFileSizeValidMessage);
       return;
     }
 
     const reader = new FileReader();
+
     reader.onload = async (readerEvent: ProgressEvent<FileReader>) => {
       if (!readerEvent.target) return;
       // 4. check if the image dimensions are valid
-      const { isValid: isImageDimensionValid, message: isImageDimensionValidMessage } = await checkValidFileDimensions(file, imageMaxWidth, imageMaxHeight);
+      const {
+        isValid: isImageDimensionValid,
+        message: isImageDimensionValidMessage,
+      } = await checkValidFileDimensions(file, imageMaxWidth, imageMaxHeight);
+
       if (!isImageDimensionValid) {
         window.alert(labels?.imageMaxSize || isImageDimensionValidMessage);
         return;
@@ -112,18 +133,24 @@ export const onUpload = (
       // ---------- drop ---------- //
       if (type === 'drop') {
         const dropEvent = event as DragEvent;
-        const coordinates = view.posAtCoords({ left: dropEvent.clientX, top: dropEvent.clientY }) as { pos: number; inside: number; };
+        const coordinates = view.posAtCoords({
+          left: dropEvent.clientX,
+          top: dropEvent.clientY,
+        }) as { pos: number; inside: number };
+
         position = coordinates.pos;
       }
 
       // ----- upload callback ----- //
       if (uploadFile) {
         const response = await uploadFile(file);
+
         if (response) {
           if (typeof response === 'string') {
             // only src attribute
             attrs.src = response;
-          } else {
+          }
+          else {
             // other attributes like alt, title, etc
             attrs = { ...attrs, ...response };
           }
@@ -135,14 +162,14 @@ export const onUpload = (
         type: 'image',
         attrs,
       }).focus().run();
-    }
+    };
 
     reader.readAsDataURL(file);
   }
-}
+};
 
 const classes = {
-  tiptapImageRootStyle: ({ isRight, isLeft }: { isRight: boolean; isLeft: boolean; }) => {
+  tiptapImageRootStyle: ({ isRight, isLeft }: { isRight: boolean; isLeft: boolean }) => {
     const values = {
       display: 'flex',
       flex: 1,
@@ -153,71 +180,73 @@ const classes = {
 
     if (isRight) {
       values.justifyContent = 'flex-end';
-    } else if (isLeft) {
+    }
+    else if (isLeft) {
       values.justifyContent = 'flex-start';
     }
 
-    return values
+    return values;
   },
   tiptapImageRoot: {
     '&.ProseMirror-selectednode .tiptap-image-content': {
       outline: '2px solid blue',
     },
   },
-}
+};
 
 const getClassName = (selected: boolean): string => {
   // this className is used in the css file
   let className = 'tiptap-image';
+
   if (selected) {
     className += ' ProseMirror-selectednode';
   }
-  return className
-}
+  return className;
+};
 
 type Props = {
   maxLegendLength?: number;
 } & ILabels['upload'] & NodeViewWrapperProps;
 
-const ImageNode = ({ labels, node, updateAttributes, editor, maxLegendLength, ...props }: Props) => {
+// eslint-disable-next-line react-refresh/only-export-components
+const ImageNode = ({
+  labels, node, updateAttributes, editor, maxLegendLength, ...props
+}: Props) => {
   /**
    * update the alt or title attribute
    * @param attr { alt: "Alt" } or { title: "Title" }
    */
   const handleConfirm = async (attr: Record<string, string>) => {
     await updateAttributes(attr);
-  }
+  };
 
-  const onLoadImage = (e: SyntheticEvent<HTMLImageElement, Event>) => {
+  const onLoadImage = (e: SyntheticEvent<HTMLImageElement>) => {
     const target = e.target as HTMLImageElement;
+
     // remove the width and height after the image is loaded
     target.removeAttribute('width');
     target.removeAttribute('height');
-  }
+  };
 
   return (
     <NodeViewWrapper
-      // className to check if node is selected, used in editor
-      className={getClassName(props.selected)}
-      // used in editor
-      css={classes.tiptapImageRoot}
       data-drag-handle
-      // used to display the content outside of the editor library
-      style={classes.tiptapImageRootStyle({
-        isRight: editor.isActive({ textAlign: "right" }),
-        isLeft: editor.isActive({ textAlign: "left" }),
+      className={getClassName(props.selected)}
+      css={classes.tiptapImageRoot} // used in editor
+      style={classes.tiptapImageRootStyle({ // used to display the content outside of the editor library
+        isRight: editor.isActive({ textAlign: 'right' }),
+        isLeft: editor.isActive({ textAlign: 'left' }),
       })}
     >
       <div className="tiptap-image-content" style={{ position: 'relative' }}>
         {/* ------------ image ------------ */}
         <figure>
           <img
-            title={node.attrs.title}
-            src={node.attrs.src}
             alt={node.attrs.alt}
-            // add temporary width and height to show the image while loading
-            width="300"
             height="300"
+            src={node.attrs.src}
+            title={node.attrs.title}
+            width="300" // add temporary width and height to show the image while loading
             onLoad={onLoadImage}
           />
           {/* legend */}
@@ -231,27 +260,27 @@ const ImageNode = ({ labels, node, updateAttributes, editor, maxLegendLength, ..
         {(editor.options.editable) && (
           <>
             <ImageText
-              defaultValue={node.attrs.alt}
-              onConfirm={handleConfirm}
-              label={labels?.addAltText || 'Add alt text'}
               attrName="alt"
+              defaultValue={node.attrs.alt}
               invalidErrorMessage={labels?.enterValidAltText || 'Please enter a valid alt text'}
+              label={labels?.addAltText || 'Add alt text'}
+              onConfirm={handleConfirm}
 
             />
             <ImageText
-              defaultValue={node.attrs.title}
-              onConfirm={handleConfirm}
-              label={labels?.addLegendText || 'Add legend'}
               attrName="title"
+              defaultValue={node.attrs.title}
               invalidErrorMessage={labels?.enterValidLegendText || 'Please enter a valid legend'}
+              label={labels?.addLegendText || 'Add legend'}
               maxLegendLength={maxLegendLength}
+              onConfirm={handleConfirm}
             />
           </>
         )}
       </div>
     </NodeViewWrapper>
-  )
-}
+  );
+};
 
 /**
  * custom image extension to handle image upload
@@ -265,16 +294,15 @@ const getCustomImage = (options?: Omit<ImageUploadOptions, 'type'>, labels?: ILa
   .extend({
     defaultOptions: {
       ...TiptapImage.options,
-      sizes: ["inline", "block", "left", "right"]
+      sizes: ['inline', 'block', 'left', 'right'],
     },
-    addNodeView() {
-      return ReactNodeViewRenderer(
-        (props: any) => <ImageNode {...props} labels={labels} maxLegendLength={maxLegendLength} />,
-        { className: 'tiptap-image' }
-      );
-    },
+    addNodeView: () => ReactNodeViewRenderer(
+      (props: any) => <ImageNode {...props} labels={labels} maxLegendLength={maxLegendLength} />,
+      { className: 'tiptap-image' }
+    ),
     addProseMirrorPlugins() {
       const editor = this.editor as Editor;
+
       return [
         new Plugin({
           props: {
@@ -283,7 +311,7 @@ const getCustomImage = (options?: Omit<ImageUploadOptions, 'type'>, labels?: ILa
           } as any,
         }),
       ];
-    }
+    },
   })
   .configure({ allowBase64: true });
 

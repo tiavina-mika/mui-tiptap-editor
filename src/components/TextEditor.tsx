@@ -1,19 +1,21 @@
-import "../index.css";
+import '../index.css';
 
 import { cx } from '@emotion/css';
 import { Theme } from '@emotion/react';
-import { FormHelperText, Tab, Tabs, Typography } from '@mui/material';
+import {
+  FormHelperText, Tab, Tabs, Typography,
+} from '@mui/material';
 import {
   EditorContent,
   FloatingMenu,
   BubbleMenu,
 } from '@tiptap/react';
 import { useState, SyntheticEvent } from 'react';
-import { useTextEditor } from "../hooks/useTextEditor";
+import { useTextEditor } from '../hooks/useTextEditor';
 
 import Toolbar from './Toolbar';
-import { IEditorToolbar, TextEditorProps } from "../types";
-import { getBorderColor } from "../utils/app.utils";
+import { IEditorToolbar, TextEditorProps } from '../types';
+import { getBorderColor } from '../utils/app.utils';
 
 const defaultMenuToolbar: IEditorToolbar[] = ['heading', 'bold', 'italic', 'underline', 'link', 'bulletList'];
 
@@ -67,11 +69,11 @@ const classes = {
     paddingLeft: 4,
     paddingRight: 4,
     borderRadius: 3,
-    minWidth: 400
+    minWidth: 400,
   }),
   bubbleMenu: (theme: Theme) => ({
     backgroundColor: theme.palette.background.paper,
-  })
+  }),
 };
 
 const TextEditor = ({
@@ -115,12 +117,12 @@ const TextEditor = ({
     userPathname,
     uploadFileOptions,
     uploadFileLabels: labels?.upload,
-    ...editorOptions
-  })
+    ...editorOptions,
+  });
 
   // preview
   if (!editable) {
-    return <EditorContent editor={editor} className={inputClassName} />;
+    return <EditorContent className={inputClassName} editor={editor} />;
   }
 
   return (
@@ -129,7 +131,7 @@ const TextEditor = ({
       {/* ----------- label ---------- */}
       {/* ---------------------------- */}
       {label && (
-        <Typography css={classes.label} className={labelClassName}>
+        <Typography className={labelClassName} css={classes.label}>
           {label}
         </Typography>
       )}
@@ -137,15 +139,20 @@ const TextEditor = ({
       {/* ------------ tabs ---------- */}
       {/* ---------------------------- */}
       <Tabs
+        aria-label="basic tabs example"
+        className={tabsClassName}
+        css={classes.tabs}
+        TabIndicatorProps={{ children: <span className="MuiTabs-indicatorSpan" /> }}
         value={tab}
         onChange={handleTabChange}
-        aria-label="basic tabs example"
-        TabIndicatorProps={{ children: <span className="MuiTabs-indicatorSpan" /> }}
-        css={classes.tabs}
-        className={tabsClassName}
       >
-        <Tab css={classes.tab} label={labels?.editor?.editor || 'Editor'} value="editor" className={tabClassName} />
-        <Tab css={classes.tab} label={labels?.editor?.preview || 'Preview'} className={tabClassName} />
+        <Tab
+          className={tabClassName}
+          css={classes.tab}
+          label={labels?.editor?.editor || 'Editor'}
+          value="editor"
+        />
+        <Tab className={tabClassName} css={classes.tab} label={labels?.editor?.preview || 'Preview'} />
       </Tabs>
 
       {/* ---------------------------- */}
@@ -158,10 +165,10 @@ const TextEditor = ({
               {editor && withFloatingMenu && (
                 <FloatingMenu editor={editor} tippyOptions={{ duration: 100 }}>
                   <Toolbar
-                    editor={editor}
-                    toolbar={floatingMenuToolbar || defaultMenuToolbar}
                     css={[classes.menu, classes.bubbleMenu]}
+                    editor={editor}
                     labels={labels}
+                    toolbar={floatingMenuToolbar || defaultMenuToolbar}
                     uploadFileOptions={uploadFileOptions}
                   />
                 </FloatingMenu>
@@ -169,9 +176,9 @@ const TextEditor = ({
               {editor && withBubbleMenu && (
                 <BubbleMenu editor={editor} tippyOptions={{ duration: 100 }}>
                   <Toolbar
+                    css={[classes.menu, classes.bubbleMenu]}
                     editor={editor}
                     toolbar={bubbleMenuToolbar || defaultMenuToolbar}
-                    css={[classes.menu, classes.bubbleMenu]}
                     uploadFileOptions={uploadFileOptions}
                   />
                 </BubbleMenu>
@@ -179,28 +186,29 @@ const TextEditor = ({
               {/* editor */}
               <EditorContent editor={editor} />
               {error && (
-                <FormHelperText error css={{ paddingTop: 4, paddingBottom: 4 }} className={errorClassName}>
+                <FormHelperText error className={errorClassName} css={{ paddingTop: 4, paddingBottom: 4 }}>
                   {error}
                 </FormHelperText>
               )}
               {editor && (
                 <Toolbar
-                  editor={editor}
                   className={cx('stretchSelf', toolbarClassName)}
-                  toolbar={toolbar}
+                  editor={editor}
                   labels={labels}
+                  toolbar={toolbar}
                   uploadFileOptions={uploadFileOptions}
                 />
               )}
             </div>
           </div>
-        // ---------------------------- //
-        // ----------- preview -------- //
-        // ---------------------------- //
+        /*
+         * ---------------------------- //
+         * ----------- preview -------- //
+         * ---------------------------- //
+         */
         ) : (
-          <EditorContent editor={editor} className={inputClassName} />
-        )
-      }
+          <EditorContent className={inputClassName} editor={editor} />
+        )}
     </div>
   );
 };

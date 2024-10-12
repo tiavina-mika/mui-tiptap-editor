@@ -1,7 +1,11 @@
 import { Theme } from '@emotion/react';
-import { List, ListItem, ListItemButton, ListItemText } from '@mui/material';
+import {
+  List, ListItem, ListItemButton, ListItemText,
+} from '@mui/material';
 import { SuggestionProps } from '@tiptap/suggestion';
-import { forwardRef, useEffect, useImperativeHandle, useState } from 'react';
+import {
+  forwardRef, useEffect, useImperativeHandle, useState,
+} from 'react';
 import { ITextEditorOption } from '../../types.d';
 
 const classes = {
@@ -20,6 +24,7 @@ const classes = {
     },
   }),
 };
+
 type Props = {
   command: (value: { id: ITextEditorOption }) => void;
 } & SuggestionProps<ITextEditorOption>; // items should be an select option
@@ -74,11 +79,12 @@ const Mentions = forwardRef<any, Props>(({ items, command }, ref) => {
     <List css={classes.list}>
       {items.length ? (
         items.map((item: ITextEditorOption, index: number) => (
-          <ListItem disablePadding key={index}>
+          <ListItem key={index} disablePadding>
             <ListItemButton
+              className={`item ${index === selectedIndex ? 'is-selected' : ''}`}
               onClick={() => selectItem(index)}
-              className={`item ${index === selectedIndex ? 'is-selected' : ''}`}>
-              <ListItemText primary={item.label} css={classes.item} />
+            >
+              <ListItemText css={classes.item} primary={item.label} />
             </ListItemButton>
           </ListItem>
         ))

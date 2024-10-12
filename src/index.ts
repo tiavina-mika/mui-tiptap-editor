@@ -10,5 +10,5 @@ export {
 } from './components/Toolbar';
 export {
   type TextEditorProps,
-  type ITextEditorOption
+  type ITextEditorOption,
 } from './types.d';
