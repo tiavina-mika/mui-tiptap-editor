@@ -39,7 +39,7 @@ type Props = {
   id: string;
 };
 const ColorPicker = ({ editor, id }: Props) => {
-  const [color, setColor] = useState<string>('');
+  const [color, setColor] = useState<string>('#000000');
 
   const theme = useTheme();
 
