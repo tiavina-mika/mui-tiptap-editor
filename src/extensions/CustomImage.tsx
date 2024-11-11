@@ -292,8 +292,8 @@ const ImageNode = ({
  */
 const getCustomImage = (options?: Omit<ImageUploadOptions, 'type'>, labels?: ILabels['upload'], maxLegendLength?: number) => TiptapImage
   .extend({
-    defaultOptions: {
-      ...TiptapImage.options,
+    addOptions: {
+      ...(this as any)?.parent?.(),
       sizes: ['inline', 'block', 'left', 'right'],
     },
     addNodeView: () => ReactNodeViewRenderer(
@@ -301,7 +301,7 @@ const getCustomImage = (options?: Omit<ImageUploadOptions, 'type'>, labels?: ILa
       { className: 'tiptap-image' }
     ),
     addProseMirrorPlugins() {
-      const editor = this.editor as Editor;
+      const editor = this.editor;
 
       return [
         new Plugin({
