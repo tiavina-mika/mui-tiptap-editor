@@ -157,7 +157,7 @@ export const onUpload = (
         }
       }
 
-      // insert theimage into the editor
+      // insert the image into the editor
       editor.chain().insertContentAt(position, {
         type: 'image',
         attrs,
