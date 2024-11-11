@@ -70,8 +70,13 @@ const extensions = [
       keepMarks: true,
       keepAttributes: false, // TODO : Making this as `false` becase marks are not preserved when I try to preserve attrs, awaiting a bit of help
     },
-    // history: false, // important because history will now be handled by Y.js
+    // disable the following nodes, since we already have our own
     codeBlock: false,
+    paragraph: false,
+    document: false,
+    gapcursor: false,
+    heading: false,
+    text: false,
   }),
   Heading.configure({
     HTMLAttributes: {
