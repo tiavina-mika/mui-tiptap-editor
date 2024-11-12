@@ -305,11 +305,11 @@ See [`here`](https://github.com/tiavina-mika/mui-tiptap-editor/blob/main/src/dev
     <td>Versions</td>
     <td>Features</td>
   <tr>
-    <tr>
+  <tr>
     <th><a href="https://github.com/tiavina-mika/mui-tiptap-editor/pull/79">v0.9.29</a></th>
     <td>
       <ul>
-        <li>Compatible with Next.js (v13+)</li>
+        <li>Compatible with Next.js (v13+). See <a href="https://github.com/tiavina-mika/mui-tiptap-editor-nextjs">example</a></li>
       </ul>
     </td>
   <tr>
