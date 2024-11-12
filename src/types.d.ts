@@ -328,4 +328,9 @@ export type TextEditorProps = {
    * ex: file size, number of files, allowed mime types, api callback, etc
    */
   uploadFileOptions?: Omit<ImageUploadOptions, 'type'>;
+
+  /**
+   * if true, the tabs (editor, preview) will not be displayed
+   */
+  disableTabs?: boolean;
 } & Partial<EditorOptions>;
