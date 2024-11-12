@@ -69,6 +69,7 @@ const App = () => {
             label="Content"
             mentions={mentions}
             placeholder="Enter your content here"
+            toolbarPosition="top"
             user={currentUser}
             labels={{
               editor: {

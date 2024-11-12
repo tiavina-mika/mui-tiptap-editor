@@ -40,7 +40,13 @@ import TextColor from '../icons/TextColor';
 import UploadFile from './UploadFile';
 
 const classes = {
-  toolbar: (theme: Theme) => ({
+  topToolbar: (theme: Theme) => ({
+    borderBottom: '1px solid ' + getBorderColor(theme),
+    paddingLeft: 8,
+    paddingRight: 8,
+    order: -1,
+  }),
+  bottomToolbar: (theme: Theme) => ({
     marginTop: -1,
     borderTop: '1px solid ' + getBorderColor(theme),
     paddingLeft: 8,
@@ -108,6 +114,11 @@ export type ToolbarProps = {
    * ex: file size, number of files, allowed mime types, api callback, etc
    */
   uploadFileOptions?: TextEditorProps['uploadFileOptions'];
+
+  /**
+   * position of the toolbar
+   */
+  position?: 'top' | 'bottom';
 };
 
 const Toolbar = ({
@@ -115,6 +126,7 @@ const Toolbar = ({
   className,
   labels,
   uploadFileOptions,
+  position,
   toolbar = defaultEditorToolbar,
 }: ToolbarProps) => {
   const [openLinkDialog, setOpen] = useState<boolean>(false);
@@ -363,7 +375,12 @@ const Toolbar = ({
   ]);
 
   return (
-    <div className={cx(className, 'flexRow center')} css={classes.toolbar}>
+    <div
+      className={cx(className, 'flexRow center')}
+      css={position
+        ? (position === 'bottom' ? classes.bottomToolbar : classes.topToolbar)
+        : undefined}
+    >
       {/* heading */}
       {showTextEditorToolbarMenu(toolbar, 'heading') && <Heading split editor={editor} headingLabels={labels?.headings} />}
 

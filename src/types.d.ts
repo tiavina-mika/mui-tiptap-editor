@@ -279,14 +279,14 @@ export type TextEditorProps = {
   /**
    * toolbar (each icon) to be displayed in bubble menu
    *
-   * default values are: ['bold', 'italic', 'underline', 'link']
+   * @default ['bold', 'italic', 'underline', 'link']
    */
   bubbleMenuToolbar?: IEditorToolbar[];
 
   /**
    * toolbar (each icon) to be displayed in floating menu
    *
-   * default values are: ['bold', 'italic', 'underline', 'link']
+   * @default ['bold', 'italic', 'underline', 'link']
    */
   floatingMenuToolbar?: IEditorToolbar[];
 
@@ -294,7 +294,7 @@ export type TextEditorProps = {
    * user object for collaboration
    * the current user or selected user used for collaboration
    *
-   * eg: { label: 'John Doe', value: 'some_user_id' }
+   * @example { label: 'John Doe', value: 'some_user_id' }
    */
   user?: ITextEditorOption;
 
@@ -310,10 +310,10 @@ export type TextEditorProps = {
   /**
    * user pathname for the mentioned user
    *
-   * eg. /profile
    * so the final url will be /profile/:id
    * :id here is the value in mentions array (see above)
    * the final element is something like: <a href="/profile/some_user_id">{mentioned_user}</a>
+   * @example /profile
    */
   userPathname?: string;
 
@@ -331,6 +331,15 @@ export type TextEditorProps = {
 
   /**
    * if true, the tabs (editor, preview) will not be displayed
+   * @default false
    */
   disableTabs?: boolean;
+
+  /**
+   * position of the toolbar
+   * if top, the toolbar will be displayed at the top of the editor
+   * if bottom, the toolbar will be displayed at the bottom of the editor
+   * @default bottom
+   */
+  toolbarPosition?: 'top' | 'bottom';
 } & Partial<EditorOptions>;
