@@ -103,6 +103,7 @@ const TextEditor = ({
   withFloatingMenu = false,
   withBubbleMenu = true,
   disableTabs = false,
+  toolbarPosition = 'bottom',
   ...editorOptions
 }: TextEditorProps) => {
   const [tab, setTab] = useState<'editor' | 'preview'>('editor');
@@ -165,47 +166,52 @@ const TextEditor = ({
       {/* ---------------------------- */}
       {tab === 'editor'
         ? (
-          <div className={cx('positionRelative flexColumn tiptap', inputClassName)} css={classes.input}>
-            <div className="positionRelative stretchSelf">
-              {editor && withFloatingMenu && (
-                <FloatingMenu editor={editor} tippyOptions={{ duration: 100 }}>
+          <>
+            <div className={cx('positionRelative flexColumn tiptap', inputClassName)} css={classes.input}>
+              <div className="positionRelative stretchSelf flexColumn">
+                {editor && withFloatingMenu && (
+                  <FloatingMenu editor={editor} tippyOptions={{ duration: 100 }}>
+                    <Toolbar
+                      css={[classes.menu, classes.bubbleMenu]}
+                      editor={editor}
+                      labels={labels}
+                      toolbar={floatingMenuToolbar || defaultMenuToolbar}
+                      uploadFileOptions={uploadFileOptions}
+                    />
+                  </FloatingMenu>
+                )}
+                {editor && withBubbleMenu && (
+                  <BubbleMenu editor={editor} tippyOptions={{ duration: 100 }}>
+                    <Toolbar
+                      css={[classes.menu, classes.bubbleMenu]}
+                      editor={editor}
+                      toolbar={bubbleMenuToolbar || defaultMenuToolbar}
+                      uploadFileOptions={uploadFileOptions}
+                    />
+                  </BubbleMenu>
+                )}
+                {/* editor field */}
+                <EditorContent editor={editor} />
+                {/* top or bottom toolbar */}
+                {editor && (
                   <Toolbar
-                    css={[classes.menu, classes.bubbleMenu]}
+                    className={cx('stretchSelf', toolbarClassName)}
                     editor={editor}
                     labels={labels}
-                    toolbar={floatingMenuToolbar || defaultMenuToolbar}
+                    position={toolbarPosition}
+                    toolbar={toolbar}
                     uploadFileOptions={uploadFileOptions}
                   />
-                </FloatingMenu>
-              )}
-              {editor && withBubbleMenu && (
-                <BubbleMenu editor={editor} tippyOptions={{ duration: 100 }}>
-                  <Toolbar
-                    css={[classes.menu, classes.bubbleMenu]}
-                    editor={editor}
-                    toolbar={bubbleMenuToolbar || defaultMenuToolbar}
-                    uploadFileOptions={uploadFileOptions}
-                  />
-                </BubbleMenu>
-              )}
-              {/* editor */}
-              <EditorContent editor={editor} />
-              {error && (
-                <FormHelperText error className={errorClassName} css={{ paddingTop: 4, paddingBottom: 4 }}>
-                  {error}
-                </FormHelperText>
-              )}
-              {editor && (
-                <Toolbar
-                  className={cx('stretchSelf', toolbarClassName)}
-                  editor={editor}
-                  labels={labels}
-                  toolbar={toolbar}
-                  uploadFileOptions={uploadFileOptions}
-                />
-              )}
+                )}
+              </div>
             </div>
-          </div>
+            {/* error message */}
+            {error && (
+              <FormHelperText error className={errorClassName} css={{ paddingTop: 4, paddingBottom: 4 }}>
+                {error}
+              </FormHelperText>
+            )}
+          </>
         /*
          * ---------------------------- //
          * ----------- preview -------- //
