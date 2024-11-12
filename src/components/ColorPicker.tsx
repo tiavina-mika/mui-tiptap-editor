@@ -1,3 +1,5 @@
+'use client';
+
 import { useTheme } from '@mui/material';
 import { Editor } from '@tiptap/react';
 
