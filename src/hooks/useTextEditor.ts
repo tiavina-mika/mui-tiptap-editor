@@ -1,3 +1,5 @@
+'use client';
+
 import { useTheme } from '@mui/material';
 import { Color } from '@tiptap/extension-color';
 import Document from '@tiptap/extension-document';

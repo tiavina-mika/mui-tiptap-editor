@@ -1,3 +1,5 @@
+'use client';
+
 import { Theme } from '@emotion/react';
 import { cx } from '@emotion/css';
 import { IconButton, Tooltip } from '@mui/material';

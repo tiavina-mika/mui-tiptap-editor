@@ -1,3 +1,5 @@
+'use client';
+
 import { Editor } from '@tiptap/react';
 import {
   Menu, MenuItem, Fade, Theme, Button,

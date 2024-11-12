@@ -1,3 +1,5 @@
+'use client';
+
 /**
  *
  * Edit image alt text in Tiptap editor

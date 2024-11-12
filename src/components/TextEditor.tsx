@@ -1,3 +1,5 @@
+'use client';
+
 import '../index.css';
 
 import { cx } from '@emotion/css';

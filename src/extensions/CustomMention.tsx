@@ -1,3 +1,5 @@
+'use client';
+
 import Mention, { MentionOptions } from '@tiptap/extension-mention';
 import { mergeAttributes } from '@tiptap/react';
 import getSuggestion from '../components/mention/suggestions';
