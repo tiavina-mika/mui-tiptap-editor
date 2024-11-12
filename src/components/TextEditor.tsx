@@ -191,7 +191,7 @@ const TextEditor = ({
                   </BubbleMenu>
                 )}
                 {/* editor field */}
-                <EditorContent editor={editor} />
+                <EditorContent className="stretchSelf" editor={editor} />
                 {/* top or bottom toolbar */}
                 {editor && (
                   <Toolbar
