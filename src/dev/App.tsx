@@ -64,6 +64,7 @@ const App = () => {
         <Container>
           <TextEditor
             withFloatingMenu
+            disableTabs={false}
             inputClassName="flexColumn stretchSelf flex1"
             label="Content"
             mentions={mentions}

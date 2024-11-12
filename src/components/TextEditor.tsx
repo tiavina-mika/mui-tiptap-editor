@@ -102,6 +102,7 @@ const TextEditor = ({
   editable = true,
   withFloatingMenu = false,
   withBubbleMenu = true,
+  disableTabs = false,
   ...editorOptions
 }: TextEditorProps) => {
   const [tab, setTab] = useState<'editor' | 'preview'>('editor');
@@ -140,22 +141,24 @@ const TextEditor = ({
       {/* ---------------------------- */}
       {/* ------------ tabs ---------- */}
       {/* ---------------------------- */}
-      <Tabs
-        aria-label="basic tabs example"
-        className={tabsClassName}
-        css={classes.tabs}
-        TabIndicatorProps={{ children: <span className="MuiTabs-indicatorSpan" /> }}
-        value={tab}
-        onChange={handleTabChange}
-      >
-        <Tab
-          className={tabClassName}
-          css={classes.tab}
-          label={labels?.editor?.editor || 'Editor'}
-          value="editor"
-        />
-        <Tab className={tabClassName} css={classes.tab} label={labels?.editor?.preview || 'Preview'} />
-      </Tabs>
+      {!disableTabs && (
+        <Tabs
+          aria-label="basic tabs example"
+          className={tabsClassName}
+          css={classes.tabs}
+          TabIndicatorProps={{ children: <span className="MuiTabs-indicatorSpan" /> }}
+          value={tab}
+          onChange={handleTabChange}
+        >
+          <Tab
+            className={tabClassName}
+            css={classes.tab}
+            label={labels?.editor?.editor || 'Editor'}
+            value="editor"
+          />
+          <Tab className={tabClassName} css={classes.tab} label={labels?.editor?.preview || 'Preview'} />
+        </Tabs>
+      )}
 
       {/* ---------------------------- */}
       {/* ----------- editor --------- */}
