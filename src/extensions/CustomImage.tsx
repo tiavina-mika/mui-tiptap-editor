@@ -294,10 +294,6 @@ const ImageNode = ({
  */
 const getCustomImage = (options?: Omit<ImageUploadOptions, 'type'>, labels?: ILabels['upload'], maxLegendLength?: number) => TiptapImage
   .extend({
-    addOptions: {
-      ...(this as any)?.parent?.(),
-      sizes: ['inline', 'block', 'left', 'right'],
-    },
     addNodeView: () => ReactNodeViewRenderer(
       (props: any) => <ImageNode {...props} labels={labels} maxLegendLength={maxLegendLength} />,
       { className: 'tiptap-image' }

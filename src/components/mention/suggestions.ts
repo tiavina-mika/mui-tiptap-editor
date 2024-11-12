@@ -34,6 +34,9 @@ const getSuggestion = (options: ITextEditorOption[] = []): MentionOptions['sugge
         }
 
         if (!component) return;
+        if (typeof document === 'undefined') {
+          return;
+        }
         popup = tippy('body', {
           getReferenceClientRect: props.clientRect,
           appendTo: () => document.body,
