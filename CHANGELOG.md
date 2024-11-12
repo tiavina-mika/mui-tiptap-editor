@@ -1,7 +1,7 @@
-## 0.10.0 (2024-11-12)
+## 0.11.0 (2024-11-12)
 
 
 ### Features
 
-* top or bottom toolbar ([#91](https://github.com/tiavina-mika/mui-tiptap-editor/issues/91)) ([17c18b4](https://github.com/tiavina-mika/mui-tiptap-editor/commit/17c18b48dabc11c248dfd63201541598a6783fb9))
+* add inline code ([#93](https://github.com/tiavina-mika/mui-tiptap-editor/issues/93)) ([8687734](https://github.com/tiavina-mika/mui-tiptap-editor/commit/86877347fe7051ee3f05ee1191e517c3aae38a1d))
 
