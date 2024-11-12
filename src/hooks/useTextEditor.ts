@@ -137,6 +137,8 @@ export const useTextEditor = ({
 
   const editor = useEditor({
     content: value,
+    immediatelyRender: true,
+    shouldRerenderOnTransaction: false,
     extensions: [
       // placeholder extension
       Placeholder.configure({

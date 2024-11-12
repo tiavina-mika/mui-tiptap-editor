@@ -53,8 +53,8 @@ const classes = {
   },
   tab: (theme: Theme) => ({
     textTransform: 'none' as const,
-    fontWeight: theme.typography.fontWeightRegular,
-    fontSize: theme.typography.pxToRem(15),
+    fontWeight: 500,
+    fontSize: 14,
     marginRight: theme.spacing(1),
     '&.Mui-selected': {
       color: theme.palette.mode === 'light' ? '#000' : '#fff',
