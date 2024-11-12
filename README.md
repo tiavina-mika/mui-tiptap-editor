@@ -308,6 +308,14 @@ See [`here`](https://github.com/tiavina-mika/mui-tiptap-editor/blob/main/src/dev
     <td>Features</td>
   <tr>
   <tr>
+    <th><a href="https://github.com/tiavina-mika/mui-tiptap-editor/pull/93">v0.11.0</a></th>
+    <td>
+      <ul>
+        <li>Can use both inline code and code blocks.</li>
+      </ul>
+    </td>
+  <tr>
+  <tr>
     <th><a href="https://github.com/tiavina-mika/mui-tiptap-editor/pull/91">v0.10.0</a></th>
     <td>
       <ul>
