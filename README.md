@@ -308,6 +308,22 @@ See [`here`](https://github.com/tiavina-mika/mui-tiptap-editor/blob/main/src/dev
     <td>Features</td>
   <tr>
   <tr>
+    <th><a href="https://github.com/tiavina-mika/mui-tiptap-editor/pull/91">v0.10.0</a></th>
+    <td>
+      <ul>
+        <li>Can position the toolbar at the top or bottom.</li>
+      </ul>
+    </td>
+  <tr>
+    <tr>
+    <th><a href="https://github.com/tiavina-mika/mui-tiptap-editor/pull/89">v0.09.33</a></th>
+    <td>
+      <ul>
+        <li>Can show or hide Editor/Preview tabs.</li>
+      </ul>
+    </td>
+  <tr>
+  <tr>
     <th><a href="https://github.com/tiavina-mika/mui-tiptap-editor/pull/79">v0.9.29</a></th>
     <td>
       <ul>
@@ -331,15 +347,6 @@ See [`here`](https://github.com/tiavina-mika/mui-tiptap-editor/blob/main/src/dev
         <li>Upload image via drop, paste or upload button</li>
         <li>Add or edit the image alt text and legend</li>
         <li>Reorder toolbar menus</li>
-      </ul>
-    </td>
-  <tr>
-  <tr>
-    <th><a href="https://github.com/tiavina-mika/mui-tiptap-editor/pull/52">v0.9.9</a></th>
-    <td>
-      <ul>
-        <li>Work with dark mode</li>
-        <li>Customize and override all messages and labels</li>
       </ul>
     </td>
   <tr>

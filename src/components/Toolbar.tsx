@@ -38,6 +38,7 @@ import Icon from '../icons/Icon';
 import Picture from '../icons/Picture';
 import TextColor from '../icons/TextColor';
 import UploadFile from './UploadFile';
+import CodeBlock from '../icons/CodeBlock';
 
 const classes = {
   topToolbar: (theme: Theme) => ({
@@ -323,11 +324,19 @@ const Toolbar = ({
       },
       {
         name: 'codeBlock',
-        icon: Code,
+        icon: CodeBlock,
         onClick: () => editor.chain().focus().toggleCodeBlock().run(),
         disabled: false,
-        split: true,
         tooltip: toolbarLabels?.codeBlock || 'Code block',
+        iconSize: 16,
+      },
+      {
+        name: 'code',
+        icon: Code,
+        onClick: () => editor.chain().focus().toggleCode().run(),
+        disabled: false,
+        split: true,
+        tooltip: toolbarLabels?.inlineCode || 'Inline code',
       },
       {
         name: 'youtube',
