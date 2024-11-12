@@ -278,6 +278,7 @@ import './index.css';
 |onChange|`(value: string) => void`|-| Function to call when the input change
 |userPathname|`string`|/user| URL pathname for the mentioned user (eg: /user/user_id)
 |labels|`ILabels`|null| Override labels, for example using `i18n`
+|disableTabs|`boolean`|false| If true, the Editor/Preview tabs are hidden.
 |uploadFileOptions|`ImageUploadOptions`|null| Override image upload default options like max size, max file number, ...
 |...all tiptap features|[EditorOptions](https://github.com/ueberdosis/tiptap/blob/e73073c02069393d858ca7d8c44b56a651417080/packages/core/src/types.ts#L52)|empty| Can access to all tiptap `useEditor` props
 
