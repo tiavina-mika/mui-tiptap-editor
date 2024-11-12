@@ -19,6 +19,7 @@ import TableHeader from '@tiptap/extension-table-header';
 import TableRow from '@tiptap/extension-table-row';
 import Youtube from '@tiptap/extension-youtube';
 import BubbleMenu from '@tiptap/extension-bubble-menu';
+import Code from '@tiptap/extension-code';
 import {
   useEditor,
   EditorOptions,
@@ -43,6 +44,11 @@ const extensions = [
   Text,
   TipTapTypography,
   Underline,
+  Code.configure({
+    HTMLAttributes: {
+      class: 'inline-code',
+    },
+  }),
   Link.configure({
     openOnClick: false,
     protocols: [
@@ -138,7 +144,7 @@ export const useTextEditor = ({
   const editor = useEditor({
     content: value,
     immediatelyRender: false,
-    shouldRerenderOnTransaction: false,
+    shouldRerenderOnTransaction: true,
     extensions: [
       // placeholder extension
       Placeholder.configure({

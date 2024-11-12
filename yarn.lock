@@ -7106,6 +7106,7 @@ __metadata:
     "@mui/material": "npm:^5.15.2"
     "@stylistic/eslint-plugin": "npm:^2.9.0"
     "@tiptap/extension-bubble-menu": "npm:^2.9.1"
+    "@tiptap/extension-code": "npm:^2.9.1"
     "@tiptap/extension-code-block-lowlight": "npm:^2.9.1"
     "@tiptap/extension-color": "npm:^2.9.1"
     "@tiptap/extension-gapcursor": "npm:^2.9.1"

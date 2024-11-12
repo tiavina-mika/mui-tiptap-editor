@@ -114,6 +114,7 @@ export type IRequiredLabels = {
     upload: string;
     color: string;
     codeBlock: string;
+    inlineCode: string;
     table: string;
     youtube: string;
     undo: string;
