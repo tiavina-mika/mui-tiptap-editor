@@ -97,7 +97,7 @@ const extensions = [
   TextAlign.configure({
     types: ['heading', 'paragraph', 'table', 'image'],
   }),
-  BubbleMenu.configure({
+  BubbleMenu.configure(typeof document !== 'undefined' && {
     element: document.querySelector('.bubble-menu'),
   } as any),
 ];
