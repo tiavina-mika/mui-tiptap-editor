@@ -16,6 +16,7 @@ const classes = {
     backgroundColor: 'transparent',
     border: 'none',
     cursor: 'pointer',
+    borderRadius: 4,
     '&::-webkit-color-swatch': {
       borderRadius: 4,
       border: 'none',
@@ -42,6 +43,8 @@ type Props = {
 };
 const ColorPicker = ({ editor, id }: Props) => {
   const [color, setColor] = useState<string>('#000000');
+
+  console.log('color: ', color);
 
   const theme = useTheme();
 
