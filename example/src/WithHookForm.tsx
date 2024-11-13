@@ -1,5 +1,7 @@
 import { zodResolver } from '@hookform/resolvers/zod';
-import { SubmitHandler, useForm, FormProvider, Controller } from 'react-hook-form';
+import {
+  SubmitHandler, useForm, FormProvider, Controller,
+} from 'react-hook-form';
 
 import z from 'zod';
 import { TextEditor, TextEditorReadOnly } from 'mui-tiptap-editor';
@@ -17,14 +19,14 @@ const WithHookForm = () => {
 
   const form = useForm<Input>({
     resolver: zodResolver(schema),
-    defaultValues: { content: '' }
+    defaultValues: { content: '' },
 
   });
 
   const { handleSubmit, control } = form;
 
 
-  const handleFormSubmit: SubmitHandler<Input> = async values => {
+  const handleFormSubmit: SubmitHandler<Input> = async (values) => {
     setValue(values.content);
   };
 
@@ -35,24 +37,25 @@ const WithHookForm = () => {
         <form onSubmit={handleSubmit(handleFormSubmit)}>
           <Stack spacing={2}>
             <Controller
-                name="content"
-                control={control}
-                defaultValue=""
-                render={({ field }) => (
-                  <TextEditor
-                    {...field}
-                    label="Content"
-                  />
-                )}
-              />
-              {/* buttons */}
-              <Stack direction="row" spacing={3}>
-                <Button
-                  variant="contained"
-                  type="submit"
-                >
-                  Submit
-                </Button>
+              control={control}
+              defaultValue=""
+              name="content"
+              render={({ field }) => (
+                <TextEditor
+                  {...field}
+                  id="content"
+                  label="Content"
+                />
+              )}
+            />
+            {/* buttons */}
+            <Stack direction="row" spacing={3}>
+              <Button
+                type="submit"
+                variant="contained"
+              >
+                Submit
+              </Button>
             </Stack>
           </Stack>
         </form>

@@ -258,12 +258,13 @@ const App = () => {
             />
           </div>
           {/* Simple input */}
-          {tab === 0 && <TextEditor placeholder="Type something here..." onChange={v => console.log(v)} />}
+          {tab === 0 && <TextEditor id="simple-input" placeholder="Type something here..." onChange={v => console.log(v)} />}
 
           {/* Select toolbar */}
           {tab === 1 && (
             <TextEditor
               disableTabs={false}
+              id="select-toolbar"
               placeholder="Type something here..."
               toolbar={['bold', 'italic', 'underline']}
               toolbarPosition="top"
@@ -274,6 +275,7 @@ const App = () => {
           {/* Custom global styles */}
           {tab === 3 && (
             <TextEditor
+              id="custom-global-styles"
               rootClassName="root"
               value="<p>Hello word!</p>"
             />
@@ -281,6 +283,7 @@ const App = () => {
           {/* Each element styles */}
           {tab === 4 && (
             <TextEditor
+              id="each-element-styles"
               inputClassName="my-input"
               label="Content"
               labelClassName="my-label"
@@ -293,6 +296,7 @@ const App = () => {
           {/* Override labels */}
           {tab === 5 && (
             <TextEditor
+              id="override-labels"
               label="Content"
               labels={customLabels}
             />
@@ -301,6 +305,7 @@ const App = () => {
           {/* mentions */}
           {tab === 6 && (
             <TextEditor
+              id="mentions"
               label="Content"
               mentions={mentions}
               user={currentUser}
@@ -308,7 +313,7 @@ const App = () => {
             />
           )}
           {/* With default async value */}
-          {tab === 7 && <TextEditor value={asyncDefaultValue} />}
+          {tab === 7 && <TextEditor id="async-value" value={asyncDefaultValue} />}
 
           {/* With React Hook Form */}
           {tab === 8 && <WithHookForm />}
@@ -323,6 +328,7 @@ const App = () => {
           {tab === 10 && (
             <TextEditor
               content="<img alt='Cute cat' src='https://png.pngtree.com/png-clipart/20230511/ourmid/pngtree-isolated-cat-on-white-background-png-image_7094927.png' />"
+              id="upload-image"
               uploadFileOptions={{
                 uploadFile,
                 maxSize: 5,
@@ -338,6 +344,7 @@ const App = () => {
           {tab === 11 && (
             <TextEditor
               content={code}
+              id="code-block"
             />
           )}
         </Container>
