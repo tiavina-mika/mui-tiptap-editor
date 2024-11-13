@@ -1,69 +1,20 @@
 'use client';
 
-import { useTheme } from '@mui/material';
 import { Editor } from '@tiptap/react';
 
-import { ChangeEvent, useEffect, useState } from 'react';
-
-const classes = {
-  color: {
-    WebkitAppearance: 'none' as const,
-    MozAppearance: 'none' as const,
-    appearance: 'none' as const,
-    width: 28,
-    height: 28,
-    visibility: 'hidden' as const,
-    backgroundColor: 'transparent',
-    border: 'none',
-    cursor: 'pointer',
-    borderRadius: 4,
-    '&::-webkit-color-swatch': {
-      borderRadius: 4,
-      border: 'none',
-    },
-    '&::-moz-color-swatch': {
-      borderRadius: 4,
-      border: 'none',
-    },
-  },
-  colorPreview: (color: string) => ({
-    position: 'absolute' as const,
-    bottom: 10,
-    transform: 'translate(-20%, 0px)',
-    height: 3,
-    width: 14,
-    backgroundColor: color,
-    borderRadius: 3,
-  }),
-};
+import { ChangeEvent } from 'react';
 
 type Props = {
   editor: Editor;
   id: string;
 };
 const ColorPicker = ({ editor, id }: Props) => {
-  const [color, setColor] = useState<string>('#000000');
-
-  console.log('color: ', color);
-
-  const theme = useTheme();
-
-  // add default styles if not defined
-  useEffect(() => {
-    // get current color from editor instance
-    const currentColor = editor.getAttributes('textStyle').color;
-    // set default color based on theme
-    const defaultColor = theme.palette.mode === 'dark' ? '#ffffff' : '#000000';
-
-    setColor(currentColor || defaultColor);
-  }, [editor, theme.palette.mode]);
-
   const handleInput = (event: ChangeEvent<HTMLInputElement>) => {
+    event.preventDefault();
     const value = event.target.value;
 
     // set color in editor instance
     editor.chain().focus().setColor(value).run();
-    setColor(value);
   };
 
   return (
@@ -72,7 +23,7 @@ const ColorPicker = ({ editor, id }: Props) => {
         css={{ width: 0, height: 0 }}
         id={id}
         type="color"
-        value={color}
+        value={editor.getAttributes('textStyle').color || '#000000'}
         /*
          * Use width and height to hide the color picker instead of display: none
          * Otherwise browser will place the picker in the corner (out of the Visual DOM tree)
@@ -83,7 +34,17 @@ const ColorPicker = ({ editor, id }: Props) => {
         * The `colorPreview` div displays the selected color as a small rectangle below the color picker.
         * see Toolbar component for the implementation of icon
       */}
-      <div css={classes.colorPreview(color)} />
+      <div
+        css={{
+          position: 'absolute' as const,
+          bottom: 10,
+          transform: 'translate(-20%, 0px)',
+          height: 3,
+          width: 14,
+          backgroundColor: editor.getAttributes('textStyle').color || '#000000',
+          borderRadius: 3,
+        }}
+      />
     </>
   );
 };
