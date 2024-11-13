@@ -110,16 +110,69 @@ const extensions = [
 ];
 
 export type TextEditorProps = {
+  /**
+   * input placeholder
+   * @default ''
+   */
   placeholder?: string;
+  /**
+   * when the editor content changes
+   * @type {(value: string) => void}
+   * @default undefined
+   * @param value
+   * @returns
+   */
   onChange?: (value: string) => void;
+  /**
+   * value of the editor
+   * @default '''
+   * @type {string}
+   * @example '<p>Some text</p>'
+   */
   value?: string;
+  /**
+   * tabs to show in the editor
+   * or the preview tab
+   * @default 'editor'
+   */
   tab: 'editor' | 'preview';
+  /**
+   * current user
+   * @default undefined
+   * @type {ITextEditorOption}
+   * @example { label: 'John Doe', value: 'some_user_id' }
+   */
   user?: ITextEditorOption;
+  /**
+   * list of users used for mentions
+   * @default undefined
+   * @type {ITextEditorOption[]}
+   * @example [{ label: 'John Doe', value: 'some_user_id' }, { label: 'James Smith ', value: 'some_user_id_2' }]
+   */
   mentions?: ITextEditorOption[];
-  // url for user profile
+  /**
+   * user profile pathname
+   * @default '/profile'
+   */
   userPathname?: string;
+  /**
+   * options for uploading images
+   * @default undefined
+   * @type {ImageUploadOptions}
+   */
   uploadFileOptions?: Omit<ImageUploadOptions, 'type'>;
+  /**
+   * override the default labels
+   * @default undefined
+   * @type {ILabels}
+   */
   uploadFileLabels?: ILabels['upload'];
+  /**
+   * if using multiple editors on the same page, add unique id
+   * @default 'color'
+   * @type {string}
+   */
+  id?: string;
   /**
    * props for the block code extension
    */
@@ -138,6 +191,7 @@ export const useTextEditor = ({
   userPathname,
   editable = true,
   codeBlock,
+  id,
   ...editorOptions
 }: TextEditorProps) => {
   const theme = useTheme();
@@ -146,6 +200,7 @@ export const useTextEditor = ({
     content: value,
     immediatelyRender: false,
     shouldRerenderOnTransaction: true,
+    autofocus: false,
     extensions: [
       // placeholder extension
       Placeholder.configure({
@@ -210,9 +265,7 @@ export const useTextEditor = ({
       editor?.setOptions({
         editable: tab === 'editor',
         editorProps: {
-          attributes: {
-            class: className,
-          },
+          attributes: { class: className },
         },
       });
       return;
@@ -226,7 +279,7 @@ export const useTextEditor = ({
         },
       },
     });
-  }, [editor, tab, editable, theme]);
+  }, [editor, tab, editable, theme, id]);
 
   return editor;
 };

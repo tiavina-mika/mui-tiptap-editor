@@ -280,6 +280,7 @@ import './index.css';
 |labels|`ILabels`|null| Override labels, for example using `i18n`
 |disableTabs|`boolean`|false| If true, the Editor/Preview tabs are hidden.
 |toolbarPosition|`top or bottom`|bottom| Position of the toolbar
+|id|`string`|empty| Used if using multiple editors on the same page, to identify uniquely each editor
 |uploadFileOptions|`ImageUploadOptions`|null| Override image upload default options like max size, max file number, ...
 |...all tiptap features|[EditorOptions](https://github.com/ueberdosis/tiptap/blob/e73073c02069393d858ca7d8c44b56a651417080/packages/core/src/types.ts#L52)|empty| Can access to all tiptap `useEditor` props
 

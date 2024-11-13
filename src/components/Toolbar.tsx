@@ -120,6 +120,7 @@ export type ToolbarProps = {
    * position of the toolbar
    */
   position?: 'top' | 'bottom';
+  colorId?: string;
 };
 
 const Toolbar = ({
@@ -128,6 +129,7 @@ const Toolbar = ({
   labels,
   uploadFileOptions,
   position,
+  colorId,
   toolbar = defaultEditorToolbar,
 }: ToolbarProps) => {
   const [openLinkDialog, setOpen] = useState<boolean>(false);
@@ -216,10 +218,10 @@ const Toolbar = ({
       // color use a label with htmlFor
       {
         name: 'color',
-        id: 'color', // id for the label
+        id: colorId || 'color', // id for the label
         icon: TextColor,
         disabled: false,
-        component: <ColorPicker editor={editor} id="color" />,
+        component: <ColorPicker editor={editor} id={colorId || 'color'} />,
         tooltip: toolbarLabels?.color || 'Text color',
         split: true,
         iconSize: 24,

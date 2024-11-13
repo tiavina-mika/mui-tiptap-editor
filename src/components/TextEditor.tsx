@@ -99,6 +99,7 @@ const TextEditor = ({
   userPathname,
   labels,
   uploadFileOptions,
+  id,
   editable = true,
   withFloatingMenu = false,
   withBubbleMenu = true,
@@ -120,6 +121,7 @@ const TextEditor = ({
     mentions,
     userPathname,
     uploadFileOptions,
+    id,
     uploadFileLabels: labels?.upload,
     ...editorOptions,
   });
@@ -196,6 +198,7 @@ const TextEditor = ({
                 {editor && (
                   <Toolbar
                     className={cx('stretchSelf', toolbarClassName)}
+                    colorId={id}
                     editor={editor}
                     labels={labels}
                     position={toolbarPosition}

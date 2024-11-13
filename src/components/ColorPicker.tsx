@@ -10,7 +10,6 @@ type Props = {
 };
 const ColorPicker = ({ editor, id }: Props) => {
   const handleInput = (event: ChangeEvent<HTMLInputElement>) => {
-    event.preventDefault();
     const value = event.target.value;
 
     // set color in editor instance

@@ -184,6 +184,11 @@ export interface ITextEditorOption<T = string> {
 }
 
 export type TextEditorProps = {
+  /**
+   * input id
+   * used if using multiple editors on the same page, to identify uniquely each editor
+   */
+  id?: string;
   placeholder?: string;
 
   /**
