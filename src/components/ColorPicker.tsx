@@ -28,7 +28,7 @@ const ColorPicker = ({ editor, id }: Props) => {
          * Use width and height to hide the color picker instead of display: none
          * Otherwise browser will place the picker in the corner (out of the Visual DOM tree)
          */
-        onInput={handleInput}
+        onChange={handleInput}
       />
       {/*
         * The `colorPreview` div displays the selected color as a small rectangle below the color picker.
