@@ -80,6 +80,7 @@ const extensions = [
     },
     // disable the following nodes, since we already have our own
     codeBlock: false,
+    code: false,
     paragraph: false,
     document: false,
     gapcursor: false,
