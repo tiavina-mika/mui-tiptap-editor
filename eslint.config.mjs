@@ -53,6 +53,7 @@ export default defineConfig(
         extends: [
             js.configs.recommended,
             eslintPluginPrettierRecommended,
+            js.configs.recommended,
             comments.recommended,
             'react-hooks/recommended'
         ],
