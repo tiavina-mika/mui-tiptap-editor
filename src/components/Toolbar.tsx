@@ -39,6 +39,7 @@ import Picture from '../icons/Picture';
 import TextColor from '../icons/TextColor';
 import UploadFile from './UploadFile';
 import CodeBlock from '../icons/CodeBlock';
+import ToolBarIconButton from './ToolBarIconButton';
 
 const classes = {
   topToolbar: (theme: Theme) => ({
@@ -121,6 +122,7 @@ export type ToolbarProps = {
    */
   position?: 'top' | 'bottom';
   colorId?: string;
+  type?: 'toolbar' | 'floating' | 'bubble';
 };
 
 const Toolbar = ({
@@ -131,6 +133,7 @@ const Toolbar = ({
   position,
   colorId,
   toolbar = defaultEditorToolbar,
+  type ="toolbar"
 }: ToolbarProps) => {
   const [openLinkDialog, setOpen] = useState<boolean>(false);
 
@@ -387,7 +390,7 @@ const Toolbar = ({
 
   return (
     <div
-      className={cx(className, 'flexRow center')}
+      className={cx(className, 'flexRow center', type ? `${type}-menu` : '')}
       css={position
         ? (position === 'bottom' ? classes.bottomToolbar : classes.topToolbar)
         : undefined}
@@ -399,34 +402,23 @@ const Toolbar = ({
       {menus.map((menu, index) => {
         if (!showTextEditorToolbarMenu(toolbar, menu)) return null;
 
-        // if the menu has an id, we need to use a label (use htmlFor)
-        const LabelComponent = menu.id ? 'label' : Fragment;
-        // label props if the menu has an id
-        const labelProps = menu.id ? { htmlFor: menu.id, css: { cursor: 'pointer' } } : {};
-
         return (
           <Fragment key={menu.name + index}>
-            <Tooltip title={menu.tooltip}>
-              {/* add span wrapper to avoid disabled child to the tooltip */}
-              <span>
-                <IconButton
-                  disabled={menu.disabled}
-                  css={classes.button(
-                    editor.isActive(menu.active || menu.name), // the order is important
-                    !!menu.split
-                  )}
-                  onClick={menu.onClick}
-                >
-                  <LabelComponent {...labelProps}>
-                    <Icon size={menu.iconSize}>
-                      <menu.icon />
-                    </Icon>
-                  </LabelComponent>
-                  {/* component used with label */}
-                  {menu.component}
-                </IconButton>
-              </span>
-            </Tooltip>
+            {type === 'toolbar'
+              ? (
+                <Tooltip title={menu.tooltip}>
+                  <ToolBarIconButton
+                    editor={editor}
+                    menu={menu}
+                  />
+                </Tooltip>
+              )
+              : (
+            <ToolBarIconButton
+                    editor={editor}
+                    menu={menu}
+                  />
+              )}
           </Fragment>
         );
       })}
