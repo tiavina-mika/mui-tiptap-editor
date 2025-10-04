@@ -9,9 +9,8 @@ import {
 } from '@mui/material';
 import {
   EditorContent,
-  FloatingMenu,
-  BubbleMenu,
 } from '@tiptap/react';
+import { BubbleMenu, FloatingMenu  } from '@tiptap/react/menus'
 import { useState, SyntheticEvent } from 'react';
 import { useTextEditor } from '../hooks/useTextEditor';
 
@@ -172,7 +171,7 @@ const TextEditor = ({
             <div className={cx('positionRelative flexColumn tiptap', inputClassName)} css={classes.input}>
               <div className="positionRelative stretchSelf flexColumn">
                 {editor && withFloatingMenu && (
-                  <FloatingMenu editor={editor} tippyOptions={{ duration: 100 }}>
+                  <FloatingMenu editor={editor}>
                     <Toolbar
                       css={[classes.menu, classes.bubbleMenu]}
                       editor={editor}
@@ -183,7 +182,7 @@ const TextEditor = ({
                   </FloatingMenu>
                 )}
                 {editor && withBubbleMenu && (
-                  <BubbleMenu editor={editor} tippyOptions={{ duration: 100 }}>
+                  <BubbleMenu editor={editor}>
                     <Toolbar
                       css={[classes.menu, classes.bubbleMenu]}
                       editor={editor}
