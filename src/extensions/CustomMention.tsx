@@ -1,14 +1,19 @@
 'use client';
 
-import Mention, { MentionOptions } from '@tiptap/extension-mention';
-import { mergeAttributes } from '@tiptap/react';
+import { Mention } from '@tiptap/extension-mention';
+import { mergeAttributes } from '@tiptap/core';
 import getSuggestion from '../components/mention/suggestions';
-import { Node } from '@tiptap/pm/model';
 import { ITextEditorOption } from '../types';
 
 type Props = {
+// base pathname for the mention link
   pathname?: string;
+  // List of user to mention
   mentions?: ITextEditorOption[];
+};
+
+type HTMLAttributesType = {
+  'data-id'?: string;
 };
 
 /**
@@ -19,51 +24,45 @@ export const getCustomMention = ({
   pathname = '/users',
   mentions,
 }: Props) => {
-  const extendsOption = {
-    // use a link (with url) instead of the default span
-    // eslint-disable-next-line @typescript-eslint/naming-convention
-    renderHTML({ node, HTMLAttributes }: Record<string, any>) {
-      return [
-        'a',
-        mergeAttributes(
-          { href: `${pathname}/${HTMLAttributes['data-id']}` },
-          this.options.HTMLAttributes,
-          HTMLAttributes
-        ),
-        (this.options)?.renderLabel({
-          options: this.options,
-          node,
-        }),
-      ];
-    },
-    // the attribute should be user id for exemple
+  return Mention.extend({
     addAttributes: () => ({
       id: {
         default: null,
         parseHTML: (element: HTMLElement) => element.getAttribute('data-id'),
+        /*
+         * Add the value of id as data-id attribute in the rendered HTML
+         * so that we can retrieve it when parsing HTML
+         */
         renderHTML: (attributes: any) => {
-          if (!attributes.id?.value) {
+          if (!attributes.id) {
             return {};
           }
-
           return {
-            'data-id': attributes.id.value,
+            'data-id': attributes.id,
           };
         },
       },
     }),
-  } as any;
-
-  return Mention
-    .extend(extendsOption)
-    .configure({
-      HTMLAttributes: {
-        class: 'mention',
-      },
-      renderLabel: ({ options, node }: { options: MentionOptions; node: Node }) =>
-        `${options.suggestion.char}${
-          node.attrs.label ?? node.attrs.id.label
-        }`,
-      suggestion: getSuggestion(mentions),
-    });
+    // Create a link to the user profile
+    // eslint-disable-next-line @typescript-eslint/naming-convention
+    renderHTML: ({ node, HTMLAttributes }: { node: any; HTMLAttributes: HTMLAttributesType }) => {
+      return [
+        'a',
+        // @example: <a href="/users/1" class="mention">@user1</a>
+        mergeAttributes(HTMLAttributes, {
+          href: `${pathname}/${node.attrs.id.value}`,
+          class: 'mention',
+        }),
+        // Text to be displayed in the editor
+        `${node.attrs.id.label ?? node.attrs.id.value}`,
+      ];
+    },
+  }).configure({
+    HTMLAttributes: {
+      class: 'mention',
+    },
+    renderText: ({ options, node }: any) =>
+      `${options.suggestion.char}${node.attrs.label ?? node.attrs.id}`,
+    suggestion: getSuggestion(mentions),
+  });
 };
