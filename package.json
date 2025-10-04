@@ -103,8 +103,8 @@
   "peerDependencies": {
     "@emotion/react": "^7.3.4",
     "@mui/material": "^7.3.4",
-    "react": "^16.8.0 || ^17.0.2 || ^18.2.0",
-    "react-dom": "^16.8.0 || ^17.0.2 || ^18.2.0"
+    "react": "^16.8.0 || ^17.0.2 || ^18.2.0 || ^19.2.0",
+    "react-dom": "^16.8.0 || ^17.0.2 || ^18.2.0 || ^19.2.0"
   },
   "devDependencies": {
     "@emotion/babel-plugin": "^11.11.0",
@@ -142,8 +142,8 @@
     "markdown-link-check": "^3.12.1",
     "prettier": "^3.3.3",
     "prettier-plugin-organize-imports": "^3.2.4",
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0",
+    "react": "^19.2.0",
+    "react-dom": "^19.2.0",
     "rimraf": "^5.0.5",
     "ts-add-js-extension": "^1.6.4",
     "ts-jest": "^29.1.4",
