@@ -68,8 +68,7 @@ export default defineConfig(
             '@stylistic': stylistic
         },
         rules: {
-            // ...reactHooks.configs.recommended.rules,
-            // ...stylistic.configs["recommended-flat"].rules,
+            '@cspell/spellchecker': ['warn', { cspell: { cspellOptionsRoot: import.meta.dirname } }],
             "@typescript-eslint/no-empty-object-type": "off",
             'react-refresh/only-export-components': [
                 'warn',
