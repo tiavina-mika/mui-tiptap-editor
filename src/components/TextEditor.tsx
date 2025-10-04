@@ -9,9 +9,11 @@ import {
 } from '@mui/material';
 import {
   EditorContent,
+  EditorContext,
 } from '@tiptap/react';
-import { BubbleMenu, FloatingMenu  } from '@tiptap/react/menus'
-import { useState, SyntheticEvent } from 'react';
+// @ts-expect-error: BubbleMenu and FloatingMenu are not typed in @tiptap/react/menus
+import { BubbleMenu, FloatingMenu } from '@tiptap/react/menus';
+import { useState, SyntheticEvent, useMemo } from 'react';
 import { useTextEditor } from '../hooks/useTextEditor';
 
 import Toolbar from './Toolbar';
@@ -71,6 +73,8 @@ const classes = {
     paddingRight: 4,
     borderRadius: 3,
     minWidth: 400,
+    zIndex: 10,
+    position: 'absolute' as const,
   }),
   bubbleMenu: (theme: Theme) => ({
     backgroundColor: theme.palette.background.paper,
@@ -124,105 +128,108 @@ const TextEditor = ({
     uploadFileLabels: labels?.upload,
     ...editorOptions,
   });
+  const providerValue = useMemo(() => ({ editor }), [editor]);
 
   // preview
   if (!editable) {
     return <EditorContent className={inputClassName} editor={editor} />;
   }
-
+  // Memoize the provider value to avoid unnecessary re-renders
   return (
-    <div className={rootClassName} css={{ position: 'relative' }}>
-      {/* ---------------------------- */}
-      {/* ----------- label ---------- */}
-      {/* ---------------------------- */}
-      {label && (
-        <Typography className={labelClassName} css={classes.label}>
-          {label}
-        </Typography>
-      )}
-      {/* ---------------------------- */}
-      {/* ------------ tabs ---------- */}
-      {/* ---------------------------- */}
-      {!disableTabs && (
-        <Tabs
-          aria-label="basic tabs example"
-          className={tabsClassName}
-          css={classes.tabs}
-          TabIndicatorProps={{ children: <span className="MuiTabs-indicatorSpan" /> }}
-          value={tab}
-          onChange={handleTabChange}
-        >
-          <Tab
-            className={tabClassName}
-            css={classes.tab}
-            label={labels?.editor?.editor || 'Editor'}
-            value="editor"
-          />
-          <Tab className={tabClassName} css={classes.tab} label={labels?.editor?.preview || 'Preview'} />
-        </Tabs>
-      )}
+    <EditorContext.Provider value={providerValue}>
+      <div className={rootClassName} css={{ position: 'relative' }}>
+        {/* ---------------------------- */}
+        {/* ----------- label ---------- */}
+        {/* ---------------------------- */}
+        {label && (
+          <Typography className={labelClassName} css={classes.label}>
+            {label}
+          </Typography>
+        )}
+        {/* ---------------------------- */}
+        {/* ------------ tabs ---------- */}
+        {/* ---------------------------- */}
+        {!disableTabs && (
+          <Tabs
+            aria-label="basic tabs example"
+            className={tabsClassName}
+            css={classes.tabs}
+            TabIndicatorProps={{ children: <span className="MuiTabs-indicatorSpan" /> }}
+            value={tab}
+            onChange={handleTabChange}
+          >
+            <Tab
+              className={tabClassName}
+              css={classes.tab}
+              label={labels?.editor?.editor || 'Editor'}
+              value="editor"
+            />
+            <Tab className={tabClassName} css={classes.tab} label={labels?.editor?.preview || 'Preview'} />
+          </Tabs>
+        )}
 
-      {/* ---------------------------- */}
-      {/* ----------- editor --------- */}
-      {/* ---------------------------- */}
-      {tab === 'editor'
-        ? (
-          <>
-            <div className={cx('positionRelative flexColumn tiptap', inputClassName)} css={classes.input}>
-              <div className="positionRelative stretchSelf flexColumn">
-                {editor && withFloatingMenu && (
-                  <FloatingMenu editor={editor}>
+        {/* ---------------------------- */}
+        {/* ----------- editor --------- */}
+        {/* ---------------------------- */}
+        {tab === 'editor'
+          ? (
+            <>
+              <div className={cx('positionRelative flexColumn tiptap', inputClassName)} css={classes.input}>
+                <div className="positionRelative stretchSelf flexColumn">
+                  {editor && withFloatingMenu && (
+                    <FloatingMenu editor={editor}>
+                      <Toolbar
+                        css={[classes.menu, classes.bubbleMenu]}
+                        labels={labels}
+                        toolbar={floatingMenuToolbar || defaultMenuToolbar}
+                        type="floating"
+                        uploadFileOptions={uploadFileOptions}
+                      />
+                    </FloatingMenu>
+                  )}
+                  {editor && withBubbleMenu && (
+                    <BubbleMenu editor={editor}>
+                      <Toolbar
+                        css={[classes.menu, classes.bubbleMenu]}
+                        toolbar={bubbleMenuToolbar || defaultMenuToolbar}
+                        type="bubble"
+                        uploadFileOptions={uploadFileOptions}
+                      />
+                    </BubbleMenu>
+                  )}
+                  {/* editor field */}
+                  <EditorContent className="stretchSelf" editor={editor} />
+                  {/* top or bottom toolbar */}
+                  {editor && (
                     <Toolbar
-                      css={[classes.menu, classes.bubbleMenu]}
-                      editor={editor}
+                      className={cx('stretchSelf', toolbarClassName)}
+                      colorId={id}
                       labels={labels}
-                      toolbar={floatingMenuToolbar || defaultMenuToolbar}
+                      position={toolbarPosition}
+                      toolbar={toolbar}
+                      type="toolbar"
                       uploadFileOptions={uploadFileOptions}
                     />
-                  </FloatingMenu>
-                )}
-                {editor && withBubbleMenu && (
-                  <BubbleMenu editor={editor}>
-                    <Toolbar
-                      css={[classes.menu, classes.bubbleMenu]}
-                      editor={editor}
-                      toolbar={bubbleMenuToolbar || defaultMenuToolbar}
-                      uploadFileOptions={uploadFileOptions}
-                    />
-                  </BubbleMenu>
-                )}
-                {/* editor field */}
-                <EditorContent className="stretchSelf" editor={editor} />
-                {/* top or bottom toolbar */}
-                {editor && (
-                  <Toolbar
-                    className={cx('stretchSelf', toolbarClassName)}
-                    colorId={id}
-                    editor={editor}
-                    labels={labels}
-                    position={toolbarPosition}
-                    toolbar={toolbar}
-                    uploadFileOptions={uploadFileOptions}
-                  />
-                )}
+                  )}
+                </div>
               </div>
-            </div>
-            {/* error message */}
-            {error && (
-              <FormHelperText error className={errorClassName} css={{ paddingTop: 4, paddingBottom: 4 }}>
-                {error}
-              </FormHelperText>
-            )}
-          </>
+              {/* error message */}
+              {error && (
+                <FormHelperText error className={errorClassName} css={{ paddingTop: 4, paddingBottom: 4 }}>
+                  {error}
+                </FormHelperText>
+              )}
+            </>
         /*
          * ---------------------------- //
          * ----------- preview -------- //
          * ---------------------------- //
          */
-        ) : (
-          <EditorContent className={inputClassName} editor={editor} />
-        )}
-    </div>
+          ) : (
+            <EditorContent className={inputClassName} editor={editor} />
+          )}
+      </div>
+    </EditorContext.Provider>
   );
 };
 
