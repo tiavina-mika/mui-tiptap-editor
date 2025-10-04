@@ -11,6 +11,7 @@ import eslint from '@eslint/js';
 import comments from "@eslint-community/eslint-plugin-eslint-comments/configs";
 import jsxA11y from "eslint-plugin-jsx-a11y";
 import { defineConfig } from 'eslint/config';
+import cspellESLintPluginRecommended from '@cspell/eslint-plugin/recommended';
 
 export default defineConfig(
     {
@@ -55,7 +56,8 @@ export default defineConfig(
             eslintPluginPrettierRecommended,
             js.configs.recommended,
             comments.recommended,
-            'react-hooks/recommended'
+            'react-hooks/recommended',
+            cspellESLintPluginRecommended
         ],
         files: ['**/*.ts', '**/*.tsx'],
         plugins: {
