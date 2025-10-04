@@ -1,10 +1,11 @@
 'use client';
 
 import { Theme } from '@emotion/react';
-import { IconButton } from '@mui/material';
-import { Editor } from '@tiptap/react';
+import { IconButton, Tooltip } from '@mui/material';
+import { useCurrentEditor } from '@tiptap/react';
 import {
   Fragment,
+  ReactNode,
 } from 'react';
 
 import { ToolbarItem } from '../types.d';
@@ -50,38 +51,64 @@ const classes = {
   },
 };
 
-type Props = {
-  editor: Editor;
-  menu: ToolbarItem;
-}
+type Props = ToolbarItem & {
+  children?: ReactNode;
+};
 const ToolBarIconButton = ({
-  editor,
-  menu
+  disabled,
+  id,
+  active,
+  name,
+  icon,
+  iconSize,
+  onClick,
+  split,
+  children,
+  withTooltip = false,
+  tooltip,
 }: Props) => {
-  // if the menu has an id, we need to use a label (use htmlFor)
-  const LabelComponent = menu.id ? 'label' : Fragment;
-  // label props if the menu has an id
-  const labelProps = menu.id ? { htmlFor: menu.id, css: { cursor: 'pointer' } } : {};
+  const { editor } = useCurrentEditor();
 
-  return (
+  // if the menu has an id, we need to use a label (use htmlFor)
+  const LabelComponent = id ? 'label' : Fragment;
+  // label props if the menu has an id
+  const labelProps = id ? { htmlFor: id, css: { cursor: 'pointer' } } : {};
+
+  if (!editor) {
+    return null;
+  }
+
+  const component= (
     <span>
       <IconButton
-        disabled={menu.disabled}
+        disabled={disabled}
         css={classes.button(
-          editor.isActive(menu.active || menu.name), // the order is important
-          !!menu.split
+          editor.isActive(active || name), // the order is important
+          !!split
         )}
-        onClick={menu.onClick}
+        onClick={onClick}
       >
         <LabelComponent {...labelProps}>
-          <Icon size={menu.iconSize}>
-            <menu.icon />
+          <Icon size={iconSize}>
+            {icon}
           </Icon>
         </LabelComponent>
         {/* component used with label */}
-        {menu.component}
+        {children}
       </IconButton>
     </span>
+  );
+
+  return (
+    withTooltip
+      ?(
+        <Tooltip arrow title={tooltip || ''}>
+          {component}
+        </Tooltip>
+      )
+      :(
+        component
+      )
   );
 };
 
