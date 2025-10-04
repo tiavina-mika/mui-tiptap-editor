@@ -9,10 +9,10 @@ import eslintPluginPrettierRecommended from 'eslint-plugin-prettier/recommended'
 import preferArrowFunctions from "eslint-plugin-prefer-arrow-functions";
 import eslint from '@eslint/js';
 import comments from "@eslint-community/eslint-plugin-eslint-comments/configs";
-import { fixupPluginRules } from "@eslint/compat";
 import jsxA11y from "eslint-plugin-jsx-a11y";
+import { defineConfig } from 'eslint/config';
 
-export default tseslint.config(
+export default defineConfig(
     {
         ignores: [
             "**/dist",
@@ -54,18 +54,19 @@ export default tseslint.config(
             js.configs.recommended,
             eslintPluginPrettierRecommended,
             comments.recommended,
+            'react-hooks/recommended'
         ],
         files: ['**/*.ts', '**/*.tsx'],
         plugins: {
-            "react-hooks": fixupPluginRules(reactHooks),
-            // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+            "react-hooks": reactHooks,
+
             'react-refresh': reactRefresh,
             "prefer-arrow-functions": preferArrowFunctions,
             '@stylistic': stylistic
         },
         rules: {
-            ...reactHooks.configs.recommended.rules,
-            ...stylistic.configs["recommended-flat"].rules,
+            // ...reactHooks.configs.recommended.rules,
+            // ...stylistic.configs["recommended-flat"].rules,
             "@typescript-eslint/no-empty-object-type": "off",
             'react-refresh/only-export-components': [
                 'warn',
@@ -333,16 +334,16 @@ export default tseslint.config(
             }],
         },
     },
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
+
     {
         languageOptions: {
             globals: { ...globals.jest }
         },
         files: ['**/__tests__/?(*.)+(spec|test).ts?(x)'],
         ...jest.configs['flat/recommended'],
-        // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+
         rules: {
-            // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
+
             ...jest.configs['flat/recommended'].rules
         }
     }
