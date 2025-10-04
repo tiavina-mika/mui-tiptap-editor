@@ -73,7 +73,7 @@
     "test:coverage": "jest --coverage"
   },
   "dependencies": {
-    "@emotion/css": "^11.13.4",
+    "@emotion/css": "^11.13.5",
     "@tiptap/extension-bubble-menu": "^2.9.1",
     "@tiptap/extension-code": "^2.9.1",
     "@tiptap/extension-code-block-lowlight": "^2.9.1",
@@ -101,8 +101,8 @@
     "lowlight": "^3.1.0"
   },
   "peerDependencies": {
-    "@emotion/react": "^11.11.3",
-    "@mui/material": "^5.15.2",
+    "@emotion/react": "^7.3.4",
+    "@mui/material": "^7.3.4",
     "react": "^16.8.0 || ^17.0.2 || ^18.2.0",
     "react-dom": "^16.8.0 || ^17.0.2 || ^18.2.0"
   },
