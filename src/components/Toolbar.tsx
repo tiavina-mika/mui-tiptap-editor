@@ -2,10 +2,10 @@
 
 import { Theme } from '@emotion/react';
 import { cx } from '@emotion/css';
-import { IconButton, Tooltip } from '@mui/material';
-import { Editor } from '@tiptap/react';
+import { Editor, useCurrentEditor } from '@tiptap/react';
 import {
-  useState, MouseEvent, useMemo, useCallback, Fragment,
+  useState, MouseEvent, useCallback,
+  useMemo,
 } from 'react';
 
 import TableMenuDialog from './TableMenuDialog';
@@ -34,7 +34,6 @@ import Youtube from '../icons/Youtube';
 import Undo from '../icons/Undo';
 import Redo from '../icons/Redo';
 import Mention from '../icons/Mention';
-import Icon from '../icons/Icon';
 import Picture from '../icons/Picture';
 import TextColor from '../icons/TextColor';
 import UploadFile from './UploadFile';
@@ -90,7 +89,7 @@ const classes = {
 };
 
 export type ToolbarProps = {
-  editor: Editor;
+  // editor: Editor;
   /**
    * override the default class
    */
@@ -126,25 +125,17 @@ export type ToolbarProps = {
 };
 
 const Toolbar = ({
-  editor,
+  // editor,
   className,
   labels,
   uploadFileOptions,
   position,
   colorId,
   toolbar = defaultEditorToolbar,
-  type ="toolbar"
+  type ='toolbar',
 }: ToolbarProps) => {
-  const [openLinkDialog, setOpen] = useState<boolean>(false);
-
-  const toggleLinkDialog = useCallback(() => setOpen(!openLinkDialog), [openLinkDialog]);
-
   const [openYoutubeDialog, setOpenYoutubeDialog] = useState<boolean>(false);
-
-  const toggleYoutubeDialog = useCallback(
-    () => setOpenYoutubeDialog(!openYoutubeDialog),
-    [openYoutubeDialog]
-  );
+  const { editor } = useCurrentEditor() as { editor: Editor };
 
   const [tableAnchorEl, setTableAnchorEl] = useState<null | HTMLElement>(null);
 
@@ -155,6 +146,8 @@ const Toolbar = ({
   const handleCloseTableMenu = () => {
     setTableAnchorEl(null);
   };
+
+  const toggleYoutubeDialog = () => setOpenYoutubeDialog(!openYoutubeDialog);
 
   // set link
   const setLink = useCallback(() => {
@@ -181,212 +174,9 @@ const Toolbar = ({
     editor.chain().focus().extendMarkRange('link').setLink({ href: url }).run();
   }, [editor, labels?.link?.invalid]);
 
-  const menus = useMemo(() => {
-    const toolbarLabels = labels?.toolbar;
-
-    return [
-      {
-        name: 'bold',
-        icon: Bold,
-        iconSize: 12,
-        onClick: () => editor.chain().focus().toggleBold().run(),
-        disabled: !editor.can().chain().focus().toggleBold().run(),
-        tooltip: toolbarLabels?.bold || 'Bold',
-      },
-      {
-        name: 'italic',
-        icon: Italic,
-        iconSize: 12,
-        onClick: () => editor.chain().focus().toggleItalic().run(),
-        disabled: !editor.can().chain().focus().toggleItalic().run(),
-        tooltip: toolbarLabels?.italic || 'Italic',
-      },
-      {
-        name: 'strike',
-        icon: Strike,
-        iconSize: 14,
-        onClick: () => editor.chain().focus().toggleStrike().run(),
-        disabled: !editor.can().chain().focus().toggleStrike().run(),
-        tooltip: toolbarLabels?.strike || 'Strike through',
-      },
-      {
-        name: 'underline',
-        iconSize: 14,
-        icon: Underline,
-        onClick: () => editor.chain().focus().toggleUnderline().run(),
-        disabled: !editor.can().chain().focus().toggleUnderline().run(),
-        tooltip: toolbarLabels?.underline || 'Underline',
-        split: true,
-      },
-      // color use a label with htmlFor
-      {
-        name: 'color',
-        id: colorId || 'color', // id for the label
-        icon: TextColor,
-        disabled: false,
-        component: <ColorPicker editor={editor} id={colorId || 'color'} />,
-        tooltip: toolbarLabels?.color || 'Text color',
-        split: true,
-        iconSize: 24,
-      },
-      // alignment
-      {
-        name: 'align-left',
-        icon: AlignLeft,
-        onClick: () => editor.chain().focus().setTextAlign('left').run(),
-        disabled: false,
-        active: { textAlign: 'left' },
-        group: 'align',
-        tooltip: toolbarLabels?.alignLeft || 'Left align',
-      },
-      {
-        name: 'align-center',
-        icon: AlignCenter,
-        onClick: () => editor.chain().focus().setTextAlign('center').run(),
-        disabled: false,
-        active: { textAlign: 'center' },
-        group: 'align',
-        tooltip: toolbarLabels?.alignCenter || 'Center align',
-      },
-      {
-        name: 'align-right',
-        icon: AlignRight,
-        onClick: () => editor.chain().focus().setTextAlign('right').run(),
-        disabled: false,
-        active: { textAlign: 'right' },
-        group: 'align',
-        tooltip: toolbarLabels?.alignRight || 'Right align',
-      },
-      {
-        name: 'align-justify',
-        icon: AlignJustify,
-        onClick: () => editor.chain().focus().setTextAlign('justify').run(),
-        disabled: false,
-        active: { textAlign: 'justify' },
-        split: true,
-        group: 'align',
-        tooltip: toolbarLabels?.alignJustify || 'Justify align',
-      },
-      // order
-      {
-        name: 'bulletList',
-        icon: BulletList,
-        onClick: () => editor.chain().focus().toggleBulletList().run(),
-        disabled: !editor.can().chain().focus().toggleBulletList().run(),
-        tooltip: toolbarLabels?.bulletList || 'Bullet list',
-      },
-      {
-        name: 'orderedList',
-        icon: OrderedList,
-        onClick: () => editor.chain().focus().toggleOrderedList().run(),
-        disabled: !editor.can().chain().focus().toggleOrderedList().run(),
-        split: true,
-        tooltip: toolbarLabels?.orderedList || 'Ordered list',
-        iconSize: 14,
-      },
-      // link
-      {
-        name: 'link',
-        icon: Link,
-        onClick: setLink,
-        disabled: false,
-        tooltip: toolbarLabels?.link || 'Link',
-      },
-      {
-        name: 'upload',
-        id: 'upload', // id for the label with htmlFor
-        icon: Picture,
-        disabled: false,
-        component: <UploadFile editor={editor} id="upload" {...uploadFileOptions} />,
-        tooltip: toolbarLabels?.upload || 'Upload image',
-        iconSize: 16,
-      },
-      {
-        name: 'mention',
-        icon: Mention,
-        onClick: () => editor.chain().focus().insertContent('@').run(),
-        disabled: false,
-        tooltip: toolbarLabels?.mention || 'Mention user',
-        iconSize: 16,
-      },
-      {
-        name: 'table',
-        icon: Table,
-        onClick: (event: MouseEvent<HTMLElement>) => {
-          handleOpenTableMenu(event);
-        },
-        disabled: false,
-        split: true,
-        tooltip: labels?.table?.table || 'Table',
-      },
-      {
-        name: 'blockquote',
-        icon: Quote,
-        onClick: () => editor.chain().focus().toggleBlockquote().run(),
-        disabled: false,
-        tooltip: toolbarLabels?.blockquote || 'Block quote',
-        iconSize: 16,
-      },
-      {
-        name: 'codeBlock',
-        icon: CodeBlock,
-        onClick: () => editor.chain().focus().toggleCodeBlock().run(),
-        disabled: false,
-        tooltip: toolbarLabels?.codeBlock || 'Code block',
-        iconSize: 16,
-      },
-      {
-        name: 'code',
-        icon: Code,
-        onClick: () => editor.chain().focus().toggleCode().run(),
-        disabled: false,
-        split: true,
-        tooltip: toolbarLabels?.inlineCode || 'Inline code',
-      },
-      {
-        name: 'youtube',
-        icon: Youtube,
-        onClick: toggleYoutubeDialog,
-        disabled: false,
-        split: true,
-        tooltip: toolbarLabels?.youtube || 'Youtube',
-      },
-      {
-        name: 'undo',
-        icon: Undo,
-        onClick: () => editor.chain().focus().undo().run(),
-        disabled: !editor.can().undo(),
-        default: true, // always display
-        tooltip: toolbarLabels?.undo || 'Undo',
-      },
-      {
-        name: 'redo',
-        icon: Redo,
-        onClick: () => editor.chain().focus().redo().run(),
-        disabled: !editor.can().redo(),
-        default: true, // always display
-        split: true,
-        tooltip: toolbarLabels?.redo || 'Redo',
-      },
-    ];
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [
-    editor,
-    /*
-     * for some unknown reason, the history is not being updated
-     * so we need to force the update
-     */
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    editor.can().undo,
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    editor.can().redo,
-    toggleYoutubeDialog,
-    handleOpenTableMenu,
-    labels,
-    setLink,
-    uploadFileOptions,
-    toggleLinkDialog,
-  ]);
+  const isWithTooltip = useMemo(() => {
+    return type === 'toolbar';
+  }, [type]);
 
   return (
     <div
@@ -398,32 +188,237 @@ const Toolbar = ({
       {/* heading */}
       {showTextEditorToolbarMenu(toolbar, 'heading') && <Heading split editor={editor} headingLabels={labels?.headings} />}
 
-      {/* other options */}
-      {menus.map((menu, index) => {
-        if (!showTextEditorToolbarMenu(toolbar, menu)) return null;
+      {showTextEditorToolbarMenu(toolbar, 'bold') && (
+        <ToolBarIconButton
+          disabled={!editor.can().chain().focus().toggleBold().run()}
+          icon={<Bold />}
+          iconSize={12}
+          name="bold"
+          tooltip={labels?.toolbar?.bold || 'Bold'}
+          withTooltip={isWithTooltip}
+          onClick={() => editor.chain().focus().toggleBold().run()}
+        />
+      )}
 
-        return (
-          <Fragment key={menu.name + index}>
-            {type === 'toolbar'
-              ? (
-                <Tooltip title={menu.tooltip}>
-                  <ToolBarIconButton
-                    editor={editor}
-                    menu={menu}
-                  />
-                </Tooltip>
-              )
-              : (
-            <ToolBarIconButton
-                    editor={editor}
-                    menu={menu}
-                  />
-              )}
-          </Fragment>
-        );
-      })}
+      {showTextEditorToolbarMenu(toolbar, 'italic') && (
+        <ToolBarIconButton
+          disabled={!editor.can().chain().focus().toggleItalic().run()}
+          icon={<Italic />}
+          iconSize={12}
+          name="italic"
+          tooltip={labels?.toolbar?.italic || 'Italic'}
+          withTooltip={isWithTooltip}
+          onClick={() => editor.chain().focus().toggleItalic().run()}
+        />
+      )}
 
-      {/* youtube dialog */}
+      {showTextEditorToolbarMenu(toolbar, 'strike') && (
+        <ToolBarIconButton
+          disabled={!editor.can().chain().focus().toggleStrike().run()}
+          icon={<Strike />}
+          iconSize={14}
+          name="strike"
+          tooltip={labels?.toolbar?.strike || 'Strike through'}
+          withTooltip={isWithTooltip}
+          onClick={() => editor.chain().focus().toggleStrike().run()}
+        />
+      )}
+
+      {showTextEditorToolbarMenu(toolbar, 'underline') && (
+        <ToolBarIconButton
+          split
+          disabled={!editor.can().chain().focus().toggleUnderline().run()}
+          icon={<Underline />}
+          iconSize={14}
+          name="underline"
+          tooltip={labels?.toolbar?.underline || 'Underline'}
+          withTooltip={isWithTooltip}
+          onClick={() => editor.chain().focus().toggleUnderline().run()}
+        />
+      )}
+
+      {showTextEditorToolbarMenu(toolbar, 'color') && (
+        <ToolBarIconButton
+          split
+          icon={<TextColor />}
+          iconSize={24}
+          id={colorId || 'color'}
+          name="color"
+          tooltip={labels?.toolbar?.color || 'Text Color'}
+        >
+          <ColorPicker editor={editor} id={colorId || 'color'} />
+        </ToolBarIconButton>
+      )}
+
+      {showTextEditorToolbarMenu(toolbar, 'align') && (
+        <>
+          <ToolBarIconButton
+            disabled={false}
+            icon={<AlignLeft />}
+            isActive={editor.isActive({ textAlign: 'left' })}
+            name="align-left"
+            tooltip={labels?.toolbar?.alignLeft || 'Left align'}
+            onClick={() => editor.chain().focus().setTextAlign('left').run()}
+          />
+          <ToolBarIconButton
+            disabled={false}
+            icon={<AlignCenter />}
+            isActive={editor.isActive({ textAlign: 'center' })}
+            name="align-center"
+            tooltip={labels?.toolbar?.alignCenter || 'Center align'}
+            onClick={() => editor.chain().focus().setTextAlign('center').run()}
+          />
+          <ToolBarIconButton
+            disabled={false}
+            icon={<AlignRight />}
+            isActive={editor.isActive({ textAlign: 'right' })}
+            name="align-right"
+            tooltip={labels?.toolbar?.alignRight || 'Right align'}
+            onClick={() => editor.chain().focus().setTextAlign('right').run()}
+          />
+          <ToolBarIconButton
+            split
+            disabled={false}
+            icon={<AlignJustify />}
+            isActive={editor.isActive({ textAlign: 'justify' })}
+            name="align-justify"
+            tooltip={labels?.toolbar?.alignJustify || 'Justify align'}
+            onClick={() => editor.chain().focus().setTextAlign('justify').run()}
+          />
+        </>
+      )}
+
+      {showTextEditorToolbarMenu(toolbar, 'bulletList') && (
+        <ToolBarIconButton
+          disabled={!editor.can().chain().focus().toggleBulletList().run()}
+          icon={<BulletList />}
+          name="bulletList"
+          tooltip={labels?.toolbar?.bulletList || 'Bullet list'}
+          onClick={() => editor.chain().focus().toggleBulletList().run()}
+        />
+      )}
+
+      {showTextEditorToolbarMenu(toolbar, 'orderedList') && (
+        <ToolBarIconButton
+          split
+          disabled={!editor.can().chain().focus().toggleOrderedList().run()}
+          icon={<OrderedList />}
+          iconSize={14}
+          name="orderedList"
+          tooltip={labels?.toolbar?.orderedList || 'Ordered list'}
+          onClick={() => editor.chain().focus().toggleOrderedList().run()}
+        />
+      )}
+
+      {showTextEditorToolbarMenu(toolbar, 'link') && (
+        <ToolBarIconButton
+          disabled={false}
+          icon={<Link />}
+          name="link"
+          tooltip={labels?.toolbar?.link || 'Link'}
+          onClick={setLink}
+        />
+      )}
+
+      {showTextEditorToolbarMenu(toolbar, 'image') && (
+      // <UploadFile editor={editor} id="upload" {...uploadFileOptions} />
+        <ToolBarIconButton
+          disabled={false}
+          icon={<Picture />}
+          iconSize={16}
+          id="upload"
+          name="upload"
+          tooltip={labels?.toolbar?.upload || 'Upload image'}
+        >
+          <UploadFile editor={editor} id="upload" {...uploadFileOptions} />
+        </ToolBarIconButton>
+      )}
+
+      {showTextEditorToolbarMenu(toolbar, 'mention') && (
+        <ToolBarIconButton
+          disabled={false}
+          icon={<Mention />}
+          iconSize={16}
+          name="mention"
+          tooltip={labels?.toolbar?.mention || 'Mention user'}
+          onClick={() => editor.chain().focus().insertContent('@').run()}
+        />
+      )}
+
+      {showTextEditorToolbarMenu(toolbar, 'table') && (
+        <ToolBarIconButton
+          split
+          disabled={false}
+          icon={<Table />}
+          name="table"
+          tooltip={labels?.table?.table || 'Table'}
+          onClick={handleOpenTableMenu}
+        />
+      )}
+
+      {showTextEditorToolbarMenu(toolbar, 'blockquote') && (
+        <ToolBarIconButton
+          disabled={false}
+          icon={<Quote />}
+          iconSize={16}
+          name="blockquote"
+          tooltip={labels?.toolbar?.blockquote || 'Block quote'}
+          onClick={() => editor.chain().focus().toggleBlockquote().run()}
+        />
+      )}
+
+      {showTextEditorToolbarMenu(toolbar, 'codeBlock') && (
+        <ToolBarIconButton
+          disabled={false}
+          icon={<CodeBlock />}
+          iconSize={16}
+          name="codeBlock"
+          tooltip={labels?.toolbar?.codeBlock || 'Code block'}
+          onClick={() => editor.chain().focus().toggleCodeBlock().run()}
+        />
+      )}
+
+      {showTextEditorToolbarMenu(toolbar, 'code') && (
+        <ToolBarIconButton
+          split
+          disabled={false}
+          icon={<Code />}
+          name="code"
+          tooltip={labels?.toolbar?.inlineCode || 'Inline code'}
+          onClick={() => editor.chain().focus().toggleCode().run()}
+        />
+      )}
+
+      {showTextEditorToolbarMenu(toolbar, 'youtube') && (
+        <ToolBarIconButton
+          disabled={false}
+          icon={<Youtube />}
+          name="youtube"
+          tooltip={labels?.toolbar?.youtube || 'Insert YouTube video'}
+          onClick={toggleYoutubeDialog}
+        />
+      )}
+
+      {showTextEditorToolbarMenu(toolbar, 'history') && (
+        <>
+          <ToolBarIconButton
+            disabled={!editor.can().undo()}
+            icon={<Undo />}
+            name="undo"
+            tooltip={labels?.toolbar?.undo || 'Undo'}
+            onClick={() => editor.chain().focus().undo().run()}
+          />
+          <ToolBarIconButton
+            split
+            disabled={!editor.can().redo()}
+            icon={<Redo />}
+            name="redo"
+            tooltip={labels?.toolbar?.redo || 'Redo'}
+            onClick={() => editor.chain().focus().redo().run()}
+          />
+        </>
+      )}
+
       {showTextEditorToolbarMenu(toolbar, 'youtube') && (
         <YoutubeDialog
           editor={editor}
