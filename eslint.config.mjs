@@ -194,7 +194,7 @@ const jsxRules = {
     ],
     // Force new line after opening tag if multiline
     '@stylistic/jsx-first-prop-new-line': [2, 'multiline-multiprop'],
-    '@stylistic/jsx-props-no-multi-spaces': 'error',
+    '@stylistic/no-multi-spaces': 'error',
     '@stylistic/jsx-tag-spacing': ['error', {
         closingSlash: 'never',
         beforeSelfClosing: 'always',
@@ -229,7 +229,7 @@ const jsxRules = {
 
 // --- General rules ---
 const generalRules = {
-    '@cspell/spellchecker': ['warn', { cspell: { cspellOptionsRoot: import.meta.dirname } }],
+    '@cspell/spellchecker': ['warn', {}],
     '@typescript-eslint/no-empty-object-type': 'off',
     'react-refresh/only-export-components': [
         'warn',
