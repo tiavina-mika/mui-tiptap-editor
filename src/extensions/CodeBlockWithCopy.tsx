@@ -34,8 +34,7 @@ const CodeBlockWithCopy = ({ node }: any) => {
       </button>
       <pre>
         <code>
-        <NodeViewContent />
-
+          <NodeViewContent />
         </code>
       </pre>
     </NodeViewWrapper>
