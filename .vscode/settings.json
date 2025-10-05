@@ -1,7 +1,6 @@
 {
   "// editor": "-------------------------------------",
   "editor.codeActionsOnSave": {
-    "source.fixAll.eslint": "explicit",
     "source.organizeImports": "never"
   },
   "editor.defaultFormatter": "dbaeumer.vscode-eslint",
@@ -21,11 +20,10 @@
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
   "[markdown]": {
-    "editor.defaultFormatter": "DavidAnson.vscode-markdownlint"
+    "editor.defaultFormatter": "vscode.markdown-language-features"
   },
   "// files": "-------------------------------------",
-  "files.trimTrailingWhitespace": true,
-  "files.insertFinalNewline": true,
+//   "files.insertFinalNewline": true,
   "files.associations": {
     "*.ignore": "plaintext",
     "*.txt": "plaintext",
@@ -39,7 +37,7 @@
   },
   "// typescript": "-------------------------------------",
   "typescript.tsdk": "./node_modules/typescript/lib",
-  "typescript.enablePromptUseWorkspaceTsdk": true,
+  // "typescript.enablePromptUseWorkspaceTsdk": true,
   "typescript.validate.enable": true,
   "// eslint": "-------------------------------------",
   "eslint.validate": [
@@ -57,3 +55,4 @@
   "typescript.tsserver.allowLocalPluginLoads": true,
   "typescript.tsserver.pluginPaths": ["./"]
 }
+
