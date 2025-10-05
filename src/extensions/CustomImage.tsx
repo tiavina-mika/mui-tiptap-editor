@@ -15,15 +15,16 @@
 
 import TiptapImage from '@tiptap/extension-image';
 import {
-  Editor, NodeViewWrapper, NodeViewWrapperProps, ReactNodeViewRenderer,
+  Editor, NodeViewWrapper, ReactNodeViewRenderer,
 } from '@tiptap/react';
-import { ClipboardEvent, SyntheticEvent } from 'react';
+import type { NodeViewWrapperProps } from '@tiptap/react';
+import type { ClipboardEvent, SyntheticEvent } from 'react';
 import {
   checkFilesNumber, checkIsImage, checkValidMimeType, checkValidFileDimensions, getIsFileSizeValid,
 } from '../utils/app.utils';
 import { EditorView } from '@tiptap/pm/view';
 import { Slice } from '@tiptap/pm/model';
-import { ILabels, ImageUploadOptions } from '../types';
+import type { ILabels, ImageUploadOptions } from '../types';
 import { Plugin } from '@tiptap/pm/state';
 import ImageText from './image/ImageText';
 
@@ -65,13 +66,17 @@ export const onUpload = (
 
   if (type === 'drop' && moved) return;
 
-  const files = (type === 'drop' ? (event as DragEvent).dataTransfer?.files : (event as ClipboardEvent).clipboardData?.files) || [];
+  const files = Array.from(
+    type === 'drop'
+      ? (event as DragEvent).dataTransfer?.files || []
+      : (event as ClipboardEvent).clipboardData?.files || []
+  );
 
   // check if the number of files is valid
   const {
     isValid: isFilesNumberValid,
     message: filesNumberMessage,
-  } = checkFilesNumber(files as FileList, maxFilesNumber);
+  } = checkFilesNumber(files, maxFilesNumber);
 
   if (!isFilesNumberValid) {
     window.alert(labels?.maximumNumberOfFiles || filesNumberMessage);

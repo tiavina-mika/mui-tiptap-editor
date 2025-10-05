@@ -2,13 +2,15 @@
 
 import { Editor } from '@tiptap/react';
 import {
-  Menu, MenuItem, Fade, Theme, Button,
+  Menu, MenuItem, Fade, Button,
 } from '@mui/material';
-import { Level } from '@tiptap/extension-heading';
-import { MouseEvent, useMemo, useState } from 'react';
+import type { Theme } from '@mui/material';
+import type { Level } from '@tiptap/extension-heading';
+import { useMemo, useState } from 'react';
+import type { MouseEvent } from 'react';
 import ChevronDown from '../icons/ChevronDown';
 import Icon from '../icons/Icon';
-import { ILabels } from '../types';
+import type { ILabels } from '../types';
 import { getBorderColor } from '../utils/app.utils';
 
 const isActive = (editor: Editor) => {

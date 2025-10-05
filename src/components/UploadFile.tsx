@@ -5,7 +5,7 @@ import { useRef } from 'react';
 import {
   checkIsImage, checkValidFileDimensions, checkValidMimeType, getIsFileSizeValid,
 } from '../utils/app.utils';
-import { ILabels, ImageUploadOptions, UploadResponse } from '../types';
+import type { ILabels, ImageUploadOptions, UploadResponse } from '../types';
 
 type Props = {
   editor: Editor;

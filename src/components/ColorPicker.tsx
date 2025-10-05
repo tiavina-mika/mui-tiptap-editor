@@ -2,7 +2,7 @@
 
 import { Editor } from '@tiptap/react';
 
-import { ChangeEvent } from 'react';
+import type { ChangeEvent } from 'react';
 
 type Props = {
   editor: Editor;

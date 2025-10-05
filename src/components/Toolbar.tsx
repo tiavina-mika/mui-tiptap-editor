@@ -1,17 +1,18 @@
 'use client';
 
-import { Theme } from '@emotion/react';
+import type { Theme } from '@emotion/react';
 import { cx } from '@emotion/css';
 import { Editor, useCurrentEditor } from '@tiptap/react';
 import {
-  useState, MouseEvent, useCallback,
+  useState, useCallback,
   useMemo,
 } from 'react';
+import type { MouseEvent } from 'react';
 
 import TableMenuDialog from './TableMenuDialog';
 import Heading from './Heading';
 import ColorPicker from './ColorPicker';
-import { IEditorToolbar, ILabels, TextEditorProps } from '../types.d';
+import type { IEditorToolbar, ILabels, TextEditorProps } from '../types.d';
 import {
   checkIsValidUrl, defaultEditorToolbar, getBorderColor, showTextEditorToolbarMenu,
 } from '../utils/app.utils';

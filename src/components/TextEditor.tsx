@@ -3,7 +3,7 @@
 import '../index.css';
 
 import { cx } from '@emotion/css';
-import { Theme } from '@emotion/react';
+import type { Theme } from '@emotion/react';
 import {
   FormHelperText, Tab, Tabs, Typography,
 } from '@mui/material';
@@ -11,13 +11,13 @@ import {
   EditorContent,
   EditorContext,
 } from '@tiptap/react';
-// @ts-expect-error: BubbleMenu and FloatingMenu are not typed in @tiptap/react/menus
 import { BubbleMenu, FloatingMenu } from '@tiptap/react/menus';
-import { useState, SyntheticEvent, useMemo } from 'react';
+import { useState, useMemo } from 'react';
+import type { SyntheticEvent } from 'react';
 import { useTextEditor } from '../hooks/useTextEditor';
 
 import Toolbar from './Toolbar';
-import { IEditorToolbar, TextEditorProps } from '../types';
+import type { IEditorToolbar, TextEditorProps } from '../types';
 import { getBorderColor } from '../utils/app.utils';
 
 const defaultMenuToolbar: IEditorToolbar[] = ['heading', 'bold', 'italic', 'underline', 'link', 'bulletList'];

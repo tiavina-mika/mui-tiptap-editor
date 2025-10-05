@@ -1,14 +1,12 @@
 'use client';
 
-import { Theme } from '@emotion/react';
+import type { Theme } from '@emotion/react';
 import { IconButton, Tooltip } from '@mui/material';
 import { useCurrentEditor } from '@tiptap/react';
-import {
-  Fragment,
-  ReactNode,
-} from 'react';
+import { Fragment } from 'react';
+import type { ReactNode } from 'react';
 
-import { ToolbarItem } from '../types.d';
+import type { ToolbarItem } from '../types.d';
 import {
   getBorderColor,
 } from '../utils/app.utils';

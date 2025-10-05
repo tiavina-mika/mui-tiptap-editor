@@ -5,10 +5,11 @@ import {
   TextField,
 } from '@mui/material';
 import { Editor } from '@tiptap/react';
-import { ChangeEvent, useState } from 'react';
+import { useState } from 'react';
+import type { ChangeEvent } from 'react';
 import Dialog from './Dialog';
 import { checkIsValidYoutubeUrl } from '../utils/app.utils';
-import { ILabels } from '../types';
+import type { ILabels } from '../types';
 
 type YoutubeInput = {
   url: string;

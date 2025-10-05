@@ -1,11 +1,12 @@
 'use client';
 
-import { MouseEventHandler, ReactNode } from 'react';
+import type { MouseEventHandler, ReactNode } from 'react';
 
 import {
-  IconButton, Theme, Typography, Button, Dialog as MUIDialog, DialogProps,
+  IconButton, Typography, Button, Dialog as MUIDialog,
   DialogActions, DialogContent, DialogContentText, DialogTitle,
 } from '@mui/material';
+import type { Theme, DialogProps } from '@mui/material';
 import Close from '../icons/Close';
 
 const classes = {

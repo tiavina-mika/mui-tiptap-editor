@@ -12,16 +12,12 @@ import TextAlign from '@tiptap/extension-text-align';
 import Youtube from '@tiptap/extension-youtube';
 import { Placeholder, Gapcursor } from '@tiptap/extensions';
 import Code from '@tiptap/extension-code';
-import {
-  useEditor,
-  EditorOptions,
-  AnyExtension,
-  EditorEvents,
-} from '@tiptap/react';
+import { useEditor } from '@tiptap/react';
+import type { AnyExtension, EditorOptions, EditorEvents } from '@tiptap/react';
 import StarterKit from '@tiptap/starter-kit';
 import { useEffect } from 'react';
 import Heading from '@tiptap/extension-heading';
-import {
+import type {
   CodeBlockWithCopyProps, ILabels, ImageUploadOptions, ITextEditorOption,
 } from '../types.d';
 import getCustomImage from '../extensions/CustomImage';

@@ -14,9 +14,11 @@
 
 import Edit from '../../icons/Edit';
 import {
-  IconButton, Stack, TextField, Theme, Typography,
+  IconButton, Stack, TextField, Typography,
 } from '@mui/material';
-import { ChangeEvent, useEffect, useState } from 'react';
+import type { Theme } from '@mui/material';
+import { useEffect, useState } from 'react';
+import type { ChangeEvent } from 'react';
 import { checkAlt, checkLegend } from '../../utils/app.utils';
 import Dialog from '../../components/Dialog';
 import Add from '../../icons/Add';

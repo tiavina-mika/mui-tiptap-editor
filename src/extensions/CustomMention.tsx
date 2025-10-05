@@ -3,7 +3,7 @@
 import { Mention } from '@tiptap/extension-mention';
 import { mergeAttributes } from '@tiptap/core';
 import getSuggestion from '../components/mention/suggestions';
-import { ITextEditorOption } from '../types';
+import type { ITextEditorOption } from '../types';
 
 type Props = {
 // base pathname for the mention link

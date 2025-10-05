@@ -1,5 +1,5 @@
-import { Theme } from '@mui/material';
-import { IEditorToolbar } from '../types';
+import type { Theme } from '@mui/material';
+import type { IEditorToolbar } from '../types';
 
 type FileValidationOutput = {
   isValid: boolean;
@@ -174,7 +174,7 @@ export const checkValidMimeType = (file: File, allowedMimeTypes: string[] | null
  * @param maxFilesNumber
  * @returns
  */
-export const checkFilesNumber = (files: FileList, maxFilesNumber = 5): FileValidationOutput => {
+export const checkFilesNumber = (files: FileList | File[], maxFilesNumber = 5): FileValidationOutput => {
   return {
     isValid: files.length <= maxFilesNumber,
     message: `You can only upload ${maxFilesNumber} files at once.`,
