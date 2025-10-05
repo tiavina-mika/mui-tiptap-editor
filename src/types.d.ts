@@ -282,6 +282,11 @@ export type TextEditorProps = {
   labelClassName?: string;
 
   /**
+   * table of contents container class name
+   */
+  tableOfContentsClassName?: string;
+
+  /**
    * if true, floating menu will be disabled
    */
   withFloatingMenu?: boolean;
