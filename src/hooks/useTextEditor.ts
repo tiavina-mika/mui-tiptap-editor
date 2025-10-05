@@ -1,5 +1,4 @@
 'use client';
-
 import { useTheme } from '@mui/material';
 import Document from '@tiptap/extension-document';
 import Link from '@tiptap/extension-link';
@@ -17,6 +16,7 @@ import type { AnyExtension, EditorOptions, EditorEvents } from '@tiptap/react';
 import StarterKit from '@tiptap/starter-kit';
 import { useEffect } from 'react';
 import Heading from '@tiptap/extension-heading';
+import { getHierarchicalIndexes, TableOfContents } from '@tiptap/extension-table-of-contents';
 import type {
   CodeBlockWithCopyProps, ILabels, ImageUploadOptions, ITextEditorOption,
 } from '../types.d';
@@ -25,6 +25,7 @@ import { getCustomMention } from '../extensions/CustomMention';
 import { getCodeBlockWithCopy } from '../extensions/CodeBlockWithCopy';
 import { TableKit } from '@tiptap/extension-table';
 import { TextStyleKit, Color } from '@tiptap/extension-text-style';
+import { type ToCItemType } from '../components/tableOfContent/ToC';
 
 const extensions = [
   Color.configure({ types: ['textStyle', ListItem.name] }),
@@ -166,6 +167,8 @@ export type TextEditorProps = {
    * props for the block code extension
    */
   codeBlock?: CodeBlockWithCopyProps;
+
+  onChangeTableOfContents?: (items: ToCItemType[]) => void;
 } & Partial<EditorOptions>;
 
 export const useTextEditor = ({
@@ -181,6 +184,7 @@ export const useTextEditor = ({
   editable = true,
   codeBlock,
   id,
+  onChangeTableOfContents,
   ...editorOptions
 }: TextEditorProps) => {
   const theme = useTheme();
@@ -200,6 +204,13 @@ export const useTextEditor = ({
       // upload image extension
       getCustomImage(uploadFileOptions, uploadFileLabels, uploadFileOptions?.maxMediaLegendLength),
       getCodeBlockWithCopy(codeBlock),
+      onChangeTableOfContents ? TableOfContents.configure({
+        getIndex: getHierarchicalIndexes,
+        onUpdate: (contents: ToCItemType[]) => {
+          onChangeTableOfContents(contents);
+        },
+      }) : null,
+      // default extensions
       ...extensions,
     ] as AnyExtension[],
     /*
