@@ -1,12 +1,13 @@
 {
   "compilerOptions": {
-    "target": "ES2015",
-    "lib": ["ES2015", "DOM", "DOM.Iterable"],
-    "module": "CommonJS",
+    "target": "ES2023",
+    "lib": ["ES2023"],
+    "module": "ESNext",
+    "types": ["node"],
     "skipLibCheck": true,
 
     // Build options
-    "moduleResolution": "node",
+    "moduleResolution": "bundler",
     "resolveJsonModule": true,
     "isolatedModules": true,
     "jsx": "react-jsx",
@@ -14,6 +15,10 @@
     "sourceMap": false,
     "esModuleInterop": true,
     "strictNullChecks": true,
+    "allowImportingTsExtensions": true,
+    "verbatimModuleSyntax": true,
+    "moduleDetection": "force",
+    "noEmit": true,
 
     // Linting
     "strict": true,
@@ -21,7 +26,11 @@
     "declaration": true,
     "allowJs": false,
     "jsxImportSource": "@emotion/react",
-    "noFallthroughCasesInSwitch": true
+    "noFallthroughCasesInSwitch": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "erasableSyntaxOnly": true,
+    "noUncheckedSideEffectImports": true
   },
   "include": ["./src", "vite.config.ts", "jest.config.js", "dts-bundle-generator.config.ts", "./__tests__"]
 }
