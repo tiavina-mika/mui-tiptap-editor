@@ -98,6 +98,7 @@ const TextEditor = ({
   bubbleMenuToolbar,
   floatingMenuToolbar,
   errorClassName,
+  tableOfContentsClassName,
   labelClassName,
   user,
   mentions,
@@ -253,6 +254,7 @@ const TextEditor = ({
             noContentLabel={labels?.tableOfContent?.noContentLabel}
             position={tableOfContentPosition}
             tableOfContents={tableOfContents}
+            tableOfContentsClassName={tableOfContentsClassName}
           />
         )}
       </Stack>

@@ -11,17 +11,19 @@ type Props = {
   label: string | undefined;
   noContentLabel: string | undefined;
   position: TextEditorProps['tableOfContentPosition'];
+  tableOfContentsClassName: string | undefined;
 };
 const TocBlock = ({
   tableOfContents,
   label = 'Table of contents',
   noContentLabel,
   position,
+  tableOfContentsClassName,
 }: Props) => {
   const { editor } = useCurrentEditor();
 
   return (
-    <div className={`toc-sidebar-${position} toc-sidebar`}>
+    <div className={`toc-sidebar-${position} toc-sidebar ${tableOfContentsClassName}`}>
       <div className="toc-sidebar-options">
         <Typography className="toc-label">{label}</Typography>
         <div className="toc-items">
