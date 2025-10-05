@@ -394,7 +394,7 @@ const Toolbar = ({
         tooltip={labels?.toolbar?.undo || 'Undo'}
         onClick={() => editor.chain().focus().undo().run()}
       />
-      
+
       <ToolBarIconButton
         split
         disabled={!editor.can().redo()}
