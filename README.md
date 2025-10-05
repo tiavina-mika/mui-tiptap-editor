@@ -270,6 +270,7 @@ import './index.css';
 |errorClassName|`string`|empty| Override the error message styles
 |rootClassName|`string`|empty| Override the main container styles
 |labelClassName|`string`|empty| Override the label styles
+|tableOfContentsClassName|`string`|empty| Override the table of contents styles
 |bubbleMenuToolbar|`string[]`|`['bold', 'italic', 'underline', 'link']`| Similar to `toolbar` props
 |floatingMenuToolbar|`string[]`|`['bold', 'italic', 'underline', 'link']`| Similar to `toolbar` props
 |mentions|`ITextEditorOption[]`|undefined| List of users to be mentioned when entering or selecting `@`
@@ -282,6 +283,9 @@ import './index.css';
 |toolbarPosition|`top or bottom`|bottom| Position of the toolbar
 |id|`string`|empty| Used if using multiple editors on the same page, to identify uniquely each editor
 |uploadFileOptions|`ImageUploadOptions`|null| Override image upload default options like max size, max file number, ...
+|disableTableOfContents|`boolean`|false| If true, the table of contents is hidden.
+|tableOfContentPosition|`top, left or right`|right| Position of the table of contents (Only if `disableTableOfContents` is false).
+
 |...all tiptap features|[EditorOptions](https://github.com/ueberdosis/tiptap/blob/e73073c02069393d858ca7d8c44b56a651417080/packages/core/src/types.ts#L52)|empty| Can access to all tiptap `useEditor` props
 
 See [`here`](https://github.com/tiavina-mika/mui-tiptap-editor/blob/main/src/dev/App.tsx) how to use all the `TextEditor` props.
@@ -307,8 +311,17 @@ See [`here`](https://github.com/tiavina-mika/mui-tiptap-editor/blob/main/src/dev
   <tr>
     <td>Versions</td>
     <td>Features</td>
+  </tr>
   <tr>
-    <tr>
+    <th><a href="https://github.com/tiavina-mika/mui-tiptap-editor/pull/94">v0.12.0</a></th>
+    <td>
+      <ul>
+        <li>Can use table of contents.</li>
+        <li>Upgrade to MUI 7</li>
+      </ul>
+    </td>
+  <tr>
+  <tr>
     <th><a href="https://github.com/tiavina-mika/mui-tiptap-editor/pull/93">v0.11.0</a></th>
     <td>
       <ul>
