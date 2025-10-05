@@ -229,7 +229,11 @@ const jsxRules = {
 
 // --- General rules ---
 const generalRules = {
-    '@cspell/spellchecker': ['warn', {}],
+    '@cspell/spellchecker': ['warn', {
+        cspell: {
+            ignoreWords: ['noopener', 'noreferrer']
+        }
+    }],
     '@typescript-eslint/no-empty-object-type': 'off',
     'react-refresh/only-export-components': [
         'warn',

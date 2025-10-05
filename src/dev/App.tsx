@@ -1,3 +1,4 @@
+/* eslint-disable @cspell/spellchecker */
 import { ThemeProvider as EmotionThemeProvider } from '@emotion/react';
 import {
   Container, CssBaseline, ThemeProvider, createTheme,

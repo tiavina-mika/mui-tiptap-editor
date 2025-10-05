@@ -30,6 +30,9 @@
     "package-lock.json",
     "yarn.lock",
     "tsconfig.json",
-    "node_modules/**"
+    "node_modules/**",
+    "dev/**",
+    "dist/**",
+    "build/**",
   ]
 }
