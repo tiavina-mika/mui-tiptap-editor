@@ -33,12 +33,19 @@ export const getBorderColor = (theme: Theme) => {
   return theme.palette.mode === 'light' ? theme.palette.grey[300] : theme.palette.grey[800];
 };
 
-// menus to display
+/**
+ * Show the text editor toolbar menu button to be displayed
+ * @param toolbar the list of toolbar items (e.g: ["bold", "italic", "history", "align", etc])
+ * @param menu current button or group to check (e.g: "bold", "italic", "history", "align", etc)
+ * @returns
+ */
 export const showTextEditorToolbarMenu = (toolbar: IEditorToolbar[], menu: any): boolean => {
   return !!toolbar?.find((t: IEditorToolbar) => {
     if (typeof menu === 'string') {
       return t === menu;
     }
+
+    // if default is true, show the menu button
     if (menu.default) return true;
     // if group is defined, otherwise check the name
     return menu.group ? menu.group === t : menu.name === t;
@@ -113,6 +120,11 @@ export const checkLegend = (text: string, maxLength: number): FileValidationOutp
   };
 };
 
+/**
+ * Get the file size in MB
+ * @param file
+ * @returns
+ */
 const getFileSize = (file: File): number => {
   const size = (file.size / 1024) / 1024;
 
