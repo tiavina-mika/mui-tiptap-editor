@@ -190,6 +190,10 @@ export type IRequiredLabels = {
     enterValidLegendText: string;
     imageMaxSize: string;
   };
+  tableOfContent: {
+    label: string;
+    noContentLabel: string;
+  };
 };
 
 export type ILabels = DeepPartial<IRequiredLabels>;
@@ -366,4 +370,14 @@ export type TextEditorProps = {
    * @default bottom
    */
   toolbarPosition?: 'top' | 'bottom';
+  /**
+   * if true, the table of contents will not be displayed
+   * @default true
+   */
+  disableTableOfContents?: boolean;
+  /**
+   * Position of the table of content
+   * @default right
+   */
+  tableOfContentPosition?: 'left' | 'right' | 'top';
 } & Partial<EditorOptions>;
