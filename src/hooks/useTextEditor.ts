@@ -1,24 +1,16 @@
 'use client';
 
 import { useTheme } from '@mui/material';
-import { Color } from '@tiptap/extension-color';
 import Document from '@tiptap/extension-document';
 import Link from '@tiptap/extension-link';
 import ListItem from '@tiptap/extension-list-item';
 import Paragraph from '@tiptap/extension-paragraph';
-import Placeholder from '@tiptap/extension-placeholder';
 import Text from '@tiptap/extension-text';
-import TextStyle from '@tiptap/extension-text-style';
 import TipTapTypography from '@tiptap/extension-typography';
 import Underline from '@tiptap/extension-underline';
-import Gapcursor from '@tiptap/extension-gapcursor';
 import TextAlign from '@tiptap/extension-text-align';
-import Table from '@tiptap/extension-table';
-import TableCell from '@tiptap/extension-table-cell';
-import TableHeader from '@tiptap/extension-table-header';
-import TableRow from '@tiptap/extension-table-row';
 import Youtube from '@tiptap/extension-youtube';
-import BubbleMenu from '@tiptap/extension-bubble-menu';
+import { Placeholder, Gapcursor } from '@tiptap/extensions';
 import Code from '@tiptap/extension-code';
 import {
   useEditor,
@@ -35,10 +27,12 @@ import {
 import getCustomImage from '../extensions/CustomImage';
 import { getCustomMention } from '../extensions/CustomMention';
 import { getCodeBlockWithCopy } from '../extensions/CodeBlockWithCopy';
+import { TableKit } from '@tiptap/extension-table';
+import { TextStyleKit, Color } from '@tiptap/extension-text-style';
 
 const extensions = [
-  Color.configure({ types: [TextStyle.name, ListItem.name] }),
-  TextStyle.configure({ types: [ListItem.name] } as any),
+  Color.configure({ types: ['textStyle', ListItem.name] }),
+  TextStyleKit.configure({ types: [ListItem.name] } as any),
   Document,
   Paragraph,
   Text,
@@ -93,20 +87,19 @@ const extensions = [
     },
     levels: [1, 2, 3, 3, 4, 5, 6],
   }),
-  Table.configure({
-    resizable: true,
+  TableKit.configure({
+    table: { resizable: true },
   }),
-  TableRow,
-  TableHeader,
-  TableCell,
   Gapcursor,
   Youtube,
   TextAlign.configure({
     types: ['heading', 'paragraph', 'table', 'image'],
   }),
-  BubbleMenu.configure(typeof document !== 'undefined' && {
-    element: document.querySelector('.bubble-menu'),
-  } as any),
+  /*
+   * BubbleMenu.configure(typeof document !== 'undefined' && {
+   *   element: document.querySelector('.bubble-menu'),
+   * } as any),
+   */
 ];
 
 export type TextEditorProps = {
