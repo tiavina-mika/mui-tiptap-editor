@@ -51,6 +51,7 @@ const classes = {
 
 type Props = ToolbarItem & {
   children?: ReactNode;
+  display?: boolean;
 };
 const ToolBarIconButton = ({
   disabled,
@@ -64,6 +65,7 @@ const ToolBarIconButton = ({
   children,
   withTooltip = false,
   tooltip,
+  display = false,
 }: Props) => {
   const { editor } = useCurrentEditor();
 
@@ -75,6 +77,8 @@ const ToolBarIconButton = ({
   if (!editor) {
     return null;
   }
+
+  if (!display) return null;
 
   const component= (
     <span>
