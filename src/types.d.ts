@@ -39,6 +39,24 @@ export type CodeBlockWithCopyProps = {
   language?: string;
   className?: string;
 };
+
+export type ToolbarItem = {
+  name: string;
+  icon: ReactNode;
+  iconSize?: number;
+  onClick?: (event?: MouseEvent<HTMLElement>) => void;
+  disabled?: boolean;
+  tooltip?: string;
+  split?: boolean;
+  id?: string;
+  group?: string;
+  active?: Record<string, any>;
+  default?: boolean;
+  isActive?: boolean;
+  withTooltip?: boolean;
+  tooltip?: string;
+};
+
 /**
  * Image upload options from drop or paste event
  * the image can be uploaded to the server via an API or saved inside as a base64 string
