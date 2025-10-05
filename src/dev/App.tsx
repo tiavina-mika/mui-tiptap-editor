@@ -62,16 +62,17 @@ const App = () => {
       <CssBaseline />
 
       <EmotionThemeProvider theme={theme}>
-        <Container>
+        <Container maxWidth="xl" style={{ marginTop: 20, marginBottom: 20 }}>
           <TextEditor
             withFloatingMenu
+            withBubbleMenu
             disableTableOfContents={false} // new
             disableTabs={false}
             inputClassName="flexColumn stretchSelf flex1"
             label="Content"
             mentions={mentions}
             placeholder="Enter your content here"
-            tableOfContentPosition='left'
+            tableOfContentPosition='right'
             toolbarPosition="top"
             user={currentUser}
             labels={{
@@ -164,8 +165,8 @@ const App = () => {
               maxSize: 5,
               maxFilesNumber: 2,
               allowedMimeTypes: ['image/jpeg', 'image/png', 'image/jpg'],
-              imageMaxWidth: 900,
-              imageMaxHeight: 500,
+              // imageMaxWidth: 900,
+              // imageMaxHeight: 500,
             }}
           />
         </Container>
