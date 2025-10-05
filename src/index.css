@@ -311,7 +311,7 @@ code {
   border-radius: 0.5rem;
 }
 /* code highlight */
-.tiptap .code-block-root pre code {
+.tiptap .code-block-root pre code, .tiptap .code-block-root pre code > div {
   color: inherit;
   padding: 0;
   background: none;
@@ -319,8 +319,8 @@ code {
 }
 .tiptap .code-block-root button {
   position: absolute;
-  right: 1rem;
-  top: 1rem;
+  right: 10px;
+  top: 10px;
   background: transparent;
   border: none;
   display: flex;
