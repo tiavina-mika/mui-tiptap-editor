@@ -1,3 +1,4 @@
+/* eslint-disable @cspell/spellchecker */
 'use client';
 
 /**
@@ -32,7 +33,10 @@ const CodeBlockWithCopy = ({ node }: any) => {
         {isCopied ? <Check /> : <Copy />}
       </button>
       <pre>
-        <NodeViewContent as="code" />
+        <code>
+        <NodeViewContent />
+
+        </code>
       </pre>
     </NodeViewWrapper>
   );
@@ -52,5 +56,7 @@ export const getCodeBlockWithCopy = (props?: CodeBlockWithCopyProps) => {
     // Configure lowlight with common languages and set default language
       lowlight: createLowlight(common),
       defaultLanguage: language,
+      enableTabIndentation: true,
+      tabSize: 2,
     });
 };
