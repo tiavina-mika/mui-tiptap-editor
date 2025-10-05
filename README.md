@@ -43,7 +43,9 @@ A customizable and easy to use <a href="https://tiptap.dev/">Tiptap</a> styled W
 - **[Demo video](https://www.youtube.com/watch?v=KAxcH5a9Reg)**
 
 
-<img alt="Screenshot" src="https://github.com/tiavina-mika/mui-tiptap-editor/blob/main/screenshots/screenshot.png" />
+<!-- <img alt="Screenshot" src="https://github.com/tiavina-mika/mui-tiptap-editor/blob/main/screenshots/screenshot.png" /> -->
+[![Watch the video](https://img.youtube.com/vi/KAxcH5a9Reg/maxresdefault.jpg)](https://www.youtube.com/watch?v=KAxcH5a9Reg)
+[![Watch the video](https://img.youtube.com/vi/Hi1jrH64TKs/maxresdefault.jpg)](https://www.youtube.com/watch?v=Hi1jrH64TKs)
 
 ## Installation
 
