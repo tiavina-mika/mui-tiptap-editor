@@ -1,14 +1,14 @@
 'use client';
 
-import { Theme } from '@emotion/react';
+import type { Theme } from '@mui/material';
 import {
   List, ListItem, ListItemButton, ListItemText,
 } from '@mui/material';
-import { SuggestionProps } from '@tiptap/suggestion';
+import type { SuggestionProps } from '@tiptap/suggestion';
 import {
   forwardRef, useEffect, useImperativeHandle, useState,
 } from 'react';
-import { ITextEditorOption } from '../../types.d';
+import type { ITextEditorOption } from '../../types.d';
 
 const classes = {
   list: (theme: Theme) => ({

@@ -4,8 +4,8 @@ import { Editor, ReactRenderer } from '@tiptap/react';
 import { computePosition, flip, shift } from '@floating-ui/dom';
 import { posToDOMRect } from '@tiptap/core';
 import Mentions from './Mentions';
-import { MentionOptions } from '@tiptap/extension-mention';
-import { ITextEditorOption } from '../../types.d';
+import type { MentionOptions } from '@tiptap/extension-mention';
+import type { ITextEditorOption } from '../../types.d';
 
 const updatePosition = (editor: Editor, element: HTMLElement) => {
   const virtualElement = {

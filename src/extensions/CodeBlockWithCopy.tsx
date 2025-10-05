@@ -1,5 +1,5 @@
-/* eslint-disable @cspell/spellchecker */
 'use client';
+/* eslint-disable @cspell/spellchecker */
 
 /**
  * This file defines a custom CodeBlockWithCopy component for use with the TipTap editor.
@@ -11,7 +11,7 @@ import { NodeViewWrapper, NodeViewContent, ReactNodeViewRenderer } from '@tiptap
 import { useState } from 'react';
 import { createLowlight, common } from 'lowlight';
 import CodeBlockLowlight from '@tiptap/extension-code-block-lowlight';
-import { type CodeBlockWithCopyProps } from '../types';
+import type { CodeBlockWithCopyProps } from '../types';
 import Copy from '../icons/Copy';
 import Check from '../icons/Check';
 

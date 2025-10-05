@@ -1,4 +1,4 @@
-import { EditorOptions } from '@tiptap/react';
+import type { EditorOptions } from '@tiptap/react';
 import { ReactNode } from 'react';
 
 type DeepPartial<T> = {
