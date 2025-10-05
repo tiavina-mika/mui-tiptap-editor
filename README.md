@@ -111,16 +111,14 @@ function App() {
 ```
 
 ### Image upload
-Here is the corrected English version:
 
-```html
 <ul>
   <li>The image can be uploaded to the server via an API call or inserted directly into the content as a base64 string.</li>
   <li>The image can be uploaded using the upload button, or pasted or dropped.</li>
   <li>Add or modify the alt text and the caption (title) of the image.</li>
   <li>Delete the selected image using the `Delete` key on the keyboard.</li>
 </ul>
-```
+
 
 ```tsx
 // Example: Uploading an image via an API call using fetch
@@ -315,7 +313,7 @@ See [`here`](https://github.com/tiavina-mika/mui-tiptap-editor/blob/main/src/dev
     <td>Features</td>
   </tr>
   <tr>
-    <th><a href="https://github.com/tiavina-mika/mui-tiptap-editor/pull/94">v0.12.0</a></th>
+    <th><a href="https://github.com/tiavina-mika/mui-tiptap-editor/pull/103">v0.12.0</a></th>
     <td>
       <ul>
         <li>Added Table of Content.</li>
