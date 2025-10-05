@@ -65,11 +65,13 @@ const App = () => {
         <Container>
           <TextEditor
             withFloatingMenu
+            disableTableOfContents={false} // new
             disableTabs={false}
             inputClassName="flexColumn stretchSelf flex1"
             label="Content"
             mentions={mentions}
             placeholder="Enter your content here"
+            tableOfContentPosition='left'
             toolbarPosition="top"
             user={currentUser}
             labels={{
@@ -150,6 +152,11 @@ const App = () => {
                 addLegendText: 'Ajouter un texte de légende',
                 enterValidLegendText: 'Entrez un texte de légende valide',
                 imageMaxSize: 'Taille maximale de l\'image',
+              },
+
+              tableOfContent: { // New
+                label: 'Summary',
+                noContentLabel: 'Pas de contenu',
               },
             }}
             uploadFileOptions={{
