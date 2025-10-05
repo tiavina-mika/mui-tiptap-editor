@@ -5,7 +5,7 @@ import '../index.css';
 import { cx } from '@emotion/css';
 import type { Theme } from '@emotion/react';
 import {
-  FormHelperText, Tab, Tabs, Typography,
+  FormHelperText, Stack, Tab, Tabs, Typography,
 } from '@mui/material';
 import {
   EditorContent,
@@ -19,6 +19,8 @@ import { useTextEditor } from '../hooks/useTextEditor';
 import Toolbar from './Toolbar';
 import type { IEditorToolbar, TextEditorProps } from '../types';
 import { getBorderColor } from '../utils/app.utils';
+import { type ToCItemType } from './tableOfContent/ToC';
+import TocBlock from './tableOfContent/TocBlock';
 
 const defaultMenuToolbar: IEditorToolbar[] = ['heading', 'bold', 'italic', 'underline', 'link', 'bulletList'];
 
@@ -108,11 +110,18 @@ const TextEditor = ({
   withBubbleMenu = true,
   disableTabs = false,
   toolbarPosition = 'bottom',
+  disableTableOfContents = true,
+  tableOfContentPosition = 'right',
   ...editorOptions
 }: TextEditorProps) => {
   const [tab, setTab] = useState<'editor' | 'preview'>('editor');
+  const [tableOfContents, setTableOfContents] = useState<ToCItemType[]>([]);
 
   const handleTabChange = (_: SyntheticEvent, value: 'editor' | 'preview') => setTab(value);
+
+  const handleToCItemClick = (contents: ToCItemType[] = []) => {
+    setTableOfContents(contents);
+  };
 
   const editor = useTextEditor({
     placeholder,
@@ -126,109 +135,127 @@ const TextEditor = ({
     uploadFileOptions,
     id,
     uploadFileLabels: labels?.upload,
+    onChangeTableOfContents: handleToCItemClick,
     ...editorOptions,
   });
+
   const providerValue = useMemo(() => ({ editor }), [editor]);
 
   // preview
   if (!editable) {
     return <EditorContent className={inputClassName} editor={editor} />;
   }
+
   // Memoize the provider value to avoid unnecessary re-renders
   return (
     <EditorContext.Provider value={providerValue}>
-      <div className={rootClassName} css={{ position: 'relative' }}>
-        {/* ---------------------------- */}
-        {/* ----------- label ---------- */}
-        {/* ---------------------------- */}
-        {label && (
-          <Typography className={labelClassName} css={classes.label}>
-            {label}
-          </Typography>
-        )}
-        {/* ---------------------------- */}
-        {/* ------------ tabs ---------- */}
-        {/* ---------------------------- */}
-        {!disableTabs && (
-          <Tabs
-            aria-label="basic tabs example"
-            className={tabsClassName}
-            css={classes.tabs}
-            TabIndicatorProps={{ children: <span className="MuiTabs-indicatorSpan" /> }}
-            value={tab}
-            onChange={handleTabChange}
-          >
-            <Tab
-              className={tabClassName}
-              css={classes.tab}
-              label={labels?.editor?.editor || 'Editor'}
-              value="editor"
-            />
-            <Tab className={tabClassName} css={classes.tab} label={labels?.editor?.preview || 'Preview'} />
-          </Tabs>
-        )}
-
-        {/* ---------------------------- */}
-        {/* ----------- editor --------- */}
-        {/* ---------------------------- */}
-        {tab === 'editor'
-          ? (
-            <>
-              <div className={cx('positionRelative flexColumn tiptap', inputClassName)} css={classes.input}>
-                <div className="positionRelative stretchSelf flexColumn">
-                  {editor && withFloatingMenu && (
-                    <FloatingMenu editor={editor}>
-                      <Toolbar
-                        css={[classes.menu, classes.bubbleMenu]}
-                        labels={labels}
-                        toolbar={floatingMenuToolbar || defaultMenuToolbar}
-                        type="floating"
-                        uploadFileOptions={uploadFileOptions}
-                      />
-                    </FloatingMenu>
-                  )}
-                  {editor && withBubbleMenu && (
-                    <BubbleMenu editor={editor}>
-                      <Toolbar
-                        css={[classes.menu, classes.bubbleMenu]}
-                        toolbar={bubbleMenuToolbar || defaultMenuToolbar}
-                        type="bubble"
-                        uploadFileOptions={uploadFileOptions}
-                      />
-                    </BubbleMenu>
-                  )}
-                  {/* editor field */}
-                  <EditorContent className="stretchSelf" editor={editor} />
-                  {/* top or bottom toolbar */}
-                  {editor && (
-                    <Toolbar
-                      className={cx('stretchSelf', toolbarClassName)}
-                      colorId={id}
-                      labels={labels}
-                      position={toolbarPosition}
-                      toolbar={toolbar}
-                      type="toolbar"
-                      uploadFileOptions={uploadFileOptions}
-                    />
-                  )}
-                </div>
-              </div>
-              {/* error message */}
-              {error && (
-                <FormHelperText error className={errorClassName} css={{ paddingTop: 4, paddingBottom: 4 }}>
-                  {error}
-                </FormHelperText>
-              )}
-            </>
-        /*
-         * ---------------------------- //
-         * ----------- preview -------- //
-         * ---------------------------- //
-         */
-          ) : (
-            <EditorContent className={inputClassName} editor={editor} />
+      <Stack direction={{ sm: 'column', md: tableOfContentPosition === 'top' ? 'column' : 'row' }} spacing={2}>
+        <div className={rootClassName} css={{ position: 'relative' }}>
+          {/* ---------------------------- */}
+          {/* ----------- label ---------- */}
+          {/* ---------------------------- */}
+          {label && (
+            <Typography className={labelClassName} css={classes.label}>
+              {label}
+            </Typography>
           )}
-      </div>
+          {/* ---------------------------- */}
+          {/* ------------ tabs ---------- */}
+          {/* ---------------------------- */}
+          {!disableTabs && (
+            <Tabs
+              aria-label="basic tabs example"
+              className={tabsClassName}
+              css={classes.tabs}
+              TabIndicatorProps={{ children: <span className="MuiTabs-indicatorSpan" /> }}
+              value={tab}
+              onChange={handleTabChange}
+            >
+              <Tab
+                className={tabClassName}
+                css={classes.tab}
+                label={labels?.editor?.editor || 'Editor'}
+                value="editor"
+              />
+              <Tab className={tabClassName} css={classes.tab} label={labels?.editor?.preview || 'Preview'} />
+            </Tabs>
+          )}
+
+          {/* ---------------------------- */}
+          {/* ----------- Editor --------- */}
+          {/* ---------------------------- */}
+          {tab === 'editor'
+            ? (
+              <>
+                <div className={cx('positionRelative flexColumn tiptap', inputClassName)} css={classes.input}>
+                  <div className="positionRelative stretchSelf flexColumn">
+                    {editor && withFloatingMenu && (
+                      <FloatingMenu editor={editor}>
+                        <Toolbar
+                          css={[classes.menu, classes.bubbleMenu]}
+                          labels={labels}
+                          toolbar={floatingMenuToolbar || defaultMenuToolbar}
+                          type="floating"
+                          uploadFileOptions={uploadFileOptions}
+                        />
+                      </FloatingMenu>
+                    )}
+                    {editor && withBubbleMenu && (
+                      <BubbleMenu editor={editor}>
+                        <Toolbar
+                          css={[classes.menu, classes.bubbleMenu]}
+                          toolbar={bubbleMenuToolbar || defaultMenuToolbar}
+                          type="bubble"
+                          uploadFileOptions={uploadFileOptions}
+                        />
+                      </BubbleMenu>
+                    )}
+                    {/* editor field */}
+                    <EditorContent className="stretchSelf" editor={editor} />
+                    {/* top or bottom toolbar */}
+                    {editor && (
+                      <Toolbar
+                        className={cx('stretchSelf', toolbarClassName)}
+                        colorId={id}
+                        labels={labels}
+                        position={toolbarPosition}
+                        toolbar={toolbar}
+                        type="toolbar"
+                        uploadFileOptions={uploadFileOptions}
+                      />
+                    )}
+                  </div>
+                </div>
+                {/* error message */}
+                {error && (
+                  <FormHelperText error className={errorClassName} css={{ paddingTop: 4, paddingBottom: 4 }}>
+                    {error}
+                  </FormHelperText>
+                )}
+              </>
+          /*
+           * ---------------------------- //
+           * ----------- Preview -------- //
+           * ---------------------------- //
+           */
+            ) : (
+              <EditorContent className={inputClassName} editor={editor} />
+            )}
+        </div>
+        {/*
+      * ---------------------------- //
+      * ---- Table of Contents ---- //
+      * ---------------------------- //
+      */}
+        {!disableTableOfContents && (
+          <TocBlock
+            label={labels?.tableOfContent?.label}
+            noContentLabel={labels?.tableOfContent?.noContentLabel}
+            position={tableOfContentPosition}
+            tableOfContents={tableOfContents}
+          />
+        )}
+      </Stack>
     </EditorContext.Provider>
   );
 };
