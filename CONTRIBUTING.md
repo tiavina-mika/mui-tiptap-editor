@@ -22,7 +22,7 @@ It's recommended to run all check commands before submitting the PR (`type:check
 
 This package uses Vite with Hot Module Replacement (HMR), so file edits should reflect immediately in your browser during local development.
 
-To instead test a "built" version of this package which is installed into an "external" module, you can run `yarn example`, which runs a server with the separate application in the `example/` directory.
+To instead test a "built" version of this package which is installed into an "external" module, you can run `yarn demos`, which runs a server with the separate application in the `demos/` directory.
 
 ## Releasing a new version (for maintainers)
 
