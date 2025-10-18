@@ -6,10 +6,8 @@ import { useCurrentEditor } from '@tiptap/react';
 import { Fragment } from 'react';
 import type { ReactNode } from 'react';
 
-import type { ToolbarItem } from '../types.d';
-import {
-  getBorderColor,
-} from '../utils/app.utils';
+import type { ToolbarItem } from '../types';
+import { getBorderColor } from '../utils/app.utils';
 
 import Icon from '../icons/Icon';
 
@@ -21,8 +19,7 @@ const classes = {
     if (isActive) {
       if (isLightMode) {
         backgroundColor = theme.palette.grey[100];
-      }
-      else {
+      } else {
         backgroundColor = theme.palette.grey[800];
       }
     }
@@ -80,20 +77,18 @@ const ToolBarIconButton = ({
 
   if (!display) return null;
 
-  const component= (
+  const component = (
     <span>
       <IconButton
         disabled={disabled}
         css={classes.button(
           editor.isActive(active || name), // the order is important
-          !!split
+          !!split,
         )}
         onClick={onClick}
       >
         <LabelComponent {...labelProps}>
-          <Icon size={iconSize}>
-            {icon}
-          </Icon>
+          <Icon size={iconSize}>{icon}</Icon>
         </LabelComponent>
         {/* component used with label */}
         {children}
@@ -101,16 +96,12 @@ const ToolBarIconButton = ({
     </span>
   );
 
-  return (
-    withTooltip
-      ?(
-        <Tooltip arrow title={tooltip || ''}>
-          {component}
-        </Tooltip>
-      )
-      :(
-        component
-      )
+  return withTooltip ? (
+    <Tooltip arrow title={tooltip || ''}>
+      {component}
+    </Tooltip>
+  ) : (
+    component
   );
 };
 
