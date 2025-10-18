@@ -9,7 +9,7 @@ import type { ToolbarItem } from '@/types';
 import type { Theme } from '@emotion/react';
 import type { ReactNode } from 'react';
 
-import Icon from '@/icons/Icon';
+import Icon from '@/assets/icons/Icon';
 import { getBorderColor } from '@/utils/app.utils';
 
 const classes = {

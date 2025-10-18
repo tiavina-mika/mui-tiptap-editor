@@ -8,27 +8,27 @@ import type { IEditorToolbar, ILabels, TextEditorProps } from '@/types';
 import type { Theme } from '@emotion/react';
 import type { MouseEvent } from 'react';
 
-import AlignCenter from '@/icons/AlignCenter';
-import AlignRight from '@/icons/AlignJustify';
-import AlignLeft from '@/icons/AlignLeft';
-import AlignJustify from '@/icons/AlignRight';
-import Bold from '@/icons/Bold';
-import BulletList from '@/icons/BulletList';
-import Code from '@/icons/Code';
-import CodeBlock from '@/icons/CodeBlock';
-import Italic from '@/icons/Italic';
-import Link from '@/icons/Link';
-import Mention from '@/icons/Mention';
-import OrderedList from '@/icons/OrderedList';
-import Picture from '@/icons/Picture';
-import Quote from '@/icons/Quote';
-import Redo from '@/icons/Redo';
-import Strike from '@/icons/Strike';
-import Table from '@/icons/Table';
-import TextColor from '@/icons/TextColor';
-import Underline from '@/icons/Underline';
-import Undo from '@/icons/Undo';
-import Youtube from '@/icons/Youtube';
+import AlignCenter from '@/assets/icons/AlignCenter';
+import AlignRight from '@/assets/icons/AlignJustify';
+import AlignLeft from '@/assets/icons/AlignLeft';
+import AlignJustify from '@/assets/icons/AlignRight';
+import Bold from '@/assets/icons/Bold';
+import BulletList from '@/assets/icons/BulletList';
+import Code from '@/assets/icons/Code';
+import CodeBlock from '@/assets/icons/CodeBlock';
+import Italic from '@/assets/icons/Italic';
+import Link from '@/assets/icons/Link';
+import Mention from '@/assets/icons/Mention';
+import OrderedList from '@/assets/icons/OrderedList';
+import Picture from '@/assets/icons/Picture';
+import Quote from '@/assets/icons/Quote';
+import Redo from '@/assets/icons/Redo';
+import Strike from '@/assets/icons/Strike';
+import Table from '@/assets/icons/Table';
+import TextColor from '@/assets/icons/TextColor';
+import Underline from '@/assets/icons/Underline';
+import Undo from '@/assets/icons/Undo';
+import Youtube from '@/assets/icons/Youtube';
 import {
   checkIsValidUrl,
   defaultEditorToolbar,

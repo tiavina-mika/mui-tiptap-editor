@@ -9,7 +9,7 @@ import {
 import type { Theme, DialogProps } from '@mui/material';
 import type { MouseEventHandler, ReactNode } from 'react';
 
-import Close from '@/icons/Close';
+import Close from '@/assets/icons/Close';
 
 const classes = {
   dialog: (theme: Theme) => ({

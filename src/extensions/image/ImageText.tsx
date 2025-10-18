@@ -21,9 +21,9 @@ import type { Theme } from '@mui/material';
 import type { ChangeEvent } from 'react';
 
 import Dialog from '@/components/Dialog';
-import Add from '@/icons/Add';
-import Close from '@/icons/Close';
-import Edit from '@/icons/Edit';
+import Add from '@/assets/icons/Add';
+import Close from '@/assets/icons/Close';
+import Edit from '@/assets/icons/Edit';
 import { checkAlt, checkLegend } from '@/utils/app.utils';
 
 type Props = {

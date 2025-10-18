@@ -19,8 +19,8 @@ import { useState } from 'react';
 
 import type { CodeBlockWithCopyProps } from '@/types';
 
-import Check from '@/icons/Check';
-import Copy from '@/icons/Copy';
+import Check from '@/assets/icons/Check';
+import Copy from '@/assets/icons/Copy';
 
 // eslint-disable-next-line react-refresh/only-export-components
 const CodeBlockWithCopy = ({ node }: any) => {

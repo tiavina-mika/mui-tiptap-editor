@@ -11,8 +11,8 @@ import type { Theme } from '@mui/material';
 import type { Level } from '@tiptap/extension-heading';
 import type { MouseEvent } from 'react';
 
-import ChevronDown from '@/icons/ChevronDown';
-import Icon from '@/icons/Icon';
+import ChevronDown from '@/assets/icons/ChevronDown';
+import Icon from '@/assets/icons/Icon';
 import { getBorderColor } from '@/utils/app.utils';
 
 const isActive = (editor: Editor) => {
