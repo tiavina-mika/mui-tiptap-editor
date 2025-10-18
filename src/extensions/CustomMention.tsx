@@ -6,7 +6,7 @@ import getSuggestion from '../components/mention/suggestions';
 import type { ITextEditorOption } from '../types';
 
 type Props = {
-// base pathname for the mention link
+  // base pathname for the mention link
   pathname?: string;
   // List of user to mention
   mentions?: ITextEditorOption[];
@@ -20,10 +20,7 @@ type HTMLAttributesType = {
  * mention extension
  * mention user in the editor, and link to the select profile
  */
-export const getCustomMention = ({
-  pathname = '/users',
-  mentions,
-}: Props) => {
+export const getCustomMention = ({ pathname = '/users', mentions }: Props) => {
   return Mention.extend({
     addAttributes: () => ({
       id: {
@@ -45,7 +42,13 @@ export const getCustomMention = ({
     }),
     // Create a link to the user profile
     // eslint-disable-next-line @typescript-eslint/naming-convention
-    renderHTML: ({ node, HTMLAttributes }: { node: any; HTMLAttributes: HTMLAttributesType }) => {
+    renderHTML: ({
+      node,
+      HTMLAttributes,
+    }: {
+      node: any;
+      HTMLAttributes: HTMLAttributesType;
+    }) => {
       return [
         'a',
         // @example: <a href="/users/1" class="mention">@user1</a>
