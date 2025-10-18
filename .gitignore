@@ -24,3 +24,14 @@ dist-ssr
 *.sw?
 .yarn/cache
 coverage
+
+
+# playwright
+/test-results
+/playwright-report
+
+# for rollup vizualizer
+temp
+
+*storybook.log
+storybook-static
