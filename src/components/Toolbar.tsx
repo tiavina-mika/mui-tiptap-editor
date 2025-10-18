@@ -3,18 +3,18 @@
 import type { Theme } from '@emotion/react';
 import { cx } from '@emotion/css';
 import { Editor, useCurrentEditor } from '@tiptap/react';
-import {
-  useState, useCallback,
-  useMemo,
-} from 'react';
+import { useState, useCallback, useMemo } from 'react';
 import type { MouseEvent } from 'react';
 
 import TableMenuDialog from './TableMenuDialog';
 import Heading from './Heading';
 import ColorPicker from './ColorPicker';
-import type { IEditorToolbar, ILabels, TextEditorProps } from '../types.d';
+import type { IEditorToolbar, ILabels, TextEditorProps } from '../types';
 import {
-  checkIsValidUrl, defaultEditorToolbar, getBorderColor, showTextEditorToolbarMenu,
+  checkIsValidUrl,
+  defaultEditorToolbar,
+  getBorderColor,
+  showTextEditorToolbarMenu,
 } from '../utils/app.utils';
 import YoutubeDialog from './YoutubeDialog';
 import Bold from '../icons/Bold';
@@ -61,8 +61,7 @@ const classes = {
     if (isActive) {
       if (isLightMode) {
         backgroundColor = theme.palette.grey[100];
-      }
-      else {
+      } else {
         backgroundColor = theme.palette.grey[800];
       }
     }
@@ -133,7 +132,7 @@ const Toolbar = ({
   position,
   colorId,
   toolbar = defaultEditorToolbar,
-  type ='toolbar',
+  type = 'toolbar',
 }: ToolbarProps) => {
   const [openYoutubeDialog, setOpenYoutubeDialog] = useState<boolean>(false);
   const { editor } = useCurrentEditor() as { editor: Editor };
@@ -182,9 +181,13 @@ const Toolbar = ({
   return (
     <div
       className={cx(className, 'flexRow center', type ? `${type}-menu` : '')}
-      css={position
-        ? (position === 'bottom' ? classes.bottomToolbar : classes.topToolbar)
-        : undefined}
+      css={
+        position
+          ? position === 'bottom'
+            ? classes.bottomToolbar
+            : classes.topToolbar
+          : undefined
+      }
     >
       {showTextEditorToolbarMenu(toolbar, 'heading') && (
         <Heading split editor={editor} headingLabels={labels?.headings} />
