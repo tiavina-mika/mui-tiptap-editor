@@ -16,10 +16,16 @@ import type { AnyExtension, EditorOptions, EditorEvents } from '@tiptap/react';
 import StarterKit from '@tiptap/starter-kit';
 import { useEffect } from 'react';
 import Heading from '@tiptap/extension-heading';
-import { getHierarchicalIndexes, TableOfContents } from '@tiptap/extension-table-of-contents';
+import {
+  getHierarchicalIndexes,
+  TableOfContents,
+} from '@tiptap/extension-table-of-contents';
 import type {
-  CodeBlockWithCopyProps, ILabels, ImageUploadOptions, ITextEditorOption,
-} from '../types.d';
+  CodeBlockWithCopyProps,
+  ILabels,
+  ImageUploadOptions,
+  ITextEditorOption,
+} from '../types';
 import getCustomImage from '../extensions/CustomImage';
 import { getCustomMention } from '../extensions/CustomMention';
 import { getCodeBlockWithCopy } from '../extensions/CodeBlockWithCopy';
@@ -202,14 +208,20 @@ export const useTextEditor = ({
       // user mentions editing extension
       getCustomMention({ pathname: userPathname, mentions }),
       // upload image extension
-      getCustomImage(uploadFileOptions, uploadFileLabels, uploadFileOptions?.maxMediaLegendLength),
+      getCustomImage(
+        uploadFileOptions,
+        uploadFileLabels,
+        uploadFileOptions?.maxMediaLegendLength,
+      ),
       getCodeBlockWithCopy(codeBlock),
-      onChangeTableOfContents ? TableOfContents.configure({
-        getIndex: getHierarchicalIndexes,
-        onUpdate: (contents: ToCItemType[]) => {
-          onChangeTableOfContents(contents);
-        },
-      }) : null,
+      onChangeTableOfContents
+        ? TableOfContents.configure({
+            getIndex: getHierarchicalIndexes,
+            onUpdate: (contents: ToCItemType[]) => {
+              onChangeTableOfContents(contents);
+            },
+          })
+        : null,
       // default extensions
       ...extensions,
     ] as AnyExtension[],
@@ -249,7 +261,7 @@ export const useTextEditor = ({
     if (value && !editable && tab === 'preview') {
       editor.commands.setContent(value);
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [editor, value]);
 
   /**
@@ -259,7 +271,10 @@ export const useTextEditor = ({
   useEffect(() => {
     // preview tab or not editable
     if (editable) {
-      const className = tab === 'editor' ? 'mui-tiptap-input' : 'mui-tiptap-input mui-tiptap-input-preview';
+      const className =
+        tab === 'editor'
+          ? 'mui-tiptap-input'
+          : 'mui-tiptap-input mui-tiptap-input-preview';
 
       // editor tab
       editor?.setOptions({
