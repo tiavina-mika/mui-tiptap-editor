@@ -7,7 +7,11 @@
  * The component uses lowlight for syntax highlighting and integrates with TipTap's NodeViewRenderer.
  */
 
-import { NodeViewWrapper, NodeViewContent, ReactNodeViewRenderer } from '@tiptap/react';
+import {
+  NodeViewWrapper,
+  NodeViewContent,
+  ReactNodeViewRenderer,
+} from '@tiptap/react';
 import { useState } from 'react';
 import { createLowlight, common } from 'lowlight';
 import CodeBlockLowlight from '@tiptap/extension-code-block-lowlight';
@@ -18,7 +22,6 @@ import Check from '../icons/Check';
 // eslint-disable-next-line react-refresh/only-export-components
 const CodeBlockWithCopy = ({ node }: any) => {
   const [isCopied, setIsCopied] = useState(false);
-
 
   const copyToClipboard = () => {
     navigator.clipboard.writeText(node.textContent).then(() => {
@@ -44,18 +47,16 @@ const CodeBlockWithCopy = ({ node }: any) => {
 export const getCodeBlockWithCopy = (props?: CodeBlockWithCopyProps) => {
   const { language = 'javascript', className } = props || {};
 
-  return CodeBlockLowlight
-    .extend({
-      addNodeView: () => ReactNodeViewRenderer(
-        (props: any) => <CodeBlockWithCopy {...props} />,
-        { className }
-      ),
-    })
-    .configure({
+  return CodeBlockLowlight.extend({
+    addNodeView: () =>
+      ReactNodeViewRenderer((props: any) => <CodeBlockWithCopy {...props} />, {
+        className,
+      }),
+  }).configure({
     // Configure lowlight with common languages and set default language
-      lowlight: createLowlight(common),
-      defaultLanguage: language,
-      enableTabIndentation: true,
-      tabSize: 2,
-    });
+    lowlight: createLowlight(common),
+    defaultLanguage: language,
+    enableTabIndentation: true,
+    tabSize: 2,
+  });
 };
