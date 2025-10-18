@@ -1,4 +1,7 @@
 # This action use https://github.com/wow-actions/add-badges?tab=readme-ov-file to add badges to your README.md file.
+# The badges are added between the comments <!-- [START BADGES] --> and <!-- [END BADGES] --> in the README.md file.
+# Make sure these comments are present in your README.md file.
+# IMPORTANT: Make sure to add "write and read" permission for "Contents" in the workflow file to allow this action to update the README.md file.
 name: Add Badges
 
 on:
@@ -10,11 +13,13 @@ on:
   # see: https://docs.github.com/en/actions/using-workflows/events-that-trigger-workflows#workflow_run
   workflow_run:
     # the workflow we want to trigger this workflow (see .github/workflows/automerge.yml)
-    workflows: [Approve PR and delete branch]
+    workflows: [Release & Publish]
     types: [completed]
 
 jobs:
   run:
+    # Run this job only if the previous workflow was successful
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
     runs-on: ubuntu-latest
     steps:
       - uses: wow-actions/add-badges@v1
@@ -24,6 +29,8 @@ jobs:
           repo_owner: ${{ github.event.repository.owner.login }}
         with:
           GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
+          # Define the badges to add to the README.md file
+          # It uses shields.io and GitHub Actions badges
           badges: |
             [
               {
@@ -40,11 +47,20 @@ jobs:
                 "badge": "https://github.com/${{ env.repo_owner }}/${{ env.repo_name }}/actions/workflows/release.yml/badge.svg",
                 "alt": "Build",
                 "link": "https://github.com/${{ env.repo_owner }}/${{ env.repo_name }}/actions"
+              },
+              {
+                "badge": "https://img.shields.io/npm/dm/${{ env.repo_name }}?style=flat-square",
+                "alt": "Downloads",
+                "link": "https://www.npmjs.com/package/${{ env.repo_name }}"
+              },
+              {
+                "badge": "https://img.shields.io/github/contributors/${{ env.repo_owner }}/${{ env.repo_name }}?style=flat-square",
+                "alt": "Contributors",
+                "link": "https://github.com/${{ env.repo_owner }}/${{ env.repo_name }}/graphs/contributors"
+              },
+              {
+                "badge": "https://img.shields.io/badge/Storybook-View%20Components-orange?style=flat-square&logo=storybook",
+                "alt": "Storybook",
+                "link": "https://${{ env.repo_owner }}.github.io/mui-tiptap-editor"
               }
             ]
-      # if adding the last commit badge
-      #   {
-      #   "badge": "https://img.shields.io/github/last-commit/${{ env.repo_owner }}/${{ env.repo_name }}?style=flat-square",
-      #   "alt": "Last Commit",
-      #   "link": "${{ env.repo_url }}/commits/master"
-      # }

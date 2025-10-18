@@ -1,0 +1,58 @@
+# This workflow lints commit messages and PR titles to ensure they follow Conventional Commits.
+# If the linting is successful, it triggers the release workflow (see .github/workflows/release.yml).
+name: Commit & PR Lint
+run-name: ${{ github.actor }} commit & PR Lint 🧩
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened, edited]
+    branches:
+      - release
+      - main
+      - feat/*
+      - fix/*
+
+jobs:
+  commitlint:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+        # Set up Yarn
+      - name: Install Yarn 4
+        # Enable corepack first to use Yarn 4
+        run: corepack enable && corepack prepare yarn@4 --activate
+        # Set up project dependencies
+      - name: Install dependencies
+        run: yarn install --immutable
+        # Lint commits to ensure they follow Conventional Commits
+      - name: Validate Conventional Commits
+        uses: wagoid/commitlint-github-action@v6
+        with:
+          configFile: commitlint.config.mjs
+        # Lint PR title to ensure it follows Conventional Commits
+      - name: Validate PR title
+        uses: amannn/action-semantic-pull-request@v5
+        with:
+          types: |-
+            feat
+            fix
+            docs
+            style
+            refactor
+            perf
+            test
+            build
+            ci
+            chore
+            revert
+            BREAKING CHANGE
+          githubBaseUrl: https://api.github.com
+        env:
+          GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}

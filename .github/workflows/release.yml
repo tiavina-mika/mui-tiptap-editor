@@ -1,155 +1,217 @@
-# --------------------------------------------------- #
-# ------------------------ 1 ------------------------ #
-# --------------------------------------------------- #
-name: Releases
-run-name: ${{ github.actor }} releases 🚀
+# GitHub Actions workflow to automate release and publishing to NPM
+# This workflow is triggered on pushes to the main branch.
 
-# run this workflow on push to main branch and pull requests
+name: Release & Publish
+run-name: Release & publish to npm by ${{ github.actor }} 🚀
+
 on:
   push:
     branches:
       - main
 
-permissions:
-  contents: write
-  packages: write
-  pull-requests: write
-
-env:
-  APP_NAME: mui-tiptap-editor
-
 jobs:
   lint:
-    name: Lint
     runs-on: ubuntu-latest
-
     steps:
-      - name: Checkout
+      - name: Checkout code
         uses: actions/checkout@v4
-
-      # need this for using yarn v4
-      - name: Enable Corepack
-        run: corepack enable
+        with:
+          fetch-depth: 0
 
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: '20'
 
-      - name: Install dependencies
-        run: yarn
+      - name: Install Yarn 4
+        run: corepack enable && corepack prepare yarn@4 --activate
 
-      - name: Lint
+      - name: Restore Yarn cache
+        uses: actions/cache@v4
+        with:
+          path: .yarn/install-state.gz
+          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
+          restore-keys: ${{ runner.os }}-yarn-
+          enableCrossOsArchive: true
+
+      - name: Install dependencies
+        run: yarn install --immutable
+
+      - name: Run ESLint
         run: yarn lint
 
-  # see: https://qa-nora.medium.com/unit-testing-with-jest-and-integration-with-github-actions-bc241b31d257
   test:
-    name: Test
-    # need the previous job to be completed
-    needs: lint
     runs-on: ubuntu-latest
-
+    needs: lint
     steps:
-      - name: Checkout
+      - name: Checkout code
         uses: actions/checkout@v4
-
-      # need this for using yarn v4
-      - name: Enable Corepack
-        run: corepack enable
+        with:
+          fetch-depth: 0
 
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: '20'
 
-      - name: Install dependencies
-        run: yarn
+      - name: Install Yarn 4
+        run: corepack enable && corepack prepare yarn@4 --activate
 
-      - name: Test
-        run: yarn test:coverage
-
-  changelog:
-    name: Changelog
-    needs:
-      # - lint
-      - test
-    if: github.event_name != 'pull_request'
-    runs-on: ubuntu-latest
-
-    outputs:
-      skipped: ${{ steps.changelog.outputs.skipped }}
-      tag: ${{ steps.changelog.outputs.tag }}
-      clean_changelog: ${{ steps.changelog.outputs.clean_changelog }}
-      version: ${{ steps.changelog.outputs.version }}
-
-    env:
-      PR_BRANCH: release-ci-${{ github.sha }}
-
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-
-      - name: Create Branch
-        run: |
-          git checkout -b ${{ env.PR_BRANCH }}
-
-        # This action will bump version, tag commit and generate a changelog with conventional commits.
-        # see: https://github.com/TriPSs/conventional-changelog-action
-      - name: Create Changelog
-        uses: TriPSs/conventional-changelog-action@v5
-        id: changelog
+      - name: Restore Yarn cache
+        uses: actions/cache@v4
         with:
-          preset: 'conventionalcommits'
-          github-token: ${{ secrets.GH_TOKEN }}
-          git-user-name: "github-actions[bot]"
-          git-user-email: "github-actions[bot]@users.noreply.github.com"
-          git-branch: ${{ env.PR_BRANCH }}
-          skip-git-pull: true
-          skip-on-empty: false
-          # this will update the version in package.json
-          # and therefore the npm package version
-          version-file: './package.json'
-          create-summary: true
+          path: .yarn/install-state.gz
+          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
+          restore-keys: ${{ runner.os }}-yarn-
+          enableCrossOsArchive: true
 
-      # if the changelog is skipped, we do not need to create a PR
-      # create a PR with the changelog and the new version
-      # see: https://blog.kubesimplify.com/automated-github-releases-with-github-actions-and-conventional-commits
-      - name: Create Changelog PR
-        if: steps.changelog.outputs.skipped == 'false'
+      - name: Install dependencies
+        run: yarn install --immutable
+
+      - name: Run tests
+        run: yarn test:ci
+
+  build:
+    runs-on: ubuntu-latest
+    needs: test
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install Yarn 4
+        run: corepack enable && corepack prepare yarn@4 --activate
+
+      # This step restores the Yarn cache to speed up installation
+      # It uses the hash of the yarn.lock file to ensure the cache is valid
+      # If there is no new installation, the cache will be restored from the previous run
+      - name: Restore Yarn cache
+        id: yarn-cache
+        uses: actions/cache@v4
+        with:
+          path: 
+            .yarn/install-state.gz
+          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-yarn-
+          # For cross OS archive compatibility (Linux, Windows, Mac)
+          enableCrossOsArchive: true
+      
+      - name: Install dependencies
+        run: yarn install --immutable
+
+
+      - name: Build project
+        run: yarn build
+
+      # To make the build output available for the other jobs (e.g., release job)
+      # So that the other job (e.g., release job) does not need to rebuild the project
+      # For faster release process
+      # Use case: download /dist, then download /dist in other job so no need to rebuild
+      - name: Upload build artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: dist
+          path: dist/
+          # Using compression-level 0 to speed up the upload process
+          compression-level: 0
+
+  # Release job to publish the package to NPM
+  release:
+    runs-on: ubuntu-latest
+    # Semantic-release needs write permissions to create releases
+    # and to comment on issues and pull requests
+    permissions:
+      contents: write # for tags and commits
+      issues: write # to be able to comment on released issues
+      pull-requests: write # to be able to comment on released pull requests
+      id-token: write # to enable use of OIDC for npm provenance
+    needs: [lint, build, test]
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          registry-url: 'https://registry.npmjs.org/'
+
+      - name: Install Yarn 4
+        run: corepack enable && corepack prepare yarn@4 --activate
+
+      # This step restores the Yarn cache to speed up installation
+      # It uses the hash of the yarn.lock file to ensure the cache is valid
+      # If there is no new installation, the cache will be restored from the previous run
+      - name: Restore Yarn cache
+        id: yarn-cache
+        uses: actions/cache@v4
+        with:
+          path: 
+            .yarn/install-state.gz
+          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-yarn-
+          # For cross OS archive compatibility (Linux, Windows, Mac)
+          enableCrossOsArchive: true
+
+      - name: Install dependencies
+        run: yarn install --immutable
+
+      # Download the build artifact from the build job so we don't need to rebuild
+      - name: Download build artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: dist
+          path: dist/
+
+      # display dist directory contents for debugging
+      - name: Show dist directory contents (DEBUG)
+        run: ls -l dist/
+
+      - name: Show existing git tags (DEBUG)
+        run: git tag -l | sort -V
+
+      # Configure npm to use the NPM_TOKEN secret for authentication
+      - name: Configure npm
         run: |
-          gh pr create --base main --head ${{ env.PR_BRANCH }} --title 'chore(release): ${{ steps.changelog.outputs.tag }} [skip-ci]' --body '${{ steps.changelog.outputs.clean_changelog }}'
+          echo '//registry.npmjs.org/:_authToken=${NPM_TOKEN}' > .npmrc
+          cat .npmrc
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+      - name: Show if .npmrc is created (DEBUG)
+        run: ls -l .npmrc
+
+      - name: Validate NPM Token (DEBUG)  # Garde tes debugs
+        env:
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+        run: |
+          echo "Token length: $(echo -n $NPM_TOKEN | wc -c)"
+          if npm whoami --registry=https://registry.npmjs.org/ > /dev/null 2>&1; then
+            echo "NPM Token: VALID"
+          else
+            echo "NPM Token: INVALID"
+          fi
+      - name: Show 5 most recent commits (DEBUG)
+        run: git rev-parse HEAD && git log --oneline -5
+
+
+      # Publish the package to NPM using semantic-release
+      - name: Publish package on NPM 📦
         env:
           GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
-      # the PR is created, we can now merge and close it
-      # see: .github/workflows/automerge.yml
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+        run: npx semantic-release
 
-  release:
-    name: Release
-    needs: changelog
-    if: github.event_name != 'pull_request' && github.event_name != 'pull_request_target'
-    runs-on: ubuntu-latest
-
-
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-
-        # Create GitHub Releases
-        # see: https://github.com/softprops/action-gh-release
-      - name: Create Release
-        uses: softprops/action-gh-release@v2
-        # it needs the tag to create the release
-        if: needs.changelog.outputs.tag != ''
-        with:
-          tag_name: ${{ needs.changelog.outputs.tag }}
-          name: ${{ needs.changelog.outputs.tag }}
-          prerelease: false
-          draft: false
-          files: CHANGELOG.md
-          generate_release_notes: true
-          body: |
-            <details>
-              <summary>🤖 ${{ env.APP_NAME }} Changelog</summary>
-
-              ${{ needs.changelog.outputs.clean_changelog }}
-            </details>
+      # Optional: Show the NPM package link after publishing
+      - name: Show NPM package link (DEBUG)
+        run: echo "Published to NPM 🚀- https://www.npmjs.com/package/${{ github.event.repository.name }}"
