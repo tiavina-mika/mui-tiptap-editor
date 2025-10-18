@@ -1,9 +1,6 @@
 'use client';
 
-import {
-  Stack,
-  TextField,
-} from '@mui/material';
+import { Stack, TextField } from '@mui/material';
 import { Editor } from '@tiptap/react';
 import { useState } from 'react';
 import type { ChangeEvent } from 'react';
@@ -53,9 +50,7 @@ type Props = {
   onClose: () => void;
   labels?: ILabels['youtube'];
 };
-const YoutubeDialog = ({
-  editor, open, onClose, labels,
-}: Props) => {
+const YoutubeDialog = ({ editor, open, onClose, labels }: Props) => {
   const [values, setValues] = useState<YoutubeInput>(initialValues);
   const [errors, setErrors] = useState<Record<string, string> | null>(null);
 
@@ -64,7 +59,7 @@ const YoutubeDialog = ({
       (prev: YoutubeInput): YoutubeInput => ({
         ...prev,
         [event.target.name]: event.target.value,
-      })
+      }),
     );
   };
 
@@ -84,7 +79,7 @@ const YoutubeDialog = ({
 
     Object.keys(result).forEach((key) => {
       if (!result[key as keyof YoutubeValidation].validation) {
-        setErrors(prev => ({
+        setErrors((prev) => ({
           ...prev,
           [key]: result[key as keyof YoutubeValidation].error,
         }));
