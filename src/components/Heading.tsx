@@ -1,9 +1,7 @@
 'use client';
 
 import { Editor } from '@tiptap/react';
-import {
-  Menu, MenuItem, Fade, Button,
-} from '@mui/material';
+import { Menu, MenuItem, Fade, Button } from '@mui/material';
 import type { Theme } from '@mui/material';
 import type { Level } from '@tiptap/extension-heading';
 import { useMemo, useState } from 'react';
@@ -66,7 +64,7 @@ const Heading = ({ editor, headingLabels, split = false }: Props) => {
 
   // get label for selected heading
   const selectedLabel = useMemo(() => {
-    const heading = options.find(option => option === selected);
+    const heading = options.find((option) => option === selected);
 
     if (heading) {
       if (headingLabels?.[`h${heading}`]) {
@@ -110,9 +108,7 @@ const Heading = ({ editor, headingLabels, split = false }: Props) => {
         variant="text"
         onClick={handleOpenHeadingMenu}
       >
-        <span css={{ marginRight: 8 }}>
-          {selectedLabel}
-        </span>
+        <span css={{ marginRight: 8 }}>{selectedLabel}</span>
         {/* chevron icon */}
         <Icon>
           <ChevronDown />
@@ -139,7 +135,7 @@ const Heading = ({ editor, headingLabels, split = false }: Props) => {
             key={index}
             css={classes.menuItem(
               editor.isActive('heading', { level: option }), // isActive
-              (10 - index) * 3 // fontSize is decreasing
+              (10 - index) * 3, // fontSize is decreasing
             )}
             onClick={() => handleSelectHeading(option)}
           >
@@ -149,7 +145,6 @@ const Heading = ({ editor, headingLabels, split = false }: Props) => {
         ))}
       </Menu>
     </span>
-
   );
 };
 
