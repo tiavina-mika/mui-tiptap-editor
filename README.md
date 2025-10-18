@@ -152,7 +152,7 @@ function App() {
 }
 ```
 
-See more examples of  `TextEditor` usage [here](https://github.com/tiavina-mika/mui-tiptap-editor/tree/main/example).
+See more examples of  `TextEditor` usage [here](https://github.com/tiavina-mika/mui-tiptap-editor/tree/main/demos).
 
 ### Read only
 
