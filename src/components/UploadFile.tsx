@@ -3,7 +3,10 @@
 import { Editor } from '@tiptap/react';
 import { useRef } from 'react';
 import {
-  checkIsImage, checkValidFileDimensions, checkValidMimeType, getIsFileSizeValid,
+  checkIsImage,
+  checkValidFileDimensions,
+  checkValidMimeType,
+  getIsFileSizeValid,
 } from '../utils/app.utils';
 import type { ILabels, ImageUploadOptions, UploadResponse } from '../types';
 
@@ -41,10 +44,8 @@ const UploadFile = ({
     }
 
     // 2. check if the mime type is allowed
-    const {
-      isValid: isValidMimeTypes,
-      message: isValidMimeTypesMessage,
-    } = checkValidMimeType(file, allowedMimeTypes);
+    const { isValid: isValidMimeTypes, message: isValidMimeTypesMessage } =
+      checkValidMimeType(file, allowedMimeTypes);
 
     if (!isValidMimeTypes) {
       window.alert(labels?.invalidMimeType || isValidMimeTypesMessage);
@@ -52,7 +53,8 @@ const UploadFile = ({
     }
 
     // 3. file size in MB
-    const { isValid: isFileSizeValid, message: isFileSizeValidMessage } = getIsFileSizeValid(file, maxSize);
+    const { isValid: isFileSizeValid, message: isFileSizeValidMessage } =
+      getIsFileSizeValid(file, maxSize);
 
     if (!isFileSizeValid) {
       window.alert(labels?.fileTooLarge || isFileSizeValidMessage);
@@ -86,8 +88,7 @@ const UploadFile = ({
           if (typeof response === 'string') {
             // if the response is a string, we assume it's the image src
             attrs.src = response;
-          }
-          else {
+          } else {
             // image attributes
             attrs = { ...attrs, ...response };
           }
