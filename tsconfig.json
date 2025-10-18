@@ -1,36 +1,7 @@
 {
-  "compilerOptions": {
-    "target": "ES2023",
-    "lib": ["ES2023"],
-    "module": "ESNext",
-    "types": ["node"],
-    "skipLibCheck": true,
-
-    // Build options
-    "moduleResolution": "bundler",
-    "resolveJsonModule": true,
-    "isolatedModules": true,
-    "jsx": "react-jsx",
-    "outDir": "./dist",
-    "sourceMap": false,
-    "esModuleInterop": true,
-    "strictNullChecks": true,
-    "allowImportingTsExtensions": true,
-    "verbatimModuleSyntax": true,
-    "moduleDetection": "force",
-    "noEmit": true,
-
-    // Linting
-    "strict": true,
-    "forceConsistentCasingInFileNames": true,
-    "declaration": true,
-    "allowJs": false,
-    "jsxImportSource": "@emotion/react",
-    "noFallthroughCasesInSwitch": true,
-    "noUnusedLocals": true,
-    "noUnusedParameters": true,
-    "erasableSyntaxOnly": true,
-    "noUncheckedSideEffectImports": true
-  },
-  "include": ["./src", "vite.config.ts", "jest.config.js", "dts-bundle-generator.config.ts", "./__tests__"]
+  "files": [],
+  "references": [
+    { "path": "./tsconfig.app.json" },
+    { "path": "./tsconfig.node.json" }
+  ]
 }
