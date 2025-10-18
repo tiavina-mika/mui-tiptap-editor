@@ -1,0 +1,54 @@
+{
+    "branches": ["main"],
+    "plugins": [
+        ["@semantic-release/commit-analyzer", {
+            "preset": "conventionalcommits",
+            "releaseRules": [
+                { "type": "feat", "release": "minor" },
+                { "type": "fix", "release": "patch" },
+                { "type": "docs", "release": false },
+                { "type": "style", "release": false },
+                { "type": "refactor", "release": false },
+                { "type": "perf", "release": "patch" },
+                { "type": "test", "release": false },
+                { "type": "chore", "release": false, "scope": "release" },
+                { "type": "revert", "release": "patch" },
+                { "type": "BREAKING CHANGE", "release": "major" }
+            ]
+        }],
+        ["@semantic-release/release-notes-generator", {
+            "preset": "conventionalcommits",
+            "writerOpts": {
+                "headerPartial": "{{#if version}}## {{version}} ({{date}})\n{{/if}}",
+                "commitGroupsSort": "title",
+                "groupBy": "type",
+                "commitGroups": [
+                    { "title": "Bug Fixes", "type": "fix" },
+                    { "title": "Features", "type": "feat" },
+                    { "title": "Performance Improvements", "type": "perf" },
+                    { "title": "Breaking Changes", "type": "BREAKING CHANGE" },
+                    { "title": "Documentation", "type": "docs" },
+                    { "title": "Styles", "type": "style" },
+                    { "title": "Code Refactoring", "type": "refactor" },
+                    { "title": "Tests", "type": "test" },
+                    { "title": "Chores", "type": "chore" },
+                    { "title": "Reverts", "type": "revert" }
+                ]
+            }
+        }],
+        ["@semantic-release/changelog", {
+            "changelogFile": "CHANGELOG.md",
+            "changelogTitle": "# Changelog"
+        }],
+        ["@semantic-release/npm", {
+            "npmPublish": true
+        }],
+        ["@semantic-release/git", {
+            "assets": ["package.json", "yarn.lock", "CHANGELOG.md"],
+            "message": "chore(release): ${nextRelease.version} [skip ci]\n\n${nextRelease.notes}"
+        }]
+    ],
+    "generateNotes": {
+        "addPrUrl": true
+    }
+}
