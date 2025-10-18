@@ -5,12 +5,16 @@ import { computePosition, flip, shift } from '@floating-ui/dom';
 import { posToDOMRect } from '@tiptap/core';
 import Mentions from './Mentions';
 import type { MentionOptions } from '@tiptap/extension-mention';
-import type { ITextEditorOption } from '../../types.d';
+import type { ITextEditorOption } from '../../types';
 
 const updatePosition = (editor: Editor, element: HTMLElement) => {
   const virtualElement = {
     getBoundingClientRect: () => {
-      return posToDOMRect(editor.view, editor.state.selection.from, editor.state.selection.to);
+      return posToDOMRect(
+        editor.view,
+        editor.state.selection.from,
+        editor.state.selection.to,
+      );
     },
   };
 
@@ -30,10 +34,14 @@ const updatePosition = (editor: Editor, element: HTMLElement) => {
  * Get suggestion for mention
  */
 
-const getSuggestion = (options: ITextEditorOption[] = []): MentionOptions['suggestion'] => ({
+const getSuggestion = (
+  options: ITextEditorOption[] = [],
+): MentionOptions['suggestion'] => ({
   items: ({ query }: { query: string }) => {
     return options
-      .filter((option: ITextEditorOption) => (option.label).toLowerCase().startsWith(query.toLowerCase()))
+      .filter((option: ITextEditorOption) =>
+        option.label.toLowerCase().startsWith(query.toLowerCase()),
+      )
       .slice(0, 5);
   },
 
@@ -97,12 +105,10 @@ const getSuggestion = (options: ITextEditorOption[] = []): MentionOptions['sugge
           // popup[0].hide();
           component.destroy();
 
-
           return true;
         }
 
         return component.ref?.onKeyDown(props);
-
       },
 
       onExit: () => {
