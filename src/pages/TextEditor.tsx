@@ -3,19 +3,22 @@
 import '../styles/index.css';
 
 import { cx } from '@emotion/css';
-import type { Theme } from '@emotion/react';
-import { FormHelperText, Stack, Tab, Tabs, Typography } from '@mui/material';
+import {
+  FormHelperText, Stack, Tab, Tabs, Typography,
+} from '@mui/material';
 import { EditorContent, EditorContext } from '@tiptap/react';
 import { BubbleMenu, FloatingMenu } from '@tiptap/react/menus';
 import { useState, useMemo } from 'react';
-import type { SyntheticEvent } from 'react';
-import { useTextEditor } from '../hooks/useTextEditor';
 
-import Toolbar from '../components/Toolbar';
-import type { IEditorToolbar, TextEditorProps } from '../types';
-import { getBorderColor } from '../utils/app.utils';
-import { type ToCItemType } from '../components/tableOfContent/ToC';
-import TocBlock from '../components/tableOfContent/TocBlock';
+import type { IEditorToolbar, TextEditorProps } from '@/types';
+import type { Theme } from '@emotion/react';
+import type { SyntheticEvent } from 'react';
+
+import { type ToCItemType } from '@/components/tableOfContent/ToC';
+import TocBlock from '@/components/tableOfContent/TocBlock';
+import Toolbar from '@/components/Toolbar';
+import { useTextEditor } from '@/hooks/useTextEditor';
+import { getBorderColor } from '@/utils/app.utils';
 
 const defaultMenuToolbar: IEditorToolbar[] = [
   'heading',
@@ -157,11 +160,11 @@ const TextEditor = ({
   return (
     <EditorContext.Provider value={providerValue}>
       <Stack
+        spacing={2}
         direction={{
           sm: 'column',
           md: tableOfContentPosition === 'top' ? 'column' : 'row',
         }}
-        spacing={2}
       >
         <div className={rootClassName} css={{ position: 'relative' }}>
           {/* ---------------------------- */}
@@ -180,10 +183,10 @@ const TextEditor = ({
               aria-label="basic tabs example"
               className={tabsClassName}
               css={classes.tabs}
+              value={tab}
               TabIndicatorProps={{
                 children: <span className="MuiTabs-indicatorSpan" />,
               }}
-              value={tab}
               onChange={handleTabChange}
             >
               <Tab
@@ -206,11 +209,11 @@ const TextEditor = ({
           {tab === 'editor' ? (
             <>
               <div
+                css={classes.input}
                 className={cx(
                   'positionRelative flexColumn tiptap',
-                  inputClassName,
+                  inputClassName
                 )}
-                css={classes.input}
               >
                 <div className="positionRelative stretchSelf flexColumn">
                   {editor && withFloatingMenu && (

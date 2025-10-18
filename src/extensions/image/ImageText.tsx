@@ -12,17 +12,19 @@
  *
  */
 
-import Edit from '../../icons/Edit';
 import {
   IconButton, Stack, TextField, Typography,
 } from '@mui/material';
-import type { Theme } from '@mui/material';
 import { useEffect, useState } from 'react';
+
+import type { Theme } from '@mui/material';
 import type { ChangeEvent } from 'react';
-import { checkAlt, checkLegend } from '../../utils/app.utils';
-import Dialog from '../../components/Dialog';
-import Add from '../../icons/Add';
-import Close from '../../icons/Close';
+
+import Dialog from '@/components/Dialog';
+import Add from '@/icons/Add';
+import Close from '@/icons/Close';
+import Edit from '@/icons/Edit';
+import { checkAlt, checkLegend } from '@/utils/app.utils';
 
 type Props = {
   defaultValue: string;

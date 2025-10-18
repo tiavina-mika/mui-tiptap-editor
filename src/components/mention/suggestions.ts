@@ -1,11 +1,14 @@
 'use client';
 
-import { Editor, ReactRenderer } from '@tiptap/react';
 import { computePosition, flip, shift } from '@floating-ui/dom';
 import { posToDOMRect } from '@tiptap/core';
-import Mentions from './Mentions';
-import type { MentionOptions } from '@tiptap/extension-mention';
+import { Editor, ReactRenderer } from '@tiptap/react';
+
+
 import type { ITextEditorOption } from '../../types';
+import type { MentionOptions } from '@tiptap/extension-mention';
+
+import Mentions from './Mentions';
 
 const updatePosition = (editor: Editor, element: HTMLElement) => {
   const virtualElement = {
@@ -13,7 +16,7 @@ const updatePosition = (editor: Editor, element: HTMLElement) => {
       return posToDOMRect(
         editor.view,
         editor.state.selection.from,
-        editor.state.selection.to,
+        editor.state.selection.to
       );
     },
   };
@@ -35,12 +38,12 @@ const updatePosition = (editor: Editor, element: HTMLElement) => {
  */
 
 const getSuggestion = (
-  options: ITextEditorOption[] = [],
+  options: ITextEditorOption[] = []
 ): MentionOptions['suggestion'] => ({
   items: ({ query }: { query: string }) => {
     return options
       .filter((option: ITextEditorOption) =>
-        option.label.toLowerCase().startsWith(query.toLowerCase()),
+        option.label.toLowerCase().startsWith(query.toLowerCase())
       )
       .slice(0, 5);
   },

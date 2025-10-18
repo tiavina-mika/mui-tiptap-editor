@@ -1,8 +1,9 @@
 'use client';
 
-import { Editor } from '@tiptap/react';
 import { Menu, MenuItem, Fade } from '@mui/material';
-import type { ILabels } from '../types';
+import { Editor } from '@tiptap/react';
+
+import type { ILabels } from '@/types';
 
 type IOption = {
   label: string;
@@ -10,7 +11,7 @@ type IOption = {
 };
 const getTableMenus = (
   editor: Editor,
-  labels?: ILabels['table'],
+  labels?: ILabels['table']
 ): IOption[] => [
   {
     label: labels?.insertTable || 'Insert table',
@@ -81,7 +82,9 @@ type Props = {
   onClose: () => void;
   labels?: ILabels['table'];
 };
-const TableMenuDialog = ({ editor, anchorEl, onClose, labels }: Props) => {
+const TableMenuDialog = ({
+  editor, anchorEl, onClose, labels,
+}: Props) => {
   const handleClick = (menu: IOption) => {
     menu.action();
     onClose();

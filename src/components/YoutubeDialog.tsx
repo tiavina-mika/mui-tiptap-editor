@@ -3,10 +3,13 @@
 import { Stack, TextField } from '@mui/material';
 import { Editor } from '@tiptap/react';
 import { useState } from 'react';
+
+import type { ILabels } from '@/types';
 import type { ChangeEvent } from 'react';
+
+import { checkIsValidYoutubeUrl } from '@/utils/app.utils';
+
 import Dialog from './Dialog';
-import { checkIsValidYoutubeUrl } from '../utils/app.utils';
-import type { ILabels } from '../types';
 
 type YoutubeInput = {
   url: string;
@@ -50,7 +53,9 @@ type Props = {
   onClose: () => void;
   labels?: ILabels['youtube'];
 };
-const YoutubeDialog = ({ editor, open, onClose, labels }: Props) => {
+const YoutubeDialog = ({
+  editor, open, onClose, labels,
+}: Props) => {
   const [values, setValues] = useState<YoutubeInput>(initialValues);
   const [errors, setErrors] = useState<Record<string, string> | null>(null);
 
@@ -59,7 +64,7 @@ const YoutubeDialog = ({ editor, open, onClose, labels }: Props) => {
       (prev: YoutubeInput): YoutubeInput => ({
         ...prev,
         [event.target.name]: event.target.value,
-      }),
+      })
     );
   };
 

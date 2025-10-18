@@ -1,45 +1,47 @@
 'use client';
 
-import type { Theme } from '@emotion/react';
 import { cx } from '@emotion/css';
 import { Editor, useCurrentEditor } from '@tiptap/react';
 import { useState, useCallback, useMemo } from 'react';
+
+import type { IEditorToolbar, ILabels, TextEditorProps } from '@/types';
+import type { Theme } from '@emotion/react';
 import type { MouseEvent } from 'react';
 
-import TableMenuDialog from './TableMenuDialog';
-import Heading from './Heading';
-import ColorPicker from './ColorPicker';
-import type { IEditorToolbar, ILabels, TextEditorProps } from '../types';
+import AlignCenter from '@/icons/AlignCenter';
+import AlignRight from '@/icons/AlignJustify';
+import AlignLeft from '@/icons/AlignLeft';
+import AlignJustify from '@/icons/AlignRight';
+import Bold from '@/icons/Bold';
+import BulletList from '@/icons/BulletList';
+import Code from '@/icons/Code';
+import CodeBlock from '@/icons/CodeBlock';
+import Italic from '@/icons/Italic';
+import Link from '@/icons/Link';
+import Mention from '@/icons/Mention';
+import OrderedList from '@/icons/OrderedList';
+import Picture from '@/icons/Picture';
+import Quote from '@/icons/Quote';
+import Redo from '@/icons/Redo';
+import Strike from '@/icons/Strike';
+import Table from '@/icons/Table';
+import TextColor from '@/icons/TextColor';
+import Underline from '@/icons/Underline';
+import Undo from '@/icons/Undo';
+import Youtube from '@/icons/Youtube';
 import {
   checkIsValidUrl,
   defaultEditorToolbar,
   getBorderColor,
   showTextEditorToolbarMenu,
-} from '../utils/app.utils';
-import YoutubeDialog from './YoutubeDialog';
-import Bold from '../icons/Bold';
-import Italic from '../icons/Italic';
-import Strike from '../icons/Strike';
-import Underline from '../icons/Underline';
-import Link from '../icons/Link';
-import BulletList from '../icons/BulletList';
-import OrderedList from '../icons/OrderedList';
-import AlignLeft from '../icons/AlignLeft';
-import AlignCenter from '../icons/AlignCenter';
-import AlignRight from '../icons/AlignJustify';
-import AlignJustify from '../icons/AlignRight';
-import Quote from '../icons/Quote';
-import Code from '../icons/Code';
-import Table from '../icons/Table';
-import Youtube from '../icons/Youtube';
-import Undo from '../icons/Undo';
-import Redo from '../icons/Redo';
-import Mention from '../icons/Mention';
-import Picture from '../icons/Picture';
-import TextColor from '../icons/TextColor';
-import UploadFile from './UploadFile';
-import CodeBlock from '../icons/CodeBlock';
+} from '@/utils/app.utils';
+
+import ColorPicker from './ColorPicker';
+import Heading from './Heading';
+import TableMenuDialog from './TableMenuDialog';
 import ToolBarIconButton from './ToolBarIconButton';
+import UploadFile from './UploadFile';
+import YoutubeDialog from './YoutubeDialog';
 
 const classes = {
   topToolbar: (theme: Theme) => ({

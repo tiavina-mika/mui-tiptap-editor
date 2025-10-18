@@ -1,5 +1,6 @@
-import type { EditorOptions } from '@tiptap/react';
 import { ReactNode } from 'react';
+
+import type { EditorOptions } from '@tiptap/react';
 
 export { default as TextEditor } from './pages/TextEditor';
 export { default as TextEditorReadOnly } from './pages/TextEditorReadOnly';
@@ -30,7 +31,7 @@ export enum EditorToolbarEnum {
   mention = 'mention',
   upload = 'upload',
   // does not exist yet
-  ai = 'ai',
+  ai = 'ai'
 }
 
 export type UploadResponse = {

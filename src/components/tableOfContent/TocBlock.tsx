@@ -1,8 +1,11 @@
-import { memo } from 'react';
-import { ToC, type ToCItemType } from './ToC';
-import { useCurrentEditor } from '@tiptap/react';
 import { Typography } from '@mui/material';
-import type { TextEditorProps } from '../../types';
+import { useCurrentEditor } from '@tiptap/react';
+import { memo } from 'react';
+
+import type { TextEditorProps } from '@/types';
+
+import { ToC, type ToCItemType } from './ToC';
+
 
 const MemorizedToC = memo(ToC);
 

@@ -1,9 +1,12 @@
 'use client';
 
-import { Mention } from '@tiptap/extension-mention';
 import { mergeAttributes } from '@tiptap/core';
-import getSuggestion from '../components/mention/suggestions';
-import type { ITextEditorOption } from '../types';
+import { Mention } from '@tiptap/extension-mention';
+
+import type { ITextEditorOption } from '@/types';
+
+import getSuggestion from '@/components/mention/suggestions';
+
 
 type Props = {
   // base pathname for the mention link
@@ -41,9 +44,10 @@ export const getCustomMention = ({ pathname = '/users', mentions }: Props) => {
       },
     }),
     // Create a link to the user profile
-    // eslint-disable-next-line @typescript-eslint/naming-convention
+
     renderHTML: ({
       node,
+      // eslint-disable-next-line @typescript-eslint/naming-convention
       HTMLAttributes,
     }: {
       node: any;

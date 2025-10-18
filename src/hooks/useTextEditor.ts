@@ -1,37 +1,42 @@
+/* eslint-disable import/no-named-as-default */
 'use client';
 import { useTheme } from '@mui/material';
+import Code from '@tiptap/extension-code';
 import Document from '@tiptap/extension-document';
+import Heading from '@tiptap/extension-heading';
 import Link from '@tiptap/extension-link';
 import ListItem from '@tiptap/extension-list-item';
 import Paragraph from '@tiptap/extension-paragraph';
-import Text from '@tiptap/extension-text';
-import TipTapTypography from '@tiptap/extension-typography';
-import Underline from '@tiptap/extension-underline';
-import TextAlign from '@tiptap/extension-text-align';
-import Youtube from '@tiptap/extension-youtube';
-import { Placeholder, Gapcursor } from '@tiptap/extensions';
-import Code from '@tiptap/extension-code';
-import { useEditor } from '@tiptap/react';
-import type { AnyExtension, EditorOptions, EditorEvents } from '@tiptap/react';
-import StarterKit from '@tiptap/starter-kit';
-import { useEffect } from 'react';
-import Heading from '@tiptap/extension-heading';
+import { TableKit } from '@tiptap/extension-table';
 import {
   getHierarchicalIndexes,
   TableOfContents,
 } from '@tiptap/extension-table-of-contents';
+import Text from '@tiptap/extension-text';
+import TextAlign from '@tiptap/extension-text-align';
+import { TextStyleKit, Color } from '@tiptap/extension-text-style';
+import TipTapTypography from '@tiptap/extension-typography';
+import Underline from '@tiptap/extension-underline';
+import Youtube from '@tiptap/extension-youtube';
+import { Placeholder, Gapcursor } from '@tiptap/extensions';
+import { useEditor } from '@tiptap/react';
+import StarterKit from '@tiptap/starter-kit';
+import { useEffect } from 'react';
+
 import type {
   CodeBlockWithCopyProps,
   ILabels,
   ImageUploadOptions,
   ITextEditorOption,
-} from '../types';
-import getCustomImage from '../extensions/CustomImage';
-import { getCustomMention } from '../extensions/CustomMention';
-import { getCodeBlockWithCopy } from '../extensions/CodeBlockWithCopy';
-import { TableKit } from '@tiptap/extension-table';
-import { TextStyleKit, Color } from '@tiptap/extension-text-style';
-import { type ToCItemType } from '../components/tableOfContent/ToC';
+} from '@/types';
+import type { AnyExtension, EditorOptions, EditorEvents } from '@tiptap/react';
+
+
+import { type ToCItemType } from '@/components/tableOfContent/ToC';
+import { getCodeBlockWithCopy } from '@/extensions/CodeBlockWithCopy';
+import getCustomImage from '@/extensions/CustomImage';
+import { getCustomMention } from '@/extensions/CustomMention';
+
 
 const extensions = [
   Color.configure({ types: ['textStyle', ListItem.name] }),
@@ -211,16 +216,16 @@ export const useTextEditor = ({
       getCustomImage(
         uploadFileOptions,
         uploadFileLabels,
-        uploadFileOptions?.maxMediaLegendLength,
+        uploadFileOptions?.maxMediaLegendLength
       ),
       getCodeBlockWithCopy(codeBlock),
       onChangeTableOfContents
         ? TableOfContents.configure({
-            getIndex: getHierarchicalIndexes,
-            onUpdate: (contents: ToCItemType[]) => {
-              onChangeTableOfContents(contents);
-            },
-          })
+          getIndex: getHierarchicalIndexes,
+          onUpdate: (contents: ToCItemType[]) => {
+            onChangeTableOfContents(contents);
+          },
+        })
         : null,
       // default extensions
       ...extensions,
@@ -261,7 +266,7 @@ export const useTextEditor = ({
     if (value && !editable && tab === 'preview') {
       editor.commands.setContent(value);
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+
   }, [editor, value]);
 
   /**

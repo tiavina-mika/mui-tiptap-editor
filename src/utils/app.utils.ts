@@ -1,5 +1,5 @@
-import type { Theme } from '@mui/material';
 import type { IEditorToolbar } from '../types';
+import type { Theme } from '@mui/material';
 
 type FileValidationOutput = {
   isValid: boolean;
@@ -43,7 +43,7 @@ export const getBorderColor = (theme: Theme) => {
  */
 export const showTextEditorToolbarMenu = (
   toolbar: IEditorToolbar[],
-  menu: any,
+  menu: any
 ): boolean => {
   return !!toolbar?.find((t: IEditorToolbar) => {
     if (typeof menu === 'string') {
@@ -64,7 +64,7 @@ export const showTextEditorToolbarMenu = (
  * @returns
  */
 const getImageSize = (
-  file: File,
+  file: File
 ): Promise<{ width: number; height: number }> => {
   return new Promise((resolve) => {
     const image = new Image();
@@ -119,7 +119,7 @@ export const checkAlt = (text: string): FileValidationOutput => {
  */
 export const checkLegend = (
   text: string,
-  maxLength: number,
+  maxLength: number
 ): FileValidationOutput => {
   return {
     isValid: checkAlt(text) && text.length <= maxLength,
@@ -147,7 +147,7 @@ const getFileSize = (file: File): number => {
  */
 export const getIsFileSizeValid = (
   file: File,
-  maxSize = 10,
+  maxSize = 10
 ): FileValidationOutput => {
   return {
     isValid: getFileSize(file) <= maxSize,
@@ -178,7 +178,7 @@ export const checkIsImage = (file: File): FileValidationOutput => {
  */
 export const checkValidMimeType = (
   file: File,
-  allowedMimeTypes: string[] | null,
+  allowedMimeTypes: string[] | null
 ): FileValidationOutput => {
   if (!allowedMimeTypes) {
     return {
@@ -201,7 +201,7 @@ export const checkValidMimeType = (
  */
 export const checkFilesNumber = (
   files: FileList | File[],
-  maxFilesNumber = 5,
+  maxFilesNumber = 5
 ): FileValidationOutput => {
   return {
     isValid: files.length <= maxFilesNumber,
@@ -212,7 +212,7 @@ export const checkFilesNumber = (
 export const checkValidFileDimensions = async (
   file: File,
   maxWidth = 1920,
-  maxHeight = 1080,
+  maxHeight = 1080
 ): Promise<FileValidationOutput> => {
   const size = await getImageSize(file);
 

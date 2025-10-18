@@ -1,15 +1,16 @@
 'use client';
 
-import type { Theme } from '@emotion/react';
 import { IconButton, Tooltip } from '@mui/material';
 import { useCurrentEditor } from '@tiptap/react';
 import { Fragment } from 'react';
+
+
+import type { ToolbarItem } from '@/types';
+import type { Theme } from '@emotion/react';
 import type { ReactNode } from 'react';
 
-import type { ToolbarItem } from '../types';
-import { getBorderColor } from '../utils/app.utils';
-
-import Icon from '../icons/Icon';
+import Icon from '@/icons/Icon';
+import { getBorderColor } from '@/utils/app.utils';
 
 const classes = {
   button: (isActive: boolean, split: boolean) => (theme: Theme) => {
@@ -83,7 +84,7 @@ const ToolBarIconButton = ({
         disabled={disabled}
         css={classes.button(
           editor.isActive(active || name), // the order is important
-          !!split,
+          !!split
         )}
         onClick={onClick}
       >

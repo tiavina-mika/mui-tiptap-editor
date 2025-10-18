@@ -1,15 +1,19 @@
 'use client';
 
+import {
+  Menu, MenuItem, Fade, Button,
+} from '@mui/material';
 import { Editor } from '@tiptap/react';
-import { Menu, MenuItem, Fade, Button } from '@mui/material';
+import { useMemo, useState } from 'react';
+
+import type { ILabels } from '@/types';
 import type { Theme } from '@mui/material';
 import type { Level } from '@tiptap/extension-heading';
-import { useMemo, useState } from 'react';
 import type { MouseEvent } from 'react';
-import ChevronDown from '../icons/ChevronDown';
-import Icon from '../icons/Icon';
-import type { ILabels } from '../types';
-import { getBorderColor } from '../utils/app.utils';
+
+import ChevronDown from '@/icons/ChevronDown';
+import Icon from '@/icons/Icon';
+import { getBorderColor } from '@/utils/app.utils';
 
 const isActive = (editor: Editor) => {
   return (
@@ -135,7 +139,7 @@ const Heading = ({ editor, headingLabels, split = false }: Props) => {
             key={index}
             css={classes.menuItem(
               editor.isActive('heading', { level: option }), // isActive
-              (10 - index) * 3, // fontSize is decreasing
+              (10 - index) * 3 // fontSize is decreasing
             )}
             onClick={() => handleSelectHeading(option)}
           >

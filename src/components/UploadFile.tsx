@@ -2,13 +2,15 @@
 
 import { Editor } from '@tiptap/react';
 import { useRef } from 'react';
+
+import type { ILabels, ImageUploadOptions, UploadResponse } from '@/types';
+
 import {
   checkIsImage,
   checkValidFileDimensions,
   checkValidMimeType,
   getIsFileSizeValid,
-} from '../utils/app.utils';
-import type { ILabels, ImageUploadOptions, UploadResponse } from '../types';
+} from '@/utils/app.utils';
 
 type Props = {
   editor: Editor;
@@ -32,7 +34,7 @@ const UploadFile = ({
     if (!fileUploadRef.current) return;
     const files = fileUploadRef.current.files;
 
-    if ((files && files.length === 0) || !files) return;
+    if ((files?.length === 0) || !files) return;
     const file = files[0];
 
     // 1. check if the file is an image

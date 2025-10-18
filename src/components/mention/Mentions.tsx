@@ -1,10 +1,15 @@
 'use client';
 
-import type { Theme } from '@mui/material';
-import { List, ListItem, ListItemButton, ListItemText } from '@mui/material';
-import type { SuggestionProps } from '@tiptap/suggestion';
-import { forwardRef, useEffect, useImperativeHandle, useState } from 'react';
+import {
+  List, ListItem, ListItemButton, ListItemText,
+} from '@mui/material';
+import {
+  forwardRef, useEffect, useImperativeHandle, useState,
+} from 'react';
+
 import type { ITextEditorOption } from '../../types';
+import type { Theme } from '@mui/material';
+import type { SuggestionProps } from '@tiptap/suggestion';
 
 const classes = {
   list: (theme: Theme) => ({
@@ -73,7 +78,7 @@ const Mentions = forwardRef<any, Props>(({ items, command }, ref) => {
 
         return false;
       },
-    }),
+    })
   );
 
   return (

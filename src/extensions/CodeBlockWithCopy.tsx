@@ -7,17 +7,20 @@
  * The component uses lowlight for syntax highlighting and integrates with TipTap's NodeViewRenderer.
  */
 
+// eslint-disable-next-line import/no-named-as-default
+import CodeBlockLowlight from '@tiptap/extension-code-block-lowlight';
 import {
   NodeViewWrapper,
   NodeViewContent,
   ReactNodeViewRenderer,
 } from '@tiptap/react';
-import { useState } from 'react';
 import { createLowlight, common } from 'lowlight';
-import CodeBlockLowlight from '@tiptap/extension-code-block-lowlight';
-import type { CodeBlockWithCopyProps } from '../types';
-import Copy from '../icons/Copy';
-import Check from '../icons/Check';
+import { useState } from 'react';
+
+import type { CodeBlockWithCopyProps } from '@/types';
+
+import Check from '@/icons/Check';
+import Copy from '@/icons/Copy';
 
 // eslint-disable-next-line react-refresh/only-export-components
 const CodeBlockWithCopy = ({ node }: any) => {
