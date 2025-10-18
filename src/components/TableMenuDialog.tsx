@@ -8,7 +8,10 @@ type IOption = {
   label: string;
   action: () => void;
 };
-const getTableMenus = (editor: Editor, labels?: ILabels['table']): IOption[] => [
+const getTableMenus = (
+  editor: Editor,
+  labels?: ILabels['table'],
+): IOption[] => [
   {
     label: labels?.insertTable || 'Insert table',
     action: () =>
@@ -78,9 +81,7 @@ type Props = {
   onClose: () => void;
   labels?: ILabels['table'];
 };
-const TableMenuDialog = ({
-  editor, anchorEl, onClose, labels,
-}: Props) => {
+const TableMenuDialog = ({ editor, anchorEl, onClose, labels }: Props) => {
   const handleClick = (menu: IOption) => {
     menu.action();
     onClose();
