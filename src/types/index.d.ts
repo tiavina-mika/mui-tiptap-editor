@@ -47,7 +47,7 @@ export type CodeBlockWithCopyProps = {
 
 export type ToolbarItem = {
   name: string;
-  icon: ReactNode;
+  icon: ReactNode | string;
   iconSize?: number;
   onClick?: (event?: MouseEvent<HTMLElement>) => void;
   disabled?: boolean;

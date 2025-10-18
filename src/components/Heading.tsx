@@ -11,9 +11,10 @@ import type { Theme } from '@mui/material';
 import type { Level } from '@tiptap/extension-heading';
 import type { MouseEvent } from 'react';
 
-import ChevronDown from '@/assets/icons/ChevronDown';
-import Icon from '@/assets/icons/Icon';
+import ChevronDown from '@/assets/icons/chevron-down.svg';
 import { getBorderColor } from '@/utils/app.utils';
+
+import Icon from './Icon';
 
 const isActive = (editor: Editor) => {
   return (
@@ -115,7 +116,7 @@ const Heading = ({ editor, headingLabels, split = false }: Props) => {
         <span css={{ marginRight: 8 }}>{selectedLabel}</span>
         {/* chevron icon */}
         <Icon>
-          <ChevronDown />
+          <img alt="chevron down" src={ChevronDown} />
         </Icon>
       </Button>
       {/* menu */}

@@ -8,27 +8,27 @@ import type { IEditorToolbar, ILabels, TextEditorProps } from '@/types';
 import type { Theme } from '@emotion/react';
 import type { MouseEvent } from 'react';
 
-import AlignCenter from '@/assets/icons/AlignCenter';
-import AlignRight from '@/assets/icons/AlignJustify';
-import AlignLeft from '@/assets/icons/AlignLeft';
-import AlignJustify from '@/assets/icons/AlignRight';
-import Bold from '@/assets/icons/Bold';
-import BulletList from '@/assets/icons/BulletList';
-import Code from '@/assets/icons/Code';
-import CodeBlock from '@/assets/icons/CodeBlock';
-import Italic from '@/assets/icons/Italic';
-import Link from '@/assets/icons/Link';
-import Mention from '@/assets/icons/Mention';
-import OrderedList from '@/assets/icons/OrderedList';
-import Picture from '@/assets/icons/Picture';
-import Quote from '@/assets/icons/Quote';
-import Redo from '@/assets/icons/Redo';
-import Strike from '@/assets/icons/Strike';
-import Table from '@/assets/icons/Table';
-import TextColor from '@/assets/icons/TextColor';
-import Underline from '@/assets/icons/Underline';
-import Undo from '@/assets/icons/Undo';
-import Youtube from '@/assets/icons/Youtube';
+import AlignCenter from '@/assets/icons/align-center.svg';
+import AlignJustify from '@/assets/icons/align-justify.svg';
+import AlignLeft from '@/assets/icons/align-left.svg';
+import AlignRight from '@/assets/icons/align-right.svg';
+import Bold from '@/assets/icons/bold.svg';
+import BulletList from '@/assets/icons/bullet-list.svg';
+import Code from '@/assets/icons/code.svg';
+import CodeBlock from '@/assets/icons/codeblock.svg';
+import Italic from '@/assets/icons/italic.svg';
+import Link from '@/assets/icons/link.svg';
+import Mention from '@/assets/icons/mention.svg';
+import OrderedList from '@/assets/icons/ordered-list.svg';
+import Picture from '@/assets/icons/picture.svg';
+import Quote from '@/assets/icons/quote.svg';
+import Redo from '@/assets/icons/redo.svg';
+import Strike from '@/assets/icons/strike.svg';
+import Table from '@/assets/icons/table.svg';
+import TextColor from '@/assets/icons/text-color.svg';
+import Underline from '@/assets/icons/underline.svg';
+import Undo from '@/assets/icons/undo.svg';
+import Youtube from '@/assets/icons/youtube.svg';
 import {
   checkIsValidUrl,
   defaultEditorToolbar,
@@ -198,8 +198,8 @@ const Toolbar = ({
       <ToolBarIconButton
         disabled={!editor.can().chain().focus().toggleBold().run()}
         display={showTextEditorToolbarMenu(toolbar, 'bold')}
-        icon={<Bold />}
-        iconSize={12}
+        icon={Bold}
+        iconSize={10}
         name="bold"
         tooltip={labels?.toolbar?.bold || 'Bold'}
         withTooltip={isWithTooltip}
@@ -209,7 +209,7 @@ const Toolbar = ({
       <ToolBarIconButton
         disabled={!editor.can().chain().focus().toggleItalic().run()}
         display={showTextEditorToolbarMenu(toolbar, 'italic')}
-        icon={<Italic />}
+        icon={Italic}
         iconSize={12}
         name="italic"
         tooltip={labels?.toolbar?.italic || 'Italic'}
@@ -220,7 +220,7 @@ const Toolbar = ({
       <ToolBarIconButton
         disabled={!editor.can().chain().focus().toggleStrike().run()}
         display={showTextEditorToolbarMenu(toolbar, 'strike')}
-        icon={<Strike />}
+        icon={Strike}
         iconSize={14}
         name="strike"
         tooltip={labels?.toolbar?.strike || 'Strike through'}
@@ -232,8 +232,8 @@ const Toolbar = ({
         split
         disabled={!editor.can().chain().focus().toggleUnderline().run()}
         display={showTextEditorToolbarMenu(toolbar, 'underline')}
-        icon={<Underline />}
-        iconSize={14}
+        icon={Underline}
+        iconSize={13}
         name="underline"
         tooltip={labels?.toolbar?.underline || 'Underline'}
         withTooltip={isWithTooltip}
@@ -243,7 +243,7 @@ const Toolbar = ({
       <ToolBarIconButton
         split
         display={showTextEditorToolbarMenu(toolbar, 'color')}
-        icon={<TextColor />}
+        icon={TextColor}
         iconSize={24}
         id={colorId || 'color'}
         name="color"
@@ -255,7 +255,8 @@ const Toolbar = ({
       <ToolBarIconButton
         disabled={false}
         display={showTextEditorToolbarMenu(toolbar, 'align')}
-        icon={<AlignLeft />}
+        icon={AlignLeft}
+        iconSize={19}
         isActive={editor.isActive({ textAlign: 'left' })}
         name="align-left"
         tooltip={labels?.toolbar?.alignLeft || 'Left align'}
@@ -264,7 +265,8 @@ const Toolbar = ({
       <ToolBarIconButton
         disabled={false}
         display={showTextEditorToolbarMenu(toolbar, 'align')}
-        icon={<AlignCenter />}
+        icon={AlignCenter}
+        iconSize={19}
         isActive={editor.isActive({ textAlign: 'center' })}
         name="align-center"
         tooltip={labels?.toolbar?.alignCenter || 'Center align'}
@@ -273,7 +275,8 @@ const Toolbar = ({
       <ToolBarIconButton
         disabled={false}
         display={showTextEditorToolbarMenu(toolbar, 'align')}
-        icon={<AlignRight />}
+        icon={AlignRight}
+        iconSize={19}
         isActive={editor.isActive({ textAlign: 'right' })}
         name="align-right"
         tooltip={labels?.toolbar?.alignRight || 'Right align'}
@@ -283,7 +286,8 @@ const Toolbar = ({
         split
         disabled={false}
         display={showTextEditorToolbarMenu(toolbar, 'align')}
-        icon={<AlignJustify />}
+        icon={AlignJustify}
+        iconSize={19}
         isActive={editor.isActive({ textAlign: 'justify' })}
         name="align-justify"
         tooltip={labels?.toolbar?.alignJustify || 'Justify align'}
@@ -293,7 +297,8 @@ const Toolbar = ({
       <ToolBarIconButton
         disabled={!editor.can().chain().focus().toggleBulletList().run()}
         display={showTextEditorToolbarMenu(toolbar, 'bulletList')}
-        icon={<BulletList />}
+        icon={BulletList}
+        iconSize={19}
         name="bulletList"
         tooltip={labels?.toolbar?.bulletList || 'Bullet list'}
         onClick={() => editor.chain().focus().toggleBulletList().run()}
@@ -303,7 +308,7 @@ const Toolbar = ({
         split
         disabled={!editor.can().chain().focus().toggleOrderedList().run()}
         display={showTextEditorToolbarMenu(toolbar, 'orderedList')}
-        icon={<OrderedList />}
+        icon={OrderedList}
         iconSize={14}
         name="orderedList"
         tooltip={labels?.toolbar?.orderedList || 'Ordered list'}
@@ -313,7 +318,8 @@ const Toolbar = ({
       <ToolBarIconButton
         disabled={false}
         display={showTextEditorToolbarMenu(toolbar, 'link')}
-        icon={<Link />}
+        icon={Link}
+        iconSize={18}
         name="link"
         tooltip={labels?.toolbar?.link || 'Link'}
         onClick={setLink}
@@ -322,7 +328,7 @@ const Toolbar = ({
       <ToolBarIconButton
         disabled={false}
         display={showTextEditorToolbarMenu(toolbar, 'image')}
-        icon={<Picture />}
+        icon={Picture}
         iconSize={16}
         id="upload"
         name="upload"
@@ -334,7 +340,7 @@ const Toolbar = ({
       <ToolBarIconButton
         disabled={false}
         display={showTextEditorToolbarMenu(toolbar, 'mention')}
-        icon={<Mention />}
+        icon={Mention}
         iconSize={16}
         name="mention"
         tooltip={labels?.toolbar?.mention || 'Mention user'}
@@ -345,7 +351,8 @@ const Toolbar = ({
         split
         disabled={false}
         display={showTextEditorToolbarMenu(toolbar, 'table')}
-        icon={<Table />}
+        icon={Table}
+        iconSize={18}
         name="table"
         tooltip={labels?.table?.table || 'Table'}
         onClick={handleOpenTableMenu}
@@ -354,7 +361,7 @@ const Toolbar = ({
       <ToolBarIconButton
         disabled={false}
         display={showTextEditorToolbarMenu(toolbar, 'blockquote')}
-        icon={<Quote />}
+        icon={Quote}
         iconSize={16}
         name="blockquote"
         tooltip={labels?.toolbar?.blockquote || 'Block quote'}
@@ -364,8 +371,8 @@ const Toolbar = ({
       <ToolBarIconButton
         disabled={false}
         display={showTextEditorToolbarMenu(toolbar, 'codeBlock')}
-        icon={<CodeBlock />}
-        iconSize={16}
+        icon={CodeBlock}
+        iconSize={13.5}
         name="codeBlock"
         tooltip={labels?.toolbar?.codeBlock || 'Code block'}
         onClick={() => editor.chain().focus().toggleCodeBlock().run()}
@@ -375,7 +382,8 @@ const Toolbar = ({
         split
         disabled={false}
         display={showTextEditorToolbarMenu(toolbar, 'code')}
-        icon={<Code />}
+        icon={Code}
+        iconSize={18}
         name="code"
         tooltip={labels?.toolbar?.inlineCode || 'Inline code'}
         onClick={() => editor.chain().focus().toggleCode().run()}
@@ -384,7 +392,8 @@ const Toolbar = ({
       <ToolBarIconButton
         disabled={false}
         display={showTextEditorToolbarMenu(toolbar, 'youtube')}
-        icon={<Youtube />}
+        icon={Youtube}
+        iconSize={18}
         name="youtube"
         tooltip={labels?.toolbar?.youtube || 'Insert YouTube video'}
         onClick={toggleYoutubeDialog}
@@ -394,7 +403,8 @@ const Toolbar = ({
       <ToolBarIconButton
         disabled={!editor.can().undo()}
         display={showTextEditorToolbarMenu(toolbar, 'history')}
-        icon={<Undo />}
+        icon={Undo}
+        iconSize={18}
         name="undo"
         tooltip={labels?.toolbar?.undo || 'Undo'}
         onClick={() => editor.chain().focus().undo().run()}
@@ -404,7 +414,8 @@ const Toolbar = ({
         split
         disabled={!editor.can().redo()}
         display={showTextEditorToolbarMenu(toolbar, 'history')}
-        icon={<Redo />}
+        icon={Redo}
+        iconSize={18}
         name="redo"
         tooltip={labels?.toolbar?.redo || 'Redo'}
         onClick={() => editor.chain().focus().redo().run()}

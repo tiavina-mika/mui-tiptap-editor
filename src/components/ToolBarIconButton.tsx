@@ -9,8 +9,9 @@ import type { ToolbarItem } from '@/types';
 import type { Theme } from '@emotion/react';
 import type { ReactNode } from 'react';
 
-import Icon from '@/assets/icons/Icon';
 import { getBorderColor } from '@/utils/app.utils';
+
+import Icon from './Icon';
 
 const classes = {
   button: (isActive: boolean, split: boolean) => (theme: Theme) => {
@@ -89,7 +90,12 @@ const ToolBarIconButton = ({
         onClick={onClick}
       >
         <LabelComponent {...labelProps}>
-          <Icon size={iconSize}>{icon}</Icon>
+          {/* <Icon size={iconSize}>{icon}</Icon> */}
+          <Icon size={iconSize}>
+            {typeof icon === 'string' ? (<img alt={name} src={icon} width={iconSize} />) : (
+              icon
+            )}
+          </Icon>
         </LabelComponent>
         {/* component used with label */}
         {children}

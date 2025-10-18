@@ -9,7 +9,7 @@ import {
 import type { Theme, DialogProps } from '@mui/material';
 import type { MouseEventHandler, ReactNode } from 'react';
 
-import Close from '@/assets/icons/Close';
+import Close from '@/assets/icons/close.svg';
 
 const classes = {
   dialog: (theme: Theme) => ({
@@ -72,8 +72,7 @@ const Dialog = ({
       sx={{ position: 'absolute', right: 0, top: 0 }}
       onClick={onClose}
     >
-      {/* <img alt="close" src="/icons/close.svg" /> */}
-      <Close />
+      <img alt="close" src={Close} />
     </IconButton>
   );
 

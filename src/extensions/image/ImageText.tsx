@@ -20,10 +20,10 @@ import { useEffect, useState } from 'react';
 import type { Theme } from '@mui/material';
 import type { ChangeEvent } from 'react';
 
+import Add from '@/assets/icons/add.svg';
+import Close from '@/assets/icons/close.svg';
+import Edit from '@/assets/icons/edit.svg';
 import Dialog from '@/components/Dialog';
-import Add from '@/assets/icons/Add';
-import Close from '@/assets/icons/Close';
-import Edit from '@/assets/icons/Edit';
 import { checkAlt, checkLegend } from '@/utils/app.utils';
 
 type Props = {
@@ -163,7 +163,7 @@ const ImageText = ({
                 type="button"
                 onClick={handleOpen}
               >
-                <Edit />
+                <img alt="edit" src={Edit} style={{ width: 18 }} />
               </IconButton>
             </Stack>
           ) : (
@@ -173,7 +173,7 @@ const ImageText = ({
               type="button"
               onClick={handleOpen}
             >
-              <Add />
+              <img alt="add" src={Add} style={{ width: 18, marginRight: 4 }} />
               <Typography>{label}</Typography>
             </button>
           )}
@@ -183,7 +183,8 @@ const ImageText = ({
           type="button"
           onClick={handleDelete}
         >
-          <Close />
+          {/* <Close /> */}
+          <img alt="close" src={Close} style={{ width: 18 }} />
         </IconButton>
       </Stack>
       {/* dialog form */}
