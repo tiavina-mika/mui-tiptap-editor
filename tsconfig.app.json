@@ -9,7 +9,8 @@
     "useDefineForClassFields": true,
     "lib": ["ES2022", "DOM", "DOM.Iterable"],
     "module": "ESNext",
-    "types": ["vite/client", "jest", "@playwright/test"],
+    "types": ["vite/client", "jest", "@playwright/test", "@emotion/react/types/css-prop"],
+
     "skipLibCheck": true,
 
     /* Bundler mode */
@@ -19,6 +20,7 @@
     "moduleDetection": "force",
     "noEmit": true,
     "jsx": "react-jsx",
+    "jsxImportSource": "@emotion/react",
 
     /* Linting */
     "strict": true,
