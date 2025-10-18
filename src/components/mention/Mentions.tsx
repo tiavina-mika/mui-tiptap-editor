@@ -1,14 +1,10 @@
 'use client';
 
 import type { Theme } from '@mui/material';
-import {
-  List, ListItem, ListItemButton, ListItemText,
-} from '@mui/material';
+import { List, ListItem, ListItemButton, ListItemText } from '@mui/material';
 import type { SuggestionProps } from '@tiptap/suggestion';
-import {
-  forwardRef, useEffect, useImperativeHandle, useState,
-} from 'react';
-import type { ITextEditorOption } from '../../types.d';
+import { forwardRef, useEffect, useImperativeHandle, useState } from 'react';
+import type { ITextEditorOption } from '../../types';
 
 const classes = {
   list: (theme: Theme) => ({
@@ -56,26 +52,29 @@ const Mentions = forwardRef<any, Props>(({ items, command }, ref) => {
 
   useEffect(() => setSelectedIndex(0), [items]);
 
-  useImperativeHandle(ref, (): { onKeyDown: ({ event }: { event: KeyboardEvent }) => boolean } => ({
-    onKeyDown: ({ event }: { event: KeyboardEvent }): boolean => {
-      if (event.key === 'ArrowUp') {
-        upHandler();
-        return true;
-      }
+  useImperativeHandle(
+    ref,
+    (): { onKeyDown: ({ event }: { event: KeyboardEvent }) => boolean } => ({
+      onKeyDown: ({ event }: { event: KeyboardEvent }): boolean => {
+        if (event.key === 'ArrowUp') {
+          upHandler();
+          return true;
+        }
 
-      if (event.key === 'ArrowDown') {
-        downHandler();
-        return true;
-      }
+        if (event.key === 'ArrowDown') {
+          downHandler();
+          return true;
+        }
 
-      if (event.key === 'Enter') {
-        enterHandler();
-        return true;
-      }
+        if (event.key === 'Enter') {
+          enterHandler();
+          return true;
+        }
 
-      return false;
-    },
-  }));
+        return false;
+      },
+    }),
+  );
 
   return (
     <List css={classes.list}>
