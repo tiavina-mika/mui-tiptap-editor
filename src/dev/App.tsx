@@ -1,9 +1,12 @@
 /* eslint-disable @cspell/spellchecker */
 import { ThemeProvider as EmotionThemeProvider } from '@emotion/react';
 import {
-  Container, CssBaseline, ThemeProvider, createTheme,
+  Container,
+  CssBaseline,
+  ThemeProvider,
+  createTheme,
 } from '@mui/material';
-import TextEditor from '../components/TextEditor';
+import TextEditor from '../pages/TextEditor';
 
 const mentions = [
   { label: 'Lea Thompson', value: 'xxxx1' },
@@ -47,10 +50,13 @@ const App = () => {
     const formData = new FormData();
 
     formData.append('file', file);
-    const response = await fetch('https://api.escuelajs.co/api/v1/files/upload', {
-      method: 'POST',
-      body: formData,
-    });
+    const response = await fetch(
+      'https://api.escuelajs.co/api/v1/files/upload',
+      {
+        method: 'POST',
+        body: formData,
+      },
+    );
 
     const data = await response.json();
 
@@ -72,7 +78,7 @@ const App = () => {
             label="Content"
             mentions={mentions}
             placeholder="Enter your content here"
-            tableOfContentPosition='right'
+            tableOfContentPosition="right"
             toolbarPosition="top"
             user={currentUser}
             labels={{
@@ -124,11 +130,11 @@ const App = () => {
                 splitCell: 'Diviser la cellule',
                 deleteTable: 'Supprimer le tableau',
                 insertTable: 'Insérer un tableau',
-                toggleHeaderCell: 'Basculer la cellule d\'en-tête',
-                toggleHeaderColumn: 'Basculer la colonne d\'en-tête',
-                toggleHeaderRow: 'Basculer la ligne d\'en-tête',
+                toggleHeaderCell: "Basculer la cellule d'en-tête",
+                toggleHeaderColumn: "Basculer la colonne d'en-tête",
+                toggleHeaderRow: "Basculer la ligne d'en-tête",
                 mergeOrSplit: 'Fusionner ou diviser',
-                setCellAttribute: 'Définir l\'attribut de cellule',
+                setCellAttribute: "Définir l'attribut de cellule",
               },
               link: {
                 link: 'Lien',
@@ -152,10 +158,11 @@ const App = () => {
                 shouldBeAnImage: 'Le fichier doit être une image',
                 addLegendText: 'Ajouter un texte de légende',
                 enterValidLegendText: 'Entrez un texte de légende valide',
-                imageMaxSize: 'Taille maximale de l\'image',
+                imageMaxSize: "Taille maximale de l'image",
               },
 
-              tableOfContent: { // New
+              tableOfContent: {
+                // New
                 label: 'Summary',
                 noContentLabel: 'Pas de contenu',
               },
