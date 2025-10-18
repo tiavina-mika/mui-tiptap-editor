@@ -21,8 +21,8 @@
     "tinycolor",
     "Tiptap",
     "tiptap",
-    "Cyndi",
-    "Lauper"
+    "noopener",
+    "noreferrer"
   ],
   "flagWords": [],
   "ignorePaths": [
@@ -33,6 +33,9 @@
     "node_modules/**",
     "dev/**",
     "dist/**",
+    "build/**",
+    "__tests__/**",
+    "demos/**",
     "build/**",
   ]
 }
