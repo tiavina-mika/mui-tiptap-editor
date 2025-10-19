@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.0.1 (2025-10-19)
+
+* fix: trigger build ([bd82464](https://github.com/tiavina-mika/mui-tiptap-editor/commit/bd82464))
+
 ## 1.0.0 (2025-10-19)
 
 * 0.3.0 ([ca4f973](https://github.com/tiavina-mika/mui-tiptap-editor/commit/ca4f973))
