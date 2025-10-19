@@ -105,6 +105,7 @@ export default [
       // Show bundle size information in a visual HTML file
       visualizer({ filename: './temp/stats.html', open: false }),
     ],
+    // Mark peer dependencies as external
     external: [
       ...getExternalDeps(),
       'react/jsx-runtime',
