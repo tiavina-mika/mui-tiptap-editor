@@ -89,13 +89,13 @@ export default [
             "@babel/preset-react",
             {
               runtime: "automatic",
-              importSource: "@emotion/react" // 👈 important pour css prop
+              importSource: "@emotion/react" // for css prop support
             }
           ],
           "@babel/preset-typescript"
         ],
         plugins: [
-          "@emotion/babel-plugin" // 👈 ajoute les labels, minifie et optimise
+          "@emotion/babel-plugin" // adds labels, minifies and optimizes
         ]
       }),
       // Minify the bundle for smaller file sizes
