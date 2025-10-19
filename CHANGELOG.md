@@ -1,5 +1,11 @@
 # Changelog
 
+## 4.0.2 (2025-10-19)
+
+* Merge branch 'main' of https://github.com/tiavina-mika/mui-tiptap-editor ([1428842](https://github.com/tiavina-mika/mui-tiptap-editor/commit/1428842))
+* fix: debug release ([009a2de](https://github.com/tiavina-mika/mui-tiptap-editor/commit/009a2de))
+* fix: npm config ([2af48af](https://github.com/tiavina-mika/mui-tiptap-editor/commit/2af48af))
+
 ## 4.0.1 (2025-10-19)
 
 * Merge branch 'main' of https://github.com/tiavina-mika/mui-tiptap-editor ([5ae1ff9](https://github.com/tiavina-mika/mui-tiptap-editor/commit/5ae1ff9))
