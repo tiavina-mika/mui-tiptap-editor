@@ -5,7 +5,7 @@ import {
 import { SyntheticEvent, useEffect, useState } from 'react';
 import { TextEditor, TextEditorReadOnly } from 'mui-tiptap-editor';
 import TiptapParser from 'tiptap-parser';
-import WithHookForm from './WithHookForm';
+// import WithHookForm from './WithHookForm';
 
 const customLabels = {
   editor: {
@@ -316,7 +316,7 @@ const App = () => {
           {tab === 7 && <TextEditor id="async-value" value={asyncDefaultValue} />}
 
           {/* With React Hook Form */}
-          {tab === 8 && <WithHookForm />}
+          {/* {tab === 8 && <WithHookForm />} */}
 
           {/* Read without editor */}
           {tab === 9 && (

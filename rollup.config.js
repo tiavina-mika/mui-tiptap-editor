@@ -24,6 +24,18 @@ const aliasConfig = alias({
   entries: [{ find: '@', replacement: SRC_DIR }],
 });
 
+const pkg = JSON.parse(readFileSync(new URL('./package.json', import.meta.url)));
+
+// Fonction pour extraire et formater les deps
+const getExternalDeps = () => {
+  const peerDeps = pkg.peerDependencies || {};
+
+  // Combine et formate en array (ex. : ['react', 'react-dom', '@emotion/react'])
+  return [
+    ...Object.keys(peerDeps),
+  ];
+}
+
 export default [
   // JS/TS Build
   {
@@ -93,11 +105,8 @@ export default [
       visualizer({ filename: './temp/stats.html', open: false }),
     ],
     external: [
-      'react',
-      'react-dom',
+      ...getExternalDeps(),
       'react/jsx-runtime',
-      '@emotion/react',
-      '@emotion/styled'
     ],
     treeshake: {
       moduleSideEffects: false,
