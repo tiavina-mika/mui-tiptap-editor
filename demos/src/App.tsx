@@ -2,7 +2,7 @@
 import {
   Box, Container, CssBaseline, FormControlLabel, Switch, Tab, Tabs, ThemeProvider, createTheme,
 } from '@mui/material';
-import { SyntheticEvent, useEffect, useState } from 'react';
+import { type SyntheticEvent, useEffect, useState } from 'react';
 import { TextEditor, TextEditorReadOnly } from 'mui-tiptap-editor';
 import TiptapParser from 'tiptap-parser';
 // import WithHookForm from './WithHookForm';
@@ -246,11 +246,11 @@ const App = () => {
         {/* --------------------------------------- */}
         {/* ------------- tabs panels ------------- */}
         {/* --------------------------------------- */}
-        <Container css={{ marginTop: 10 }}>
+        <Container style={{ marginTop: 10 }}>
           {/* mode switch */}
-          <div css={{ marginBottom: 18 }}>
+          <div style={{ marginBottom: 18 }}>
             <FormControlLabel
-              css={{ textTransform: 'capitalize' }}
+              style={{ textTransform: 'capitalize' }}
               label={mode}
               control={
                 <Switch checked={mode === defaultMode} onChange={handleChangeMode} />
@@ -258,7 +258,7 @@ const App = () => {
             />
           </div>
           {/* Simple input */}
-          {tab === 0 && <TextEditor id="simple-input" placeholder="Type something here..." onChange={v => console.log(v)} />}
+          {tab === 0 && <TextEditor id="simple-input" placeholder="Type something here..." onChange={(v: string) => console.log(v)} />}
 
           {/* Select toolbar */}
           {tab === 1 && (
