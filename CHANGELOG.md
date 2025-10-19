@@ -1,5 +1,11 @@
 # Changelog
 
+## 4.0.4 (2025-10-19)
+
+* Merge branch 'main' of https://github.com/tiavina-mika/mui-tiptap-editor ([f81ad0d](https://github.com/tiavina-mika/mui-tiptap-editor/commit/f81ad0d))
+* docs: trigger build ([67c4d39](https://github.com/tiavina-mika/mui-tiptap-editor/commit/67c4d39))
+* fix: demos ([d2ca0a1](https://github.com/tiavina-mika/mui-tiptap-editor/commit/d2ca0a1))
+
 ## 4.0.3 (2025-10-19)
 
 * Merge branch 'main' of https://github.com/tiavina-mika/mui-tiptap-editor ([fdcc27d](https://github.com/tiavina-mika/mui-tiptap-editor/commit/fdcc27d))
