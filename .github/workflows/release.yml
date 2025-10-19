@@ -183,7 +183,7 @@ jobs:
       # Configure npm to use the NPM_TOKEN secret for authentication
       - name: Configure npm
         run: |
-          echo '//registry.npmjs.org/:_authToken=${NPM_TOKEN}' > .npmrc
+          echo '//registry.npmjs.org/:_authToken=${NPM_TOKEN}' > ~/.npmrc
           cat .npmrc
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
@@ -204,13 +204,15 @@ jobs:
       - name: Show 5 most recent commits (DEBUG)
         run: git rev-parse HEAD && git log --oneline -5
 
+      - name: Check npm versions (DEBUG)
+        run: npm view mui-tiptap-editor versions --json
 
       # Publish the package to NPM using semantic-release
       - name: Publish package on NPM 📦
         env:
           GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
-        run: npx semantic-release
+        run: npx semantic-release --debug
 
       # Optional: Show the NPM package link after publishing
       - name: Show NPM package link (DEBUG)
