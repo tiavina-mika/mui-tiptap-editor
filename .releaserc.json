@@ -41,7 +41,8 @@
             "changelogTitle": "# Changelog"
         }],
         ["@semantic-release/npm", {
-            "npmPublish": true
+            "npmPublish": true,
+            "registry": "https://registry.npmjs.org/"
         }],
         ["@semantic-release/git", {
             "assets": ["package.json", "yarn.lock", "CHANGELOG.md"],
