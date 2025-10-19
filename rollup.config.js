@@ -47,7 +47,7 @@ export default [
       entryFileNames: '[name].mjs',
       preserveModules: true,
       preserveModulesRoot: 'src',
-      sourcemap: true,
+      sourcemap: false,
     },
     plugins: [
       clear({ targets: [DIST_DIR], watch: true }),
