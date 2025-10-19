@@ -1,5 +1,13 @@
 # Changelog
 
+## 4.0.3 (2025-10-19)
+
+* Merge branch 'main' of https://github.com/tiavina-mika/mui-tiptap-editor ([84e3ca9](https://github.com/tiavina-mika/mui-tiptap-editor/commit/84e3ca9))
+* docs: add badges [skip ci] ([f27dd4a](https://github.com/tiavina-mika/mui-tiptap-editor/commit/f27dd4a))
+* docs: trigger build ([33601ca](https://github.com/tiavina-mika/mui-tiptap-editor/commit/33601ca))
+* fix: build ([1a0a2f7](https://github.com/tiavina-mika/mui-tiptap-editor/commit/1a0a2f7))
+* fix: exclude peer deps ([c4217ea](https://github.com/tiavina-mika/mui-tiptap-editor/commit/c4217ea))
+
 ## 4.0.2 (2025-10-19)
 
 * Merge branch 'main' of https://github.com/tiavina-mika/mui-tiptap-editor ([1428842](https://github.com/tiavina-mika/mui-tiptap-editor/commit/1428842))
