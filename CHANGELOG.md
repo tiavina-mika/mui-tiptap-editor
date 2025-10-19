@@ -2,6 +2,17 @@
 
 ## 4.0.3 (2025-10-19)
 
+* Merge branch 'main' of https://github.com/tiavina-mika/mui-tiptap-editor ([fdcc27d](https://github.com/tiavina-mika/mui-tiptap-editor/commit/fdcc27d))
+* Merge branch 'main' of https://github.com/tiavina-mika/mui-tiptap-editor ([84e3ca9](https://github.com/tiavina-mika/mui-tiptap-editor/commit/84e3ca9))
+* chore(release): 4.0.3 [skip ci] ([77a6aca](https://github.com/tiavina-mika/mui-tiptap-editor/commit/77a6aca))
+* docs: add badges [skip ci] ([f27dd4a](https://github.com/tiavina-mika/mui-tiptap-editor/commit/f27dd4a))
+* docs: trigger build ([33601ca](https://github.com/tiavina-mika/mui-tiptap-editor/commit/33601ca))
+* fix: build ([1a0a2f7](https://github.com/tiavina-mika/mui-tiptap-editor/commit/1a0a2f7))
+* fix: exclude peer deps ([c4217ea](https://github.com/tiavina-mika/mui-tiptap-editor/commit/c4217ea))
+* fix: trigger release ([6fbef33](https://github.com/tiavina-mika/mui-tiptap-editor/commit/6fbef33))
+
+## 4.0.3 (2025-10-19)
+
 * Merge branch 'main' of https://github.com/tiavina-mika/mui-tiptap-editor ([84e3ca9](https://github.com/tiavina-mika/mui-tiptap-editor/commit/84e3ca9))
 * docs: add badges [skip ci] ([f27dd4a](https://github.com/tiavina-mika/mui-tiptap-editor/commit/f27dd4a))
 * docs: trigger build ([33601ca](https://github.com/tiavina-mika/mui-tiptap-editor/commit/33601ca))
