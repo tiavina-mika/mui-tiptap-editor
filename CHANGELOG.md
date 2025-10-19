@@ -1,5 +1,10 @@
 # Changelog
 
+## 4.0.1 (2025-10-19)
+
+* Merge branch 'main' of https://github.com/tiavina-mika/mui-tiptap-editor ([5ae1ff9](https://github.com/tiavina-mika/mui-tiptap-editor/commit/5ae1ff9))
+* fix: npm release config ([33144bd](https://github.com/tiavina-mika/mui-tiptap-editor/commit/33144bd))
+
 ## 4.0.0 (2025-10-19)
 
 * add badge in readme ([70c21d3](https://github.com/tiavina-mika/mui-tiptap-editor/commit/70c21d3))
