@@ -10,7 +10,8 @@ import { EditorContent, EditorContext } from '@tiptap/react';
 import { BubbleMenu, FloatingMenu } from '@tiptap/react/menus';
 import { useState, useMemo } from 'react';
 
-import type { IEditorToolbar, TextEditorProps } from '@/types';
+import type { TextEditorProps } from '@/types/text-editor';
+import type { IEditorToolbar } from '@/types/toolbar';
 import type { Theme } from '@emotion/react';
 import type { SyntheticEvent } from 'react';
 

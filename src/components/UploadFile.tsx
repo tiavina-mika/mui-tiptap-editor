@@ -3,7 +3,7 @@
 import { Editor } from '@tiptap/react';
 import { useRef } from 'react';
 
-import type { ILabels, ImageUploadOptions, UploadResponse } from '@/types';
+import type { ImageUploadOptions, UploadResponse, ILabels } from '@/types/toolbar';
 
 import {
   checkIsImage,

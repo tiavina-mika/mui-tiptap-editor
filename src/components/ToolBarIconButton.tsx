@@ -5,7 +5,7 @@ import { useCurrentEditor } from '@tiptap/react';
 import { Fragment } from 'react';
 
 
-import type { ToolbarItem } from '@/types';
+import type { ToolbarItem } from '@/types/toolbar';
 import type { Theme } from '@emotion/react';
 import type { ReactNode } from 'react';
 

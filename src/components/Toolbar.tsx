@@ -4,7 +4,7 @@ import { cx } from '@emotion/css';
 import { Editor, useCurrentEditor } from '@tiptap/react';
 import { useState, useCallback, useMemo } from 'react';
 
-import type { IEditorToolbar, ILabels, TextEditorProps } from '@/types';
+import type { ToolbarProps } from '@/types/toolbar';
 import type { Theme } from '@emotion/react';
 import type { MouseEvent } from 'react';
 
@@ -90,41 +90,6 @@ const classes = {
   },
 };
 
-export type ToolbarProps = {
-  // editor: Editor;
-  /**
-   * override the default class
-   */
-  className?: string;
-  /**
-   * toolbar (each icon) to be displayed
-   *
-   * possible values are: [
-   * "heading", "bold", "italic", "strike", "link", "underline", "image", "code",
-   * "orderedList", "bulletList", "align", "codeBlock", "blockquote", "table",
-   * "history", "youtube", "color", "mention"
-   * ]
-   *
-   * default values is all the above
-   */
-  toolbar?: IEditorToolbar[];
-  /**
-   * Custom labels for the toolbar
-   */
-  labels?: Omit<ILabels, 'editor'>;
-  /**
-   * upload file options
-   * ex: file size, number of files, allowed mime types, api callback, etc
-   */
-  uploadFileOptions?: TextEditorProps['uploadFileOptions'];
-
-  /**
-   * position of the toolbar
-   */
-  position?: 'top' | 'bottom';
-  colorId?: string;
-  type?: 'toolbar' | 'floating' | 'bubble';
-};
 
 const Toolbar = ({
   // editor,

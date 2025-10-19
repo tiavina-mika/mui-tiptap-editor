@@ -11,9 +11,13 @@ import url from '@rollup/plugin-url';
 import { terser } from 'rollup-plugin-terser';
 import { visualizer } from 'rollup-plugin-visualizer';
 import filesize from 'rollup-plugin-filesize'; // Ajout du plugin filesize
+import babel from '@rollup/plugin-babel';
+import preserveUseClientDirective from 'rollup-plugin-preserve-use-client';
 
 const SRC_DIR = path.resolve(process.cwd(), 'src');
 const DIST_DIR = 'dist';
+
+const extensions = ['.js', '.jsx', '.ts', '.tsx'];
 
 // Replace '@' in imports with the src directory
 const aliasConfig = alias({
@@ -53,12 +57,33 @@ export default [
       }),
       css({ minify: true }),
       peerDepsExternal(),
-      resolve({ extensions: ['.js', '.jsx', '.ts', '.tsx'] }),
+      resolve({ extensions }),
       commonjs(),
       typescript({
         clean: true,
         tsconfig: 'tsconfig.build.json',
         useTsconfigDeclarationDir: true,
+      }),
+      preserveUseClientDirective(),
+      // Adds 'use client' to every file if no option is provided
+      // Transformations Babel pour Emotion
+      babel({
+        extensions,
+        babelHelpers: "bundled",
+        exclude: "node_modules/**",
+        presets: [
+          [
+            "@babel/preset-react",
+            {
+              runtime: "automatic",
+              importSource: "@emotion/react" // 👈 important pour css prop
+            }
+          ],
+          "@babel/preset-typescript"
+        ],
+        plugins: [
+          "@emotion/babel-plugin" // 👈 ajoute les labels, minifie et optimise
+        ]
       }),
       // Minify the bundle for smaller file sizes
       terser(),
@@ -67,7 +92,13 @@ export default [
       // Show bundle size information in a visual HTML file
       visualizer({ filename: './temp/stats.html', open: false }),
     ],
-    external: ['react', 'react-dom', 'react/jsx-runtime'],
+    external: [
+      'react',
+      'react-dom',
+      'react/jsx-runtime',
+      '@emotion/react',
+      '@emotion/styled'
+    ],
     treeshake: {
       moduleSideEffects: false,
       propertyReadSideEffects: false,
@@ -83,6 +114,6 @@ export default [
       preserveModulesRoot: 'src',
       entryFileNames: '[name].ts',
     },
-    plugins: [aliasConfig, dts()],
+    plugins: [aliasConfig, preserveUseClientDirective(), dts()],
   },
 ];

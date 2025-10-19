@@ -19,7 +19,7 @@ import { Plugin } from '@tiptap/pm/state';
 import { EditorView } from '@tiptap/pm/view';
 import { Editor, NodeViewWrapper, ReactNodeViewRenderer } from '@tiptap/react';
 
-import type { ILabels, ImageUploadOptions } from '@/types';
+import type { ILabels, ImageUploadOptions } from '@/types/toolbar';
 import type { NodeViewWrapperProps } from '@tiptap/react';
 import type { ClipboardEvent, SyntheticEvent } from 'react';
 

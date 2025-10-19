@@ -6,7 +6,7 @@ import {
 import { Editor } from '@tiptap/react';
 import { useMemo, useState } from 'react';
 
-import type { ILabels } from '@/types';
+import type { ILabels } from '@/types/toolbar';
 import type { Theme } from '@mui/material';
 import type { Level } from '@tiptap/extension-heading';
 import type { MouseEvent } from 'react';

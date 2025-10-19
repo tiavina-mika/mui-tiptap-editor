@@ -1,4 +1,4 @@
-import type { IEditorToolbar } from '../types';
+import type { IEditorToolbar } from '../types/toolbar';
 import type { Theme } from '@mui/material';
 
 type FileValidationOutput = {

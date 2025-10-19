@@ -3,7 +3,7 @@
 import { Menu, MenuItem, Fade } from '@mui/material';
 import { Editor } from '@tiptap/react';
 
-import type { ILabels } from '@/types';
+import type { ILabels } from '@/types/toolbar';
 
 type IOption = {
   label: string;

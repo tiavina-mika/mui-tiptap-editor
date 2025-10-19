@@ -17,7 +17,7 @@ import {
 import { createLowlight, common } from 'lowlight';
 import { useState } from 'react';
 
-import type { CodeBlockWithCopyProps } from '@/types';
+import type { CodeBlockWithCopyProps } from '@/types/toolbar';
 
 import Check from '@/assets/icons/check.svg';
 import Copy from '@/assets/icons/copy.svg';

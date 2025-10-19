@@ -23,14 +23,13 @@ import { useEditor } from '@tiptap/react';
 import StarterKit from '@tiptap/starter-kit';
 import { useEffect } from 'react';
 
+import type { ITextEditorOption } from '@/types/text-editor';
 import type {
   CodeBlockWithCopyProps,
   ILabels,
   ImageUploadOptions,
-  ITextEditorOption,
-} from '@/types';
+} from '@/types/toolbar';
 import type { AnyExtension, EditorOptions, EditorEvents } from '@tiptap/react';
-
 
 import { type ToCItemType } from '@/components/tableOfContent/ToC';
 import { getCodeBlockWithCopy } from '@/extensions/CodeBlockWithCopy';

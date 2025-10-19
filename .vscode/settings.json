@@ -1,7 +1,7 @@
 {
   "// editor": "-------------------------------------",
   "editor.codeActionsOnSave": {
-    "source.organizeImports": "never"
+    // "source.organizeImports": "never"
   },
   "editor.defaultFormatter": "dbaeumer.vscode-eslint",
   "editor.formatOnSave": true,
