@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.0.2 (2025-10-19)
+
+* fix: remove unused script ([279dc1f](https://github.com/tiavina-mika/mui-tiptap-editor/commit/279dc1f))
+
 ## 1.0.1 (2025-10-19)
 
 * fix: trigger build ([bd82464](https://github.com/tiavina-mika/mui-tiptap-editor/commit/bd82464))
