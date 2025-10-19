@@ -13,6 +13,7 @@ import { visualizer } from 'rollup-plugin-visualizer';
 import filesize from 'rollup-plugin-filesize'; // Ajout du plugin filesize
 import babel from '@rollup/plugin-babel';
 import preserveUseClientDirective from 'rollup-plugin-preserve-use-client';
+import { readFileSync } from 'fs';
 
 const SRC_DIR = path.resolve(process.cwd(), 'src');
 const DIST_DIR = 'dist';
