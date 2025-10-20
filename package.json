@@ -57,7 +57,8 @@
     "build-storybook": "storybook build",
     "md-link:check": "markdown-link-check -v -p README.md -v -p CONTRIBUTING.md -v -p .github/**/*.md -c .markdown-link-check-config.json",
     "spell:check": "cspell \"{README.md,CONTRIBUTING.md,.github/*.md}\"",
-    "demos": "cd demos && yarn upgrade && rimraf ./demos/node_modules && yarn && yarn dev"
+    "upgrade:demos": "cd demos && yarn upgrade && rimraf ./demos/node_modules && yarn && yarn dev",
+    "dev:demos": "cd demos && yarn dev"
   },
   "dependencies": {
     "@emotion/css": "^11.13.5",
