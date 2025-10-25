@@ -6,8 +6,8 @@ import {
   ThemeProvider,
   createTheme,
 } from '@mui/material';
-import TextEditor from '../pages/TextEditor';
-
+import TextEditor from '../src/pages/TextEditor';
+import { lightTheme } from './theme';
 const mentions = [
   { label: 'Lea Thompson', value: 'xxxx1' },
   { label: 'Cyndi Lauper', value: 'xxxx2' },
@@ -38,12 +38,6 @@ const mentions = [
 
 const currentUser = mentions[0];
 
-const theme = createTheme({
-  palette: {
-    mode: 'light',
-  },
-});
-
 const App = () => {
   // API call to upload file
   const uploadFile = async (file: File) => {
@@ -64,10 +58,10 @@ const App = () => {
   };
 
   return (
-    <ThemeProvider theme={theme}>
+    <ThemeProvider theme={lightTheme}>
       <CssBaseline />
 
-      <EmotionThemeProvider theme={theme}>
+      <EmotionThemeProvider theme={lightTheme}>
         <Container maxWidth="xl" style={{ marginTop: 20, marginBottom: 20 }}>
           <TextEditor
             withFloatingMenu
