@@ -1,5 +1,15 @@
 # Changelog
 
+## 1.1.1 (2025-10-25)
+
+* add e2e testing ([4abffae](https://github.com/tiavina-mika/mui-tiptap-editor/commit/4abffae))
+* add e2e tests ([fc95172](https://github.com/tiavina-mika/mui-tiptap-editor/commit/fc95172))
+* Add storybook link in README ([2d1d6b2](https://github.com/tiavina-mika/mui-tiptap-editor/commit/2d1d6b2))
+* Add testId ([3fc5880](https://github.com/tiavina-mika/mui-tiptap-editor/commit/3fc5880))
+* update demo lib ([2120b45](https://github.com/tiavina-mika/mui-tiptap-editor/commit/2120b45))
+* update tabs props ([d57dc43](https://github.com/tiavina-mika/mui-tiptap-editor/commit/d57dc43))
+* fix: tooltip not displayed ([75b3cee](https://github.com/tiavina-mika/mui-tiptap-editor/commit/75b3cee))
+
 ## 1.1.0 (2025-10-25)
 
 * Add MUI wrapper to storybook ([35e5f8a](https://github.com/tiavina-mika/mui-tiptap-editor/commit/35e5f8a))
