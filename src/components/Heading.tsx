@@ -124,9 +124,11 @@ const Heading = ({ editor, headingLabels, split = false }: Props) => {
         anchorEl={anchorEl}
         id="select-heading-menu"
         open={Boolean(anchorEl)}
-        TransitionComponent={Fade}
-        MenuListProps={{
-          'aria-labelledby': 'select-heading-button',
+        slots={{ transition: Fade }}
+        slotProps={{
+          list: {
+            'aria-labelledby': 'select-heading-button',
+          },
         }}
         onClose={handleClose}
       >
