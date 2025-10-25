@@ -33,12 +33,8 @@ jobs:
           key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
           restore-keys: ${{ runner.os }}-yarn-
           enableCrossOsArchive: true
-      - name: Install build dependencies
-        run: |
-          sudo apt update
-          sudo apt install -y build-essential
       - name: Install dependencies
-        run: yarn install --immutable
+        run: yarn install --immutable --ignore-optional
 
       - name: Run ESLint
         run: yarn lint
