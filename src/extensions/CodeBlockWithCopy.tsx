@@ -36,7 +36,7 @@ const CodeBlockWithCopy = ({ node }: any) => {
   return (
     <NodeViewWrapper className="code-block-root">
       <button onClick={copyToClipboard}>
-        {isCopied ? <Check /> : <Copy />}
+        <img alt={isCopied ? 'copied' : 'copy'} src={isCopied ? Check : Copy} width="18" />
       </button>
       <pre>
         <code>
