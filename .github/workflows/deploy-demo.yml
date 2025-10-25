@@ -1,0 +1,63 @@
+name: Deploy Demo to Netlify
+
+on:
+  # Triggers the workflow when the Release & Publish workflow is completed
+  workflow_run:
+    workflows: [Release & Publish]
+    types: [completed]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      # Set up Node
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - name: Install Yarn 4
+        run: corepack enable && corepack prepare yarn@4 --activate
+
+      - name: Navigate to /demos and upgrade libs
+      # Go to demos folder and upgrade dependencies (script defined in /demos/package.json)
+        run: |
+          cd demos
+          yarn upgrade:lib
+
+      - name: Project build
+        run: |
+          cd demos
+          yarn build
+
+      - name: Check for Netlify functions
+        id: check-functions
+        run: |
+          if [ -d "demos/netlify/functions" ] && [ "$(ls -A demos/netlify/functions)" ]; then
+            echo "has_functions=true" >> $GITHUB_OUTPUT
+          else
+            echo "has_functions=false" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Deploy to Netlify (Production on main)
+        uses: jsmrcaga/action-netlify-deploy@v2.0.0
+        with:
+          NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
+          NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
+          NETLIFY_DEPLOY_MESSAGE: "Deploy message - ${{ github.sha }}"
+          NETLIFY_DEPLOY_TO_PROD: true
+          build_directory: './demos/dist'
+          functions_directory: ${{ steps.check-functions.outputs.has_functions == 'true' && './demos/netlify/functions' || '' }}
+
+      - name: Get deployment URL
+        if: github.event_name == 'pull_request'
+        run: |
+          echo "Deployed Preview URL:"
+          curl -s "https://api.netlify.com/api/v1/sites/${{ secrets.NETLIFY_SITE_ID }}/deploys" \
+            -H "Authorization: Bearer ${{ secrets.NETLIFY_AUTH_TOKEN }}" | \
+            jq -r '.[] | select(.context=="deploy-preview") | .deploy_url' | \
+            grep "${{ github.head_ref || github.ref_name }}" | head -n 1
+
+          
