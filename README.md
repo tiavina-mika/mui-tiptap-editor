@@ -44,6 +44,7 @@ A customizable and easy to use <a href="https://tiptap.dev/">Tiptap</a> styled W
 - **[CodeSandbox demo](https://codesandbox.io/s/github/tiavina-mika/mui-tiptap-editor-demo)**
 - **[Live demo](https://mui-tiptap-editor.netlify.app/)**
 - **[Demo video](https://www.youtube.com/watch?v=Hi1jrH64TKs)**
+- **[Storybook](https://tiavina-mika.github.io/mui-tiptap-editor/)**
 
 
 <!-- <img alt="Screenshot" src="https://github.com/tiavina-mika/mui-tiptap-editor/blob/main/screenshots/screenshot.png" /> -->
