@@ -38,7 +38,7 @@ test('text editor has default toolbar buttons', async ({ page }) => {
 
 // test form with result
 test('text editor has default value', async ({ page }) => {
-  // Navigate to the Storybook page for the Tongasoa component
+  // Navigate to the Storybook page for the mui-tiptap-editor component
   await page.goto('/?path=/story/input-default-value--default-value');
   // Wait for the network to be idle
   await page.waitForLoadState('networkidle');
