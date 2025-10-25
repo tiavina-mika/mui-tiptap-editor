@@ -1,5 +1,10 @@
 # Changelog
 
+## 1.1.2 (2025-10-25)
+
+* Merge branch 'main' of https://github.com/tiavina-mika/mui-tiptap-editor ([21e76ed](https://github.com/tiavina-mika/mui-tiptap-editor/commit/21e76ed))
+* fix(ci): add deploy to netlify workflow ([ba325d7](https://github.com/tiavina-mika/mui-tiptap-editor/commit/ba325d7))
+
 ## 1.1.1 (2025-10-25)
 
 * add e2e testing ([4abffae](https://github.com/tiavina-mika/mui-tiptap-editor/commit/4abffae))
