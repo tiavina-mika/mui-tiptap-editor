@@ -9,14 +9,14 @@
     "lint": "eslint . --ext ts,tsx --fix --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview",
     "clean-cache": "yarn cache clean --all",
-    "upgrade": "yarn add mui-tiptap-editor@latest"
+    "upgrade:lib": "yarn add mui-tiptap-editor@latest"
   },
   "dependencies": {
     "@emotion/react": "^11.14.0",
     "@emotion/styled": "^11.14.1",
     "@hookform/resolvers": "^5.2.2",
     "@mui/material": "^7.3.4",
-    "mui-tiptap-editor": "^1.0.2",
+    "mui-tiptap-editor": "^1.1.0",
     "react": "^19.2.0",
     "react-dom": "^19.2.0",
     "react-hook-form": "^7.65.0",
