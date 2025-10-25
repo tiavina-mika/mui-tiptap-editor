@@ -34,7 +34,7 @@ jobs:
           restore-keys: ${{ runner.os }}-yarn-
           enableCrossOsArchive: true
       - name: Install dependencies
-        run: yarn install --immutable --ignore-optional
+        run: yarn install --immutable
 
       - name: Run ESLint
         run: yarn lint
