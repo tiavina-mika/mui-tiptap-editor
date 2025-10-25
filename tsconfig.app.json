@@ -33,7 +33,6 @@
   },
   "include": [
     "src/**/*",
-    "dev/**/*",
     "vite.config.ts",
     "__tests__/**/*",
     "stories/**/*",

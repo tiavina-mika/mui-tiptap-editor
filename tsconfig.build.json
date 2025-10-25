@@ -9,5 +9,5 @@
   "allowImportingTsExtensions": false
   },
   "include": ["src/**/*"],
-  "exclude": ["**/__tests__/**", "eslint.config.mjs"]
+  "exclude": ["dist/**"]
 }
