@@ -213,6 +213,7 @@ const Toolbar = ({
         id={colorId || 'color'}
         name="color"
         tooltip={labels?.toolbar?.color || 'Text Color'}
+        withTooltip={isWithTooltip}
       >
         <ColorPicker editor={editor} id={colorId || 'color'} />
       </ToolBarIconButton>
@@ -225,6 +226,7 @@ const Toolbar = ({
         isActive={editor.isActive({ textAlign: 'left' })}
         name="align-left"
         tooltip={labels?.toolbar?.alignLeft || 'Left align'}
+        withTooltip={isWithTooltip}
         onClick={() => editor.chain().focus().setTextAlign('left').run()}
       />
       <ToolBarIconButton
@@ -235,6 +237,7 @@ const Toolbar = ({
         isActive={editor.isActive({ textAlign: 'center' })}
         name="align-center"
         tooltip={labels?.toolbar?.alignCenter || 'Center align'}
+        withTooltip={isWithTooltip}
         onClick={() => editor.chain().focus().setTextAlign('center').run()}
       />
       <ToolBarIconButton
@@ -245,6 +248,7 @@ const Toolbar = ({
         isActive={editor.isActive({ textAlign: 'right' })}
         name="align-right"
         tooltip={labels?.toolbar?.alignRight || 'Right align'}
+        withTooltip={isWithTooltip}
         onClick={() => editor.chain().focus().setTextAlign('right').run()}
       />
       <ToolBarIconButton
@@ -256,6 +260,7 @@ const Toolbar = ({
         isActive={editor.isActive({ textAlign: 'justify' })}
         name="align-justify"
         tooltip={labels?.toolbar?.alignJustify || 'Justify align'}
+        withTooltip={isWithTooltip}
         onClick={() => editor.chain().focus().setTextAlign('justify').run()}
       />
 
@@ -266,6 +271,7 @@ const Toolbar = ({
         iconSize={19}
         name="bulletList"
         tooltip={labels?.toolbar?.bulletList || 'Bullet list'}
+        withTooltip={isWithTooltip}
         onClick={() => editor.chain().focus().toggleBulletList().run()}
       />
 
@@ -277,6 +283,7 @@ const Toolbar = ({
         iconSize={14}
         name="orderedList"
         tooltip={labels?.toolbar?.orderedList || 'Ordered list'}
+        withTooltip={isWithTooltip}
         onClick={() => editor.chain().focus().toggleOrderedList().run()}
       />
 
@@ -287,6 +294,7 @@ const Toolbar = ({
         iconSize={18}
         name="link"
         tooltip={labels?.toolbar?.link || 'Link'}
+        withTooltip={isWithTooltip}
         onClick={setLink}
       />
 
@@ -298,6 +306,7 @@ const Toolbar = ({
         id="upload"
         name="upload"
         tooltip={labels?.toolbar?.upload || 'Upload image'}
+        withTooltip={isWithTooltip}
       >
         <UploadFile editor={editor} id="upload" {...uploadFileOptions} />
       </ToolBarIconButton>
@@ -309,6 +318,7 @@ const Toolbar = ({
         iconSize={16}
         name="mention"
         tooltip={labels?.toolbar?.mention || 'Mention user'}
+        withTooltip={isWithTooltip}
         onClick={() => editor.chain().focus().insertContent('@').run()}
       />
 
@@ -320,6 +330,7 @@ const Toolbar = ({
         iconSize={18}
         name="table"
         tooltip={labels?.table?.table || 'Table'}
+        withTooltip={isWithTooltip}
         onClick={handleOpenTableMenu}
       />
 
@@ -330,6 +341,7 @@ const Toolbar = ({
         iconSize={16}
         name="blockquote"
         tooltip={labels?.toolbar?.blockquote || 'Block quote'}
+        withTooltip={isWithTooltip}
         onClick={() => editor.chain().focus().toggleBlockquote().run()}
       />
 
@@ -340,6 +352,7 @@ const Toolbar = ({
         iconSize={13.5}
         name="codeBlock"
         tooltip={labels?.toolbar?.codeBlock || 'Code block'}
+        withTooltip={isWithTooltip}
         onClick={() => editor.chain().focus().toggleCodeBlock().run()}
       />
 
@@ -351,6 +364,7 @@ const Toolbar = ({
         iconSize={18}
         name="code"
         tooltip={labels?.toolbar?.inlineCode || 'Inline code'}
+        withTooltip={isWithTooltip}
         onClick={() => editor.chain().focus().toggleCode().run()}
       />
 
@@ -361,6 +375,7 @@ const Toolbar = ({
         iconSize={18}
         name="youtube"
         tooltip={labels?.toolbar?.youtube || 'Insert YouTube video'}
+        withTooltip={isWithTooltip}
         onClick={toggleYoutubeDialog}
       />
 
@@ -372,6 +387,7 @@ const Toolbar = ({
         iconSize={18}
         name="undo"
         tooltip={labels?.toolbar?.undo || 'Undo'}
+        withTooltip={isWithTooltip}
         onClick={() => editor.chain().focus().undo().run()}
       />
 
@@ -383,6 +399,7 @@ const Toolbar = ({
         iconSize={18}
         name="redo"
         tooltip={labels?.toolbar?.redo || 'Redo'}
+        withTooltip={isWithTooltip}
         onClick={() => editor.chain().focus().redo().run()}
       />
 
