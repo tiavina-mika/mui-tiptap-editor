@@ -27,30 +27,18 @@ jobs:
           cd demos
           yarn install --immutable
           yarn upgrade:lib
-
-      - name: Project build
-        run: |
-          cd demos
-          yarn build
-
-      - name: Check for Netlify functions
-        id: check-functions
-        run: |
-          if [ -d "demos/netlify/functions" ] && [ "$(ls -A demos/netlify/functions)" ]; then
-            echo "has_functions=true" >> $GITHUB_OUTPUT
-          else
-            echo "has_functions=false" >> $GITHUB_OUTPUT
-          fi
-
-      - name: Deploy to Netlify (Production on main)
-        uses: jsmrcaga/action-netlify-deploy@v2.0.0
-        with:
+      - name: Installer Netlify CLI
+        run: npm install -g netlify-cli 
+          
+      - name: Deploy to Netlify
+        env:
           NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
           NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
-          NETLIFY_DEPLOY_MESSAGE: "Deploy message - ${{ github.sha }}"
-          NETLIFY_DEPLOY_TO_PROD: true
-          build_directory: './demos/dist'
-          functions_directory: ${{ steps.check-functions.outputs.has_functions == 'true' && './demos/netlify/functions' || '' }}
+        run: |
+          cd demos
+          yarn install --immutable
+          yarn build
+          npx netlify deploy --prod --dir=dist --message="Deploy - ${{ github.sha }}"
 
       - name: Get deployment URL
         if: github.event_name == 'pull_request'
