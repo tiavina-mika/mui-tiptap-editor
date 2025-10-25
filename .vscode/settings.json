@@ -5,8 +5,8 @@
   },
   "editor.defaultFormatter": "dbaeumer.vscode-eslint",
   "editor.formatOnSave": true,
-  "editor.tabSize": 2,
-  "eslint.format.enable": true,
+  // "editor.tabSize": 2,
+  // "eslint.format.enable": true,
 //   "[javascript]": {
 //     "editor.defaultFormatter": "esbenp.prettier-vscode"
 //   },
