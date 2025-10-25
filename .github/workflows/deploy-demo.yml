@@ -25,6 +25,7 @@ jobs:
       # Go to demos folder and upgrade dependencies (script defined in /demos/package.json)
         run: |
           cd demos
+          yarn install --immutable
           yarn upgrade:lib
 
       - name: Project build
