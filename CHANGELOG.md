@@ -1,5 +1,10 @@
 # Changelog
 
+## 1.1.4 (2025-10-25)
+
+* Merge branch 'main' of https://github.com/tiavina-mika/mui-tiptap-editor ([12ab530](https://github.com/tiavina-mika/mui-tiptap-editor/commit/12ab530))
+* fix: install missing dependencies for demos build ([f09ef63](https://github.com/tiavina-mika/mui-tiptap-editor/commit/f09ef63))
+
 ## 1.1.3 (2025-10-25)
 
 * Merge branch 'main' of https://github.com/tiavina-mika/mui-tiptap-editor ([a0e2fb5](https://github.com/tiavina-mika/mui-tiptap-editor/commit/a0e2fb5))
