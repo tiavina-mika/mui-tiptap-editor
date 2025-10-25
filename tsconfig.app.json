@@ -39,7 +39,8 @@
     "stories/**/*",
     ".storybook/**/*",
     "vitest.shims.d.ts",
-    "playwright.config.ts"
+    "playwright.config.ts",
+    "dev"
   ],
   "exclude": ["eslint.config.mjs", "jest.config.cjs"]
 }
