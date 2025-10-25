@@ -1,5 +1,10 @@
 # Changelog
 
+## 1.1.5 (2025-10-25)
+
+* Merge branch 'main' of https://github.com/tiavina-mika/mui-tiptap-editor ([0625272](https://github.com/tiavina-mika/mui-tiptap-editor/commit/0625272))
+* fix(ci): netlify ([95dcc0d](https://github.com/tiavina-mika/mui-tiptap-editor/commit/95dcc0d))
+
 ## 1.1.4 (2025-10-25)
 
 * Merge branch 'main' of https://github.com/tiavina-mika/mui-tiptap-editor ([12ab530](https://github.com/tiavina-mika/mui-tiptap-editor/commit/12ab530))
