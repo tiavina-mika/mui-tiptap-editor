@@ -1,3 +1,4 @@
+/* eslint-disable @cspell/spellchecker */
 import type { Meta, StoryObj } from '@storybook/react-vite';
 
 import TextEditor from '../src/pages/TextEditor';
