@@ -1,6 +1,8 @@
 {
   "version": "0.2",
   "language": "en",
+  "useGitignore": false,  // Disable .gitignore usage to allow custom ignorePaths
+  "globRoot": "./",
   "words": [
     "colord",
     "contenteditable",
@@ -37,5 +39,6 @@
     "__tests__/**",
     "demos/**",
     "build/**",
+    "stories/**",
   ]
 }

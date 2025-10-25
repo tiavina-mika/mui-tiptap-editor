@@ -274,9 +274,7 @@ const generalRules = {
   '@cspell/spellchecker': [
     'warn',
     {
-      cspell: {
-        ignoreWords: ['noopener', 'noreferrer'],
-      },
+      configFile: new URL('./.cspell.json', import.meta.url).toString(),
     },
   ],
   '@typescript-eslint/no-empty-object-type': 'off',
@@ -431,13 +429,7 @@ export default defineConfig(
       ...generalRules,
       ...stylisticRules,
       ...typescriptRules,
-      ...jsxRules,
-      '@cspell/spellchecker': [
-        'warn',
-        {
-          configFile: new URL('./.cspell.json', import.meta.url).toString(),
-        },
-      ],
+      ...jsxRules
     },
   },
   {
