@@ -67,6 +67,9 @@ const classes = {
     padding: '4px 4px 4px 12px !important',
     fontSize: '14px !important',
   },
+  legend: (theme: Theme) => ({
+    color: theme.palette.text.secondary,
+  }),
 };
 
 /*
@@ -116,7 +119,6 @@ const ImageText = ({
       isValidInput = isValid;
       errorMessage = message;
     }
-    console.log('🚀 ~ handleChange ~ errorMessage:', errorMessage);
 
     if (isValidInput) {
       setValue(value);
@@ -167,6 +169,7 @@ const ImageText = ({
               </IconButton>
             </Stack>
           ) : (
+            // legend
             <button
               className="flexRow itemsCenter"
               css={[classes.buttonIconSx, classes.addButton]}
@@ -174,7 +177,7 @@ const ImageText = ({
               onClick={handleOpen}
             >
               <img alt="add" src={Add} style={{ width: 18, marginRight: 4 }} />
-              <Typography>{label}</Typography>
+              <Typography css={classes.legend}>{label}</Typography>
             </button>
           )}
         <IconButton
@@ -183,7 +186,6 @@ const ImageText = ({
           type="button"
           onClick={handleDelete}
         >
-          {/* <Close /> */}
           <img alt="close" src={Close} style={{ width: 18 }} />
         </IconButton>
       </Stack>
