@@ -79,7 +79,7 @@ const ToolBarIconButton = ({
   if (!display) return null;
 
   const component = (
-    <span>
+    <span data-testid={name}>
       <IconButton
         disabled={disabled}
         css={classes.button(
