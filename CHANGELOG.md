@@ -1,5 +1,10 @@
 # Changelog
 
+## 1.1.6 (2025-10-25)
+
+* Update deploy-demo.yml ([25d51f9](https://github.com/tiavina-mika/mui-tiptap-editor/commit/25d51f9))
+* fix: image legend dark mode ([1db3a49](https://github.com/tiavina-mika/mui-tiptap-editor/commit/1db3a49))
+
 ## 1.1.5 (2025-10-25)
 
 * Merge branch 'main' of https://github.com/tiavina-mika/mui-tiptap-editor ([0625272](https://github.com/tiavina-mika/mui-tiptap-editor/commit/0625272))
