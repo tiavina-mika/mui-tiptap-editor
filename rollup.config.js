@@ -27,15 +27,25 @@ const aliasConfig = alias({
 
 const pkg = JSON.parse(readFileSync(new URL('./package.json', import.meta.url)));
 
-// Fonction pour extraire et formater les deps
-const getExternalDeps = () => {
+// Determine external dependencies
+// This will avoid node_modules being bundled into the output files
+const getExternalDeps = (id) => {
   const peerDeps = pkg.peerDependencies || {};
+  const deps = pkg.dependencies || {};
+  const allDeps = { ...peerDeps, ...deps };
+  const depNames = Object.keys(allDeps);
 
-  // Combine et formate en array (ex. : ['react', 'react-dom', '@emotion/react'])
-  return [
-    ...Object.keys(peerDeps),
-  ];
-}
+  // 1. Check if it a npm package (e.g., 'react', 'lodash/someModule')
+  if (depNames.some(dep => id.startsWith(dep))) return true;
+
+  // 2. If path contains node_modules (safer for preserveModules) (e.g: 'node_modules/react/index.js')
+  if (id.includes('node_modules')) return true;
+
+  // 3. Regex for scoped/unscoped packages (e.g., 'react', '@mui/material')
+  if (/^(@?[^./]+\/?[^./]*)$/.test(id)) return true;
+  
+  return false;
+};
 
 export default [
   // JS/TS Build
@@ -52,6 +62,10 @@ export default [
     plugins: [
       clear({ targets: [DIST_DIR], watch: true }),
       aliasConfig,
+      css({ minify: true }),
+      peerDepsExternal(),
+      resolve({ extensions }),
+      commonjs(),
       // Handle asset files
       url({
         include: [
@@ -63,23 +77,20 @@ export default [
           '**/*.woff',
           '**/*.ttf',
         ],
+        exclude: ['node_modules/**'],
         limit: 8192, // inline files < 8kb
         emitFiles: true,
         // Note: not using extname to keep original extensions since it's a .mjs extension
         fileName: '[dirname][name]',
       }),
-      css({ minify: true }),
-      peerDepsExternal(),
-      resolve({ extensions }),
-      commonjs(),
       typescript({
         clean: true,
         tsconfig: 'tsconfig.build.json',
         useTsconfigDeclarationDir: true,
       }),
+      // preserve 'use client' directive for React 18 SSR support
       preserveUseClientDirective(),
-      // Adds 'use client' to every file if no option is provided
-      // Transformations Babel pour Emotion
+      // Babel for React and Emotion
       babel({
         extensions,
         babelHelpers: "bundled",
@@ -105,10 +116,7 @@ export default [
       // Show bundle size information in a visual HTML file
       visualizer({ filename: './temp/stats.html', open: false }),
     ],
-    external: [
-      ...getExternalDeps(),
-      'react/jsx-runtime',
-    ],
+    external: getExternalDeps,
     treeshake: {
       moduleSideEffects: false,
       propertyReadSideEffects: false,
@@ -124,6 +132,8 @@ export default [
       preserveModulesRoot: 'src',
       entryFileNames: '[name].ts',
     },
-    plugins: [aliasConfig, preserveUseClientDirective(), dts()],
+    plugins: [aliasConfig, dts()],
+    // external: [...getExternalDeps()],
+    external: getExternalDeps,
   },
 ];
