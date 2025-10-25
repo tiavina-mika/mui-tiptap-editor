@@ -1,12 +1,11 @@
 'use client';
 
-import { IconButton, Tooltip } from '@mui/material';
+import { IconButton, Tooltip, type Theme } from '@mui/material';
 import { useCurrentEditor } from '@tiptap/react';
 import { Fragment } from 'react';
 
 
 import type { ToolbarItem } from '@/types/toolbar';
-import type { Theme } from '@emotion/react';
 import type { ReactNode } from 'react';
 
 import { getBorderColor } from '@/utils/app.utils';
