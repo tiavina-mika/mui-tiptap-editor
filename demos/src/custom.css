@@ -1,0 +1,107 @@
+.custom-root {
+    background: #f6f8fa;
+    border: 1px solid #d0d7de;
+    border-radius: 6px;
+    padding: 16px;
+    font-family: 'Segoe UI', 'Helvetica Neue', Arial, 'Liberation Sans', sans-serif;
+    box-shadow: 0 1px 2px rgba(27,31,35,0.04);
+    max-width: 600px;
+}
+.custom-toolbar {
+    background: #f6f8fa;
+    border-bottom: 1px solid #d0d7de;
+    padding: 4px 8px;
+    border-radius: 6px 6px 0 0;
+    display: flex;
+    gap: 4px;
+}
+.custom-input {
+    background: #fff;
+    border: none;
+    outline: none;
+    width: 100%;
+    min-height: 80px;
+    font-size: 15px;
+    padding: 0!important;
+    border-radius: 6px;
+    resize: vertical;
+    color: #24292f;
+}
+.custom-input:focus {
+    box-shadow: 0 0 0 2px #0969da33;
+}
+.custom-footer {
+    display: flex;
+    justify-content: flex-end;
+    padding-top: 8px;
+}
+.custom-btn {
+    background: #2da44e;
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    padding: 6px 16px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+.custom-btn:hover {
+    background: #218838;
+}
+
+
+
+
+.custom-editor:focus {
+  outline: none;
+  border-color: #3f51b5;
+  box-shadow: 0 0 0 2px rgba(63, 81, 181, 0.2);
+}
+
+.custom-input {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 16px;
+    font-family: 'Roboto', sans-serif;
+}
+
+.custom-label {
+    margin-bottom: 8px;
+    font-weight: 500;
+    color: #333;
+}
+
+.custom-error {
+    margin-top: 4px;
+    color: #f44336;
+    font-size: 14px;
+}
+
+.custom-helper-text {
+    margin-top: 4px;
+    color: #666;
+    font-size: 14px;
+}
+
+.custom-tabs {
+    border-bottom: none;
+}
+
+.custom-tab {
+    text-transform: none;
+    font-weight: 500;
+    color: #555;
+}
+
+.custom-tab.Mui-selected {
+    color: #3f51b5;
+    font-weight: 600;
+}
+
+.custom-tab-indicator {
+    background-color: #3f51b5;
+    height: 2px;
+    transition: all 0.3s ease;
+}

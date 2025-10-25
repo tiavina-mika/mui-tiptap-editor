@@ -5,7 +5,7 @@ import {
 import { type SyntheticEvent, useEffect, useState } from 'react';
 import { TextEditor, TextEditorReadOnly } from 'mui-tiptap-editor';
 import TiptapParser from 'tiptap-parser';
-// import WithHookForm from './WithHookForm';
+import WithHookForm from './WithHookForm';
 
 const customLabels = {
   editor: {
@@ -100,6 +100,7 @@ const tabs = [
   'React Hook Form',
   'Read without editor',
   'Upload image',
+  'Table of contents',
   'Code block',
 ];
 
@@ -284,12 +285,15 @@ const App = () => {
           {tab === 4 && (
             <TextEditor
               id="each-element-styles"
-              inputClassName="my-input"
               label="Content"
-              labelClassName="my-label"
-              tabClassName="my-tab"
-              toolbarClassName="my-toolbar"
               value="<p>Hello word!</p>"
+              rootClassName="custom-root"
+              labelClassName="custom-label"
+              inputClassName="custom-input"
+              toolbarClassName="custom-toolbar"
+              tabsClassName="custom-tabs"
+              tabClassName="custom-tab"
+              errorClassName="custom-error"
             />
           )}
 
@@ -316,7 +320,7 @@ const App = () => {
           {tab === 7 && <TextEditor id="async-value" value={asyncDefaultValue} />}
 
           {/* With React Hook Form */}
-          {/* {tab === 8 && <WithHookForm />} */}
+          {tab === 8 && <WithHookForm />}
 
           {/* Read without editor */}
           {tab === 9 && (
@@ -340,8 +344,17 @@ const App = () => {
             />
           )}
 
-          {/* With code */}
+          {/* Table of contents */}
           {tab === 11 && (
+            <TextEditor
+              content="<h1>Title 1</h1><p>Some text</p><h2>Title 2</h2><p>Some text</p><h3>Title 3</h3><p>Some text</p><h2>Title 4</h2><p>Some text</p><h1>Title 5</h1><p>Some text</p>"
+              id="table-of-contents"
+              disableTableOfContents={false}
+              tableOfContentsPosition="right"
+            />
+          )}
+          {/* With code */}
+          {tab === 12 && (
             <TextEditor
               content={code}
               id="code-block"

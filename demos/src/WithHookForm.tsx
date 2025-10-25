@@ -1,6 +1,6 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import {
-  SubmitHandler, useForm, FormProvider, Controller,
+  type SubmitHandler, useForm, FormProvider, Controller,
 } from 'react-hook-form';
 
 import z from 'zod';
