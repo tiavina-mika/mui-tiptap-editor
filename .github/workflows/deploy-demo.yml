@@ -41,7 +41,6 @@ jobs:
           npx netlify deploy --prod --dir=dist --message="Deploy - ${{ github.sha }}"
 
       - name: Get deployment URL
-        if: github.event_name == 'pull_request'
         run: |
           echo "Deployed Preview URL:"
           curl -s "https://api.netlify.com/api/v1/sites/${{ secrets.NETLIFY_SITE_ID }}/deploys" \
