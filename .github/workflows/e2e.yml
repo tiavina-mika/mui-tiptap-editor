@@ -1,0 +1,99 @@
+# Simple workflow for deploying static content to GitHub Pages
+name: Deploy storybook and run e2e tests
+
+env:
+  STORYBOOK_PAGES_URL: https://${{ github.repository_owner }}.github.io/mui-tiptap-editor
+
+on:
+  # Triggers the workflow when the Release & Publish workflow is completed
+  workflow_run:
+    workflows: [Release & Publish]
+    types: [completed]
+
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+# Sets permissions of the GITHUB_TOKEN to allow deployment to GitHub Pages
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# Allow only one concurrent deployment, skipping runs queued between the run in-progress and latest queued.
+# However, do NOT cancel in-progress runs as we want to allow these production deployments to complete.
+concurrency:
+  group: "pages"
+  cancel-in-progress: false
+
+jobs:
+  # Single deploy job since we're just deploying
+  deploy:
+    # Run this job only if the previous workflow was successful
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      # Set up Node
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - name: Install Yarn 4
+        run: corepack enable && corepack prepare yarn@4 --activate
+      #👇 Add Storybook build and deploy to GitHub Pages as a step in the workflow
+      - uses: bitovi/github-actions-storybook-to-github-pages@v1.0.3
+        with:
+          install_command: yarn install # default: npm ci
+          build_command: yarn build-storybook # default: npm run build-storybook
+          path: storybook-static # default: dist/storybook
+          checkout: false # default: true
+      - name: Display deployed URL
+        run: echo "page_url=$STORYBOOK_PAGES_URL" >> $GITHUB_OUTPUT
+
+  # test job to test the deployed Storybook with playwright
+  # test:
+  #   needs: deploy
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - name: Checkout code
+  #       uses: actions/checkout@v4
+  #       with:
+  #         fetch-depth: 0
+
+  #     - name: Setup Node.js
+  #       uses: actions/setup-node@v4
+  #       with:
+  #         node-version: '20'
+
+  #     - name: Install Yarn 4
+  #       run: corepack enable && corepack prepare yarn@4 --activate
+
+  #     - name: Restore Yarn cache
+  #       uses: actions/cache@v4
+  #       with:
+  #         path: ~/.cache/yarn
+  #         key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
+  #         restore-keys: |
+  #           ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
+  #           ${{ runner.os }}-yarn-
+  #         enableCrossOsArchive: true
+  #     - name: Install dependencies
+  #       run: yarn install --immutable
+  #     - name: Install Playwright Browsers
+  #       run: npx playwright install --with-deps
+  #     - name: Run E2E tests against deployed Storybook
+  #       env:
+  #         PLAYWRIGHT_TEST_BASE_URL: ${{ env.STORYBOOK_PAGES_URL }}
+  #       run: yarn test:e2e
+  #     - uses: actions/upload-artifact@v4
+  #       if: ${{ !cancelled() }}
+  #       with:
+  #         name: e2e-results
+  #         path: test-results/e2e/
+  #         retention-days: 30
