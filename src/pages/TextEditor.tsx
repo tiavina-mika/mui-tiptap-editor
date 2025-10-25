@@ -185,20 +185,24 @@ const TextEditor = ({
               className={tabsClassName}
               css={classes.tabs}
               value={tab}
-              TabIndicatorProps={{
-                children: <span className="MuiTabs-indicatorSpan" />,
+              slotProps={{
+                indicator: {
+                  children: <span className="MuiTabs-indicatorSpan" />,
+                },
               }}
               onChange={handleTabChange}
             >
               <Tab
                 className={tabClassName}
                 css={classes.tab}
+                data-testid="editor-tab"
                 label={labels?.editor?.editor || 'Editor'}
                 value="editor"
               />
               <Tab
                 className={tabClassName}
                 css={classes.tab}
+                data-testid="preview-tab"
                 label={labels?.editor?.preview || 'Preview'}
               />
             </Tabs>
@@ -211,6 +215,7 @@ const TextEditor = ({
             <>
               <div
                 css={classes.input}
+                data-testid="text-editor-input"
                 className={cx(
                   'positionRelative flexColumn tiptap',
                   inputClassName
