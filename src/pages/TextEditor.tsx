@@ -101,6 +101,7 @@ const TextEditor = ({
   placeholder,
   label,
   error,
+  helperText,
   onChange,
   inputClassName,
   value,
@@ -264,6 +265,11 @@ const TextEditor = ({
                   )}
                 </div>
               </div>
+              {helperText && !error && (
+                <FormHelperText css={{ marginTop: 5 }}>
+                  {helperText}
+                </FormHelperText>
+              )}
               {/* error message */}
               {error && (
                 <FormHelperText

@@ -55,6 +55,11 @@ export type TextEditorProps = {
   error?: string;
 
   /**
+   * Optional helper text to be displayed below the editor
+   */
+  helperText?: string | ReactNode;
+
+  /**
    * Value of the editor
    * It is an html string representing the content of the editor
    * @example '<p>Some text</p>'
