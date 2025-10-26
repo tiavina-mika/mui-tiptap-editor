@@ -4,4 +4,7 @@ export type {
   TextEditorProps,
   ITextEditorOption,
   ToolbarProps,
+  ILabels,
+  UploadResponse,
+  ImageAttributes,
 } from '@/types';
