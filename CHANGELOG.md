@@ -1,5 +1,12 @@
 # Changelog
 
+## 1.3.0 (2025-10-26)
+
+* tet helpler text ([52c4118](https://github.com/tiavina-mika/mui-tiptap-editor/commit/52c4118))
+* Update README.md ([54c075c](https://github.com/tiavina-mika/mui-tiptap-editor/commit/54c075c))
+* user can import editor toolbar type ([d54bd9b](https://github.com/tiavina-mika/mui-tiptap-editor/commit/d54bd9b))
+* feat: add helper text ([024ed1b](https://github.com/tiavina-mika/mui-tiptap-editor/commit/024ed1b))
+
 ## 1.2.0 (2025-10-26)
 
 * Merge branch 'main' of https://github.com/tiavina-mika/mui-tiptap-editor ([f0b5037](https://github.com/tiavina-mika/mui-tiptap-editor/commit/f0b5037))
