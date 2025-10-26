@@ -8,4 +8,6 @@ export type {
   UploadResponse,
   ImageAttributes,
   IEditorToolbar,
+  IToolbar,
+  ToolbarIcons,
 } from '@/types';

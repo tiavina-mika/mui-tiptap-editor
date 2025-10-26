@@ -1,30 +1,8 @@
+import type { IToolbar } from './toolbar';
+
 interface IEditor {
   editor: string;
   preview: string;
-}
-
-interface IToolbar {
-  bold: string;
-  italic: string;
-  strike: string;
-  underline: string;
-  link: string;
-  bulletList: string;
-  orderedList: string;
-  alignLeft: string;
-  alignCenter: string;
-  alignRight: string;
-  alignJustify: string;
-  blockquote: string;
-  upload: string;
-  color: string;
-  codeBlock: string;
-  inlineCode: string;
-  table: string;
-  youtube: string;
-  undo: string;
-  redo: string;
-  mention: string;
 }
 
 interface IHeadings {

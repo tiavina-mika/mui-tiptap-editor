@@ -25,6 +25,30 @@ export type ToolbarItem = {
   tooltip?: string;
 };
 
+export interface IToolbar {
+  bold: string;
+  italic: string;
+  strike: string;
+  underline: string;
+  link: string;
+  bulletList: string;
+  orderedList: string;
+  alignLeft: string;
+  alignCenter: string;
+  alignRight: string;
+  alignJustify: string;
+  blockquote: string;
+  upload: string;
+  color: string;
+  codeBlock: string;
+  inlineCode: string;
+  table: string;
+  youtube: string;
+  undo: string;
+  redo: string;
+  mention: string;
+}
+
 enum EditorToolbarEnum {
   heading = 'heading',
   bold = 'bold',
@@ -48,6 +72,16 @@ enum EditorToolbarEnum {
 }
 
 export type IEditorToolbar = `${EditorToolbarEnum}`;
+
+type Icon = {
+  src: string;
+  size: number;
+};
+
+export type ToolbarIcons = {
+  [K in keyof IToolbar]?: Icon;
+};
+
 export type ToolbarProps = {
   // editor: Editor;
   /**
@@ -63,7 +97,7 @@ export type ToolbarProps = {
    * "history", "youtube", "color", "mention"
    * ]
    *
-   * default values is all the above
+   * @default all
    */
   toolbar?: IEditorToolbar[];
   /**
@@ -77,11 +111,25 @@ export type ToolbarProps = {
   uploadFileOptions?: TextEditorProps['uploadFileOptions'];
 
   /**
-   * position of the toolbar
+   * Position of the toolbar
+   * @default top
    */
   position?: 'top' | 'bottom';
   colorId?: string;
+  /**
+   * Type of the toolbar
+   * if "floating", the toolbar will be displayed as a floating menu
+   * if "bubble", the toolbar will be displayed as a bubble menu
+   * if "toolbar", the toolbar will be displayed as a regular toolbar
+   * @default "toolbar"
+   */
   type?: 'toolbar' | 'floating' | 'bubble';
+  /**
+   * Custom icons for the toolbar
+   * Specify the icon URL for each toolbar action
+   * @example { bold: 'https://mydomain.com/my-bold-icon.svg' }
+   */
+  icons?: ToolbarIcons;
 };
 
 /**

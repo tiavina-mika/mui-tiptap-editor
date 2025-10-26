@@ -98,6 +98,7 @@ const Toolbar = ({
   uploadFileOptions,
   position,
   colorId,
+  icons,
   toolbar = defaultEditorToolbar,
   type = 'toolbar',
 }: ToolbarProps) => {
@@ -163,8 +164,8 @@ const Toolbar = ({
       <ToolBarIconButton
         disabled={!editor.can().chain().focus().toggleBold().run()}
         display={showTextEditorToolbarMenu(toolbar, 'bold')}
-        icon={Bold}
-        iconSize={10}
+        icon={icons?.bold?.src || Bold}
+        iconSize={icons?.bold?.size || 10}
         name="bold"
         tooltip={labels?.toolbar?.bold || 'Bold'}
         withTooltip={isWithTooltip}
@@ -174,8 +175,8 @@ const Toolbar = ({
       <ToolBarIconButton
         disabled={!editor.can().chain().focus().toggleItalic().run()}
         display={showTextEditorToolbarMenu(toolbar, 'italic')}
-        icon={Italic}
-        iconSize={12}
+        icon={icons?.italic?.src || Italic}
+        iconSize={icons?.italic?.size || 12}
         name="italic"
         tooltip={labels?.toolbar?.italic || 'Italic'}
         withTooltip={isWithTooltip}
@@ -185,8 +186,8 @@ const Toolbar = ({
       <ToolBarIconButton
         disabled={!editor.can().chain().focus().toggleStrike().run()}
         display={showTextEditorToolbarMenu(toolbar, 'strike')}
-        icon={Strike}
-        iconSize={14}
+        icon={icons?.strike?.src || Strike}
+        iconSize={icons?.strike?.size || 14}
         name="strike"
         tooltip={labels?.toolbar?.strike || 'Strike through'}
         withTooltip={isWithTooltip}
@@ -197,8 +198,8 @@ const Toolbar = ({
         split
         disabled={!editor.can().chain().focus().toggleUnderline().run()}
         display={showTextEditorToolbarMenu(toolbar, 'underline')}
-        icon={Underline}
-        iconSize={13}
+        icon={icons?.underline?.src || Underline}
+        iconSize={icons?.underline?.size || 13}
         name="underline"
         tooltip={labels?.toolbar?.underline || 'Underline'}
         withTooltip={isWithTooltip}
@@ -208,8 +209,8 @@ const Toolbar = ({
       <ToolBarIconButton
         split
         display={showTextEditorToolbarMenu(toolbar, 'color')}
-        icon={TextColor}
-        iconSize={24}
+        icon={icons?.color?.src || TextColor}
+        iconSize={icons?.color?.size || 24}
         id={colorId || 'color'}
         name="color"
         tooltip={labels?.toolbar?.color || 'Text Color'}
@@ -221,8 +222,8 @@ const Toolbar = ({
       <ToolBarIconButton
         disabled={false}
         display={showTextEditorToolbarMenu(toolbar, 'align')}
-        icon={AlignLeft}
-        iconSize={19}
+        icon={icons?.alignLeft?.src || AlignLeft}
+        iconSize={icons?.alignLeft?.size || 19}
         isActive={editor.isActive({ textAlign: 'left' })}
         name="align-left"
         tooltip={labels?.toolbar?.alignLeft || 'Left align'}
@@ -232,8 +233,8 @@ const Toolbar = ({
       <ToolBarIconButton
         disabled={false}
         display={showTextEditorToolbarMenu(toolbar, 'align')}
-        icon={AlignCenter}
-        iconSize={19}
+        icon={icons?.alignCenter?.src || AlignCenter}
+        iconSize={icons?.alignCenter?.size || 19}
         isActive={editor.isActive({ textAlign: 'center' })}
         name="align-center"
         tooltip={labels?.toolbar?.alignCenter || 'Center align'}
@@ -243,8 +244,8 @@ const Toolbar = ({
       <ToolBarIconButton
         disabled={false}
         display={showTextEditorToolbarMenu(toolbar, 'align')}
-        icon={AlignRight}
-        iconSize={19}
+        icon={icons?.alignRight?.src || AlignRight}
+        iconSize={icons?.alignRight?.size || 19}
         isActive={editor.isActive({ textAlign: 'right' })}
         name="align-right"
         tooltip={labels?.toolbar?.alignRight || 'Right align'}
@@ -255,8 +256,8 @@ const Toolbar = ({
         split
         disabled={false}
         display={showTextEditorToolbarMenu(toolbar, 'align')}
-        icon={AlignJustify}
-        iconSize={19}
+        icon={icons?.alignJustify?.src || AlignJustify}
+        iconSize={icons?.alignJustify?.size || 19}
         isActive={editor.isActive({ textAlign: 'justify' })}
         name="align-justify"
         tooltip={labels?.toolbar?.alignJustify || 'Justify align'}
@@ -267,8 +268,8 @@ const Toolbar = ({
       <ToolBarIconButton
         disabled={!editor.can().chain().focus().toggleBulletList().run()}
         display={showTextEditorToolbarMenu(toolbar, 'bulletList')}
-        icon={BulletList}
-        iconSize={19}
+        icon={icons?.bulletList?.src || BulletList}
+        iconSize={icons?.bulletList?.size || 19}
         name="bulletList"
         tooltip={labels?.toolbar?.bulletList || 'Bullet list'}
         withTooltip={isWithTooltip}
@@ -279,8 +280,8 @@ const Toolbar = ({
         split
         disabled={!editor.can().chain().focus().toggleOrderedList().run()}
         display={showTextEditorToolbarMenu(toolbar, 'orderedList')}
-        icon={OrderedList}
-        iconSize={14}
+        icon={icons?.orderedList?.src || OrderedList}
+        iconSize={icons?.orderedList?.size || 14}
         name="orderedList"
         tooltip={labels?.toolbar?.orderedList || 'Ordered list'}
         withTooltip={isWithTooltip}
@@ -290,8 +291,8 @@ const Toolbar = ({
       <ToolBarIconButton
         disabled={false}
         display={showTextEditorToolbarMenu(toolbar, 'link')}
-        icon={Link}
-        iconSize={18}
+        icon={icons?.link?.src || Link}
+        iconSize={icons?.link?.size || 18}
         name="link"
         tooltip={labels?.toolbar?.link || 'Link'}
         withTooltip={isWithTooltip}
@@ -301,8 +302,8 @@ const Toolbar = ({
       <ToolBarIconButton
         disabled={false}
         display={showTextEditorToolbarMenu(toolbar, 'image')}
-        icon={Picture}
-        iconSize={16}
+        icon={icons?.upload?.src || Picture}
+        iconSize={icons?.upload?.size || 16}
         id="upload"
         name="upload"
         tooltip={labels?.toolbar?.upload || 'Upload image'}
@@ -314,8 +315,8 @@ const Toolbar = ({
       <ToolBarIconButton
         disabled={false}
         display={showTextEditorToolbarMenu(toolbar, 'mention')}
-        icon={Mention}
-        iconSize={16}
+        icon={icons?.mention?.src || Mention}
+        iconSize={icons?.mention?.size || 16}
         name="mention"
         tooltip={labels?.toolbar?.mention || 'Mention user'}
         withTooltip={isWithTooltip}
@@ -326,8 +327,8 @@ const Toolbar = ({
         split
         disabled={false}
         display={showTextEditorToolbarMenu(toolbar, 'table')}
-        icon={Table}
-        iconSize={18}
+        icon={icons?.table?.src || Table}
+        iconSize={icons?.table?.size || 18}
         name="table"
         tooltip={labels?.table?.table || 'Table'}
         withTooltip={isWithTooltip}
@@ -337,8 +338,8 @@ const Toolbar = ({
       <ToolBarIconButton
         disabled={false}
         display={showTextEditorToolbarMenu(toolbar, 'blockquote')}
-        icon={Quote}
-        iconSize={16}
+        icon={icons?.blockquote?.src || Quote}
+        iconSize={icons?.blockquote?.size || 16}
         name="blockquote"
         tooltip={labels?.toolbar?.blockquote || 'Block quote'}
         withTooltip={isWithTooltip}
@@ -348,8 +349,8 @@ const Toolbar = ({
       <ToolBarIconButton
         disabled={false}
         display={showTextEditorToolbarMenu(toolbar, 'codeBlock')}
-        icon={CodeBlock}
-        iconSize={13.5}
+        icon={icons?.codeBlock?.src || CodeBlock}
+        iconSize={icons?.codeBlock?.size || 13.5}
         name="codeBlock"
         tooltip={labels?.toolbar?.codeBlock || 'Code block'}
         withTooltip={isWithTooltip}
@@ -360,8 +361,8 @@ const Toolbar = ({
         split
         disabled={false}
         display={showTextEditorToolbarMenu(toolbar, 'code')}
-        icon={Code}
-        iconSize={18}
+        icon={icons?.inlineCode?.src || Code}
+        iconSize={icons?.inlineCode?.size || 18}
         name="code"
         tooltip={labels?.toolbar?.inlineCode || 'Inline code'}
         withTooltip={isWithTooltip}
@@ -371,8 +372,8 @@ const Toolbar = ({
       <ToolBarIconButton
         disabled={false}
         display={showTextEditorToolbarMenu(toolbar, 'youtube')}
-        icon={Youtube}
-        iconSize={18}
+        icon={icons?.youtube?.src || Youtube}
+        iconSize={icons?.youtube?.size || 18}
         name="youtube"
         tooltip={labels?.toolbar?.youtube || 'Insert YouTube video'}
         withTooltip={isWithTooltip}
@@ -383,8 +384,8 @@ const Toolbar = ({
       <ToolBarIconButton
         disabled={!editor.can().undo()}
         display={showTextEditorToolbarMenu(toolbar, 'history')}
-        icon={Undo}
-        iconSize={18}
+        icon={icons?.undo?.src || Undo}
+        iconSize={icons?.undo?.size || 18}
         name="undo"
         tooltip={labels?.toolbar?.undo || 'Undo'}
         withTooltip={isWithTooltip}
@@ -395,8 +396,8 @@ const Toolbar = ({
         split
         disabled={!editor.can().redo()}
         display={showTextEditorToolbarMenu(toolbar, 'history')}
-        icon={Redo}
-        iconSize={18}
+        icon={icons?.redo?.src || Redo}
+        iconSize={icons?.redo?.size || 18}
         name="redo"
         tooltip={labels?.toolbar?.redo || 'Redo'}
         withTooltip={isWithTooltip}

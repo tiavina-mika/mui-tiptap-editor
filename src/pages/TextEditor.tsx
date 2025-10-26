@@ -128,6 +128,7 @@ const TextEditor = ({
   toolbarPosition = 'bottom',
   disableTableOfContents = true,
   tableOfContentPosition = 'right',
+  icons,
   ...editorOptions
 }: TextEditorProps) => {
   const [tab, setTab] = useState<'editor' | 'preview'>('editor');
@@ -232,6 +233,7 @@ const TextEditor = ({
                     <FloatingMenu editor={editor}>
                       <Toolbar
                         css={[classes.menu, classes.bubbleMenu]}
+                        icons={icons}
                         labels={labels}
                         toolbar={floatingMenuToolbar || defaultMenuToolbar}
                         type="floating"
@@ -243,6 +245,7 @@ const TextEditor = ({
                     <BubbleMenu editor={editor}>
                       <Toolbar
                         css={[classes.menu, classes.bubbleMenu]}
+                        icons={icons}
                         toolbar={bubbleMenuToolbar || defaultMenuToolbar}
                         type="bubble"
                         uploadFileOptions={uploadFileOptions}
@@ -256,6 +259,7 @@ const TextEditor = ({
                     <Toolbar
                       className={cx('stretchSelf', toolbarClassName)}
                       colorId={id}
+                      icons={icons}
                       labels={labels}
                       position={toolbarPosition}
                       toolbar={toolbar}

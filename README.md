@@ -34,6 +34,7 @@ A customizable and easy to use <a href="https://tiptap.dev/">Tiptap</a> styled W
       - [Individual element styles](#individual-element-styles)
   - [Props](#props)
     - [`ImageUploadOptions`](#imageuploadoptions)
+    - [`ToolbarIcons`](#toolbaricons)
   - [New features](#new-features)
   - [Contributing](#contributing)
 
@@ -293,6 +294,7 @@ import './index.css';
 |uploadFileOptions|`ImageUploadOptions`|null| Override image upload default options like max size, max file number, ...
 |disableTableOfContents|`boolean`|false| If true, the table of contents is hidden.
 |tableOfContentPosition|`top, left or right`|right| Position of the table of contents (Only if `disableTableOfContents` is false).
+|icons|`ToolbarIcons`|empty| Override default toolbar icons
 
 |...all tiptap features|[EditorOptions](https://github.com/ueberdosis/tiptap/blob/e73073c02069393d858ca7d8c44b56a651417080/packages/core/src/types.ts#L52)|empty| Can access to all tiptap `useEditor` props
 
@@ -310,6 +312,13 @@ See [`here`](https://github.com/tiavina-mika/mui-tiptap-editor/blob/main/src/dev
 |imageMaxWidth|`number`|1920|Maximum image width.
 |imageMaxHeight|`number`|1080|Maximum image height.
 |maxMediaLegendLength|`number`|100|Maximum length for image captions. 
+
+<br />
+
+### `ToolbarIcons`
+|props |type                          | Description |
+|----------------|-------------------------------|-----------------------------|
+|[key: string]|`{ src: string; size: number; }`| Object defining custom icons for toolbar buttons. The key should match the toolbar button name (e.g., 'bold', 'italic', 'link', etc.). The `src` is the URL of the icon image, and `size` is the desired size of the icon in pixels.|
 
 <br />
 

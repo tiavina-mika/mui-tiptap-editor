@@ -1,5 +1,5 @@
 import type { ILabels } from './labels';
-import type { IEditorToolbar, ImageUploadOptions } from './toolbar';
+import type { IEditorToolbar, ImageUploadOptions, ToolbarIcons } from './toolbar';
 import type { CSSProperties, ReactNode } from 'react';
 
 type DeepPartial<T> = {
@@ -224,4 +224,10 @@ export type TextEditorProps = {
    * @default right
    */
   tableOfContentPosition?: 'left' | 'right' | 'top';
+  /**
+   * Custom icons for the toolbar
+   * Specify the icon URL for each toolbar action
+   * @example { bold: 'https://mydomain.com/my-bold-icon.svg' }
+   */
+  icons?: ToolbarIcons;
 } & Partial<EditorOptions>;
