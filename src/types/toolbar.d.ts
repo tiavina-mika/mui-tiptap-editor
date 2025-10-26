@@ -44,9 +44,7 @@ enum EditorToolbarEnum {
   youtube = 'youtube',
   color = 'color',
   mention = 'mention',
-  upload = 'upload',
-  // does not exist yet
-  ai = 'ai'
+  upload = 'upload'
 }
 
 export type IEditorToolbar = `${EditorToolbarEnum}`;

@@ -7,4 +7,5 @@ export type {
   ILabels,
   UploadResponse,
   ImageAttributes,
+  IEditorToolbar,
 } from '@/types';
