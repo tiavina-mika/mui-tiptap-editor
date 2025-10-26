@@ -1,4 +1,6 @@
-import type { IEditorToolbar } from '../types/toolbar';
+import type { ImageAttributes } from '../types/text-editor';
+import type { IEditorToolbar, ImageUploadOptions } from '../types/toolbar';
+import type { ILabels } from '@/types';
 import type { Theme } from '@mui/material';
 
 type FileValidationOutput = {
@@ -99,6 +101,30 @@ export const checkIsValidYoutubeUrl = (url: string): boolean => {
   return url.startsWith('https://') && url.includes('youtube');
 };
 
+export const checkIfValidHttpUrl = (url: string): boolean => {
+  return url.startsWith('https://');
+};
+
+/**
+ * Filter valid image attributes
+ * Remove any invalid attributes
+ * @param attrs
+ * @returns
+ */
+export const filterValidImageAttributes = (attrs: ImageAttributes): ImageAttributes => {
+  const validImageAttributes: (keyof ImageAttributes)[] = ['src', 'alt', 'title', 'width', 'height', 'style'];
+
+  return Object.keys(attrs).reduce((acc, key) => {
+    if (
+      validImageAttributes.includes(key as keyof ImageAttributes) &&
+      attrs[key as keyof ImageAttributes] !== undefined
+    ) {
+      (acc as any)[key as keyof ImageAttributes] = attrs[key as keyof ImageAttributes];
+    }
+    return acc;
+  }, {} as Partial<ImageAttributes>) as ImageAttributes;
+};
+
 /**
  * check if the alt text is valid
  * @param text
@@ -132,7 +158,7 @@ export const checkLegend = (
  * @param file
  * @returns
  */
-const getFileSize = (file: File): number => {
+export const getFileSize = (file: File): number => {
   const size = file.size / 1024 / 1024;
 
   return +size.toFixed(4);
@@ -217,7 +243,62 @@ export const checkValidFileDimensions = async (
   const size = await getImageSize(file);
 
   return {
-    isValid: size.width <= maxWidth && size.height <= maxHeight,
+    isValid: size.width * size.height <= maxWidth * maxHeight,
     message: `Image dimensions should be less than ${maxWidth}x${maxHeight}.`,
   };
+};
+
+type ValidateUploadedFileInput = {
+  uploadFile?: ImageUploadOptions['uploadFile'];
+  file: File;
+  labels?: Pick<ILabels['upload'], 'invalidImageUrl' | 'noImageUrl'>;
+  attrs: ImageAttributes;
+};
+export const validateUploadedFile = async ({
+  uploadFile, file, labels, attrs,
+}: ValidateUploadedFileInput): Promise<ImageAttributes | undefined> => {
+  if (!uploadFile) return attrs;
+
+  let copiedAttrs = { ...attrs };
+
+  // Call the upload function
+  const response = await uploadFile(file);
+
+  if (response) {
+    // if the response is a string, it's the image src
+    if (typeof response === 'string') {
+      const isUrl = checkIfValidHttpUrl(response);
+
+      if (!isUrl) {
+        window.alert(labels?.invalidImageUrl || 'Invalid image URL');
+        return;
+      }
+
+      // only src attribute
+      copiedAttrs.src = response;
+    } else {
+      // response is an object, merge with existing attributes (like alt, title, id, width, height, etc)
+      const filteredAttrs = filterValidImageAttributes(response);
+      const imageAttrs = { ...copiedAttrs, ...filteredAttrs } as ImageAttributes;
+
+      if (imageAttrs.src) {
+        const isUrl = checkIfValidHttpUrl(imageAttrs.src);
+
+        if (!isUrl) {
+          window.alert(labels?.invalidImageUrl || 'Invalid image URL');
+          return;
+        }
+      } else {
+        window.alert(
+          labels?.noImageUrl || 'No image URL found in the upload response'
+        );
+        return;
+      }
+
+      // other attributes like alt, title, etc
+      copiedAttrs = imageAttrs;
+    }
+  }
+
+  return copiedAttrs;
 };
