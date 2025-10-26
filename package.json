@@ -1,6 +1,6 @@
 {
   "name": "mui-tiptap-editor",
-  "version": "1.1.6",
+  "version": "1.1.7",
   "description": "Easy to use Tiptap WYSIWYG rich text editor using Material UI (MUI) for React",
   "keywords": [
     "mui",
