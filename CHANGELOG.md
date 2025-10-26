@@ -1,5 +1,15 @@
 # Changelog
 
+## 2.0.0 (2025-10-26)
+
+* feat!: can use custome icons ([57f1ada](https://github.com/tiavina-mika/mui-tiptap-editor/commit/57f1ada))
+* Merge branch 'main' of https://github.com/tiavina-mika/mui-tiptap-editor ([2147728](https://github.com/tiavina-mika/mui-tiptap-editor/commit/2147728))
+
+
+### BREAKING CHANGE
+
+* can override icons
+
 ## 1.3.0 (2025-10-26)
 
 * tet helpler text ([52c4118](https://github.com/tiavina-mika/mui-tiptap-editor/commit/52c4118))
