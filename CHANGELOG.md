@@ -1,5 +1,10 @@
 # Changelog
 
+## 1.2.0 (2025-10-26)
+
+* Merge branch 'main' of https://github.com/tiavina-mika/mui-tiptap-editor ([f0b5037](https://github.com/tiavina-mika/mui-tiptap-editor/commit/f0b5037))
+* feat: change input styles if any error ([859ae09](https://github.com/tiavina-mika/mui-tiptap-editor/commit/859ae09))
+
 ## 1.1.7 (2025-10-26)
 
 * add image attributes types ([a2b0e81](https://github.com/tiavina-mika/mui-tiptap-editor/commit/a2b0e81))
