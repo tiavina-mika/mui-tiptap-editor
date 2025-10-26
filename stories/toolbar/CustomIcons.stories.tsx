@@ -1,4 +1,5 @@
 
+import type { ToolbarIcons } from '../../src/types/toolbar';
 import type { Meta, StoryObj } from '@storybook/react-vite';
 
 import TextEditor from '../../src/pages/TextEditor';
@@ -14,7 +15,7 @@ const meta: Meta<typeof TextEditor> = {
 
 export default meta;
 // use svg icons from https://icons8.com/icons
-const icons = {
+const icons: ToolbarIcons = {
   // svg icon urls
   bold: {
     src: 'https://img.icons8.com/ios-filled/50/000000/bold.png',
@@ -40,7 +41,7 @@ const icons = {
     src: 'https://img.icons8.com/ios-filled/50/000000/table.png',
     size: 16,
   },
-  blockQuote: {
+  blockquote: {
     src: 'https://img.icons8.com/ios-filled/50/000000/quote-left.png',
     size: 18,
   },
@@ -80,7 +81,7 @@ const icons = {
     src: 'https://img.icons8.com/ios-filled/50/000000/code.png',
     size: 16,
   },
-  mentions: {
+  mention: {
     src: 'https://img.icons8.com/ios-filled/50/000000/at-sign.png',
     size: 18,
   },

@@ -29,6 +29,7 @@ A customizable and easy to use <a href="https://tiptap.dev/">Tiptap</a> styled W
   - [Customization](#customization)
     - [Toolbar](#toolbar)
     - [Override labels](#override-labels)
+    - [Override icons](#override-icons)
     - [Styles](#styles)
       - [Root styles](#root-styles)
       - [Individual element styles](#individual-element-styles)
@@ -188,41 +189,61 @@ import { TextEditorReadOnly } from 'mui-tiptap-editor';
 
 ### Override labels
 ```tsx
-  <TextEditor
-    labels={{
-      editor: {
-        editor: "Editeur",
-        preview: "Aperçu"
-      },
-      toolbar: {
-        bold: "Gras",
-        upload: "Ajouter une image",
-        // ...
-      },
-      headings: {
-        h1: "En-tête 1",
-        // ...
-      },
-      table: {
-        table: "Tableau",
-        deleteColumn: "Supprimer la colonne",
-        // ....
-      },
-      link: {
-        link: "Lien",
-        // ...
-      },
-      youtube: {
-        link: "Lien",
-        insert: "Insérer la vidéo Youtube",
-        title: "Insérer une vidéo Youtube",
-      },
-      upload: {
-        fileTooLarge: "Fichier trop volumineux",
-        // ...
-      }
-    }}
-  />
+import { TextEditor, type ILabels } from 'mui-tiptap-editor';
+
+const labels: ILabels = {
+  editor: {
+    editor: "Editeur",
+    preview: "Aperçu"
+  },
+  toolbar: {
+    bold: "Gras",
+    upload: "Ajouter une image",
+    // ...
+  },
+  headings: {
+    h1: "En-tête 1",
+    // ...
+  },
+  table: {
+    table: "Tableau",
+    deleteColumn: "Supprimer la colonne",
+    // ....
+  },
+  link: {
+    link: "Lien",
+    // ...
+  },
+  youtube: {
+    link: "Lien",
+    insert: "Insérer la vidéo Youtube",
+    // ...
+  },
+  upload: {
+    fileTooLarge: "Fichier trop volumineux",
+    // ...
+  }
+};
+function App() {
+  return <TextEditor labels={labels} />;
+}
+```
+
+### Override icons
+```tsx
+import { TextEditor, type ToolbarIcons } from 'mui-tiptap-editor';
+
+const icons: ToolbarIcons = {
+  bold: { src: "https://img.icons8.com/ios-filled/50/000000/bold.png", size: 20 },
+  italic: { src: "https://img.icons8.com/ios-filled/50/000000/italic.png", size: 16 },
+  underline: { src: "https://img.icons8.com/ios-filled/50/000000/underline.png" },
+  youtube: { src: 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAYAAACNiR0NAAAACX...', size: 15 },
+  // ...
+};
+
+function App() {
+  return <TextEditor icons={icons} />;
+}
 ```
 
 ### Styles
@@ -294,11 +315,10 @@ import './index.css';
 |uploadFileOptions|`ImageUploadOptions`|null| Override image upload default options like max size, max file number, ...
 |disableTableOfContents|`boolean`|false| If true, the table of contents is hidden.
 |tableOfContentPosition|`top, left or right`|right| Position of the table of contents (Only if `disableTableOfContents` is false).
-|icons|`ToolbarIcons`|empty| Override default toolbar icons
+|icons|`ToolbarIcons`|empty| Override default toolbar icons.
+|...all tiptap features|[EditorOptions](https://github.com/ueberdosis/tiptap/blob/e73073c02069393d858ca7d8c44b56a651417080/packages/core/src/types.ts#L52)|empty| Can access to all tiptap `useEditor` props|
 
-|...all tiptap features|[EditorOptions](https://github.com/ueberdosis/tiptap/blob/e73073c02069393d858ca7d8c44b56a651417080/packages/core/src/types.ts#L52)|empty| Can access to all tiptap `useEditor` props
-
-See [`here`](https://github.com/tiavina-mika/mui-tiptap-editor/blob/main/src/dev/App.tsx) how to use all the `TextEditor` props.
+See [`here`](https://github.com/tiavina-mika/mui-tiptap-editor/blob/main/src/types/text-editor.d.ts) how to use all the `TextEditor` props.
 
 <br />
 
@@ -318,8 +338,7 @@ See [`here`](https://github.com/tiavina-mika/mui-tiptap-editor/blob/main/src/dev
 ### `ToolbarIcons`
 |props |type                          | Description |
 |----------------|-------------------------------|-----------------------------|
-|[key: string]|`{ src: string; size: number; }`| Object defining custom icons for toolbar buttons. The key should match the toolbar button name (e.g., 'bold', 'italic', 'link', etc.). The `src` is the URL of the icon image, and `size` is the desired size of the icon in pixels.|
-
+|[key: string]|`{ src: string; size: number; }`| Object defining custom icons for toolbar buttons. The `key` should match the toolbar button name (e.g., 'bold', 'italic', 'link', etc.). The `src` is the URL of the icon image, and `size` is the desired size of the icon in pixels.|
 <br />
 
 ## New features
@@ -328,6 +347,14 @@ See [`here`](https://github.com/tiavina-mika/mui-tiptap-editor/blob/main/src/dev
   <tr>
     <td>Versions</td>
     <td>Features</td>
+  </tr>
+  <tr>
+    <th><a href="https://github.com/tiavina-mika/mui-tiptap-editor/commit/57f1ada9b3c02015d587e273aeda025972062dfc">v2.0.0</a></th>
+    <td>
+      <ul>
+        <li>Can use custom icons for toolbar buttons.</li>
+        <li>Reduce bundle size.</li>
+      </ul>
   </tr>
   <tr>
     <th><a href="https://github.com/tiavina-mika/mui-tiptap-editor/pull/103">v0.12.0</a></th>

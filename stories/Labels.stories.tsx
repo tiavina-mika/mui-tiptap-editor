@@ -1,4 +1,5 @@
 /* eslint-disable @cspell/spellchecker */
+import type { ILabels } from '../src/types';
 import type { Meta, StoryObj } from '@storybook/react-vite';
 
 import TextEditor from '../src/pages/TextEditor';
@@ -14,7 +15,7 @@ const meta: Meta<typeof TextEditor> = {
 
 export default meta;
 
-const customLabels = {
+const customLabels: ILabels = {
   editor: {
     editor: 'Editeur',
     preview: 'Aperçu',
@@ -94,6 +95,10 @@ const customLabels = {
     imageMaxSize: 'Taille maximale de l\'image',
     noImageUrl: 'Aucune URL d\'image trouvée dans la réponse de téléchargement',
     invalidImageUrl: 'URL d\'image invalide',
+  },
+  tableOfContent: {
+    label: 'Table des matières',
+    noContentLabel: 'Aucun contenu disponible',
   },
 };
 

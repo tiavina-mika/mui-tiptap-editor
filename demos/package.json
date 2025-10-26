@@ -16,7 +16,7 @@
     "@emotion/styled": "^11.14.1",
     "@hookform/resolvers": "^5.2.2",
     "@mui/material": "^7.3.4",
-    "mui-tiptap-editor": "^1.1.6",
+    "mui-tiptap-editor": "^2.0.0",
     "react": "^19.2.0",
     "react-dom": "^19.2.0",
     "react-hook-form": "^7.65.0",
