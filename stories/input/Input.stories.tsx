@@ -33,6 +33,14 @@ export const WithError: StoryObj<typeof TextEditor> = {
   },
 };
 
+export const WithHelperText: StoryObj<typeof TextEditor> = {
+  args: {
+    placeholder: 'Start typing here...',
+    helperText: 'This is some helper text. If there is an error, it will not be shown.',
+    error: '',
+  },
+};
+
 export const WithoutTabs: StoryObj<typeof TextEditor> = {
   args: {
     placeholder: 'Start typing here...',
