@@ -1,6 +1,6 @@
+import type { ILabels } from '../types/labels';
 import type { ImageAttributes } from '../types/text-editor';
 import type { IEditorToolbar, ImageUploadOptions } from '../types/toolbar';
-import type { ILabels } from '@/types';
 import type { Theme } from '@mui/material';
 
 type FileValidationOutput = {
