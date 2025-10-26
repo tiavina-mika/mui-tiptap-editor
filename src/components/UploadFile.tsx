@@ -3,7 +3,9 @@
 import { Editor } from '@tiptap/react';
 import { useRef } from 'react';
 
-import type { ImageUploadOptions, UploadResponse, ILabels } from '@/types/toolbar';
+import type { ImageAttributes } from '@/types';
+import type { ILabels } from '@/types/labels';
+import type { ImageUploadOptions, UploadResponse } from '@/types/toolbar';
 
 import {
   checkIsImage,
@@ -80,11 +82,11 @@ const UploadFile = ({
         return;
       }
 
-      let attrs: UploadResponse = { src: target.result as string };
+      let attrs: ImageAttributes = { src: target.result as string };
 
       // upload the file to the server (API callback)
       if (uploadFile) {
-        const response = await uploadFile(file);
+        const response: UploadResponse = await uploadFile(file);
 
         if (response) {
           if (typeof response === 'string') {
