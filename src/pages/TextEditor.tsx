@@ -31,12 +31,17 @@ const defaultMenuToolbar: IEditorToolbar[] = [
 ];
 
 const classes = {
-  input: (theme: Theme) => ({
+  input: {
     paddingBottom: 0,
-    border: `1px solid ${getBorderColor(theme)} !important`,
     borderTopRightRadius: 4,
     borderBottomRightRadius: 4,
     borderBottomLeftRadius: 4,
+  },
+  inputWithError: (theme: Theme) => ({
+    border: `1px solid ${theme.palette.error.main} !important`,
+  }),
+  inputWithNoError: (theme: Theme) => ({
+    border: `1px solid ${getBorderColor(theme)} !important`,
   }),
   label: (theme: Theme) => ({
     pointerEvents: 'none' as const,
@@ -214,7 +219,7 @@ const TextEditor = ({
           {tab === 'editor' ? (
             <>
               <div
-                css={classes.input}
+                css={[classes.input, error ? classes.inputWithError : classes.inputWithNoError]}
                 data-testid="text-editor-input"
                 className={cx(
                   'positionRelative flexColumn tiptap',

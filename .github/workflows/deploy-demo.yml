@@ -8,6 +8,8 @@ on:
 
 jobs:
   deploy:
+    # Run this job only if the previous workflow was successful
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
