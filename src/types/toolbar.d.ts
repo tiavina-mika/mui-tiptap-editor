@@ -1,96 +1,7 @@
-type IRequiredLabels = {
-  editor: {
-    editor: string;
-    preview: string;
-  };
-  toolbar: {
-    bold: string;
-    italic: string;
-    strike: string;
-    underline: string;
-    link: string;
-    bulletList: string;
-    orderedList: string;
-    alignLeft: string;
-    alignCenter: string;
-    alignRight: string;
-    alignJustify: string;
-    blockquote: string;
-    upload: string;
-    color: string;
-    codeBlock: string;
-    inlineCode: string;
-    table: string;
-    youtube: string;
-    undo: string;
-    redo: string;
-    mention: string;
-  };
-  headings: {
-    normalText: string;
-    h1: string;
-    h2: string;
-    h3: string;
-    h4: string;
-    h5: string;
-    h6: string;
-  };
-  table: {
-    table: string;
-    insertTable: string;
-    addColumnBefore: string;
-    addColumnAfter: string;
-    deleteColumn: string;
-    addRowBefore: string;
-    addRowAfter: string;
-    deleteRow: string;
-    mergeCells: string;
-    splitCell: string;
-    deleteTable: string;
-    toggleHeaderColumn: string;
-    toggleHeaderRow: string;
-    toggleHeaderCell: string;
-    mergeOrSplit: string;
-    setCellAttribute: string;
-  };
-  link: {
-    link: string;
-    invalid: string;
-  };
-  youtube: {
-    link: string;
-    insert: string;
-    title: string;
-    invalid: string;
-    enter: string;
-    height: string;
-    width: string;
-  };
-  upload: {
-    maximumNumberOfFiles: string;
-    fileTooLarge: string;
-    addAltText: string;
-    enterValidAltText: string;
-    invalidMimeType: string;
-    shouldBeAnImage: string;
-    addLegendText: string;
-    enterValidLegendText: string;
-    imageMaxSize: string;
-  };
-  tableOfContent: {
-    label: string;
-    noContentLabel: string;
-  };
-};
+import type { ILabels } from './labels';
+import type { ImageAttributes } from './text-editor';
 
-export type ILabels = DeepPartial<IRequiredLabels>;
-
-
-export type UploadResponse = {
-  src: string;
-  id?: string;
-  alt?: string;
-};
+export type UploadResponse = ImageAttributes | string | undefined;
 
 export type CodeBlockWithCopyProps = {
   language?: string;
@@ -183,13 +94,14 @@ export type ImageUploadOptions = {
   /**
    * callback function to upload the image
    * it takes a file as an argument
-   * it should return directly the uploaded image url
+   * it should return directly the uploaded image url (to be used as src)
+   * or an object containing the uploaded image data (like url, id, alt, etc.)
    * it is used to upload the image to the server
    * @NOTE if not provided, the image will be uploaded as a base64 string and saved so
    * @param file
    * @returns
    */
-  uploadFile?: (file: File) => Promise<string | UploadResponse | undefined>;
+  uploadFile?: (file: File) => Promise<UploadResponse>;
   /**
    * maximum size of the image in MB (each image)
    * @default 10mb
