@@ -92,6 +92,8 @@ const customLabels = {
     addLegendText: 'Ajouter un texte de légende',
     enterValidLegendText: 'Entrez un texte de légende valide',
     imageMaxSize: 'Taille maximale de l\'image',
+    noImageUrl: 'Aucune URL d\'image trouvée dans la réponse de téléchargement',
+    invalidImageUrl: 'URL d\'image invalide',
   },
 };
 
