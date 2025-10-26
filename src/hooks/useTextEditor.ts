@@ -23,10 +23,10 @@ import { useEditor } from '@tiptap/react';
 import StarterKit from '@tiptap/starter-kit';
 import { useEffect } from 'react';
 
+import type { ILabels } from '@/types/labels';
 import type { ITextEditorOption } from '@/types/text-editor';
 import type {
   CodeBlockWithCopyProps,
-  ILabels,
   ImageUploadOptions,
 } from '@/types/toolbar';
 import type { AnyExtension, EditorOptions, EditorEvents } from '@tiptap/react';

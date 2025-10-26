@@ -4,7 +4,7 @@ import { Stack, TextField } from '@mui/material';
 import { Editor } from '@tiptap/react';
 import { useState } from 'react';
 
-import type { ILabels } from '@/types/toolbar';
+import type { ILabels } from '@/types/labels';
 import type { ChangeEvent } from 'react';
 
 import { checkIsValidYoutubeUrl } from '@/utils/app.utils';
