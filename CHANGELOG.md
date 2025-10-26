@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.0.1 (2025-10-26)
+
+* fix: update docs ([25bd28c](https://github.com/tiavina-mika/mui-tiptap-editor/commit/25bd28c))
+
 ## 2.0.0 (2025-10-26)
 
 * feat!: can use custome icons ([57f1ada](https://github.com/tiavina-mika/mui-tiptap-editor/commit/57f1ada))
