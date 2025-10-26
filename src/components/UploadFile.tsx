@@ -3,15 +3,15 @@
 import { Editor } from '@tiptap/react';
 import { useRef } from 'react';
 
-import type { ImageAttributes } from '@/types';
 import type { ILabels } from '@/types/labels';
-import type { ImageUploadOptions, UploadResponse } from '@/types/toolbar';
+import type { ImageUploadOptions } from '@/types/toolbar';
 
 import {
   checkIsImage,
   checkValidFileDimensions,
   checkValidMimeType,
   getIsFileSizeValid,
+  validateUploadedFile,
 } from '@/utils/app.utils';
 
 type Props = {
@@ -82,22 +82,15 @@ const UploadFile = ({
         return;
       }
 
-      let attrs: ImageAttributes = { src: target.result as string };
-
       // upload the file to the server (API callback)
-      if (uploadFile) {
-        const response: UploadResponse = await uploadFile(file);
+      const attrs = await validateUploadedFile({
+        uploadFile,
+        file,
+        labels,
+        attrs: { src: target.result as string },
+      });
 
-        if (response) {
-          if (typeof response === 'string') {
-            // if the response is a string, we assume it's the image src
-            attrs.src = response;
-          } else {
-            // image attributes
-            attrs = { ...attrs, ...response };
-          }
-        }
-      }
+      if (!attrs) return;
 
       // insert the image into the editor
       editor.chain().focus().setImage(attrs).run();

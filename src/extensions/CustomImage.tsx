@@ -20,7 +20,6 @@ import { EditorView } from '@tiptap/pm/view';
 import { Editor, NodeViewWrapper, ReactNodeViewRenderer } from '@tiptap/react';
 
 import type { ILabels } from '@/types/labels';
-import type { ImageAttributes } from '@/types/text-editor';
 import type { ImageUploadOptions } from '@/types/toolbar';
 import type { NodeViewWrapperProps } from '@tiptap/react';
 import type { ClipboardEvent, SyntheticEvent } from 'react';
@@ -31,7 +30,7 @@ import {
   checkValidMimeType,
   checkValidFileDimensions,
   getIsFileSizeValid,
-  checkIfValidHttpUrl,
+  validateUploadedFile,
 } from '@/utils/app.utils';
 
 import ImageText from './image/ImageText';
@@ -146,7 +145,6 @@ export const onUpload =
             return;
           }
 
-          let attrs = { src: readerEvent.target.result as string };
           // default position for paste
           let position = editor.state.selection.anchor;
 
@@ -162,45 +160,12 @@ export const onUpload =
           }
 
           // ----- upload function callback ----- //
-          if (uploadFile) {
-            // Call the upload function
-            const response = await uploadFile(file);
-
-            if (response) {
-              // if the response is a string, it's the image src
-              if (typeof response === 'string') {
-                const isUrl = checkIfValidHttpUrl(response);
-
-                if (!isUrl) {
-                  window.alert(labels?.invalidImageUrl || 'Invalid image URL');
-                  return;
-                }
-
-                // only src attribute
-                attrs.src = response;
-              } else {
-                // response is an object, merge with existing attributes (like alt, title, id, width, height, etc)
-                const imageAttrs = { ...attrs, ...response } as ImageAttributes;
-
-                if (imageAttrs.src) {
-                  const isUrl = checkIfValidHttpUrl(imageAttrs.src);
-
-                  if (!isUrl) {
-                    window.alert(labels?.invalidImageUrl || 'Invalid image URL');
-                    return;
-                  }
-                } else {
-                  window.alert(
-                    labels?.noImageUrl || 'No image URL found in the upload response'
-                  );
-                  return;
-                }
-
-                // other attributes like alt, title, etc
-                attrs = imageAttrs;
-              }
-            }
-          }
+          const attrs = await validateUploadedFile({
+            uploadFile,
+            file,
+            labels,
+            attrs: { src: readerEvent.target.result as string },
+          });
 
           // insert the image into the editor
           editor
