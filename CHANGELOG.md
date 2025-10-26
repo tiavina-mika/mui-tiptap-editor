@@ -1,5 +1,24 @@
 # Changelog
 
+## 1.1.7 (2025-10-26)
+
+* add image attributes types ([a2b0e81](https://github.com/tiavina-mika/mui-tiptap-editor/commit/a2b0e81))
+* Add new labels in demos ([cdc60c7](https://github.com/tiavina-mika/mui-tiptap-editor/commit/cdc60c7))
+* Add new labels in dev ([e789b34](https://github.com/tiavina-mika/mui-tiptap-editor/commit/e789b34))
+* add new labels in stories ([49319c1](https://github.com/tiavina-mika/mui-tiptap-editor/commit/49319c1))
+* add new tests ([8fd285a](https://github.com/tiavina-mika/mui-tiptap-editor/commit/8fd285a))
+* export images and labels types ([2d25062](https://github.com/tiavina-mika/mui-tiptap-editor/commit/2d25062))
+* Merge branch 'main' of https://github.com/tiavina-mika/mui-tiptap-editor ([a207f70](https://github.com/tiavina-mika/mui-tiptap-editor/commit/a207f70))
+* refactor labels ([46bb45f](https://github.com/tiavina-mika/mui-tiptap-editor/commit/46bb45f))
+* refactor upload function ([c3a1fc1](https://github.com/tiavina-mika/mui-tiptap-editor/commit/c3a1fc1))
+* Remove labels type from toolbar ([fd3515a](https://github.com/tiavina-mika/mui-tiptap-editor/commit/fd3515a))
+* update demo ([c4d0aa3](https://github.com/tiavina-mika/mui-tiptap-editor/commit/c4d0aa3))
+* Update text-editor.stories.spec.ts ([33efd2a](https://github.com/tiavina-mika/mui-tiptap-editor/commit/33efd2a))
+* upgrade menus props ([567ff05](https://github.com/tiavina-mika/mui-tiptap-editor/commit/567ff05))
+* fix: file max size validation ([5cce034](https://github.com/tiavina-mika/mui-tiptap-editor/commit/5cce034))
+* fix: type import ([5183f03](https://github.com/tiavina-mika/mui-tiptap-editor/commit/5183f03))
+* fix: validate upload callback response ([b34eccb](https://github.com/tiavina-mika/mui-tiptap-editor/commit/b34eccb))
+
 ## 1.1.6 (2025-10-25)
 
 * Update deploy-demo.yml ([25d51f9](https://github.com/tiavina-mika/mui-tiptap-editor/commit/25d51f9))
