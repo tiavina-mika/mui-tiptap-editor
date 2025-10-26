@@ -100,10 +100,11 @@ function App() {
 ```tsx
 import { TextEditor, ITextEditorOption } from 'mui-tiptap-editor';
 
+// Should be fetched from an API or a database
 const mentions: ITextEditorOption[] = [
-  { label: "Lea Thompson", value: "id1" },
-  { label: "Cyndi Lauper", value: "id2" },
-  { label: "Tom Cruise", value: "id3" },
+  { label: "Fyodor Dostoievsky", value: "id1" },
+  { label: "J.R.R. Tolkien", value: "id2" },
+  { label: "H.P. Lovecraft", value: "id3" },
 ];
 
 const currentUser: ITextEditorOption = mentions[0];
@@ -126,9 +127,10 @@ function App() {
 
 
 ```tsx
+import { TextEditor, type UploadResponse } from 'mui-tiptap-editor';
 // Example: Uploading an image via an API call using fetch
 // The returned value must be either the image URL (string) or an object with image attributes (src, alt, id, title, etc.)
-const uploadFile = async (file: File) => {
+const uploadFile = async (file: File): Promise<UploadResponse> => {
   const formData = new FormData();
   formData.append("file", file);
   const response = await fetch("https://api.escuelajs.co/api/v1/files/upload", {
@@ -137,7 +139,7 @@ const uploadFile = async (file: File) => {
   });
   const data = await response.json();
   // or return data.location
-  return { id: data.filename, src: data.location };
+  return { id: data.filename, src: data.location, width: 200, height: 200 };
 };
 
 function App() {
@@ -147,7 +149,7 @@ function App() {
         uploadFile, // If not provided, the image will be stored as a base64 string
         maxSize: 5,  // Default is 10MB
         maxFilesNumber: 2,  // Default is 5
-        allowedMimeTypes: ['image/jpeg', 'image/png', 'image/jpg'], // All image types allowed if not specified
+        allowedMimeTypes: ['image/jpeg', 'image/png', 'image/svg+xml'], // All image types allowed if not specified
         imageMaxWidth: 400, // Default to 1920
         imageMaxHeight: 400, // Default to 1080
       }}
@@ -266,6 +268,7 @@ import './index.css';
 |placeholder|`string`|empty|Placeholder text.
 |label|`string`|empty|Label for the input.
 |error|`string`|empty| Error message to display
+|helperText|`string`|empty| Helper text to display
 |withFloatingMenu|`boolean`|false| Show or hide the [floating menu](https://tiptap.dev/docs/editor/api/extensions/floating-menu)
 |withBubbleMenu|`boolean`|true| Show or hide the [bubble menu](https://tiptap.dev/docs/editor/api/extensions/bubble-menu)
 |inputClassName|`string`|empty| Override input styles
