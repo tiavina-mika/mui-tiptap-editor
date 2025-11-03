@@ -37,7 +37,7 @@ If applicable, add screenshots to help explain your problem.
 ### System (please complete the following information)
 
 - mui-tiptap-editor version: [e.g. 0.1.2]
-- tiptap version: [e.g. 2.0.0]
+- material ui version: [e.g. 5.11.0]
 - Browser: [e.g. Chrome, Firefox]
 - Node version: [e.g 16.4.2]
 - OS: [e.g. Ubuntu 22.04, macOS 11.4]
