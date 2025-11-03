@@ -1,5 +1,13 @@
 # Changelog
 
+## 2.0.2 (2025-11-03)
+
+* Update eslint.config.mjs ([a866e21](https://github.com/tiavina-mika/mui-tiptap-editor/commit/a866e21))
+* Update useTextEditor.ts ([46bbc17](https://github.com/tiavina-mika/mui-tiptap-editor/commit/46bbc17))
+* Update useTextEditor.ts ([8c5198b](https://github.com/tiavina-mika/mui-tiptap-editor/commit/8c5198b))
+* Update useTextEditor.ts ([6e5f236](https://github.com/tiavina-mika/mui-tiptap-editor/commit/6e5f236))
+* fix: remove duplicate extensions warning ([456c53b](https://github.com/tiavina-mika/mui-tiptap-editor/commit/456c53b))
+
 ## 2.0.1 (2025-10-26)
 
 * fix: update docs ([25bd28c](https://github.com/tiavina-mika/mui-tiptap-editor/commit/25bd28c))
