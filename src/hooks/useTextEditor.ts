@@ -14,7 +14,7 @@ import {
 } from '@tiptap/extension-table-of-contents';
 import Text from '@tiptap/extension-text';
 import TextAlign from '@tiptap/extension-text-align';
-import { TextStyleKit } from '@tiptap/extension-text-style';
+import { TextStyleKit, Color } from '@tiptap/extension-text-style';
 import TipTapTypography from '@tiptap/extension-typography';
 import Underline from '@tiptap/extension-underline';
 import Youtube from '@tiptap/extension-youtube';
@@ -38,7 +38,7 @@ import { getCustomMention } from '@/extensions/CustomMention';
 
 
 const extensions = [
-  // Color.configure({ types: ['textStyle', ListItem.name] }),
+  Color.configure({ types: ['textStyle', ListItem.name] }),
   TextStyleKit.configure({ types: [ListItem.name] } as any),
   Document,
   Paragraph,
@@ -87,8 +87,6 @@ const extensions = [
     gapcursor: false,
     heading: false,
     text: false,
-    underline: false,
-    link: false,
   }),
   Heading.configure({
     HTMLAttributes: {
