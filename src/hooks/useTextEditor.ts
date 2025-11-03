@@ -38,6 +38,7 @@ import { getCustomMention } from '@/extensions/CustomMention';
 
 
 const extensions = [
+  // Color.configure({ types: ['textStyle', ListItem.name] }),
   TextStyleKit.configure({ types: [ListItem.name] } as any),
   Document,
   Paragraph,
