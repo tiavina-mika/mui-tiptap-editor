@@ -319,7 +319,7 @@ const generalRules = {
       singleReturnOnly: false,
     },
   ],
-  'require-await': 'error',
+  'require-await': 'off', // Use TS version
   'no-use-before-define': 'error',
   'array-bracket-spacing': ['error', 'never'],
   'block-spacing': 'error',
