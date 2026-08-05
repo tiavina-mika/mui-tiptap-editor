@@ -1,0 +1,310 @@
+# Single-entry-point pipeline for everything that must happen once a PR is merged into main:
+# lint -> test -> build -> release (semantic-release + npm publish) -> Storybook/Pages -> e2e,
+# demo deploy, badges. Downstream jobs only run when semantic-release actually published a new
+# version (see the `release` job's `published` output), so a docs/chore-only merge just runs
+# lint/test/build/release and stops there instead of redeploying everything for nothing.
+name: CI/CD — Release, Storybook, Demo & Badges
+run-name: CI/CD triggered by ${{ github.actor }} on merge to main 🚀
+
+on:
+  push:
+    branches:
+      - main
+  # Allows re-running the full pipeline manually from the Actions tab
+  workflow_dispatch:
+
+env:
+  STORYBOOK_PAGES_URL: https://${{ github.repository_owner }}.github.io/mui-tiptap-editor
+
+# Least privilege by default; jobs that need more (release, Pages deploy) override it below.
+permissions:
+  contents: read
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - name: Install Yarn 4
+        run: corepack enable && corepack prepare yarn@4 --activate
+      - name: Restore Yarn cache
+        uses: actions/cache@v4
+        with:
+          path: .yarn/install-state.gz
+          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
+          restore-keys: ${{ runner.os }}-yarn-
+          enableCrossOsArchive: true
+      - name: Install dependencies
+        run: yarn install --immutable
+      - name: Run ESLint
+        run: yarn lint
+
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - name: Install Yarn 4
+        run: corepack enable && corepack prepare yarn@4 --activate
+      - name: Restore Yarn cache
+        uses: actions/cache@v4
+        with:
+          path: .yarn/install-state.gz
+          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
+          restore-keys: ${{ runner.os }}-yarn-
+          enableCrossOsArchive: true
+      - name: Install dependencies
+        run: yarn install --immutable
+      - name: Run tests
+        run: yarn test:ci
+
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - name: Install Yarn 4
+        run: corepack enable && corepack prepare yarn@4 --activate
+      - name: Restore Yarn cache
+        uses: actions/cache@v4
+        with:
+          path: .yarn/install-state.gz
+          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
+          restore-keys: ${{ runner.os }}-yarn-
+          enableCrossOsArchive: true
+      - name: Install dependencies
+        run: yarn install --immutable
+      - name: Build project
+        run: yarn build
+      # Made available to the `release` job so it doesn't need to rebuild.
+      - name: Upload build artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: dist
+          path: dist/
+          compression-level: 0
+
+  release:
+    runs-on: ubuntu-latest
+    needs: [lint, test, build]
+    # semantic-release needs write access to create tags/commits/GH releases and comment on
+    # issues/PRs, plus id-token for npm provenance (OIDC).
+    permissions:
+      contents: write
+      issues: write
+      pull-requests: write
+      id-token: write
+    outputs:
+      published: ${{ steps.semantic.outputs.new_release_published }}
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          registry-url: 'https://registry.npmjs.org/'
+      - name: Install Yarn 4
+        run: corepack enable && corepack prepare yarn@4 --activate
+      - name: Restore Yarn cache
+        uses: actions/cache@v4
+        with:
+          path: .yarn/install-state.gz
+          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
+          restore-keys: ${{ runner.os }}-yarn-
+          enableCrossOsArchive: true
+      - name: Install dependencies
+        run: yarn install --immutable
+      # Download the build artifact from the build job so we don't need to rebuild.
+      - name: Download build artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: dist
+          path: dist/
+      # Wraps semantic-release and exposes `new_release_published` so downstream jobs
+      # (Storybook/Pages, e2e, demo, badges) can be skipped when nothing was actually published.
+      - name: Publish package on NPM 📦
+        id: semantic
+        uses: cycjimmy/semantic-release-action@v4
+        with:
+          # Pinned to match the "semantic-release" devDependency major version so the action's
+          # own install doesn't silently drift from what's pinned in package.json.
+          semantic_version: 24
+        env:
+          GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+  deploy-storybook:
+    runs-on: ubuntu-latest
+    needs: release
+    if: needs.release.outputs.published == 'true'
+    permissions:
+      contents: read
+      pages: write
+      id-token: write
+    concurrency:
+      group: pages
+      cancel-in-progress: false
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - name: Install Yarn 4
+        run: corepack enable && corepack prepare yarn@4 --activate
+      - uses: bitovi/github-actions-storybook-to-github-pages@v1.0.3
+        with:
+          install_command: yarn install
+          build_command: yarn build-storybook
+          path: storybook-static
+          checkout: false
+      - name: Display deployed URL
+        id: deployment
+        run: echo "page_url=$STORYBOOK_PAGES_URL" >> "$GITHUB_OUTPUT"
+
+  e2e:
+    runs-on: ubuntu-latest
+    needs: deploy-storybook
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - name: Install Yarn 4
+        run: corepack enable && corepack prepare yarn@4 --activate
+      - name: Restore Yarn cache
+        uses: actions/cache@v4
+        with:
+          path: .yarn/install-state.gz
+          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
+          restore-keys: ${{ runner.os }}-yarn-
+          enableCrossOsArchive: true
+      - name: Install dependencies
+        run: yarn install --immutable
+      - name: Install Playwright Browsers
+        run: npx playwright install --with-deps
+      - name: Run E2E tests against deployed Storybook
+        env:
+          PLAYWRIGHT_TEST_BASE_URL: ${{ env.STORYBOOK_PAGES_URL }}
+        run: yarn test:e2e
+      - uses: actions/upload-artifact@v4
+        if: ${{ !cancelled() }}
+        with:
+          name: e2e-results
+          path: test-results/e2e/
+          retention-days: 30
+
+  deploy-demo:
+    runs-on: ubuntu-latest
+    needs: release
+    if: needs.release.outputs.published == 'true'
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - name: Install Yarn 4
+        run: corepack enable && corepack prepare yarn@4 --activate
+      - name: Navigate to /demos and upgrade libs
+        run: |
+          cd demos
+          yarn install --immutable
+          yarn upgrade:lib
+      - name: Install Netlify CLI
+        run: npm install -g netlify-cli
+      - name: Deploy to Netlify
+        env:
+          NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
+          NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
+        run: |
+          cd demos
+          yarn install --immutable
+          yarn build
+          npx netlify deploy --prod --dir=dist --message="Deploy - ${{ github.sha }}"
+      - name: Get deployment URL
+        run: |
+          echo "Deployed Preview URL:"
+          curl -s "https://api.netlify.com/api/v1/sites/${{ secrets.NETLIFY_SITE_ID }}/deploys" \
+            -H "Authorization: Bearer ${{ secrets.NETLIFY_AUTH_TOKEN }}" | \
+            jq -r '.[] | select(.context=="deploy-preview") | .deploy_url' | \
+            grep "${{ github.head_ref || github.ref_name }}" | head -n 1
+
+  add-badges:
+    runs-on: ubuntu-latest
+    needs: release
+    if: needs.release.outputs.published == 'true'
+    steps:
+      - uses: wow-actions/add-badges@v1
+        env:
+          repo_url: ${{ github.event.repository.html_url }}
+          repo_name: ${{ github.event.repository.name }}
+          repo_owner: ${{ github.event.repository.owner.login }}
+        with:
+          GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
+          badges: |
+            [
+              {
+                "badge": "https://img.shields.io/npm/v/${{ env.repo_name }}?style=flat-square",
+                "alt": "NPM Version",
+                "link": "https://www.npmjs.com/package/${{ env.repo_name }}"
+              },
+              {
+                "badge": "https://img.shields.io/badge/language-TypeScript-blue.svg?style=flat-square",
+                "alt": "Language",
+                "link": "https://www.typescriptlang.org"
+              },
+              {
+                "badge": "https://github.com/${{ env.repo_owner }}/${{ env.repo_name }}/actions/workflows/ci-cd.yml/badge.svg",
+                "alt": "Build",
+                "link": "https://github.com/${{ env.repo_owner }}/${{ env.repo_name }}/actions"
+              },
+              {
+                "badge": "https://img.shields.io/npm/dm/${{ env.repo_name }}?style=flat-square",
+                "alt": "Downloads",
+                "link": "https://www.npmjs.com/package/${{ env.repo_name }}"
+              },
+              {
+                "badge": "https://img.shields.io/github/contributors/${{ env.repo_owner }}/${{ env.repo_name }}?style=flat-square",
+                "alt": "Contributors",
+                "link": "https://github.com/${{ env.repo_owner }}/${{ env.repo_name }}/graphs/contributors"
+              },
+              {
+                "badge": "https://img.shields.io/badge/Storybook-View%20Components-orange?style=flat-square&logo=storybook",
+                "alt": "Storybook",
+                "link": "https://${{ env.repo_owner }}.github.io/mui-tiptap-editor"
+              }
+            ]
