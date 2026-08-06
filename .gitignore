@@ -38,5 +38,6 @@ temp
 
 *storybook.log
 storybook-static
+docs2/
 CLAUDE.local.md
 .claude/
