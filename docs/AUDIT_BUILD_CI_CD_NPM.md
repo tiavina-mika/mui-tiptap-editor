@@ -10,22 +10,23 @@
   - [1.4 npm Deployment](#14-npm-deployment)
   - [1.5 Versioning](#15-versioning)
 - [2. What's Missing](#2-whats-missing)
-  - [2.1 No CI Gate on PRs](#21-no-ci-gate-on-prs)
+  - [2.1 No CI Gate on PRs ✅](#21-no-ci-gate-on-prs)
   - [2.2 Very Low Test Coverage](#22-very-low-test-coverage)
   - [2.3 e2e Runs After Publish, Not Before](#23-e2e-runs-after-publish-not-before)
   - [2.4 package.json / Publishing Hygiene](#24-packagejson--publishing-hygiene)
   - [2.5 Missing Project Files](#25-missing-project-files)
   - [2.6 Dependency Automation](#26-dependency-automation)
   - [2.7 CI Reproducibility](#27-ci-reproducibility)
+  - [2.8 Commitlint & semantic-release Misconfigurations](#28-commitlint--semantic-release-misconfigurations)
 - [3. Best Practices to Apply](#3-best-practices-to-apply)
 - [4. Performance](#4-performance)
 - [5. Alternatives](#5-alternatives)
 - [6. Other Observations](#6-other-observations)
 - [7. Proposal — Unify Triggers on a Single Event (PR Merge → main)](#7-proposal--unify-triggers-on-a-single-event-pr-merge--main)
   - [7.1 Problem with the Current Cascade](#71-problem-with-the-current-cascade)
-  - [7.2 Recommended Approach](#72-recommended-approach)
-  - [7.3 Job Graph](#73-job-graph)
-  - [7.4 Gating Downstream Jobs on an Actual Release](#74-gating-downstream-jobs-on-an-actual-release)
+  - [7.2 Recommended Approach ✅](#72-recommended-approach)
+  - [7.3 Job Graph ✅](#73-job-graph)
+  - [7.4 Gating Downstream Jobs on an Actual Release ✅](#74-gating-downstream-jobs-on-an-actual-release)
   - [7.5 Alternative Trigger: `pull_request` `closed` + `merged == true`](#75-alternative-trigger-pull_request-closed--merged--true)
   - [7.6 What to Keep Separate](#76-what-to-keep-separate)
 
@@ -132,7 +133,7 @@ push main → release.yml: lint → test → build → release (semantic-release
 
 ## 2. What's Missing
 
-### 2.1 No CI Gate on PRs
+### 2.1 No CI Gate on PRs ✅
 
 This is the most important gap. `commitlint.yml` (the only workflow that runs on `pull_request`)
 only checks the format of commits/title — **neither `yarn lint`, `yarn test`, nor `yarn build`
@@ -189,12 +190,43 @@ in `package.json` pins an exact version (`yarn@4.10.3`). A CI run six months fro
 therefore use a different Yarn version than the one contributors use locally, defeating the
 purpose of the `packageManager` field (reproducible builds).
 
+### 2.8 Commitlint & semantic-release Misconfigurations
+
+- **`breaking` commit type never triggers a major release**: [commitlint.config.mjs](../commitlint.config.mjs)
+  allows and documents `breaking` as producing `1.0.0 => 2.0.0`, but `semantic-release`'s
+  `commit-analyzer` only bumps `major` when `commit.notes.length > 0` (a `BREAKING CHANGE:` footer
+  or a `!` after the type, e.g. `feat!:`) or when a custom rule matches `commit.type`. The custom
+  rule in [.releaserc.json](../.releaserc.json) is `{ "type": "BREAKING CHANGE", "release": "major" }`
+  — `"BREAKING CHANGE"` is never an actual `commit.type` value (types are lowercase, e.g.
+  `breaking`), so this rule can never match anything. A `breaking: ...` commit therefore passes
+  commitlint but currently produces **no release at all**.
+- **`generateNotes.addPrUrl` is a no-op**: not a recognized option of
+  `@semantic-release/release-notes-generator` or any installed `conventional-changelog-*` package
+  — confirmed by grepping the full dependency tree. It gets merged into the plugin config (a valid
+  semantic-release mechanism), but the plugin silently ignores the unknown key.
+- **`.husky/pre-commit` is empty**: emptied in commit `6880ea5` ("Update pre-commit"), which
+  removed `yarn lint-staged`. `.lintstagedrc.json` and the `"precommit": "lint-staged"` script are
+  therefore dead — lint-staged never runs locally on commit.
+- **No `commit-msg` hook**: commitlint only runs in CI ([commitlint.yml](../.github/workflows/commitlint.yml),
+  on `pull_request`), never at commit time locally.
+- **`"prepare": "husky install"` is deprecated**: the installed husky version (9.1.7) prints
+  `"install command is DEPRECATED"` at install time — should be `"prepare": "husky"`.
+- **Inconsistent allowed commit types between commit messages and PR titles**:
+  `commitlint.config.mjs` allows `feat, fix, docs, style, refactor, perf, test, chore, revert,
+  breaking`; the PR-title check in `commitlint.yml` allows `feat, fix, docs, style, refactor, perf,
+  test, build, ci, chore, revert, BREAKING CHANGE`. `build`/`ci` pass PR-title validation but would
+  fail commitlint on an actual commit of that type; `breaking` passes commitlint but has no
+  matching valid PR-title type.
+- **`CONTRIBUTING.md`'s release section is stale**: it documents a `release.yml` /
+  `automerge.yml` / `publish.yml` three-workflow flow that no longer exists — replaced by the
+  unified `ci-cd.yml` (see [§7](#7-proposal--unify-triggers-on-a-single-event-pr-merge--main)).
+
 ## 3. Best Practices to Apply
 
 1. **Add a `ci.yml` workflow triggered on `pull_request`** (into `main`) that runs `yarn lint`,
    `yarn test:ci` and `yarn build` — the same jobs as in `release.yml`, but as a **required
    check** before merge (via branch protection / required status checks on `main`). `release.yml`
-   can then focus on build + publish, trusting that merged code was already validated.
+   can then focus on build + publish, trusting that merged code was already validated. ✅
 2. **Enable branch protection on `main`**: required status checks (`lint`, `test`, `build`),
    require PR review, dismiss stale reviews — nothing currently indicates this is in place, and
    nothing in the workflows themselves can guarantee it (verify in the GitHub repo settings).
@@ -212,9 +244,26 @@ purpose of the `packageManager` field (reproducible builds).
    `package.json` for correct tree-shaking on the consumer side.
 8. **Add `"engines": { "node": ">=20" }`** to align CI, contributors, and consumers.
 9. **Clean up the `(DEBUG)` steps** in the `release` job of `release.yml` now that the pipeline is
-   stable — they add noise to every run without providing useful signal in steady state.
+   stable — they add noise to every run without providing useful signal in steady state. ✅
 10. **Add Dependabot** (`.github/dependabot.yml`), at minimum for npm security updates and GitHub
     Actions.
+11. **Fix the `breaking` release rule**: either drop the `breaking` commit type from
+    `commitlint.config.mjs` and document `feat!:`/`fix!:` or a `BREAKING CHANGE:` footer as the
+    only way to trigger a major release, or add a working custom rule
+    `{ "type": "breaking", "release": "major" }` to `.releaserc.json` and remove the dead
+    `{ "type": "BREAKING CHANGE", ... }` rule.
+12. **Remove `generateNotes.addPrUrl`** from `.releaserc.json` (or replace it with a mechanism
+    that actually links PRs in release notes), since it currently has no effect.
+13. **Restore `.husky/pre-commit`** to run `yarn lint-staged` (or explicitly document why it was
+    disabled, if that was a deliberate choice).
+14. **Add a `.husky/commit-msg` hook** running `commitlint --edit "$1"` so malformed commit
+    messages are caught locally, not only in CI.
+15. **Update the `"prepare"` script** to `"husky"` (drop the deprecated `install` subcommand)
+    before it hard-fails on a future husky major version.
+16. **Align the allowed commit types** between `commitlint.config.mjs` and the PR-title check in
+    `commitlint.yml` so both gates accept exactly the same list.
+17. **Update `CONTRIBUTING.md`**'s release section to describe the current unified `ci-cd.yml`
+    pipeline instead of the removed `release.yml` / `automerge.yml` / `publish.yml` workflows.
 
 ## 4. Performance
 
@@ -227,7 +276,7 @@ purpose of the `packageManager` field (reproducible builds).
   - `lint`, `test`, and `build` currently run **sequentially** (`test` waits on `lint`, `build`
     waits on `test`) even though they are independent of each other — parallelizing them (all
     three with `needs: []`, and `release` with `needs: [lint, test, build]`) would cut the total
-    release pipeline duration to roughly the longest single job instead of the sum of the three.
+    release pipeline duration to roughly the longest single job instead of the sum of the three. ✅
   - The Yarn cache only caches `.yarn/install-state.gz`, not the actual downloaded package
     contents (`nodeLinker: node-modules` in `.yarnrc.yml` means a real `node_modules` on disk) —
     also caching `node_modules` (keyed on `yarn.lock`) would noticeably speed up
@@ -259,7 +308,7 @@ purpose of the `packageManager` field (reproducible builds).
   `NODE_AUTH_TOKEN` (not `NPM_TOKEN`). This `.npmrc` is therefore non-functional — the actual
   publish only works because `@semantic-release/npm` reads `process.env.NPM_TOKEN` directly, which
   is correctly set in the following step (`Publish package on NPM`). This is not a secret leak
-  (nothing sensitive is written), but it is misleading dead code that should be removed.
+  (nothing sensitive is written), but it is misleading dead code that should be removed. ✅
 - **npm provenance not explicitly enabled**: the `id-token: write` permission is present
   (required for OIDC), but nothing in `.releaserc.json`/`@semantic-release/npm` enables
   `--provenance`. Enabling it would give consumers a cryptographic proof of package provenance
@@ -293,7 +342,7 @@ to `main` for `release.yml`), then fanned out further via `workflow_run` for `e2
 - There's no shared job context/output between the workflows; each one has to re-derive
   everything it needs (checkout, install, etc.) from scratch.
 
-### 7.2 Recommended Approach
+### 7.2 Recommended Approach ✅
 
 Merge the release-time workflows (`release.yml`, `e2e.yml`, `deploy-demo.yml`, `add-badges.yml`)
 into a **single workflow file** (e.g. `.github/workflows/ci-cd.yml`) with one trigger:
@@ -310,7 +359,7 @@ main". This keeps the trigger simple and matches exactly what `release.yml` alre
 today — the change is consolidating the four downstream workflows into the same file, replacing
 `workflow_run` chaining with `needs:` job dependencies.
 
-### 7.3 Job Graph
+### 7.3 Job Graph ✅
 
 Inside that single workflow, sequence/parallelize jobs with `needs:` instead of separate
 workflow files:
@@ -348,7 +397,7 @@ jobs:
 One workflow run, one visible pipeline, and downstream jobs only fire when a release actually
 happened.
 
-### 7.4 Gating Downstream Jobs on an Actual Release
+### 7.4 Gating Downstream Jobs on an Actual Release ✅
 
 The raw `npx semantic-release --debug` call used today doesn't expose whether a release was
 published as a step/job output — that has to be parsed from logs, which is fragile. Switch to
@@ -414,7 +463,7 @@ would defeat its purpose (it needs to run and block *before* the merge exists). 
 state is:
 
 - **On PR** (blocking, required checks): `commitlint.yml` (commit/title format) + `ci.yml`
-  (code lint, tests, build).
+  (code lint, tests, build). ✅
 - **On merge to `main`** (single trigger, single workflow): `ci-cd.yml` running
   `lint → test → build → release → [deploy-storybook → e2e, deploy-demo, add-badges]`, with the
-  last four jobs skipped automatically when semantic-release published nothing.
+  last four jobs skipped automatically when semantic-release published nothing. ✅
