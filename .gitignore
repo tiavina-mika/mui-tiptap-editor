@@ -14,6 +14,9 @@ dist
 dist-ssr
 *.local
 
+# Claude Code local instructions (not shared)
+CLAUDE.local.md
+
 # Editor directories and files
 .idea
 .DS_Store
@@ -35,3 +38,6 @@ temp
 
 *storybook.log
 storybook-static
+docs/
+CLAUDE.local.md
+.claude/

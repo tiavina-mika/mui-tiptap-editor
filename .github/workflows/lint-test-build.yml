@@ -1,0 +1,90 @@
+# Reusable workflow shared by ci.yml (pull_request gate) and ci-cd.yml (post-merge pipeline),
+# so lint/test/build are defined once instead of copy-pasted in both callers.
+name: Lint, Test & Build (reusable)
+
+on:
+  workflow_call:
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - name: Install Yarn 4
+        run: corepack enable && corepack prepare yarn@4 --activate
+      - name: Restore Yarn cache
+        uses: actions/cache@v4
+        with:
+          path: .yarn/install-state.gz
+          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
+          restore-keys: ${{ runner.os }}-yarn-
+          enableCrossOsArchive: true
+      - name: Install dependencies
+        run: yarn install --immutable
+      - name: Run ESLint
+        run: yarn lint
+
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - name: Install Yarn 4
+        run: corepack enable && corepack prepare yarn@4 --activate
+      - name: Restore Yarn cache
+        uses: actions/cache@v4
+        with:
+          path: .yarn/install-state.gz
+          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
+          restore-keys: ${{ runner.os }}-yarn-
+          enableCrossOsArchive: true
+      - name: Install dependencies
+        run: yarn install --immutable
+      - name: Run tests
+        run: yarn test:ci
+
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - name: Install Yarn 4
+        run: corepack enable && corepack prepare yarn@4 --activate
+      - name: Restore Yarn cache
+        uses: actions/cache@v4
+        with:
+          path: .yarn/install-state.gz
+          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
+          restore-keys: ${{ runner.os }}-yarn-
+          enableCrossOsArchive: true
+      - name: Install dependencies
+        run: yarn install --immutable
+      - name: Build project
+        run: yarn build
+      # Only meaningful for the ci-cd.yml caller (release job reuses this build); harmless no-op
+      # artifact for the ci.yml/PR caller, which doesn't download it.
+      - name: Upload build artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: dist
+          path: dist/
+          compression-level: 0
