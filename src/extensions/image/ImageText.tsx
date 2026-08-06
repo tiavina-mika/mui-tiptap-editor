@@ -149,15 +149,23 @@ const ImageText = ({
   return (
     <>
       <Stack
-        alignItems="center"
         className="tiptap-legend-text"
         css={classes.imageTextRoot(attrName)}
         direction="row"
         spacing={0}
+        sx={{
+          alignItems: 'center',
+        }}
       >
         {value && !error
           ? (
-            <Stack alignItems="center" direction="row" spacing={2}>
+            <Stack
+              direction="row"
+              spacing={2}
+              sx={{
+                alignItems: 'center',
+              }}
+            >
               <Typography>{value}</Typography>
               <IconButton
                 size="small"
@@ -170,15 +178,17 @@ const ImageText = ({
             </Stack>
           ) : (
             // legend
-            <button
-              className="flexRow itemsCenter"
-              css={[classes.buttonIconSx, classes.addButton]}
-              type="button"
-              onClick={handleOpen}
-            >
-              <img alt="add" src={Add} style={{ width: 18, marginRight: 4 }} />
-              <Typography css={classes.legend}>{label}</Typography>
-            </button>
+            (
+              <button
+                className="flexRow itemsCenter"
+                css={[classes.buttonIconSx, classes.addButton]}
+                type="button"
+                onClick={handleOpen}
+              >
+                <img alt="add" src={Add} style={{ width: 18, marginRight: 4 }} />
+                <Typography css={classes.legend}>{label}</Typography>
+              </button>
+            )
           )}
         <IconButton
           size="small"

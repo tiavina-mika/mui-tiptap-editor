@@ -291,7 +291,7 @@ const TextEditor = ({
              * ----------- Preview -------- //
              * ---------------------------- //
              */
-            <EditorContent className={inputClassName} editor={editor} />
+            (<EditorContent className={inputClassName} editor={editor} />)
           )}
         </div>
         {/*
