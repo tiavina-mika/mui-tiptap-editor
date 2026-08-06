@@ -1,0 +1,18 @@
+# Blocking PR gate: lint, test, and build must pass before a PR can be merged. This is what was
+# missing before — commitlint.yml only checked commit/PR-title format, never the code itself.
+# Set "lint-test-build / lint", "lint-test-build / test" and "lint-test-build / build" as
+# required status checks on the main branch protection rule for this to actually block merges.
+name: CI (Pull Request)
+run-name: CI check for ${{ github.actor }}'s PR 🔎
+
+on:
+  pull_request:
+    branches:
+      - release
+      - main
+      - feat/*
+      - fix/*
+
+jobs:
+  lint-test-build:
+    uses: ./.github/workflows/lint-test-build.yml
