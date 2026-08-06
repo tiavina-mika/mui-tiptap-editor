@@ -14,6 +14,8 @@ export default {
         'refactor', // Code refactoring (no feature or bug changes): no version bump
         'perf', // Performance improvements : no version bump
         'test', // Adding or updating tests : no version bump
+        'build', // Changes to the build system or external dependencies: no version bump
+        'ci', // Changes to CI configuration files and scripts: no version bump
         'chore', // Maintenance tasks (build, tooling, etc.): no version bump
         'revert', // Reverting previous commits
         'breaking', // BREAKING CHANGE (major changes that break backward compatibility): 1.0.0 => 2.0.0

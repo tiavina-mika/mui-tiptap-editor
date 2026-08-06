@@ -211,12 +211,14 @@ purpose of the `packageManager` field (reproducible builds).
   on `pull_request`), never at commit time locally.
 - **`"prepare": "husky install"` is deprecated**: the installed husky version (9.1.7) prints
   `"install command is DEPRECATED"` at install time — should be `"prepare": "husky"`.
-- **Inconsistent allowed commit types between commit messages and PR titles**:
+- **Inconsistent allowed commit types between commit messages and PR titles** ✅:
   `commitlint.config.mjs` allows `feat, fix, docs, style, refactor, perf, test, chore, revert,
   breaking`; the PR-title check in `commitlint.yml` allows `feat, fix, docs, style, refactor, perf,
   test, build, ci, chore, revert, BREAKING CHANGE`. `build`/`ci` pass PR-title validation but would
   fail commitlint on an actual commit of that type; `breaking` passes commitlint but has no
-  matching valid PR-title type.
+  matching valid PR-title type. `build` and `ci` were added to `commitlint.config.mjs`'s
+  `type-enum` to match the PR-title list; the `breaking` vs `BREAKING CHANGE` mismatch is still
+  open.
 - **`CONTRIBUTING.md`'s release section is stale**: it documents a `release.yml` /
   `automerge.yml` / `publish.yml` three-workflow flow that no longer exists — replaced by the
   unified `ci-cd.yml` (see [§7](#7-proposal--unify-triggers-on-a-single-event-pr-merge--main)).
