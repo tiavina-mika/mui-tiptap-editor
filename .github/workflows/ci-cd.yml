@@ -38,10 +38,15 @@ jobs:
     outputs:
       published: ${{ steps.semantic.outputs.new_release_published }}
     steps:
+      # token must be GH_TOKEN (not the default GITHUB_TOKEN) so the git credentials persisted
+      # here are the admin PAT that main's branch protection allows to bypass — the actual
+      # `git push` issued later by @semantic-release/git reuses whatever checkout persisted here,
+      # regardless of the GITHUB_TOKEN env passed to the semantic-release step itself.
       - name: Checkout code
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
+          token: ${{ secrets.GH_TOKEN }}
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
