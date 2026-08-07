@@ -279,7 +279,7 @@ export const validateUploadedFile = async ({
     } else {
       // response is an object, merge with existing attributes (like alt, title, id, width, height, etc)
       const filteredAttrs = filterValidImageAttributes(response);
-      const imageAttrs = { ...copiedAttrs, ...filteredAttrs } as ImageAttributes;
+      const imageAttrs = { ...copiedAttrs, ...filteredAttrs };
 
       if (imageAttrs.src) {
         const isUrl = checkIfValidHttpUrl(imageAttrs.src);

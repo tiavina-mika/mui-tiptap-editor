@@ -1,5 +1,5 @@
 'use client';
-/* eslint-disable @cspell/spellchecker */
+
 
 /**
  * This file defines a custom CodeBlockWithCopy component for use with the TipTap editor.

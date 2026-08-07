@@ -95,9 +95,11 @@ const TableMenuDialog = ({
       anchorEl={anchorEl}
       id="select-table-menu"
       open={Boolean(anchorEl)}
-      TransitionComponent={Fade}
-      MenuListProps={{
-        'aria-labelledby': 'select-table-button',
+      slots={{ transition: Fade }}
+      slotProps={{
+        list: {
+          'aria-labelledby': 'select-table-button',
+        },
       }}
       onClose={onClose}
     >

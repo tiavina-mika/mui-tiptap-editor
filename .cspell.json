@@ -4,6 +4,8 @@
   "useGitignore": false,  // Disable .gitignore usage to allow custom ignorePaths
   "globRoot": "./",
   "words": [
+    "codemod",
+    "codemods",
     "colord",
     "contenteditable",
     "dropcursor",
@@ -11,8 +13,10 @@
     "gapcursor",
     "keymap",
     "queueMicrotask",
+    "lowlight",
     "mui-tiptap",
     "mui",
+    "networkidle",
     "octocat",
     "premajor",
     "preminor",
@@ -24,7 +28,8 @@
     "Tiptap",
     "tiptap",
     "noopener",
-    "noreferrer"
+    "noreferrer",
+    "ueberdosis"
   ],
   "flagWords": [],
   "ignorePaths": [
