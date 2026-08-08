@@ -1,5 +1,80 @@
 # Changelog
 
+# [5.0.0](https://github.com/tiavina-mika/mui-tiptap-editor/compare/v4.0.4...v5.0.0) (2026-08-08)
+
+
+### breaking
+
+* declare package ESM-only and add project docs/tooling fixes ([#121](https://github.com/tiavina-mika/mui-tiptap-editor/issues/121)) ([041b913](https://github.com/tiavina-mika/mui-tiptap-editor/commit/041b9139e54dccd40e0280b01459d4a4d53902c1))
+
+
+### BREAKING CHANGES
+
+* mui-tiptap-editor no longer exposes a require (CJS)
+entry point. Consumers must use ESM import syntax.
+
+Co-Authored-By: Claude Sonnet 5 <noreply@anthropic.com>
+
+* chore: add LICENSE, SECURITY.md and CODE_OF_CONDUCT.md
+
+package.json declares "license": "MIT" but no LICENSE file existed in
+the repo — a legal gap for consumers and a common flag in automated
+compliance scanners (FOSSA, Snyk). Also add a vulnerability reporting
+policy and a contributor code of conduct, standard expectations for a
+public package accepting external contributions.
+
+Co-Authored-By: Claude Sonnet 5 <noreply@anthropic.com>
+
+* fix: use isValid check in checkLegend and expand app.utils test coverage
+
+checkLegend evaluated `checkAlt(text) && text.length <= maxLength`,
+where checkAlt(text) always returns a truthy object regardless of its
+.isValid field — so an empty legend was incorrectly accepted as long
+as it was within maxLength. Use `.isValid` instead.
+
+Also add unit tests for the remaining validation helpers in
+app.utils.ts (checkIfValidHttpUrl, showTextEditorToolbarMenu, checkAlt,
+checkLegend, getIsFileSizeValid, checkIsImage, checkValidMimeType,
+checkFilesNumber, validateUploadedFile), which is what caught the bug
+above. Coverage was previously limited to a handful of URL/file-size
+helpers.
+
+Co-Authored-By: Claude Sonnet 5 <noreply@anthropic.com>
+
+* docs: fix README/CONTRIBUTING issues and add license/compatibility sections
+
+- Fix "Hello word!" (x2) and "OOverride" typos in README
+- Fix the malformed (commit convention)[url] link in CONTRIBUTING.md
+- Remove the stale "upgrade eslint to v9" TODO — the project is
+  already on eslint v10 with eslint.config.mjs
+- Add a Compatibility section documenting supported React/MUI/Node
+  versions and the ESM-only nature of the package
+- Add a License section, and bundle-size + license badges
+- Add the words flagged by cspell for the new author/license
+  references and pre-existing French example strings to .cspell.json
+
+Co-Authored-By: Claude Sonnet 5 <noreply@anthropic.com>
+
+* fix: switch release-notes-generator to angular preset and backfill missing changelog entries
+
+conventional-changelog-conventionalcommits@10 returns its writer config under a
+`template` key while conventional-changelog-writer@8 only reads `mainTemplate`,
+so the writer silently falls back to a template incompatible with the preset's
+commit renderer — every commit line rendered empty, leaving only version
+headers in CHANGELOG.md for 3.0.0 and 3.0.1. The angular preset wires
+mainTemplate correctly and was verified to render notes properly.
+
+Co-Authored-By: Claude Sonnet 5 <noreply@anthropic.com>
+
+* fix: allow lowercase breaking type in PR title check
+
+The amannn/action-semantic-pull-request types list only recognized
+"BREAKING CHANGE", while commitlint.config.mjs's type-enum uses the
+lowercase custom "breaking" type for commit messages (per repo
+convention). PR titles using "breaking:" were rejected as a result.
+
+Co-Authored-By: Claude Sonnet 5 <noreply@anthropic.com>
+
 ## 3.0.1 (2026-08-08)
 
 ### Performance Improvements
