@@ -18,6 +18,10 @@
   "bugs": {
     "url": "https://github.com/tiavina-mika/mui-tiptap-editor/issues"
   },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tiavina-mika/mui-tiptap-editor.git"
+  },
   "author": {
     "name": "Tiavina Michael Ralainirina",
     "email": "tiavinamika@gmail.com",
@@ -31,10 +35,15 @@
   "exports": {
     ".": {
       "types": "./dist/types/index.d.ts",
-      "import": "./dist/index.mjs",
-      "require": "./dist/index.mjs"
+      "import": "./dist/index.mjs"
     }
   },
+  "engines": {
+    "node": ">=18"
+  },
+  "sideEffects": [
+    "**/*.css"
+  ],
   "files": [
     "/dist"
   ],
