@@ -2,7 +2,24 @@
 
 ## 3.0.1 (2026-08-08)
 
+### Performance Improvements
+
+* reduce unnecessary re-renders and recomputation across the toolbar and editor hook ([#120](https://github.com/tiavina-mika/mui-tiptap-editor/issues/120)) ([6050b9a](https://github.com/tiavina-mika/mui-tiptap-editor/commit/6050b9a))
+
 ## 3.0.0 (2026-08-07)
+
+### Breaking Changes
+
+* upgrade dependencies to latest (Tiptap v3.29, MUI v9) ([#116](https://github.com/tiavina-mika/mui-tiptap-editor/issues/116)) ([71f34c9](https://github.com/tiavina-mika/mui-tiptap-editor/commit/71f34c9))
+
+### Bug Fixes
+
+* set NODE_AUTH_TOKEN alongside NPM_TOKEN in release job ([#118](https://github.com/tiavina-mika/mui-tiptap-editor/issues/118)) ([3eb86ed](https://github.com/tiavina-mika/mui-tiptap-editor/commit/3eb86ed))
+* use GH_TOKEN for checkout in release job so semantic-release can push to protected main ([#119](https://github.com/tiavina-mika/mui-tiptap-editor/issues/119)) ([d257fe9](https://github.com/tiavina-mika/mui-tiptap-editor/commit/d257fe9))
+
+### BREAKING CHANGES
+
+* peer dependency @mui/material bumped from ^7.3.4 to ^9.3.1, consumers must upgrade MUI to v9.
 
 ## 2.0.2 (2025-11-03)
 

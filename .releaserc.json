@@ -17,24 +17,7 @@
             ]
         }],
         ["@semantic-release/release-notes-generator", {
-            "preset": "conventionalcommits",
-            "writerOpts": {
-                "headerPartial": "{{#if version}}## {{version}} ({{date}})\n{{/if}}",
-                "commitGroupsSort": "title",
-                "groupBy": "type",
-                "commitGroups": [
-                    { "title": "Bug Fixes", "type": "fix" },
-                    { "title": "Features", "type": "feat" },
-                    { "title": "Performance Improvements", "type": "perf" },
-                    { "title": "Breaking Changes", "type": "BREAKING CHANGE" },
-                    { "title": "Documentation", "type": "docs" },
-                    { "title": "Styles", "type": "style" },
-                    { "title": "Code Refactoring", "type": "refactor" },
-                    { "title": "Tests", "type": "test" },
-                    { "title": "Chores", "type": "chore" },
-                    { "title": "Reverts", "type": "revert" }
-                ]
-            }
+            "preset": "angular"
         }],
         ["@semantic-release/changelog", {
             "changelogFile": "CHANGELOG.md",
