@@ -153,7 +153,7 @@ const TextEditor = ({
     uploadFileOptions,
     id,
     uploadFileLabels: labels?.upload,
-    onChangeTableOfContents: handleToCItemClick,
+    onChangeTableOfContents: disableTableOfContents ? undefined : handleToCItemClick,
     ...editorOptions,
   });
 

@@ -39,87 +39,96 @@ const updatePosition = (editor: Editor, element: HTMLElement) => {
 
 const getSuggestion = (
   options: ITextEditorOption[] = []
-): MentionOptions['suggestion'] => ({
-  items: ({ query }: { query: string }) => {
-    return options
-      .filter((option: ITextEditorOption) =>
-        option.label.toLowerCase().startsWith(query.toLowerCase())
-      )
-      .slice(0, 5);
-  },
+): MentionOptions['suggestion'] => {
+  // lower-cased once per `mentions` change instead of on every keystroke of the mention query
+  const lowerCasedOptions = options.map((option) => ({
+    option,
+    lowerLabel: option.label.toLowerCase(),
+  }));
 
-  render: () => {
-    let component: any;
-    // let popup: any;
+  return {
+    items: ({ query }: { query: string }) => {
+      const lowerQuery = query.toLowerCase();
 
-    return {
-      onStart: (props: Record<string, any>) => {
-        component = new ReactRenderer(Mentions, {
-          props,
-          editor: props.editor,
-        });
+      return lowerCasedOptions
+        .filter(({ lowerLabel }) => lowerLabel.startsWith(lowerQuery))
+        .slice(0, 5)
+        .map(({ option }) => option);
+    },
 
-        if (!props.clientRect) {
-          return;
-        }
+    render: () => {
+      let component: any;
+      // let popup: any;
 
-        if (!component) return;
-        if (typeof document === 'undefined') {
-          return;
-        }
+      return {
+        onStart: (props: Record<string, any>) => {
+          component = new ReactRenderer(Mentions, {
+            props,
+            editor: props.editor,
+          });
 
-        component.element.style.position = 'absolute';
+          if (!props.clientRect) {
+            return;
+          }
 
-        document.body.appendChild(component.element);
+          if (!component) return;
+          if (typeof document === 'undefined') {
+            return;
+          }
 
-        updatePosition(props.editor, component.element);
-        /*
-         * popup = tippy('body', {
-         *   getReferenceClientRect: props.clientRect,
-         *   appendTo: () => document.body,
-         *   content: component.element,
-         *   showOnCreate: true,
-         *   interactive: true,
-         *   trigger: 'manual',
-         *   placement: 'bottom-start',
-         * } as any);
-         */
-      },
+          component.element.style.position = 'absolute';
 
-      onUpdate: (props: Record<string, any>) => {
-        if (!component) return;
-        component.updateProps(props);
+          document.body.appendChild(component.element);
 
-        if (!props.clientRect) {
-          return;
-        }
+          updatePosition(props.editor, component.element);
+          /*
+           * popup = tippy('body', {
+           *   getReferenceClientRect: props.clientRect,
+           *   appendTo: () => document.body,
+           *   content: component.element,
+           *   showOnCreate: true,
+           *   interactive: true,
+           *   trigger: 'manual',
+           *   placement: 'bottom-start',
+           * } as any);
+           */
+        },
 
-        /*
-         * popup[0].setProps({
-         *   getReferenceClientRect: props.clientRect,
-         * });
-         */
+        onUpdate: (props: Record<string, any>) => {
+          if (!component) return;
+          component.updateProps(props);
 
-        updatePosition(props.editor, component.element);
-      },
+          if (!props.clientRect) {
+            return;
+          }
 
-      onKeyDown: (props: Record<string, any>) => {
-        if (props.event.key === 'Escape') {
-          // popup[0].hide();
+          /*
+           * popup[0].setProps({
+           *   getReferenceClientRect: props.clientRect,
+           * });
+           */
+
+          updatePosition(props.editor, component.element);
+        },
+
+        onKeyDown: (props: Record<string, any>) => {
+          if (props.event.key === 'Escape') {
+            // popup[0].hide();
+            component.destroy();
+
+            return true;
+          }
+
+          return component.ref?.onKeyDown(props);
+        },
+
+        onExit: () => {
+          component.element.remove();
           component.destroy();
-
-          return true;
-        }
-
-        return component.ref?.onKeyDown(props);
-      },
-
-      onExit: () => {
-        component.element.remove();
-        component.destroy();
-      },
-    };
-  },
-});
+        },
+      };
+    },
+  };
+};
 
 export default getSuggestion;

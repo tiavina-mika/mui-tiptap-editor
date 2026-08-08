@@ -115,7 +115,39 @@ const Toolbar = ({
     setTableAnchorEl(null);
   };
 
-  const toggleYoutubeDialog = () => setOpenYoutubeDialog(!openYoutubeDialog);
+  const toggleYoutubeDialog = useCallback(
+    () => setOpenYoutubeDialog((prevOpen) => !prevOpen),
+    []
+  );
+
+  /*
+   * Stable per `editor` identity (which never changes across re-renders), so these handlers
+   * keep the same reference on every Toolbar re-render — required for the `React.memo` on
+   * `ToolBarIconButton` to actually skip re-rendering buttons whose state hasn't changed.
+   * Also simplified from `.can().chain().focus().X().run()` to `.can().X()` for the disabled
+   * checks below: the chain/focus/run roundtrip was redundant for a dry-run check.
+   */
+  const commands = useMemo(
+    () => ({
+      toggleBold: () => editor.chain().focus().toggleBold().run(),
+      toggleItalic: () => editor.chain().focus().toggleItalic().run(),
+      toggleStrike: () => editor.chain().focus().toggleStrike().run(),
+      toggleUnderline: () => editor.chain().focus().toggleUnderline().run(),
+      setTextAlignLeft: () => editor.chain().focus().setTextAlign('left').run(),
+      setTextAlignCenter: () => editor.chain().focus().setTextAlign('center').run(),
+      setTextAlignRight: () => editor.chain().focus().setTextAlign('right').run(),
+      setTextAlignJustify: () => editor.chain().focus().setTextAlign('justify').run(),
+      toggleBulletList: () => editor.chain().focus().toggleBulletList().run(),
+      toggleOrderedList: () => editor.chain().focus().toggleOrderedList().run(),
+      insertMention: () => editor.chain().focus().insertContent('@').run(),
+      toggleBlockquote: () => editor.chain().focus().toggleBlockquote().run(),
+      toggleCodeBlock: () => editor.chain().focus().toggleCodeBlock().run(),
+      toggleCode: () => editor.chain().focus().toggleCode().run(),
+      undo: () => editor.chain().focus().undo().run(),
+      redo: () => editor.chain().focus().redo().run(),
+    }),
+    [editor]
+  );
 
   // set link
   const setLink = useCallback(() => {
@@ -162,48 +194,48 @@ const Toolbar = ({
       )}
 
       <ToolBarIconButton
-        disabled={!editor.can().chain().focus().toggleBold().run()}
+        disabled={!editor.can().toggleBold()}
         display={showTextEditorToolbarMenu(toolbar, 'bold')}
         icon={icons?.bold?.src || Bold}
         iconSize={icons?.bold?.size || 10}
         name="bold"
         tooltip={labels?.toolbar?.bold || 'Bold'}
         withTooltip={isWithTooltip}
-        onClick={() => editor.chain().focus().toggleBold().run()}
+        onClick={commands.toggleBold}
       />
 
       <ToolBarIconButton
-        disabled={!editor.can().chain().focus().toggleItalic().run()}
+        disabled={!editor.can().toggleItalic()}
         display={showTextEditorToolbarMenu(toolbar, 'italic')}
         icon={icons?.italic?.src || Italic}
         iconSize={icons?.italic?.size || 12}
         name="italic"
         tooltip={labels?.toolbar?.italic || 'Italic'}
         withTooltip={isWithTooltip}
-        onClick={() => editor.chain().focus().toggleItalic().run()}
+        onClick={commands.toggleItalic}
       />
 
       <ToolBarIconButton
-        disabled={!editor.can().chain().focus().toggleStrike().run()}
+        disabled={!editor.can().toggleStrike()}
         display={showTextEditorToolbarMenu(toolbar, 'strike')}
         icon={icons?.strike?.src || Strike}
         iconSize={icons?.strike?.size || 14}
         name="strike"
         tooltip={labels?.toolbar?.strike || 'Strike through'}
         withTooltip={isWithTooltip}
-        onClick={() => editor.chain().focus().toggleStrike().run()}
+        onClick={commands.toggleStrike}
       />
 
       <ToolBarIconButton
         split
-        disabled={!editor.can().chain().focus().toggleUnderline().run()}
+        disabled={!editor.can().toggleUnderline()}
         display={showTextEditorToolbarMenu(toolbar, 'underline')}
         icon={icons?.underline?.src || Underline}
         iconSize={icons?.underline?.size || 13}
         name="underline"
         tooltip={labels?.toolbar?.underline || 'Underline'}
         withTooltip={isWithTooltip}
-        onClick={() => editor.chain().focus().toggleUnderline().run()}
+        onClick={commands.toggleUnderline}
       />
 
       <ToolBarIconButton
@@ -228,7 +260,7 @@ const Toolbar = ({
         name="align-left"
         tooltip={labels?.toolbar?.alignLeft || 'Left align'}
         withTooltip={isWithTooltip}
-        onClick={() => editor.chain().focus().setTextAlign('left').run()}
+        onClick={commands.setTextAlignLeft}
       />
       <ToolBarIconButton
         disabled={false}
@@ -239,7 +271,7 @@ const Toolbar = ({
         name="align-center"
         tooltip={labels?.toolbar?.alignCenter || 'Center align'}
         withTooltip={isWithTooltip}
-        onClick={() => editor.chain().focus().setTextAlign('center').run()}
+        onClick={commands.setTextAlignCenter}
       />
       <ToolBarIconButton
         disabled={false}
@@ -250,7 +282,7 @@ const Toolbar = ({
         name="align-right"
         tooltip={labels?.toolbar?.alignRight || 'Right align'}
         withTooltip={isWithTooltip}
-        onClick={() => editor.chain().focus().setTextAlign('right').run()}
+        onClick={commands.setTextAlignRight}
       />
       <ToolBarIconButton
         split
@@ -262,30 +294,30 @@ const Toolbar = ({
         name="align-justify"
         tooltip={labels?.toolbar?.alignJustify || 'Justify align'}
         withTooltip={isWithTooltip}
-        onClick={() => editor.chain().focus().setTextAlign('justify').run()}
+        onClick={commands.setTextAlignJustify}
       />
 
       <ToolBarIconButton
-        disabled={!editor.can().chain().focus().toggleBulletList().run()}
+        disabled={!editor.can().toggleBulletList()}
         display={showTextEditorToolbarMenu(toolbar, 'bulletList')}
         icon={icons?.bulletList?.src || BulletList}
         iconSize={icons?.bulletList?.size || 19}
         name="bulletList"
         tooltip={labels?.toolbar?.bulletList || 'Bullet list'}
         withTooltip={isWithTooltip}
-        onClick={() => editor.chain().focus().toggleBulletList().run()}
+        onClick={commands.toggleBulletList}
       />
 
       <ToolBarIconButton
         split
-        disabled={!editor.can().chain().focus().toggleOrderedList().run()}
+        disabled={!editor.can().toggleOrderedList()}
         display={showTextEditorToolbarMenu(toolbar, 'orderedList')}
         icon={icons?.orderedList?.src || OrderedList}
         iconSize={icons?.orderedList?.size || 14}
         name="orderedList"
         tooltip={labels?.toolbar?.orderedList || 'Ordered list'}
         withTooltip={isWithTooltip}
-        onClick={() => editor.chain().focus().toggleOrderedList().run()}
+        onClick={commands.toggleOrderedList}
       />
 
       <ToolBarIconButton
@@ -320,7 +352,7 @@ const Toolbar = ({
         name="mention"
         tooltip={labels?.toolbar?.mention || 'Mention user'}
         withTooltip={isWithTooltip}
-        onClick={() => editor.chain().focus().insertContent('@').run()}
+        onClick={commands.insertMention}
       />
 
       <ToolBarIconButton
@@ -343,7 +375,7 @@ const Toolbar = ({
         name="blockquote"
         tooltip={labels?.toolbar?.blockquote || 'Block quote'}
         withTooltip={isWithTooltip}
-        onClick={() => editor.chain().focus().toggleBlockquote().run()}
+        onClick={commands.toggleBlockquote}
       />
 
       <ToolBarIconButton
@@ -354,7 +386,7 @@ const Toolbar = ({
         name="codeBlock"
         tooltip={labels?.toolbar?.codeBlock || 'Code block'}
         withTooltip={isWithTooltip}
-        onClick={() => editor.chain().focus().toggleCodeBlock().run()}
+        onClick={commands.toggleCodeBlock}
       />
 
       <ToolBarIconButton
@@ -366,7 +398,7 @@ const Toolbar = ({
         name="code"
         tooltip={labels?.toolbar?.inlineCode || 'Inline code'}
         withTooltip={isWithTooltip}
-        onClick={() => editor.chain().focus().toggleCode().run()}
+        onClick={commands.toggleCode}
       />
 
       <ToolBarIconButton
@@ -389,7 +421,7 @@ const Toolbar = ({
         name="undo"
         tooltip={labels?.toolbar?.undo || 'Undo'}
         withTooltip={isWithTooltip}
-        onClick={() => editor.chain().focus().undo().run()}
+        onClick={commands.undo}
       />
 
       <ToolBarIconButton
@@ -401,7 +433,7 @@ const Toolbar = ({
         name="redo"
         tooltip={labels?.toolbar?.redo || 'Redo'}
         withTooltip={isWithTooltip}
-        onClick={() => editor.chain().focus().redo().run()}
+        onClick={commands.redo}
       />
 
       {showTextEditorToolbarMenu(toolbar, 'youtube') && (

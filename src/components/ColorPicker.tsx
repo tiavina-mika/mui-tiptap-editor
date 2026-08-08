@@ -16,13 +16,15 @@ const ColorPicker = ({ editor, id }: Props) => {
     editor.chain().focus().setColor(value).run();
   };
 
+  const color = editor.getAttributes('textStyle').color || '#000000';
+
   return (
     <>
       <input
         css={{ width: 0, height: 0 }}
         id={id}
         type="color"
-        value={editor.getAttributes('textStyle').color || '#000000'}
+        value={color}
         /*
          * Use width and height to hide the color picker instead of display: none
          * Otherwise browser will place the picker in the corner (out of the Visual DOM tree)
@@ -40,7 +42,7 @@ const ColorPicker = ({ editor, id }: Props) => {
           transform: 'translate(-20%, 0px)',
           height: 3,
           width: 14,
-          backgroundColor: editor.getAttributes('textStyle').color || '#000000',
+          backgroundColor: color,
           borderRadius: 3,
         }}
       />

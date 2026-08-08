@@ -1,8 +1,8 @@
 'use client';
 
 import { IconButton, Tooltip, type Theme } from '@mui/material';
-import { useCurrentEditor } from '@tiptap/react';
-import { Fragment } from 'react';
+import { useCurrentEditor, useEditorState } from '@tiptap/react';
+import { Fragment, memo } from 'react';
 
 
 import type { ToolbarItem } from '@/types/toolbar';
@@ -67,6 +67,20 @@ const ToolBarIconButton = ({
 }: Props) => {
   const { editor } = useCurrentEditor();
 
+  /*
+   * Subscribed individually to the editor's transactions (instead of relying on the parent
+   * Toolbar to re-render top-down), so this button only re-renders when its own active state
+   * actually changes — combined with `React.memo` below, unrelated buttons stay untouched.
+   */
+  /*
+   * `useEditorState`'s return type is unioned with `null` when `editor` may be null, even
+   * though the selector itself always returns a boolean — coerce it back at the call site.
+   */
+  const isActive = !!useEditorState({
+    editor,
+    selector: ({ editor }) => !!editor?.isActive(active || name), // the order is important
+  });
+
   // if the menu has an id, we need to use a label (use htmlFor)
   const LabelComponent = id ? 'label' : Fragment;
   // label props if the menu has an id
@@ -81,11 +95,8 @@ const ToolBarIconButton = ({
   const component = (
     <span data-testid={name}>
       <IconButton
+        css={classes.button(isActive, !!split)}
         disabled={disabled}
-        css={classes.button(
-          editor.isActive(active || name), // the order is important
-          !!split
-        )}
         onClick={onClick}
       >
         <LabelComponent {...labelProps}>
@@ -111,4 +122,4 @@ const ToolBarIconButton = ({
   );
 };
 
-export default ToolBarIconButton;
+export default memo(ToolBarIconButton);
