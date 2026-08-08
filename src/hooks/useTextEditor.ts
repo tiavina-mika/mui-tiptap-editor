@@ -1,6 +1,5 @@
 /* eslint-disable import/no-named-as-default */
 'use client';
-import { useTheme } from '@mui/material';
 import Code from '@tiptap/extension-code';
 import Document from '@tiptap/extension-document';
 import Heading from '@tiptap/extension-heading';
@@ -21,7 +20,7 @@ import Youtube from '@tiptap/extension-youtube';
 import { Placeholder, Gapcursor } from '@tiptap/extensions';
 import { useEditor } from '@tiptap/react';
 import StarterKit from '@tiptap/starter-kit';
-import { useEffect } from 'react';
+import { useEffect, useMemo } from 'react';
 
 import type { ILabels } from '@/types/labels';
 import type { ITextEditorOption } from '@/types/text-editor';
@@ -197,27 +196,36 @@ export const useTextEditor = ({
   onChangeTableOfContents,
   ...editorOptions
 }: TextEditorProps) => {
-  const theme = useTheme();
-
-  const editor = useEditor({
-    content: value,
-    immediatelyRender: false,
-    shouldRerenderOnTransaction: true,
-    autofocus: false,
-    extensions: [
-      // placeholder extension
-      Placeholder.configure({
-        placeholder,
-      }),
-      // user mentions editing extension
-      getCustomMention({ pathname: userPathname, mentions }),
-      // upload image extension
+  /*
+   * Each of these dynamic extensions is memoized on its real inputs so the composed
+   * `extensions` array below only changes reference when something it depends on actually
+   * changes. `useEditor`'s `compareOptions` compares `extensions` by reference element-by-
+   * element, so without this, every one of these factories re-running on every render would
+   * force `editor.setOptions()` (and a full `view.updateState()`) on every keystroke.
+   */
+  const placeholderExtension = useMemo(
+    () => Placeholder.configure({ placeholder }),
+    [placeholder]
+  );
+  const mentionExtension = useMemo(
+    () => getCustomMention({ pathname: userPathname, mentions }),
+    [userPathname, mentions]
+  );
+  const imageExtension = useMemo(
+    () =>
       getCustomImage(
         uploadFileOptions,
         uploadFileLabels,
         uploadFileOptions?.maxMediaLegendLength
       ),
-      getCodeBlockWithCopy(codeBlock),
+    [uploadFileOptions, uploadFileLabels]
+  );
+  const codeBlockExtension = useMemo(
+    () => getCodeBlockWithCopy(codeBlock),
+    [codeBlock]
+  );
+  const tableOfContentsExtension = useMemo(
+    () =>
       onChangeTableOfContents
         ? TableOfContents.configure({
           getIndex: getHierarchicalIndexes,
@@ -226,17 +234,47 @@ export const useTextEditor = ({
           },
         })
         : null,
-      // default extensions
-      ...extensions,
-    ] as AnyExtension[],
+    [onChangeTableOfContents]
+  );
+
+  const dynamicExtensions = useMemo(
+    () =>
+      [
+        // placeholder extension
+        placeholderExtension,
+        // user mentions editing extension
+        mentionExtension,
+        // upload image extension
+        imageExtension,
+        codeBlockExtension,
+        tableOfContentsExtension,
+        // default extensions
+        ...extensions,
+      ] as AnyExtension[],
+    [
+      placeholderExtension,
+      mentionExtension,
+      imageExtension,
+      codeBlockExtension,
+      tableOfContentsExtension,
+    ]
+  );
+
+  const editor = useEditor({
+    content: value,
+    immediatelyRender: false,
+    shouldRerenderOnTransaction: true,
+    autofocus: false,
+    extensions: dynamicExtensions,
     /*
      * The `onUpdate` function in the `useTextEditor` hook is a callback that is triggered whenever the
      * editor content is updated. Here's a breakdown of what it does:
      */
     onUpdate: ({ editor }: EditorEvents['update']) => {
-      const html = editor.getHTML();
+      // serializing the document is real work — skip it entirely when nobody is listening
+      if (!onChange) return;
 
-      onChange?.(html);
+      onChange(editor.getHTML());
     },
     ...editorOptions,
   });
@@ -260,17 +298,29 @@ export const useTextEditor = ({
    * it's useful for content that changed externally
    * @example tab change
    */
+  /*
+   * Risky change: `editable` and `tab` were previously missing from the dependency array below
+   * (stale-closure bug — this effect wouldn't fire on a tab/editable change alone). Added them
+   * to fix it, but this makes the effect run more often (e.g. on every tab switch), so double
+   * check this doesn't cause unwanted `setContent` calls if something looks off later.
+   */
   useEffect(() => {
     if (!editor) return;
     if (value && !editable && tab === 'preview') {
       editor.commands.setContent(value);
     }
-
-  }, [editor, value]);
+  }, [editor, value, editable, tab]);
 
   /**
    * change the editable state of the editor on the fly
    * for every tab change
+   */
+  /*
+   * Risky change: `theme` and `id` were previously listed as dependencies but never read in
+   * this effect body — `useTheme()` returns a new object reference on every theme change, so
+   * the effect was re-running (and calling `setOptions`/`updateState`) on every theme toggle for
+   * no reason. Dropped both from the array below; double check nothing relied on this effect
+   * re-running on a theme or `id` change if something looks off later.
    */
   useEffect(() => {
     // preview tab or not editable
@@ -298,7 +348,7 @@ export const useTextEditor = ({
         },
       },
     });
-  }, [editor, tab, editable, theme, id]);
+  }, [editor, tab, editable]);
 
   return editor;
 };

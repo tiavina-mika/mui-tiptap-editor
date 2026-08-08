@@ -2,6 +2,7 @@
 
 import { Menu, MenuItem, Fade } from '@mui/material';
 import { Editor } from '@tiptap/react';
+import { useMemo } from 'react';
 
 import type { ILabels } from '@/types/labels';
 
@@ -90,6 +91,13 @@ const TableMenuDialog = ({
     onClose();
   };
 
+  /*
+   * The Menu is always mounted (only `open` toggles), so without memoizing this, all 14 menu
+   * closures were reallocated on every Toolbar re-render even though the menu is closed 99% of
+   * the time.
+   */
+  const tableMenus = useMemo(() => getTableMenus(editor, labels), [editor, labels]);
+
   return (
     <Menu
       anchorEl={anchorEl}
@@ -103,7 +111,7 @@ const TableMenuDialog = ({
       }}
       onClose={onClose}
     >
-      {getTableMenus(editor, labels).map((menu, index) => (
+      {tableMenus.map((menu, index) => (
         <MenuItem key={index} value={index} onClick={() => handleClick(menu)}>
           {menu.label}
         </MenuItem>

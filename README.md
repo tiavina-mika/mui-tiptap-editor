@@ -349,6 +349,13 @@ See [`here`](https://github.com/tiavina-mika/mui-tiptap-editor/blob/main/src/typ
     <td>Features</td>
   </tr>
   <tr>
+    <th><a href="https://github.com/tiavina-mika/mui-tiptap-editor/pull/116">v3.0.0</a></th>
+    <td>
+      <ul>
+        <li>Major upgrade: Tiptap v3.29 and MUI v9 (breaking changes).</li>
+      </ul>
+  </tr>
+  <tr>
     <th><a href="https://github.com/tiavina-mika/mui-tiptap-editor/commit/57f1ada9b3c02015d587e273aeda025972062dfc">v2.0.0</a></th>
     <td>
       <ul>
@@ -380,42 +387,6 @@ See [`here`](https://github.com/tiavina-mika/mui-tiptap-editor/blob/main/src/typ
         <li>Toolbar can now be positioned at the top or bottom.</li>
       </ul>
     </td>
-  <tr>
-    <tr>
-    <th><a href="https://github.com/tiavina-mika/mui-tiptap-editor/pull/89">v0.09.33</a></th>
-    <td>
-      <ul>
-        <li>Option to show or hide Editor/Preview.</li>
-      </ul>
-    </td>
-  <tr>
-  <tr>
-    <th><a href="https://github.com/tiavina-mika/mui-tiptap-editor/pull/79">v0.9.29</a></th>
-    <td>
-      <ul>
-        <li>Added Next.js (v13+) compatibility <a href="https://github.com/tiavina-mika/mui-tiptap-editor-nextjs">example</a></li>
-      </ul>
-    </td>
-  <tr>
-  <tr>
-    <tr>
-    <th><a href="https://github.com/tiavina-mika/mui-tiptap-editor/pull/64">v0.9.19</a></th>
-    <td>
-      <ul>
-        <li>Added "Copy code block</li>
-      </ul>
-    </td>
-  <tr>
-  <tr>
-    <th><a href="https://github.com/tiavina-mika/mui-tiptap-editor/pull/55">v0.9.11</a></th>
-    <td>
-      <ul>
-        <li>Image upload via drag, paste, or button</li>
-        <li>Edit image alt text and caption</li>
-        <li>Reorder toolbar items</li>
-      </ul>
-    </td>
-  <tr>
 </table>
 
 <br />

@@ -29,7 +29,11 @@
     "tiptap",
     "noopener",
     "noreferrer",
-    "ueberdosis"
+    "ueberdosis",
+    "unindexed",
+    "unmemoized",
+    "unioned",
+    "releaserc"
   ],
   "flagWords": [],
   "ignorePaths": [

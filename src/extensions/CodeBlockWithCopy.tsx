@@ -15,7 +15,7 @@ import {
   ReactNodeViewRenderer,
 } from '@tiptap/react';
 import { createLowlight, common } from 'lowlight';
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 import type { CodeBlockWithCopyProps } from '@/types/toolbar';
 
@@ -25,11 +25,17 @@ import Copy from '@/assets/icons/copy.svg';
 // eslint-disable-next-line react-refresh/only-export-components
 const CodeBlockWithCopy = ({ node }: any) => {
   const [isCopied, setIsCopied] = useState(false);
+  const resetTimeoutRef = useRef<ReturnType<typeof setTimeout> | undefined>(undefined);
+
+  // clear the pending "reset" timeout if the node view unmounts (e.g. the block is deleted)
+  useEffect(() => () => clearTimeout(resetTimeoutRef.current), []);
 
   const copyToClipboard = () => {
     navigator.clipboard.writeText(node.textContent).then(() => {
       setIsCopied(true);
-      setTimeout(() => setIsCopied(false), 2000); // "Copied!" message for 2 seconds
+      clearTimeout(resetTimeoutRef.current);
+      // "Copied!" message for 2 seconds
+      resetTimeoutRef.current = setTimeout(() => setIsCopied(false), 2000);
     });
   };
 

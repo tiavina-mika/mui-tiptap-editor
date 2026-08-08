@@ -3,8 +3,8 @@
 import {
   Menu, MenuItem, Fade, Button,
 } from '@mui/material';
-import { Editor } from '@tiptap/react';
-import { useMemo, useState } from 'react';
+import { Editor, useEditorState } from '@tiptap/react';
+import { memo, useMemo, useState } from 'react';
 
 import type { ILabels } from '@/types/labels';
 import type { Theme } from '@mui/material';
@@ -15,17 +15,6 @@ import ChevronDown from '@/assets/icons/chevron-down.svg';
 import { getBorderColor } from '@/utils/app.utils';
 
 import Icon from './Icon';
-
-const isActive = (editor: Editor) => {
-  return (
-    editor.isActive('heading', { level: 1 }) ||
-    editor.isActive('heading', { level: 2 }) ||
-    editor.isActive('heading', { level: 3 }) ||
-    editor.isActive('heading', { level: 4 }) ||
-    editor.isActive('heading', { level: 5 }) ||
-    editor.isActive('heading', { level: 6 })
-  );
-};
 
 const options: Level[] = [1, 2, 3, 4, 5, 6];
 
@@ -66,6 +55,21 @@ type Props = {
 const Heading = ({ editor, headingLabels, split = false }: Props) => {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const [selected, setSelected] = useState(0);
+
+  /*
+   * Single reactive selector instead of 6 (button) + 6 (menu items) separate `isActive` calls
+   * recomputed on every render — only re-renders this component when the active heading level
+   * actually changes.
+   */
+  const { isActive, activeLevel } = useEditorState({
+    editor,
+    selector: ({ editor: currentEditor }) => {
+      const level = options.find((option) =>
+        currentEditor?.isActive('heading', { level: option }));
+
+      return { isActive: !!level, activeLevel: level ?? null };
+    },
+  });
 
   // get label for selected heading
   const selectedLabel = useMemo(() => {
@@ -108,7 +112,7 @@ const Heading = ({ editor, headingLabels, split = false }: Props) => {
       <Button
         className="flexRow center"
         color="inherit"
-        css={classes.button(isActive(editor))}
+        css={classes.button(isActive)}
         type="button"
         variant="text"
         onClick={handleOpenHeadingMenu}
@@ -141,7 +145,7 @@ const Heading = ({ editor, headingLabels, split = false }: Props) => {
           <MenuItem
             key={index}
             css={classes.menuItem(
-              editor.isActive('heading', { level: option }), // isActive
+              activeLevel === option, // isActive
               (10 - index) * 3 // fontSize is decreasing
             )}
             onClick={() => handleSelectHeading(option)}
@@ -155,4 +159,4 @@ const Heading = ({ editor, headingLabels, split = false }: Props) => {
   );
 };
 
-export default Heading;
+export default memo(Heading);

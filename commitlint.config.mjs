@@ -1,3 +1,6 @@
+// This file only validates commit message format — it doesn't decide version bumps.
+// The actual release/bump behavior per type is defined in `.releaserc.json`
+// (`@semantic-release/commit-analyzer` releaseRules), which the bump notes below mirror.
 export default {
   extends: ['@commitlint/config-conventional'],
   rules: {
@@ -12,12 +15,12 @@ export default {
         'docs', // Documentation changes (readme, comments, etc.): no version bump
         'style', // Code style changes (formatting, missing semi colons, etc.): no version bump
         'refactor', // Code refactoring (no feature or bug changes): no version bump
-        'perf', // Performance improvements : no version bump
+        'perf', // Performance improvements (patch changes, e.g. reducing re-renders): 1.0.0 => 1.0.1
         'test', // Adding or updating tests : no version bump
         'build', // Changes to the build system or external dependencies: no version bump
         'ci', // Changes to CI configuration files and scripts: no version bump
         'chore', // Maintenance tasks (build, tooling, etc.): no version bump
-        'revert', // Reverting previous commits
+        'revert', // Reverting previous commits (patch changes): 1.0.0 => 1.0.1
         'breaking', // BREAKING CHANGE (major changes that break backward compatibility): 1.0.0 => 2.0.0
       ],
     ],
