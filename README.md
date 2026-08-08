@@ -10,8 +10,6 @@ A customizable and easy to use <a href="https://tiptap.dev/">Tiptap</a> styled W
 [![Language](https://img.shields.io/badge/language-TypeScript-blue.svg?style=flat-square)](https://www.typescriptlang.org)
 [![Build](https://github.com/tiavina-mika/mui-tiptap-editor/actions/workflows/ci-cd.yml/badge.svg)](https://github.com/tiavina-mika/mui-tiptap-editor/actions)
 [![Downloads](https://img.shields.io/npm/dm/mui-tiptap-editor?style=flat-square)](https://www.npmjs.com/package/mui-tiptap-editor)
-[![Bundle Size](https://img.shields.io/bundlephobia/minzip/mui-tiptap-editor?style=flat-square)](https://bundlephobia.com/package/mui-tiptap-editor)
-[![License](https://img.shields.io/npm/l/mui-tiptap-editor?style=flat-square)](./LICENSE)
 [![Contributors](https://img.shields.io/github/contributors/tiavina-mika/mui-tiptap-editor?style=flat-square)](https://github.com/tiavina-mika/mui-tiptap-editor/graphs/contributors)
 [![Storybook](https://img.shields.io/badge/Storybook-View%20Components-orange?style=flat-square&logo=storybook)](https://tiavina-mika.github.io/mui-tiptap-editor)
 <!-- [END BADGES] -->
