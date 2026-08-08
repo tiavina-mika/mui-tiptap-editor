@@ -10,6 +10,8 @@ A customizable and easy to use <a href="https://tiptap.dev/">Tiptap</a> styled W
 [![Language](https://img.shields.io/badge/language-TypeScript-blue.svg?style=flat-square)](https://www.typescriptlang.org)
 [![Build](https://github.com/tiavina-mika/mui-tiptap-editor/actions/workflows/ci-cd.yml/badge.svg)](https://github.com/tiavina-mika/mui-tiptap-editor/actions)
 [![Downloads](https://img.shields.io/npm/dm/mui-tiptap-editor?style=flat-square)](https://www.npmjs.com/package/mui-tiptap-editor)
+[![Bundle Size](https://img.shields.io/bundlephobia/minzip/mui-tiptap-editor?style=flat-square)](https://bundlephobia.com/package/mui-tiptap-editor)
+[![License](https://img.shields.io/npm/l/mui-tiptap-editor?style=flat-square)](./LICENSE)
 [![Contributors](https://img.shields.io/github/contributors/tiavina-mika/mui-tiptap-editor?style=flat-square)](https://github.com/tiavina-mika/mui-tiptap-editor/graphs/contributors)
 [![Storybook](https://img.shields.io/badge/Storybook-View%20Components-orange?style=flat-square&logo=storybook)](https://tiavina-mika.github.io/mui-tiptap-editor)
 <!-- [END BADGES] -->
@@ -20,6 +22,7 @@ A customizable and easy to use <a href="https://tiptap.dev/">Tiptap</a> styled W
 - [mui-tiptap-editor](#mui-tiptap-editor)
   - [Table of Contents](#table-of-contents)
   - [Demo](#demo)
+  - [Compatibility](#compatibility)
   - [Installation](#installation)
   - [Get started](#get-started)
     - [Simple usage](#simple-usage)
@@ -38,6 +41,7 @@ A customizable and easy to use <a href="https://tiptap.dev/">Tiptap</a> styled W
     - [`ToolbarIcons`](#toolbaricons)
   - [New features](#new-features)
   - [Contributing](#contributing)
+  - [License](#license)
 
 </details>
 
@@ -51,6 +55,16 @@ A customizable and easy to use <a href="https://tiptap.dev/">Tiptap</a> styled W
 
 <!-- <img alt="Screenshot" src="https://github.com/tiavina-mika/mui-tiptap-editor/blob/main/screenshots/screenshot.png" /> -->
 ![Demo Video](https://github.com/tiavina-mika/mui-tiptap-editor/blob/main/screenshots/mui-tiptap-editor.gif)
+
+## Compatibility
+
+| Dependency | Supported versions |
+|---|---|
+| React | `^16.8.0`, `^17.0.2`, `^18.2.0`, `^19.2.0` |
+| MUI (`@mui/material`) | `^9.3.1` |
+| Node.js | `>=18` |
+
+This package is **ESM-only** (`import`) — it does not ship a CommonJS (`require`) build.
 
 ## Installation
 
@@ -168,7 +182,7 @@ See more examples of  `TextEditor` usage [here](https://github.com/tiavina-mika/
 ```tsx
 import { TextEditorReadOnly } from 'mui-tiptap-editor';
 
-<TextEditorReadOnly value="<h1>Hello word!</h1>" />
+<TextEditorReadOnly value="<h1>Hello world!</h1>" />
 ```
 
 2. **Displaying content without using the editor:**
@@ -253,7 +267,7 @@ function App() {
 import './index.css';
 
 <TextEditor
-  value="<p>Hello word!</p>"
+  value="<p>Hello world!</p>"
   rootClassName="root"
 />
 ```
@@ -272,7 +286,7 @@ import './index.css';
 
 ```tsx
 <TextEditor
-  value="<p>Hello word!</p>"
+  value="<p>Hello world!</p>"
   label="Content"
   tabClassName="bg-black"
   labelClassName="text-sm"
@@ -308,7 +322,7 @@ import './index.css';
 |value|`string`|empty| Value of the input
 |onChange|`(value: string) => void`|-| Function to call when the input change
 |userPathname|`string`|/user| Path for mentioned user links. (eg: /user/user_id)
-|labels|`ILabels`|null| OOverride text labels (useful for i18n).
+|labels|`ILabels`|null| Override text labels (useful for i18n).
 |disableTabs|`boolean`|false| If true, the Editor/Preview tabs are hidden.
 |toolbarPosition|`top or bottom`|bottom| Position of the toolbar
 |id|`string`|empty| Used if using multiple editors on the same page, to identify uniquely each editor
@@ -394,3 +408,7 @@ See [`here`](https://github.com/tiavina-mika/mui-tiptap-editor/blob/main/src/typ
 ## Contributing
 
 Read the contribution guide [here](https://github.com/tiavina-mika/mui-tiptap-editor/blob/main/CONTRIBUTING.md).
+
+## License
+
+[MIT](./LICENSE) © [Tiavina Michael Ralainirina](https://github.com/tiavina-mika)

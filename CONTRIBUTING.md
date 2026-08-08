@@ -29,7 +29,7 @@ To instead test a "built" version of this package which is installed into an "ex
 When a new version should be cut since some new changes have landed on the `main` branch, do the following to publish it:
 
 1. Go to the `main` branch and pull in the latest changes.
-2. Commit change using (commit convention)[https://www.conventionalcommits.org]
+2. Commit change using [commit convention](https://www.conventionalcommits.org)
 3. Push the commit (ex: `git push origin main`)
 4. The `release.yml` GitHub Actions workflow will auto-generate a tag, change log, release note and a PR branch
 5. The `automerge.yml` GitHub Actions workflow will merge and delete the PR branch
@@ -42,10 +42,3 @@ When a new version should be cut since some new changes have landed on the `main
    . `yarn cache clean --all`
    . Create an empty `yarn.lock`
    . run `yarn`
-
-## TODO:
-#### upgrade eslint to v9
-- For now, linting is not working because the actual version of eslint does not support the latest Typescript
-  So the solution is to upgrade eslint. But many eslint plugins does not support the v9 yet.
-- upgrade [eslint-plugin-prefer-arrow-functions](https://github.com/JamieMason/eslint-plugin-prefer-arrow-functions/issues/33) using eslint v9
-- upgrade [eslint-config-airbnb-typescript](https://github.com/iamturns/eslint-config-airbnb-typescript/issues/331) using eslint v9

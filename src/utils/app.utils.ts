@@ -148,7 +148,7 @@ export const checkLegend = (
   maxLength: number
 ): FileValidationOutput => {
   return {
-    isValid: checkAlt(text) && text.length <= maxLength,
+    isValid: checkAlt(text).isValid && text.length <= maxLength,
     message: `Legend is required and be less than ${maxLength} characters.`,
   };
 };

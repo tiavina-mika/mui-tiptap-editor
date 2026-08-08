@@ -52,7 +52,7 @@ jobs:
             ci
             chore
             revert
-            BREAKING CHANGE
+            breaking
           githubBaseUrl: https://api.github.com
         env:
           GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
