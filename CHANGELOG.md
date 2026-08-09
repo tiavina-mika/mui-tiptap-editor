@@ -1,5 +1,12 @@
 # Changelog
 
+# [5.1.0](https://github.com/tiavina-mika/mui-tiptap-editor/compare/v5.0.0...v5.1.0) (2026-08-09)
+
+
+### Features
+
+* can paste raw html ([#122](https://github.com/tiavina-mika/mui-tiptap-editor/issues/122)) ([d0ca102](https://github.com/tiavina-mika/mui-tiptap-editor/commit/d0ca102047ac73ecf7e6f610c89d8fce68b6319f))
+
 # [5.0.0](https://github.com/tiavina-mika/mui-tiptap-editor/compare/v4.0.4...v5.0.0) (2026-08-08)
 
 
