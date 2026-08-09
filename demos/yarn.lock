@@ -1702,7 +1702,7 @@ __metadata:
     eslint-plugin-react-hooks: "npm:^7.1.1"
     eslint-plugin-react-refresh: "npm:^0.5.3"
     globals: "npm:^17.9.0"
-    mui-tiptap-editor: "npm:^3.0.0"
+    mui-tiptap-editor: "npm:^5.0.0"
     react: "npm:^19.2.8"
     react-dom: "npm:^19.2.8"
     react-hook-form: "npm:^7.84.0"
@@ -3136,9 +3136,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"mui-tiptap-editor@npm:^3.0.0":
-  version: 3.0.0
-  resolution: "mui-tiptap-editor@npm:3.0.0"
+"mui-tiptap-editor@npm:^5.0.0":
+  version: 5.0.0
+  resolution: "mui-tiptap-editor@npm:5.0.0"
   dependencies:
     "@emotion/css": "npm:^11.13.5"
     "@tiptap/extension-bubble-menu": "npm:^3.29.2"
@@ -3169,7 +3169,7 @@ __metadata:
     "@mui/material": ^9.3.1
     react: ^16.8.0 || ^17.0.2 || ^18.2.0 || ^19.2.0
     react-dom: ^16.8.0 || ^17.0.2 || ^18.2.0 || ^19.2.0
-  checksum: 10c0/76d643add813065e3929fbaf0878471d5d0f54bacb0f4aec868102b47554f0917169118fb33b7fcf7e82c64947c64551d887598140e5c198c7086ce2dde74f53
+  checksum: 10c0/28456b7cc504788b830793a8e2ce6224930fe761a7006230962dc9a4731ab2dc41fa69018ad5a9237d36a23037cb4ff96030d2bfae33d0c93f30412dc4a5ce41
   languageName: node
   linkType: hard
 
