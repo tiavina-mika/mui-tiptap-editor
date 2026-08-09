@@ -28,12 +28,14 @@ import type {
   CodeBlockWithCopyProps,
   ImageUploadOptions,
 } from '@/types/toolbar';
+import type { EditorProps } from '@tiptap/pm/view';
 import type { AnyExtension, EditorOptions, EditorEvents } from '@tiptap/react';
 
 import { type ToCItemType } from '@/components/tableOfContent/ToC';
 import { getCodeBlockWithCopy } from '@/extensions/CodeBlockWithCopy';
 import getCustomImage from '@/extensions/CustomImage';
 import { getCustomMention } from '@/extensions/CustomMention';
+import { clipboardTextParser } from '@/utils/paste.utils';
 
 const extensions = [
   TextStyleKit.configure({ types: [ListItem.name] } as any),
@@ -107,6 +109,16 @@ const extensions = [
    * } as any),
    */
 ];
+
+/*
+ * Applied to every `editorProps` passed to `useEditor`/`setOptions` — `Editor.setOptions`
+ * replaces `editorProps` wholesale rather than merging it (see @tiptap/core), so omitting this
+ * from any call site below would silently drop HTML-paste support after the first tab/editable
+ * change.
+ */
+const baseEditorProps: EditorProps = {
+  clipboardTextParser: clipboardTextParser as EditorProps['clipboardTextParser'],
+};
 
 export type TextEditorProps = {
   /**
@@ -266,6 +278,7 @@ export const useTextEditor = ({
     shouldRerenderOnTransaction: true,
     autofocus: false,
     extensions: dynamicExtensions,
+    editorProps: baseEditorProps,
     /*
      * The `onUpdate` function in the `useTextEditor` hook is a callback that is triggered whenever the
      * editor content is updated. Here's a breakdown of what it does:
@@ -334,6 +347,7 @@ export const useTextEditor = ({
       editor?.setOptions({
         editable: tab === 'editor',
         editorProps: {
+          ...baseEditorProps,
           attributes: { class: className },
         },
       });
@@ -343,6 +357,7 @@ export const useTextEditor = ({
     editor?.setOptions({
       editable: false,
       editorProps: {
+        ...baseEditorProps,
         attributes: {
           class: 'mui-tiptap-input mui-tiptap-input-preview',
         },
